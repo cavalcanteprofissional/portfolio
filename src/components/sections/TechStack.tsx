@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { FaPython, FaJs, FaReact, FaNodeJs, FaDocker, FaAws, FaGitAlt, FaLinux } from 'react-icons/fa';
-import { SiTensorflow, SiPytorch, SiKeras, SiScikitlearn, SiPandas, SiNumpy, SiPostgresql, SiMysql, SiMongodb, SiFirebase, SiSupabase, SiStreamlit, SiJupyter, SiTableau, SiFigma, SiJira, SiTrello, SiCanva, SiGooglecloud } from 'react-icons/si';
+import { SiTensorflow, SiPytorch, SiKeras, SiScikitlearn, SiPandas, SiNumpy, SiPostgresql, SiMysql, SiMongodb, SiFirebase, SiSupabase, SiStreamlit, SiJupyter, SiFigma, SiJira, SiTrello, SiCanva, SiGooglecloud } from 'react-icons/si';
 import { VscAzure } from 'react-icons/vsc';
 
 interface TechStackItem {
@@ -32,7 +32,7 @@ const techStacks: TechStackItem[] = [
   { icon: FaGitAlt, name: 'Git' },
   { icon: SiStreamlit, name: 'Streamlit' },
   { icon: SiJupyter, name: 'Jupyter' },
-  { icon: SiTableau, name: 'Tableau' },
+  { icon: SiFigma, name: 'Figma' },
   { icon: SiFigma, name: 'Figma' },
   { icon: SiCanva, name: 'Canva' },
   { icon: SiJira, name: 'Jira' },
