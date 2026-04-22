@@ -1,20 +1,164 @@
 <!doctype html>
-<html lang="pt" class="light">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lucas Cavalcante - Analista de Dados</title>
-    <meta name="description" content="Analista de Dados com experiência em IA, Machine Learning e Visão Computacional" />
+    <link rel="icon" type="image/x-icon" href="/portfolio/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Lucas Cavalcante - Data Analyst with expertise in AI, Machine Learning, and Computer Vision. Specialized in developing chatbots, interactive dashboards, and data pipelines.">
+    <meta name="keywords" content="Data Analyst, AI, Machine Learning, Computer Vision, Python, Power BI, Streamlit">
+    <meta name="author" content="Lucas Cavalcante dos Santos">
+    <link rel="canonical" href="https://cavalcanteprofissional.com.br/" />
+    <meta name="theme-color" content="#0ea5e9">
+    
     <script>
+      // Prevent horizontal scrollbar at root level
       (function() {
-        const theme = localStorage.getItem('theme') || 'light';
-        document.documentElement.classList.add(theme);
+        var html = document.documentElement;
+        var body = document.body;
+        var root = document.getElementById('root');
+        
+        function preventOverflow() {
+          html.style.overflowX = 'hidden';
+          html.style.maxWidth = '100vw';
+          body.style.overflowX = 'hidden';
+          body.style.maxWidth = '100%';
+          if (root) {
+            root.style.overflowX = 'hidden';
+            root.style.maxWidth = '100%';
+          }
+        }
+        
+        // Run immediately
+        preventOverflow();
+        
+        // Run on load
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', preventOverflow);
+        }
+        
+        // Run periodically to catch any dynamic changes
+        setInterval(preventOverflow, 100);
       })();
     </script>
+
+    <style>
+      html { overflow-x: hidden !important; max-width: 100vw !important; }
+      body { 
+        overflow-x: hidden !important; 
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      #root { 
+        overflow-x: hidden !important; 
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      * { 
+        box-sizing: border-box;
+        max-width: 100vw;
+      }
+      ::-webkit-scrollbar { 
+        display: none !important; 
+        width: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      html, body { 
+        scrollbar-width: none !important; 
+        -ms-overflow-style: none !important; 
+      }
+    </style>
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Lucas Cavalcante | Data Analyst & AI">
+    <meta property="og:description" content="Data Analyst with expertise in AI, Machine Learning, and Computer Vision">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/portfolio/images/profile/foto-perfil.jpeg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lucas Cavalcante | Data Analyst & AI">
+    <meta name="twitter:description" content="Data Analyst with expertise in AI, Machine Learning, and Computer Vision">
+    <meta name="twitter:image" content="/portfolio/images/profile/foto-perfil.jpeg">
+    
+    <title>Lucas Cavalcante | Data Analyst & AI</title>
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://cavalcanteprofissional.com.br/#person",
+          "name": "Lucas Cavalcante dos Santos",
+          "url": "https://cavalcanteprofissional.com.br/",
+          "image": "https://cavalcanteprofissional.com.br/portfolio/images/profile/foto-perfil.png",
+          "jobTitle": "Data Analyst & AI Specialist",
+          "email": "cavalcanteprofissional@outlook.com",
+          "telephone": "+55-85-996859051",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Fortaleza",
+            "addressRegion": "Ceará",
+            "addressCountry": "BR"
+          },
+          "sameAs": [
+            "https://linkedin.com/in/cavalcante-Lucas",
+            "https://github.com/cavalcanteprofissional"
+          ],
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Freelancer"
+          }
+        },
+        {
+          "@type": "LocalBusiness",
+          "@id": "https://cavalcanteprofissional.com.br/#business",
+          "name": "Lucas Cavalcante - Data Analyst & AI",
+          "description": "Serviços de análise de dados, inteligência artificial, machine learning e computer vision. Especializado em desenvolvimento de chatbots, dashboards interativos e pipelines de dados.",
+          "url": "https://cavalcanteprofissional.com.br/",
+          "image": "https://cavalcanteprofissional.com.br/portfolio/images/profile/foto-perfil.png",
+          "telephone": "+55-85-996859051",
+          "email": "cavalcanteprofissional@outlook.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Fortaleza",
+            "addressRegion": "Ceará",
+            "addressCountry": "BR"
+          },
+          "priceRange": "$$",
+          "areaServed": {
+            "@type": "State",
+            "name": "Ceará"
+          },
+          "serviceType": [
+            "Data Analysis",
+            "Machine Learning",
+            "Computer Vision",
+            "Chatbot Development",
+            "Dashboard Development"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://cavalcanteprofissional.com.br/#website",
+          "url": "https://cavalcanteprofissional.com.br/",
+          "name": "Lucas Cavalcante Portfolio",
+          "publisher": {
+            "@type": "Person",
+            "@id": "https://cavalcanteprofissional.com.br/#person"
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="module" crossorigin src="/portfolio/assets/index-CVL-AX3Z.js"></script>
+    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-_EntIps_.css">
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
