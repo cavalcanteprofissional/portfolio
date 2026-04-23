@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import companiesData from '../../data/companies.json';
+import companiesData from '../data/companies.json';
 
 export function Companies() {
   const { t } = useTranslation();
@@ -15,11 +15,15 @@ export function Companies() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">{t('companies.title')}</h2>
-          <p className="text-muted-foreground text-sm">{t('companies.subtitle')}</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">
+            {t('companies.title')}
+          </h2>
+          <p className="text-muted-foreground text-sm">
+            {t('companies.subtitle')}
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 items-center">
           {companies.map((company, index) => (
             <motion.a
               key={company.id}

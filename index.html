@@ -9,82 +9,21 @@
     <meta name="author" content="Lucas Cavalcante dos Santos">
     <link rel="canonical" href="https://cavalcanteprofissional.com.br/" />
     <meta name="theme-color" content="#0ea5e9">
-    
-    <script>
-      // Prevent horizontal scrollbar at root level
-      (function() {
-        var html = document.documentElement;
-        var body = document.body;
-        var root = document.getElementById('root');
-        
-        function preventOverflow() {
-          html.style.overflowX = 'hidden';
-          html.style.maxWidth = '100vw';
-          body.style.overflowX = 'hidden';
-          body.style.maxWidth = '100%';
-          if (root) {
-            root.style.overflowX = 'hidden';
-            root.style.maxWidth = '100%';
-          }
-        }
-        
-        // Run immediately
-        preventOverflow();
-        
-        // Run on load
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', preventOverflow);
-        }
-        
-        // Run periodically to catch any dynamic changes
-        setInterval(preventOverflow, 100);
-      })();
-    </script>
 
-    <style>
-      html { overflow-x: hidden !important; max-width: 100vw !important; }
-      body { 
-        overflow-x: hidden !important; 
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      #root { 
-        overflow-x: hidden !important; 
-        max-width: 100% !important;
-        width: 100% !important;
-      }
-      * { 
-        box-sizing: border-box;
-        max-width: 100vw;
-      }
-      ::-webkit-scrollbar { 
-        display: none !important; 
-        width: 0 !important;
-        height: 0 !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-      }
-      html, body { 
-        scrollbar-width: none !important; 
-        -ms-overflow-style: none !important; 
-      }
-    </style>
-    
+    <title>Lucas Cavalcante | Data Analyst & AI</title>
+
     <!-- Open Graph -->
     <meta property="og:title" content="Lucas Cavalcante | Data Analyst & AI">
     <meta property="og:description" content="Data Analyst with expertise in AI, Machine Learning, and Computer Vision">
     <meta property="og:type" content="website">
     <meta property="og:image" content="/portfolio/images/profile/foto-perfil.jpeg">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Lucas Cavalcante | Data Analyst & AI">
     <meta name="twitter:description" content="Data Analyst with expertise in AI, Machine Learning, and Computer Vision">
     <meta name="twitter:image" content="/portfolio/images/profile/foto-perfil.jpeg">
-    
-    <title>Lucas Cavalcante | Data Analyst & AI</title>
-    
+
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
@@ -155,10 +94,9 @@
       ]
     }
     </script>
-    <script type="module" crossorigin src="/portfolio/assets/index-CVL-AX3Z.js"></script>
-    <link rel="stylesheet" crossorigin href="/portfolio/assets/index-_EntIps_.css">
   </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

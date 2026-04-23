@@ -1,0 +1,12 @@
+export { Nav, Hero } from './Nav';
+export { Stats } from './Stats';
+export { Companies } from './Companies';
+export { Experience } from './Experience';
+export { Portfolio } from './Portfolio';
+export { Skills } from './Skills';
+export { Certifications } from './Certifications';
+export { Languages } from './Languages';
+export { TechStack } from './TechStack';
+export { FAQ } from './FAQ';
+export { Contact } from './Contact';
+export { Footer } from './Footer';
