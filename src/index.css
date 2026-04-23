@@ -4,48 +4,67 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.2%;
+    /* Corporate Blue Palette - Suavizada */
+    --background: 215 40% 96%;
+    --foreground: 215 35% 12%;
+    
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.2%;
+    --card-foreground: 215 35% 12%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.2%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 98%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 98%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --popover-foreground: 215 35% 12%;
+    
+    --primary: 215 70% 40%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 215 30% 94%;
+    --secondary-foreground: 215 35% 12%;
+    
+    --muted: 215 25% 95%;
+    --muted-foreground: 215 15% 35%;
+    
+    --accent: 215 65% 45%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 215 20% 88%;
+    --input: 215 20% 88%;
+    --ring: 215 70% 40%;
+    
+    --radius: 1rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.2%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.2%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.2%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 71.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 71.8%;
+    /* Dark Mode - Deep Blue Suavizado */
+    --background: 215 45% 8%;
+    --foreground: 215 25% 95%;
+    
+    --card: 215 40% 10%;
+    --card-foreground: 215 25% 95%;
+    
+    --popover: 215 40% 10%;
+    --popover-foreground: 215 25% 95%;
+    
+    --primary: 212 75% 55%;
+    --primary-foreground: 215 45% 8%;
+    
+    --secondary: 215 35% 15%;
+    --secondary-foreground: 215 25% 95%;
+    
+    --muted: 215 35% 15%;
+    --muted-foreground: 215 15% 60%;
+    
+    --accent: 212 70% 60%;
+    --accent-foreground: 215 45% 8%;
+    
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 215 30% 18%;
+    --input: 215 30% 18%;
+    --ring: 212 75% 55%;
   }
 }
 
@@ -64,4 +83,55 @@
 
 .text-balance {
   text-wrap: balance;
+}
+
+/* Gradientes customizados */
+@layer utilities {
+  .bg-gradient-blue {
+    background: linear-gradient(135deg, hsl(215 70% 40%) 0%, hsl(212 75% 55%) 100%);
+  }
+  
+  .bg-gradient-blue-light {
+    background: linear-gradient(135deg, hsl(215 30% 94%) 0%, hsl(215 25% 95%) 100%);
+  }
+  
+  .bg-gradient-blue-dark {
+    background: linear-gradient(135deg, hsl(215 40% 10%) 0%, hsl(215 45% 8%) 100%);
+  }
+  
+  .text-gradient-blue {
+    background: linear-gradient(135deg, hsl(215 70% 40%) 0%, hsl(212 75% 55%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .border-gradient-blue {
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, hsl(215 70% 40%), hsl(212 75% 55%)) border-box;
+  }
+  
+  .dark .border-gradient-blue {
+    background: linear-gradient(hsl(215 40% 10%), hsl(215 40% 10%)) padding-box,
+                linear-gradient(135deg, hsl(212 75% 55%), hsl(215 70% 40%)) border-box;
+  }
+  
+  /* Suavizar sombras */
+  .shadow-soft {
+    box-shadow: 0 4px 20px -4px rgba(30, 64, 175, 0.1);
+  }
+  
+  .shadow-soft-lg {
+    box-shadow: 0 8px 30px -6px rgba(30, 64, 175, 0.15);
+  }
+  
+  /* Borda suave */
+  .rounded-soft {
+    border-radius: 1rem;
+  }
+  
+  .rounded-soft-xl {
+    border-radius: 1.5rem;
+  }
 }

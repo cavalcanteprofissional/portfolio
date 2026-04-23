@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { useThemeStore } from '../stores/themeStore';
 import { Code, Brain, Eye, Wrench, Megaphone, Network, FileText, List, ChevronDown } from 'lucide-react';
 
 const skillCategories = [
@@ -155,6 +156,7 @@ const softSkills = [
 
 export function Skills() {
   const { t } = useTranslation();
+  const { theme } = useThemeStore();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
   const toggleCategory = (id: string) => {
@@ -164,7 +166,7 @@ export function Skills() {
   };
 
   return (
-    <section id="skills" className="py-24 bg-muted/30">
+    <section id="skills" className="py-24">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -172,10 +174,10 @@ export function Skills() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
             {t('sections.skills')}
           </h2>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full" />
+          <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full" />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-4 mb-12">
@@ -190,15 +192,15 @@ export function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-card rounded-xl border border-border overflow-hidden"
+                className="bg-card/80 backdrop-blur-sm rounded-soft-xl border border-border/30 overflow-hidden shadow-soft hover:shadow-soft-lg transition-all"
               >
                 <button
                   onClick={() => toggleCategory(category.id)}
-                  className="w-full flex items-center justify-between p-4 sm:p-6 hover:bg-secondary/50 transition-colors"
+                  className="w-full flex items-center justify-between p-5 sm:p-6 hover:bg-secondary/30 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10">
-                      <IconComponent className="w-5 h-5 text-primary" />
+                    <div className="p-2.5 rounded-full bg-gradient-blue text-white">
+                      <IconComponent className="w-5 h-5" />
                     </div>
                     <h3 className="font-semibold text-left">{t(category.titleKey)}</h3>
                   </div>
@@ -227,7 +229,7 @@ export function Skills() {
                               initial={{ scale: 0.8, opacity: 0 }}
                               animate={{ scale: 1, opacity: 1 }}
                               whileHover={{ scale: 1.05 }}
-                              className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-secondary text-secondary-foreground text-xs sm:text-sm hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
+                              className="px-3 py-1.5 rounded-full bg-secondary/50 text-secondary-foreground text-xs sm:text-sm hover:bg-gradient-blue hover:text-white transition-colors cursor-default"
                             >
                               {skill}
                             </motion.span>
@@ -246,11 +248,11 @@ export function Skills() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-4 sm:p-6 lg:p-8 border border-primary/10"
+          className="bg-card/80 backdrop-blur-sm rounded-soft-xl border border-border/30 p-6 sm:p-8 lg:p-10 shadow-soft hover:shadow-soft-lg transition-all"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Brain className="w-5 h-5 text-primary" />
+            <div className="p-2.5 rounded-full bg-gradient-blue text-white">
+              <Brain className="w-5 h-5" />
             </div>
             <h3 className="text-xl font-semibold">{t('skills.soft')}</h3>
           </div>
@@ -263,7 +265,7 @@ export function Skills() {
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                className="px-4 py-2 rounded-full bg-card shadow-sm border border-border text-sm font-medium hover:shadow-md transition-shadow"
+                className="px-4 py-2.5 rounded-full bg-secondary/50 text-sm font-medium hover:bg-gradient-blue hover:text-white transition-colors cursor-default"
               >
                 {t(skill.key)}
               </motion.span>

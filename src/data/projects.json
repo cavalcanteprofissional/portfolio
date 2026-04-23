@@ -7,7 +7,7 @@
       "tech": ["Python", "Flask", "Jinja2", "Supabase"],
       "demoUrl": "https://lagbas-manager.vercel.app/",
       "codeUrl": "https://github.com/cavalcanteprofissional/lagbas-manager",
-      "icon": "database",
+      "icon": "testtube",
       "featured": true
     },
     {
@@ -47,7 +47,7 @@
       "tech": ["Python", "Geopandas", "PostgreSQL", "Folium"],
       "demoUrl": "#",
       "codeUrl": "https://github.com/cavalcanteprofissional",
-      "icon": "database",
+      "icon": "map",
       "featured": false
     },
     {
@@ -87,7 +87,7 @@
       "tech": ["Next.js 15", "React 19", "Tailwind CSS", "Supabase", "TypeScript", "Vercel"],
       "demoUrl": "https://oficina-manager.vercel.app/",
       "codeUrl": "https://github.com/cavalcanteprofissional/oficina-manager",
-      "icon": "database",
+      "icon": "wrench",
       "featured": true
     },
     {
@@ -97,7 +97,7 @@
       "tech": ["React", "TypeScript", "SCSS", "Vite", "Vercel"],
       "demoUrl": "https://paraiso-frames.vercel.app/",
       "codeUrl": "https://github.com/cavalcanteprofissional/paraiso_frames",
-      "icon": "database",
+      "icon": "video",
       "featured": true
     },
     {

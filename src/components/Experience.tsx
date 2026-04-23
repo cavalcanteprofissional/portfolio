@@ -1,17 +1,22 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useRef, useState, useEffect } from 'react';
+import { useThemeStore } from '../stores/themeStore';
 import experiencesData from '../data/experiences.json';
 
 export function Experience() {
   const { t } = useTranslation();
+  const { theme } = useThemeStore();
   const { experiences } = experiencesData;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [cardsPerPage, setCardsPerPage] = useState(1);
 
   const sortedExperiences = [...experiences].sort(
     (a, b) => parseInt(b.year) - parseInt(a.year)
   );
+
+  const totalPages = Math.ceil(sortedExperiences.length / cardsPerPage);
 
   const isCurrentYear = (year: string) =>
     activeIndex === 0 && sortedExperiences[0]?.year === year;
@@ -35,6 +40,23 @@ export function Experience() {
   };
 
   useEffect(() => {
+    const updateCardsPerPage = () => {
+      const width = window.innerWidth;
+      if (width >= 1024) {
+        setCardsPerPage(3);
+      } else if (width >= 640) {
+        setCardsPerPage(2);
+      } else {
+        setCardsPerPage(1);
+      }
+    };
+
+    updateCardsPerPage();
+    window.addEventListener('resize', updateCardsPerPage);
+    return () => window.removeEventListener('resize', updateCardsPerPage);
+  }, []);
+
+  useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (scrollContainer) {
       scrollContainer.addEventListener('scroll', handleScroll);
@@ -43,7 +65,7 @@ export function Experience() {
   }, []);
 
   return (
-    <section id="experience" className="py-24 bg-muted/30 overflow-hidden">
+    <section id="experience" className="py-24 overflow-hidden">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -51,10 +73,10 @@ export function Experience() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
             {t('sections.experience')}
           </h2>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full" />
+          <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full" />
         </motion.div>
 
         <div className="relative">
@@ -73,40 +95,25 @@ export function Experience() {
                 transition={{ duration: 0.3 }}
                 className="flex-shrink-0 w-[85vw] sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3.25)]"
               >
-                <div className="h-full bg-card rounded-2xl border border-border/50 flex flex-col overflow-hidden relative shadow-sm hover:shadow-md transition-shadow">
-                  <div className="p-6 border-b border-border/30 relative z-10">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="p-2.5 rounded-lg bg-muted">
-                        <span className="text-lg font-bold text-muted-foreground">
-                          {exp.year}
-                        </span>
-                      </div>
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-medium border-2 ${
-                          isCurrentYear(exp.year)
-                            ? 'border-animation-subtle-fast text-primary'
-                            : 'border-border bg-muted text-foreground'
-                        }`}
-                      >
-                        {isCurrentYear(exp.year) && (
-                          <span className="mr-2 text-xs text-muted-foreground">
-                            {t('experience.current')}
-                          </span>
-                        )}
+                <div className="h-full bg-card/80 backdrop-blur-sm rounded-soft-xl border border-border/30 flex flex-col overflow-hidden relative shadow-soft hover:shadow-soft-lg transition-all">
+                  <div className="p-6 border-b border-border/20">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
                         {exp.year}
+                        {isCurrentYear(exp.year) && ` • ${t('experience.current')}`}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold mb-2 leading-tight text-foreground">
+                    <h3 className="text-lg font-bold leading-tight text-foreground mb-1">
                       {t(exp.titleKey)}
                     </h3>
-                    <div className="flex items-center gap-2 text-muted-foreground font-medium">
-                      <span>{exp.company}</span>
-                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {exp.company}
+                    </p>
                   </div>
 
-                  <div className="p-6 flex-1 relative z-10">
-                    <ul className="space-y-3">
-                      {exp.descriptionKeys.map((key, descIndex) => (
+                  <div className="p-6 flex-1">
+                    <ul className="space-y-2.5">
+                      {exp.descriptionKeys.slice(0, 6).map((key, descIndex) => (
                         <motion.li
                           key={key}
                           initial={{ opacity: 0, x: -10 }}
@@ -115,7 +122,7 @@ export function Experience() {
                           transition={{ delay: index * 0.1 + descIndex * 0.05 }}
                           className="flex items-start gap-2 text-muted-foreground text-sm"
                         >
-                          <span className="text-muted-foreground mt-1">•</span>
+                          <span className="text-primary mt-1.5 min-w-[4px]">•</span>
                           <span className="leading-relaxed">{t(key)}</span>
                         </motion.li>
                       ))}
@@ -128,16 +135,16 @@ export function Experience() {
           </div>
 
           <div className="flex justify-center gap-3 mt-6">
-            {sortedExperiences.map((exp, index) => (
+            {Array.from({ length: totalPages }).map((_, pageIndex) => (
               <button
-                key={exp.id}
-                onClick={() => scrollToIndex(index)}
+                key={pageIndex}
+                onClick={() => scrollToIndex(pageIndex * cardsPerPage)}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  activeIndex === index
-                    ? 'w-8 bg-primary'
-                    : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                  Math.floor(activeIndex / cardsPerPage) === pageIndex
+                    ? 'w-10 bg-gradient-blue'
+                    : 'w-3 bg-muted-foreground/20 hover:bg-primary/40'
                 }`}
-                aria-label={`Go to experience ${index + 1}: ${exp.company}`}
+                aria-label={`Go to page ${pageIndex + 1}`}
               />
             ))}
           </div>

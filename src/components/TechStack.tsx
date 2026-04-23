@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useThemeStore } from '../stores/themeStore';
 import {
   FaPython,
   FaJs,
@@ -84,6 +85,7 @@ const itemVariants = {
 
 export function TechStack() {
   const { t } = useTranslation();
+  const { theme } = useThemeStore();
 
   return (
     <section id="techstack" className="py-24 bg-muted/20 overflow-hidden">
@@ -94,13 +96,13 @@ export function TechStack() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
             {t('techstack.title')}
           </h2>
           <p className="text-muted-foreground text-sm mb-4">
             {t('techstack.subtitle')}
           </p>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full" />
+          <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full" />
         </motion.div>
 
         <motion.div

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { useThemeStore } from '../stores/themeStore';
 import { HelpCircle, ChevronDown } from 'lucide-react';
 
 const faqItems = [
@@ -22,6 +23,7 @@ const faqSchema = {
 
 export function FAQ() {
   const { t } = useTranslation();
+  const { theme } = useThemeStore();
   const [openId, setOpenId] = useState<string | null>('0');
 
   const toggleItem = (id: string) => {
@@ -42,8 +44,8 @@ export function FAQ() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">{t('faq.title')}</h2>
-            <div className="w-24 h-1 bg-primary mx-auto rounded-full" />
+            <h2 className={`text-2xl md:text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>{t('faq.title')}</h2>
+            <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full" />
           </motion.div>
 
           <div className="max-w-2xl mx-auto space-y-4">

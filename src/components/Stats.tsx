@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useThemeStore } from '../stores/themeStore';
 import { Award, Users, Briefcase, Clock } from 'lucide-react';
 
 const statIcons = [
@@ -11,6 +12,7 @@ const statIcons = [
 
 export function Stats() {
   const { t } = useTranslation();
+  const { theme } = useThemeStore();
 
   return (
     <section id="stats" className="py-16 bg-muted/30">
@@ -21,7 +23,7 @@ export function Stats() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">
+          <h2 className={`text-2xl md:text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
             {t('stats.title')}
           </h2>
         </motion.div>

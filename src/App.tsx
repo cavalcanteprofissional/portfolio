@@ -29,7 +29,7 @@ function App() {
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
 
-      <main>
+      <main className="pb-20">
         <Hero />
         <Stats />
         <Companies />

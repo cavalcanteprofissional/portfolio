@@ -1,36 +1,274 @@
 import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 
-const resources = {
-  pt: { translation: {} },
-  en: { translation: {} },
-  es: { translation: {} },
+const translations = {
+  pt: {
+    nav: { home: "Início", showcase: "Showcase", experience: "Experiência", portfolio: "Projetos", skills: "Habilidades", certifications: "Certificações", languages: "Idiomas", menu: "Menu", swipeToClose: "Deslize para fechar" },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Dados | IA & Machine Learning | Visão Computacional", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM." },
+    contact: { location: "Fortaleza - CE", phone: "(85) 9 9685-9051", email: "cavalcanteprofissional@outlook.com" },
+    buttons: { cv: "Currículo", view: "Ver Certificado", demo: "Demo", code: "Código" },
+    sections: { experience: "Experiência Profissional", portfolio: "Projetos em Destaque", skills: "Habilidades Técnicas", certifications: "Certificações", languages: "Idiomas" },
+    portfolio: { subtitle: "Conheça alguns dos meus projetos recentes em Data Science e AI", featured: "Implementado" },
+    project: {
+      "0": { title: "LabGas Manager", description: "Dashboard para gestão de cilindro de gás em laboratório de química." },
+      "1": { title: "Dashboard de Análise de Vendas", description: "Dashboard interativo com Streamlit para análise de vendas." },
+      "2": { title: "Chatbot de Oficina Automotiva", description: "Chatbot com RAG, LangChain e Streamlit." },
+      "3": { title: "Dashboard de Reconhecimento Humano", description: "Dashboard com LBP + Machine Learning." },
+      "4": { title: "Pipeline de Dados Geoespaciais", description: "Pipeline ETL para dados geoespaciais." },
+      "5": { title: "Sistema de Previsão de Séries Temporais", description: "Modelo para previsão de demanda e vendas." },
+      "6": { title: "Análise de Sentimento em Tweets", description: "Análise de sentimento usando transformer." },
+      "7": { title: "Dashboard de Análise QA Multi-Modelo", description: "Pipeline para múltiplos modelos QA." },
+      "8": { title: "ERP de Oficina Automotiva", description: "Sistema de gestão para oficinas." },
+      "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
+      "10": { title: "Mako® Soluções Industriais", description: "Website institucional." }
+    },
+    experience: {
+      current: "Atual",
+      more: "mais",
+      activities: "atividades",
+      "7": { title: "Bolsista em Inovação Tecnológica", "1": "Processamento de Linguagem Natural.", "2": "Aprendizagem de Máquina.", "3": "Processamento de Imagem e Visão Computacional.", "4": "Mineração e Ciência de Dados.", "5": "Estatística e Inteligência Artificial Aplicada ao Negócios.", "6": "Inteligência Empresarial e Estratégias Corporativas." },
+      "2": { title: "Analista de Dados", "1": "Definição do escopo e modelagem de dados (DER) para projeto no mercado de moda do Ceará.", "2": "Coleta, limpeza e preparação de datasets utilizando Python e bibliotecas de análise.", "3": "Realização de Análise Exploratória de Dados (EDA) e cálculo de estatísticas descritivas.", "4": "Geração de dashboards interativos e relatórios para alta gestão utilizando Power BI." },
+      "3": { title: "Analista de Dados", "1": "Definição do escopo e modelagem de dados (DER) para projeto no mercado de moda do Ceará.", "2": "Coleta, limpeza e preparação de datasets utilizando Python e bibliotecas de análise.", "3": "Realização de Análise Exploratória de Dados (EDA) e cálculo de estatísticas descritivas.", "4": "Implementação de modelo de machine learning (Random Forest) com avaliação de métricas.", "5": "Geração de dashboards interativos e relatórios para alta gestão utilizando Streamlit." },
+      "4": { title: "Analista de Marketing e Comercial", "1": "Planejamento e gestão de campanhas digitais (Google Ads, Meta Ads) com monitoramento de KPIs.", "2": "Implementação de estratégias de SEO e SEM, resultando em aumento do tráfego orgânico.", "3": "Criação e edição de conteúdo audiovisual para redes sociais e funis de vendas.", "4": "Gerenciamento de CRM via ERP interno.", "5": "Suporte à equipe comercial na prospecção e fidelização de clientes." },
+      "5": { title: "Analista de Marketing | Assistente de Marketing", "1": "Desenvolvimento e monitoramento de campanhas promocionais.", "2": "Implementação de estratégias de SEO/SEM e gestão de conteúdo para site e redes sociais.", "3": "Criação de conteúdo gráfico e manutenção dos canais de comunicação digitais." },
+      "6": { title: "Técnico em Informática e Redes", company: "Autônomo", "1": "Montagem, manutenção e configuração de infraestrutura de TI (computadores, servidores, redes TCP/IP, Wi-Fi).", "2": "Suporte técnico remoto e presencial, instalação de software e permissionamento de acesso.", "3": "Consultoria técnica e elaboração de propostas para licitações de equipamentos." }
+    },
+    skills: {
+      languages: "Linguagens & Bibliotecas",
+      ml: "Machine Learning",
+      dl: "Deep Learning & Visão Computacional",
+      platforms: "Plataformas & Ferramentas",
+      marketing: "Marketing Digital",
+      tech: "Técnico em TI e Redes",
+      agile: "Gestão Ágil",
+      office: "Microsoft Office",
+      soft: "Habilidades Interpessoais",
+      communication: "Comunicação",
+      teamwork: "Trabalho em Equipe",
+      "problem-solving": "Resolução de Problemas",
+      adaptability: "Adaptabilidade",
+      "time-management": "Gestão de Tempo",
+      "critical-thinking": "Pensamento Crítico",
+      creativity: "Criatividade"
+    },
+    certifications: { subtitle: "Clique nos links para visualizar os certificados" },
+    cert: {
+      "10": { title: "Administração de Banco de Dados", year: "2026" },
+      "9": { title: "Engenharia de Software", year: "2025" },
+      "8": { title: "Análise e Desenvolvimento de Sistemas", year: "2025" },
+      "7": { title: "Ciência de Dados", year: "2024" },
+      "6": { title: "DevOps", year: "2024" },
+      "5": { title: "Desenvolvedor FullStack", year: "2024" },
+      "4": { title: "Ciências Sociais", year: "2019" },
+      "3": { title: "Programação de Jogos Digitais", year: "2016" },
+      "2": { title: "Design Gráfico & Web Design", year: "2013" },
+      "1": { title: "Montagem e Manutenção de Computadores", year: "2011" }
+    },
+    lang: {
+      portuguese: "Português",
+      english: "Inglês",
+      spanish: "Espanhol",
+      japanese: "Japonês",
+      level: { native: "Nativo", advanced: "Avançado", intermediate: "Intermediário", basic: "Básico" }
+    },
+    footer: { contact: "Entre em Contato", message: "Estou sempre aberto a novas oportunidades e colaborações.", rights: "Todos os direitos reservados." },
+    cta: { title: "Vamos Trabalhar Juntos?", subtitle: "Estou sempre aberto a novas oportunidades e colaborações. Vamos conversar sobre seu próximo projeto?", contact: "Entre em Contato", whatsapp: "Fale no WhatsApp", linkedin: "Conecte no LinkedIn", hero: "Contato" },
+    showcase: { title: "Showcase", subtitle: "Visualizações de Dados e IA", description: "Demonstração interativa de um pipeline ETL." },
+    companies: { title: "Empresas Atendidas", subtitle: "Parceiros que confiam no meu trabalho" },
+    techstack: { title: "Tech Stack", subtitle: "Tecnologias e ferramentas que domino" },
+    stats: { title: "Resultados", years: "Anos de Experiência", yearsValue: "3+", projects: "Projetos Realizados", projectsValue: "8+", clients: "Clientes Atendidos", clientsValue: "17+", certifications: "Certificações", certificationsValue: "11+" },
+    faq: {
+      title: "Perguntas Frequentes",
+      "0": { question: "Qual é o prazo médio para entrega de um projeto?", answer: "O prazo varia de 3 a 5 semanas, dependendo da complexidade do projeto. Projetos menores podem ser entregues em menor tempo." },
+      "1": { question: "Você trabalha presencialmente?", answer: "Atendo presencialmente somente em Fortaleza e Região Metropolitana. Para outras localidades, ofereço serviços remotos." },
+      "2": { question: "Quais tecnologias você utiliza?", answer: "Trabalho principalmente com Python e suas bibliotecas: Pandas e Scikit-learn para análise e machine learning, Streamlit e Flask para aplicações web, LangChain e Hugging Face para NLP, OpenCV para visão computacional, além de Streamlit e Folium para visualização de dados em séries temporais e geoespaciais." },
+      "3": { question: "Qual a sua experiência profissional?", answer: "Tenho experiência prática em empresas de pequeno e médio porte, atuação em setores institucional/educacional e também no setor industrial. Trabalhei com projetos de análise de dados, desenvolvimento de chatbots, dashboards e pipelines de dados." }
+    },
+    availability: { label: "Disponível para projetos", badge: "Disponível" }
+  },
+  en: {
+    nav: { home: "Home", showcase: "Showcase", experience: "Experience", portfolio: "Projects", skills: "Skills", certifications: "Certifications", languages: "Languages", menu: "Menu", swipeToClose: "Swipe to close" },
+    hero: { name: "Lucas Cavalcante", title: "Data Analyst | AI & Machine Learning | Computer Vision", description: "Data Analyst with experience in AI, automation, and digital marketing projects." },
+    contact: { location: "Fortaleza - CE, Brazil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com" },
+    buttons: { cv: "Resume", view: "View Certificate", demo: "Demo", code: "Code" },
+    sections: { experience: "Professional Experience", portfolio: "Featured Projects", skills: "Technical Skills", certifications: "Certifications", languages: "Languages" },
+    portfolio: { subtitle: "Check out some of my recent Data Science and AI projects", featured: "Featured" },
+    project: {
+      "0": { title: "LabGas Manager", description: "Dashboard for gas cylinder management in chemistry lab." },
+      "1": { title: "Sales Analysis Dashboard", description: "Interactive dashboard with Streamlit for sales analysis." },
+      "2": { title: "Automotive Shop Chatbot", description: "Chatbot with RAG, LangChain and Streamlit." },
+      "3": { title: "Human Recognition Dashboard", description: "Dashboard with LBP + Machine Learning." },
+      "4": { title: "Geospatial Data Pipeline", description: "ETL pipeline for geospatial data." },
+      "5": { title: "Time Series Forecasting System", description: "Model for demand and sales forecasting." },
+      "6": { title: "Tweet Sentiment Analysis", description: "Sentiment analysis using transformer." },
+      "7": { title: "Multi-Model QA Analysis Dashboard", description: "Pipeline for multiple QA models." },
+      "8": { title: "Automotive Shop ERP", description: "Management system for workshops." },
+      "9": { title: "Paraiso Frames Landing Page", description: "Institutional landing page." },
+      "10": { title: "Mako® Industrial Solutions", description: "Institutional website." }
+    },
+    experience: {
+      current: "Current",
+      more: "more",
+      activities: "activities",
+      "7": { title: "Artificial Intelligence Research Fellow", "1": "Natural Language Processing.", "2": "Machine Learning.", "3": "Image Processing and Computer Vision.", "4": "Data Mining and Data Science.", "5": "Statistics and Applied AI for Business.", "6": "Business Intelligence and Corporate Strategies." },
+      "2": { title: "Data Analyst", "1": "Definition of scope and data modeling (ERD) for a project in the Ceará fashion market.", "2": "Collection, cleaning, and preparation of datasets using Python and analysis libraries.", "3": "Performance of Exploratory Data Analysis (EDA) and calculation of descriptive statistics.", "4": "Generation of interactive dashboards and reports for senior management using Power BI." },
+      "3": { title: "Data Analyst", "1": "Definition of scope and data modeling (ERD) for a project in the Ceará fashion market.", "2": "Collection, cleaning, and preparation of datasets using Python and analysis libraries.", "3": "Performance of Exploratory Data Analysis (EDA) and calculation of descriptive statistics.", "4": "Implementation of machine learning model (Random Forest) with metric evaluation.", "5": "Generation of interactive dashboards and reports for senior management using Streamlit." },
+      "4": { title: "Marketing and Commercial Analyst", "1": "Planning and management of digital campaigns (Google Ads, Meta Ads) with KPI monitoring.", "2": "Implementation of SEO and SEM strategies, resulting in increased organic traffic.", "3": "Creation and editing of audiovisual content for social media and sales funnels.", "4": "CRM management via internal ERP.", "5": "Support to the commercial team in customer prospecting and retention." },
+      "5": { title: "Marketing Analyst | Marketing Assistant", "1": "Development and monitoring of promotional campaigns.", "2": "Implementation of SEO/SEM strategies and content management for website and social media.", "3": "Creation of graphic content and maintenance of digital communication channels." },
+      "6": { title: "IT and Network Technician", company: "Freelancer", "1": "Assembly, maintenance and configuration of IT infrastructure (computers, servers, TCP/IP networks, Wi-Fi).", "2": "Remote and on-site technical support, software installation and access permissions.", "3": "Technical consulting and preparation of bids for equipment procurement." }
+    },
+    skills: {
+      languages: "Languages & Libraries",
+      ml: "Machine Learning",
+      dl: "Deep Learning & Computer Vision",
+      platforms: "Platforms & Tools",
+      marketing: "Digital Marketing",
+      tech: "IT Technician and Networks",
+      agile: "Agile Management",
+      office: "Microsoft Office",
+      soft: "Soft Skills",
+      communication: "Communication",
+      teamwork: "Teamwork",
+      "problem-solving": "Problem Solving",
+      adaptability: "Adaptability",
+      "time-management": "Time Management",
+      "critical-thinking": "Critical Thinking",
+      creativity: "Creativity"
+    },
+    certifications: { subtitle: "Click on links to view certificates" },
+    cert: {
+      "10": { title: "Database Administration", year: "2026" },
+      "9": { title: "Software Engineering", year: "2025" },
+      "8": { title: "Systems Analysis and Development", year: "2025" },
+      "7": { title: "Data Science", year: "2024" },
+      "6": { title: "DevOps", year: "2024" },
+      "5": { title: "FullStack Developer", year: "2024" },
+      "4": { title: "Social Sciences", year: "2019" },
+      "3": { title: "Digital Game Programming", year: "2016" },
+      "2": { title: "Graphic Design & Web Design", year: "2013" },
+      "1": { title: "Computer Assembly and Maintenance", year: "2011" }
+    },
+    lang: {
+      portuguese: "Portuguese",
+      english: "English",
+      spanish: "Spanish",
+      japanese: "Japanese",
+      level: { native: "Native", advanced: "Advanced", intermediate: "Intermediate", basic: "Basic" }
+    },
+    footer: { contact: "Contact Me", message: "I am always open to new opportunities and collaborations.", rights: "All rights reserved." },
+    cta: { title: "Let's Work Together?", subtitle: "I'm always open to new opportunities and collaborations. Let's talk about your next project?", contact: "Get in Touch", whatsapp: "Message on WhatsApp", linkedin: "Connect on LinkedIn", hero: "Contact" },
+    showcase: { title: "Showcase", subtitle: "Data & AI Visualizations", description: "Interactive demonstration of an ETL pipeline." },
+    companies: { title: "Companies", subtitle: "Partners who trust my work" },
+    techstack: { title: "Tech Stack", subtitle: "Technologies and tools I master" },
+    stats: { title: "Results", years: "Years of Experience", yearsValue: "3+", projects: "Projects Completed", projectsValue: "8+", clients: "Clients Served", clientsValue: "17+", certifications: "Certifications", certificationsValue: "11+" },
+    faq: {
+      title: "Frequently Asked Questions",
+      "0": { question: "What is the average delivery time for a project?", answer: "The timeframe varies from 3 to 5 weeks, depending on the complexity of the project. Smaller projects can be delivered in less time." },
+      "1": { question: "Do you work on-site?", answer: "I serve on-site only in Fortaleza and Metropolitan Region. For other locations, I offer remote services." },
+      "2": { question: "What technologies do you use?", answer: "I work mainly with Python and its libraries: Pandas and Scikit-learn for analysis and machine learning, Streamlit and Flask for web apps, LangChain and Hugging Face for NLP, OpenCV for computer vision, and Streamlit and Folium for data visualization in time series and geospatial data." },
+      "3": { question: "What is your professional experience?", answer: "I have practical experience in small and medium-sized companies, working in institutional/educational sectors and also in the industrial sector. I have worked on data analysis projects, chatbot development, dashboards and data pipelines." }
+    },
+    availability: { label: "Available for projects", badge: "Available" }
+  },
+  es: {
+    nav: { home: "Inicio", showcase: "Showcase", experience: "Experiencia", portfolio: "Proyectos", skills: "Habilidades", certifications: "Certificaciones", languages: "Idiomas", menu: "Menú", swipeToClose: "Desliza para cerrar" },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Datos | IA & Machine Learning | Visión Computacional", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital." },
+    contact: { location: "Fortaleza - CE, Brasil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com" },
+    buttons: { cv: "Currículum", view: "Ver Certificado", demo: "Demo", code: "Código" },
+    sections: { experience: "Experiencia Profesional", portfolio: "Proyectos Destacados", skills: "Habilidades Técnicas", certifications: "Certificaciones", languages: "Idiomas" },
+    portfolio: { subtitle: "Conoce algunos de mis proyectos recientes en Data Science e IA", featured: "Destacado" },
+    project: {
+      "0": { title: "LabGas Manager", description: "Dashboard para gestión de gas en laboratorio." },
+      "1": { title: "Dashboard de Análisis de Ventas", description: "Dashboard interactivo con Streamlit." },
+      "2": { title: "Chatbot de Taller Automotriz", description: "Chatbot con RAG y LangChain." },
+      "3": { title: "Dashboard de Reconocimiento Humano", description: "Dashboard con LBP + ML." },
+      "4": { title: "Pipeline de Datos Geoespaciales", description: "Pipeline ETL para datos geoespaciales." },
+      "5": { title: "Sistema de Predicción de Series Temporales", description: "Modelo para predicción de demanda." },
+      "6": { title: "Análisis de Sentimiento en Tweets", description: "Análisis de sentimiento." },
+      "7": { title: "Dashboard de Análisis QA Multi-Modelo", description: "Pipeline para múltiples modelos." },
+      "8": { title: "ERP de Taller Automotriz", description: "Sistema de gestión." },
+      "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
+      "10": { title: "Mako® Soluciones Industriales", description: "Sitio web institucional." }
+    },
+    experience: {
+      current: "Actual",
+      more: "más",
+      activities: "actividades",
+      "7": { title: "Becario en Inteligencia Artificial", "1": "Procesamiento de Lenguaje Natural.", "2": "Aprendizaje Automático.", "3": "Procesamiento de Imagen y Visión por Computadora.", "4": "Minería y Ciencia de Datos.", "5": "Estadística e IA Aplicada a los Negocios.", "6": "Inteligencia Empresarial y Estrategias Corporativas." },
+      "2": { title: "Analista de Datos", "1": "Definición del alcance y modelado de datos (DER) para un proyecto en el mercado de moda de Ceará.", "2": "Recopilación, limpieza y preparación de datasets utilizando Python y bibliotecas de análisis.", "3": "Realización de Análisis Exploratorio de Datos (EDA) y cálculo de estadísticas descriptivas.", "4": "Generación de dashboards interactivos e informes para la alta gerencia utilizando Power BI." },
+      "3": { title: "Analista de Datos", "1": "Definición del alcance y modelado de datos (DER) para un proyecto en el mercado de moda de Ceará.", "2": "Recopilación, limpieza y preparación de datasets utilizando Python y bibliotecas de análisis.", "3": "Realización de Análisis Exploratorio de Datos (EDA) y cálculo de estadísticas descriptivas.", "4": "Implementación de modelo de machine learning (Random Forest) con evaluación de métricas.", "5": "Generación de dashboards interactivos e informes para la alta gerencia utilizando Streamlit." },
+      "4": { title: "Analista de Marketing y Comercial", "1": "Planificación y gestión de campañas digitales (Google Ads, Meta Ads) con monitoreo de KPIs.", "2": "Implementación de estrategias de SEO y SEM, resultando en aumento del tráfico orgánico.", "3": "Creación y edición de contenido audiovisual para redes sociales y embudos de ventas.", "4": "Gestión de CRM mediante ERP interno.", "5": "Apoyo al equipo comercial en la prospección y retención de clientes." },
+      "5": { title: "Analista de Marketing | Asistente de Marketing", "1": "Desarrollo y monitoreo de campañas promocionales.", "2": "Implementación de estrategias SEO/SEM y gestión de contenido para sitio web y redes sociales.", "3": "Creación de contenido gráfico y mantenimiento de los canales de comunicación digitales." },
+      "6": { title: "Técnico en Informática y Redes", company: "Autónomo", "1": "Montaje, mantenimiento y configuración de infraestructura de TI (computadoras, servidores, redes TCP/IP, Wi-Fi).", "2": "Soporte técnico remoto y presencial, instalación de software y permisos de acceso.", "3": "Consultoría técnica y elaboración de propuestas para licitaciones de equipos." }
+    },
+    skills: {
+      languages: "Lenguajes & Bibliotecas",
+      ml: "Machine Learning",
+      dl: "Deep Learning & Visión Computacional",
+      platforms: "Plataformas & Herramientas",
+      marketing: "Marketing Digital",
+      tech: "Técnico en TI y Redes",
+      agile: "Gestión Ágil",
+      office: "Microsoft Office",
+      soft: "Habilidades Interpersonales",
+      communication: "Comunicación",
+      teamwork: "Trabajo en Equipo",
+      "problem-solving": "Resolución de Problemas",
+      adaptability: "Adaptabilidad",
+      "time-management": "Gestión del Tiempo",
+      "critical-thinking": "Pensamiento Crítico",
+      creativity: "Creatividad"
+    },
+    certifications: { subtitle: "Haga clic en los enlaces para ver los certificados" },
+    cert: {
+      "10": { title: "Administración de Bases de Datos", year: "2026" },
+      "9": { title: "Ingeniería de Software", year: "2025" },
+      "8": { title: "Análisis y Desarrollo de Sistemas", year: "2025" },
+      "7": { title: "Ciencia de Datos", year: "2024" },
+      "6": { title: "DevOps", year: "2024" },
+      "5": { title: "Desarrollador FullStack", year: "2024" },
+      "4": { title: "Ciencias Sociales", year: "2019" },
+      "3": { title: "Programación de Juegos Digitales", year: "2016" },
+      "2": { title: "Diseño Gráfico & Web Design", year: "2013" },
+      "1": { title: "Ensamblaje y Mantenimiento de Computadoras", year: "2011" }
+    },
+    lang: {
+      portuguese: "Portugués",
+      english: "Inglés",
+      spanish: "Español",
+      japanese: "Japonés",
+      level: { native: "Nativo", advanced: "Avanzado", intermediate: "Intermedio", basic: "Básico" }
+    },
+    footer: { contact: "Contáctame", message: "Siempre estoy abierto a nuevas oportunidades y colaboraciones.", rights: "Todos los derechos reservados." },
+    cta: { title: "¿Trabajamos Juntos?", subtitle: "Siempre estoy abierto a nuevas oportunidades y colaboraciones. Hablemos sobre tu próximo proyecto?", contact: "Contáctame", whatsapp: "Escríbeme en WhatsApp", linkedin: "Conecta en LinkedIn", hero: "Contacto" },
+    showcase: { title: "Showcase", subtitle: "Visualizaciones de Datos e IA", description: "Demostración interactiva de un pipeline ETL." },
+    companies: { title: "Empresas Atendidas", subtitle: "Socios que confían en mi trabajo" },
+    techstack: { title: "Tech Stack", subtitle: "Tecnologías y herramientas que domino" },
+    stats: { title: "Resultados", years: "Años de Experiencia", yearsValue: "3+", projects: "Proyectos Realizados", projectsValue: "8+", clients: "Clientes Atendidos", clientsValue: "17+", certifications: "Certificaciones", certificationsValue: "11+" },
+    faq: {
+      title: "Preguntas Frecuentes",
+      "0": { question: "¿Cuál es el tiempo promedio de entrega de un proyecto?", answer: "El plazo varía de 3 a 5 semanas, dependiendo de la complejidad del proyecto. Proyectos más pequeños pueden entregarse en menor tiempo." },
+      "1": { question: "¿Trabaja presencialmente?", answer: "Atendo presencialmente solo en Fortaleza y Región Metropolitana. Para otras ubicaciones, ofrezco servicios remotos." },
+      "2": { question: "¿Qué tecnologías utiliza?", answer: "Trabajo principalmente con Python y sus librerías: Pandas y Scikit-learn para análisis y machine learning, Streamlit y Flask para aplicaciones web, LangChain y Hugging Face para NLP, OpenCV para visión computacional, además de Streamlit y Folium para visualización de datos en series temporales y geoespaciales." },
+      "3": { question: "¿Cuál es su experiencia profesional?", answer: "Tengo experiencia práctica en empresas pequeñas y medianas, actuación en sectores institucional/educacional y también en el sector industrial. He trabajado en proyectos de análisis de datos, desarrollo de chatbots, dashboards y pipelines de datos." }
+    },
+    availability: { label: "Disponible para proyectos", badge: "Disponible" }
+  }
 };
 
-async function loadResources() {
-  try {
-    const [pt, en, es] = await Promise.all([
-      fetch('/locales/pt.json').then(r => r.json()),
-      fetch('/locales/en.json').then(r => r.json()),
-      fetch('/locales/es.json').then(r => r.json()),
-    ]);
+const resources = {
+  pt: { translation: translations.pt },
+  en: { translation: translations.en },
+  es: { translation: translations.es },
+};
 
-    resources.pt.translation = pt.translation;
-    resources.en.translation = en.translation;
-    resources.es.translation = es.translation;
+i18n.use(initReactI18next);
 
-    await i18n.init({
-      resources,
-      lng: 'pt',
-      fallbackLng: 'pt',
-      interpolation: {
-        escapeValue: false,
-      },
-    });
-  } catch (error) {
-    console.error('Failed to load translations:', error);
-  }
-}
-
-loadResources();
+i18n.init({
+  resources,
+  lng: 'pt',
+  fallbackLng: 'pt',
+  interpolation: { escapeValue: false },
+});
 
 export default i18n;
