@@ -66,3 +66,16 @@ I combine strong technical skills in **Python, Machine Learning, and BI tools** 
 <div align="center">
   <i>"Turning data into decisions, insights into impact, and curiosity into innovation."</i> 🚀
 </div>
+
+---
+
+## Project structure & recovery notes
+
+- **Build:** run `npm run build` (runs `tsc -b && vite build`). Production output goes to `dist/`.
+- **Recovered assets:** recovered files from the published GitHub Pages site were added to `public/portfolio/` and `public/companies/` to restore missing images and documents used by the live site.
+- **Documents:** placeholder PDFs for certificates and resumes are under `public/portfolio/documents/` to fix broken links; replace them with official copies as needed.
+- **Recovered bundle:** a minified client bundle used on the live site is present at `public/portfolio/assets/index-CVL-AX3Z.js`.
+- **Branches:** a local cleanup branch `refactor/cleanup` was created for these recovery and reorganization changes.
+- **Repository note:** `dist/` is ignored by `.gitignore` and local `dist/` artifacts were removed from the working tree.
+
+If you want, I can tidy filenames, move documents to a separate `assets/documents/` folder, or prepare a PR with these changes.
