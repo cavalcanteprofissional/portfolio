@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Mail, Linkedin, Sun, Moon, Menu, X, Globe, ChevronDown, Github } from 'lucide-react';
+import { Mail, Linkedin, Sun, Moon, Menu, X, Globe, ChevronDown, Github, FileText } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useThemeStore } from '../stores/themeStore';
 import i18n from '../i18n';
@@ -244,6 +244,15 @@ export function Hero() {
               >
                 <Github className="w-3.5 h-3.5" />
                 GitHub
+              </a>
+              <a
+                href={t('hero.resume')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                {t('buttons.resume')}
               </a>
             </motion.div>
           </motion.div>

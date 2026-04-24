@@ -4,9 +4,9 @@ import { initReactI18next } from 'react-i18next';
 const translations = {
   pt: {
     nav: { home: "Início", showcase: "Showcase", experience: "Experiência", portfolio: "Projetos", skills: "Habilidades", certifications: "Certificações", languages: "Idiomas", menu: "Menu", swipeToClose: "Deslize para fechar" },
-    hero: { name: "Lucas Cavalcante", title: "Analista de Dados | IA & Machine Learning | Visão Computacional", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM." },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Dados | IA & Machine Learning | Visão Computacional", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM.", resume: "/portfolio/documents/resumes/cv_br_lucas_cavalcante.pdf" },
     contact: { location: "Fortaleza - CE", phone: "(85) 9 9685-9051", email: "cavalcanteprofissional@outlook.com" },
-    buttons: { cv: "Currículo", view: "Ver Certificado", demo: "Demo", code: "Código" },
+    buttons: { cv: "Currículo", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículo" },
     sections: { experience: "Experiência Profissional", portfolio: "Projetos em Destaque", skills: "Habilidades Técnicas", certifications: "Certificações", languages: "Idiomas" },
     portfolio: { subtitle: "Conheça alguns dos meus projetos recentes em Data Science e AI", featured: "Implementado" },
     project: {
@@ -88,9 +88,9 @@ const translations = {
   },
   en: {
     nav: { home: "Home", showcase: "Showcase", experience: "Experience", portfolio: "Projects", skills: "Skills", certifications: "Certifications", languages: "Languages", menu: "Menu", swipeToClose: "Swipe to close" },
-    hero: { name: "Lucas Cavalcante", title: "Data Analyst | AI & Machine Learning | Computer Vision", description: "Data Analyst with experience in AI, automation, and digital marketing projects." },
+    hero: { name: "Lucas Cavalcante", title: "Data Analyst | AI & Machine Learning | Computer Vision", description: "Data Analyst with experience in AI, automation, and digital marketing projects.", resume: "/portfolio/documents/resumes/cv_en_lucas_cavalcante.pdf" },
     contact: { location: "Fortaleza - CE, Brazil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com" },
-    buttons: { cv: "Resume", view: "View Certificate", demo: "Demo", code: "Code" },
+    buttons: { cv: "Resume", view: "View Certificate", demo: "Demo", code: "Code", resume: "Resume" },
     sections: { experience: "Professional Experience", portfolio: "Featured Projects", skills: "Technical Skills", certifications: "Certifications", languages: "Languages" },
     portfolio: { subtitle: "Check out some of my recent Data Science and AI projects", featured: "Featured" },
     project: {
@@ -172,9 +172,9 @@ const translations = {
   },
   es: {
     nav: { home: "Inicio", showcase: "Showcase", experience: "Experiencia", portfolio: "Proyectos", skills: "Habilidades", certifications: "Certificaciones", languages: "Idiomas", menu: "Menú", swipeToClose: "Desliza para cerrar" },
-    hero: { name: "Lucas Cavalcante", title: "Analista de Datos | IA & Machine Learning | Visión Computacional", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital." },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Datos | IA & Machine Learning | Visión Computacional", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital.", resume: "/portfolio/documents/resumes/cv_es_lucas_cavalcante.pdf" },
     contact: { location: "Fortaleza - CE, Brasil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com" },
-    buttons: { cv: "Currículum", view: "Ver Certificado", demo: "Demo", code: "Código" },
+    buttons: { cv: "Currículum", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículum" },
     sections: { experience: "Experiencia Profesional", portfolio: "Proyectos Destacados", skills: "Habilidades Técnicas", certifications: "Certificaciones", languages: "Idiomas" },
     portfolio: { subtitle: "Conoce algunos de mis proyectos recientes en Data Science e IA", featured: "Destacado" },
     project: {
