@@ -66,8 +66,8 @@ export function Nav() {
             {mounted && (
               <img
                 src={theme === 'dark' 
-                  ? '/portfolio/images/navbar/logo-navbar-darkmode.png' 
-                  : '/portfolio/images/navbar/logo-navbar-lightmode.png'}
+                  ? '/images/navbar/logo-navbar-darkmode.png' 
+                  : '/images/navbar/logo-navbar-lightmode.png'}
                 alt="LC"
                 className="h-8 w-auto"
               />
@@ -258,7 +258,7 @@ export function Hero() {
               <div className="absolute inset-0 bg-gradient-blue rounded-2xl" />
               <div className="absolute inset-0 bg-card/90 rounded-xl overflow-hidden shadow-soft">
                 <img
-                  src="/portfolio/images/profile/foto-perfil.png"
+                  src="/images/profile/foto-perfil.png"
                   alt="Lucas Cavalcante"
                   className="w-full h-full object-contain"
                 />
@@ -266,8 +266,8 @@ export function Hero() {
               <div className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full flex items-center justify-center">
                 <img
                   src={theme === 'dark' 
-                    ? '/portfolio/images/navbar/logo-navbar-darkmode.png' 
-                    : '/portfolio/images/navbar/logo-navbar-lightmode.png'}
+                    ? '/images/navbar/logo-navbar-darkmode.png' 
+                    : '/images/navbar/logo-navbar-lightmode.png'}
                   alt="LC"
                   className="w-20 h-20"
                 />
