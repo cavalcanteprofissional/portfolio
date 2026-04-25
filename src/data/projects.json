@@ -5,7 +5,7 @@
       "titleKey": "project.0.title",
       "descriptionKey": "project.0.description",
       "tech": ["Python", "Flask", "Jinja2", "Supabase"],
-      "demoUrl": "https://lagbas-manager.vercel.app/",
+      "demoUrl": "https://lagbas-manager-v2.vercel.app/",
       "codeUrl": "https://github.com/cavalcanteprofissional/lagbas-manager",
       "icon": "testtube",
       "featured": true

@@ -160,7 +160,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 
 | # | Chave | Título PT | Repo GitHub | Demo |
 |---|------|---------|------------------|-----------|
-| 0 | `project.0` | LabGas Manager | https://github.com/cavalcanteprofissional/lagbas-manager | https://lagbas-manager.vercel.app/ |
+| 0 | `project.0` | LabGas Manager | https://github.com/cavalcanteprofissional/lagbas-manager | https://lagbas-manager-v2.vercel.app/ |
 | 1 | `project.1` | Dashboard de Análise de Vendas | https://github.com/cavalcanteprofessional/dashboard_selling | https://dashboardselling-xguerbqzokekuhkezhgbdx.streamlit.app/ |
 | 2 | `project.2` | Chatbot de Oficina Automotiva | https://github.com/cavalcanteprofessional/chatbot_oficina | https://github.com/cavalcanteprofissional/chatbot_oficina |
 | 3 | `project.3` | Dashboard de Reconhecimento Humano | https://github.com/cavalcanteprofessional/human_recognition | https://huggingface.co/spaces/CavalcanteProfissional/human_recognition |

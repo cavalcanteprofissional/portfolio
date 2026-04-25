@@ -1,51 +1,65 @@
-# Lucas Cavalcante - Portfólio Profissional
+# Portfólio de Lucas Cavalcante
 
-Portfólio profissional de Lucas Cavalcante, especialista em Data Science, Inteligência Artificial e Machine Learning.
+Um portfólio profissional moderno e interativo, desenvolvido com foco em experiência do usuário e performance.
 
-## 🚀 Tecnologias
+## ✨ Destaques
 
-- **Frontend**: React + TypeScript + Vite
-- **Estilização**: Tailwind CSS
-- **Animações**: Framer Motion
-- **Internacionalização**: react-i18next
-- **Icons**: Lucide React
-- **Theme**: Dark/Light mode com Zustand
+- Design responsivo e adaptável
+-Modo escuro/claro
+- Suporte a múltiplos idiomas (PT, EN, ES)
+- Animações suaves com Framer Motion
+- QR Code para acesso mobile
 
-## 📦 Instalação
+## 🛠️ Tech Stack
+
+**Frontend**
+- React 19 + TypeScript
+- Vite (build tool)
+- Tailwind CSS
+
+**Bibliotecas**
+- Framer Motion (animações)
+- react-i18next (internacionalização)
+- Zustand (gerenciamento de estado)
+- Lucide React (ícones)
+- QRCode React (QR Code)
+
+## 🚀 Quick Start
 
 ```bash
+# Instalar dependências
 npm install
-```
 
-## 🏃 Execução
-
-```bash
-# Development
+# Iniciar desenvolvimento
 npm run dev
 
-# Production
+# Build de produção
 npm run build
+
+# Preview do build
+npm run preview
 ```
 
-## 🌐 Idiomas
+## 🌐 Internacionalização
 
-- Português (PT)
-- Inglês (EN)
-- Espanhol (ES)
+| Idioma | Código |
+|--------|--------|
+| Português | `pt` |
+| Inglês | `en` |
+| Espanhol | `es` |
 
-## 📋 Seções
+## 📂 Estrutura
 
-- Hero
-- Empresas Atendidas
-- Experiência Profissional
-- Habilidades Técnicas
-- Projetos em Destaque
-- Certificações
-- Idiomas
-- FAQ
-- Tech Stack
-- Estatísticas
+```
+src/
+├── components/   # Componentes React
+├── data/          # Dados (projetos, experiências)
+├── hooks/         # Custom hooks
+├── i18n/          # Traduções
+├── styles/        # Estilos globais
+└── utils/        # Utilitários
+```
 
-## 📄 License
+## 📝 Licença
 
-MIT License
+MIT
