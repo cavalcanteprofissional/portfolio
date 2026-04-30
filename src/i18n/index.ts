@@ -190,7 +190,8 @@ const translations = {
       "7": { title: "Dashboard de Análisis QA Multi-Modelo", description: "Pipeline para múltiples modelos." },
       "8": { title: "ERP de Taller Automotriz", description: "Sistema de gestión." },
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
-      "10": { title: "Mako® Soluciones Industriales", description: "Sitio web institucional." },<br>      "11": { title: "Ceará Alternativo", description: "Sitio web blog portal de noticias." }
+      "10": { title: "Mako® Soluciones Industriales", description: "Sitio web institucional." },
+      "11": { title: "Ceará Alternativo", description: "Sitio web blog portal de noticias." }
     },
     experience: {
       current: "Actual",

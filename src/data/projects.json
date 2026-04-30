@@ -105,12 +105,10 @@
       "titleKey": "project.11.title",
       "descriptionKey": "project.11.description",
       "tech": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-      "demoUrl": "https://ceara-alternativo.vercel. app/",
-      "codeUrl": "https://github. com/cavalcanteprofissional/ceara- alternativas",
+      "demoUrl": "https://ceara-alternativo.vercel.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/ceara-alternativo",
       "icon": "newspaper",
       "featured": true
     }
-  ]
-}
   ]
 }
