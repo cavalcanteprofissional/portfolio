@@ -176,7 +176,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 
 | Projeto | GitHub Repository | Live Demo |
 |---------|------------------|-----------|
-| LabGas Manager | https://github.com/cavalcanteprofissional/labgas-manager | - |
+| LabGas Manager | https://github.com/cavalcanteprofissional/labgas-manager | https://labgas-manager.vercel.app/ |
 | Mako® Soluções Industriais | https://github.com/cavalcanteprofissional/mako-site | https://mako.ind.br/ |
 | ERP de Oficina Automotiva | https://github.com/cavalcanteprofissional/oficina-erp | - |
 | Pipeline de Dados Geoespaciais | https://github.com/cavalcanteprofissional/geospatial-pipeline | - |
