@@ -19,6 +19,7 @@ import {
   FlaskConical,
   Newspaper,
   TestTube,
+  Newspaper,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
