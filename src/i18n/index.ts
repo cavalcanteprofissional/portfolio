@@ -21,7 +21,7 @@ const translations = {
       "8": { title: "ERP de Oficina Automotiva", description: "Sistema de gestão para oficinas." },
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
       "10": { title: "Mako® Soluções Industriais", description: "Website institucional." },
-      "11": { title: "Ceará Alternativo", description: "Site blog portal de notícias." }
+      "11": { title: "Blog & CMS Portal de Notícias", description: "Sistema CMS com Next. js e Supabase para portal de notícias." }
     },
     experience: {
       current: "Atual",
@@ -106,7 +106,7 @@ const translations = {
       "8": { title: "Automotive Shop ERP", description: "Management system for workshops." },
       "9": { title: "Paraiso Frames Landing Page", description: "Institutional landing page." },
       "10": { title: "Mako® Industrial Solutions", description: "Institutional website." },
-      "11": { title: "Ceará Alternativo", description: "News portal blog website." }
+      "11": { title: "News Blog & CMS Portal", description: "CMS system with Next. js and Supabase for news portal." }
     },
     experience: {
       current: "Current",
@@ -191,7 +191,7 @@ const translations = {
       "8": { title: "ERP de Taller Automotriz", description: "Sistema de gestión." },
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
       "10": { title: "Mako® Soluciones Industriales", description: "Sitio web institucional." },
-      "11": { title: "Ceará Alternativo", description: "Sitio web blog portal de noticias." }
+      "11": { title: "Blog & CMS Portal de Noticias", description: "Sistema CMS con Next.js y Supabase para portal de noticias." }
     },
     experience: {
       current: "Actual",
