@@ -18,6 +18,7 @@ import {
   LineChart,
   FlaskConical,
   TestTube,
+  Newspaper,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -35,6 +36,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   wrench: Wrench,
   video: Video,
   linechart: LineChart,
+  newspaper: Newspaper,
 };
 
 interface ProjectCardProps {

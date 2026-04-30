@@ -171,6 +171,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 8 | `project.8` | ERP de Oficina Automotiva | https://github.com/cavalcanteprofessional/oficina-manager | https://oficina-manager.vercel.app/ |
 | 9 | `project.9` | Landing Page Paraiso Frames | https://github.com/cavalcanteprofessional/paraiso_frames | https://paraiso-frames.vercel.app/ |
 | 10 | `project.10` | Mako® Soluções Industriais | https://github.com/cavalcanteprofessional/mako | https://mako-inky.vercel.app/ |
+| 11 | `project.11` | Ceará Alternativo | https://github.com/cavalcanteprofessional/ceara-alternativo | https://ceara-alternativo.vercel.app/ |
 
 ### Projetos com Links
 

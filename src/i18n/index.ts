@@ -20,7 +20,8 @@ const translations = {
       "7": { title: "Dashboard de Análise QA Multi-Modelo", description: "Pipeline para múltiplos modelos QA." },
       "8": { title: "ERP de Oficina Automotiva", description: "Sistema de gestão para oficinas." },
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
-      "10": { title: "Mako® Soluções Industriais", description: "Website institucional." }
+      "10": { title: "Mako® Soluções Industriais", description: "Website institucional." },
+      "11": { title: "Ceará Alternativo", description: "Site blog portal de notícias." }
     },
     experience: {
       current: "Atual",
@@ -104,7 +105,8 @@ const translations = {
       "7": { title: "Multi-Model QA Analysis Dashboard", description: "Pipeline for multiple QA models." },
       "8": { title: "Automotive Shop ERP", description: "Management system for workshops." },
       "9": { title: "Paraiso Frames Landing Page", description: "Institutional landing page." },
-      "10": { title: "Mako® Industrial Solutions", description: "Institutional website." }
+      "10": { title: "Mako® Industrial Solutions", description: "Institutional website." },
+      "11": { title: "Ceará Alternativo", description: "News portal blog website." }
     },
     experience: {
       current: "Current",
@@ -188,7 +190,7 @@ const translations = {
       "7": { title: "Dashboard de Análisis QA Multi-Modelo", description: "Pipeline para múltiples modelos." },
       "8": { title: "ERP de Taller Automotriz", description: "Sistema de gestión." },
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
-      "10": { title: "Mako® Soluciones Industriales", description: "Sitio web institucional." }
+      "10": { title: "Mako® Soluciones Industriales", description: "Sitio web institucional." },<br>      "11": { title: "Ceará Alternativo", description: "Sitio web blog portal de noticias." }
     },
     experience: {
       current: "Actual",

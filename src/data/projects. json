@@ -84,7 +84,7 @@
       "id": 8,
       "titleKey": "project.8.title",
       "descriptionKey": "project.8.description",
-      "tech": ["Next.js 15", "React 19", "Tailwind CSS", "Supabase", "TypeScript", "Vercel"],
+      "tech": ["Next. js 15", "React 19", "Tailwind CSS", "Supabase", "TypeScript", "Vercel"],
       "demoUrl": "https://oficina-manager.vercel.app/",
       "codeUrl": "https://github.com/cavalcanteprofissional/oficina-manager",
       "icon": "wrench",
@@ -100,17 +100,25 @@
       "icon": "video",
       "featured": true
     },
-{
+    {
+      "id": 10,
+      "titleKey": "project.10.title",
+      "descriptionKey": "project.10.description",
+      "tech": ["Next. js 16", "React 19", "TypeScript", "Tailwind CSS", "Framer Motion", "Zod"],
+      "demoUrl": "https://mako-inky.vercel.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/mako",
+      "icon": "building",
+      "featured": true
+    },
+    {
       "id": 11,
       "titleKey": "project.11.title",
       "descriptionKey": "project.11.description",
-      "tech": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-      "demoUrl": "https://ceara-alternativo.vercel. app/",
-      "codeUrl": "https://github. com/cavalcanteprofissional/ceara- alternativas",
+      "tech": ["Next. js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+      "demoUrl": "https://ceara-alternativo.vercel.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/ceara-alternativo",
       "icon": "newspaper",
       "featured": true
     }
-  ]
-}
   ]
 }
