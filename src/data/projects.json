@@ -48,7 +48,7 @@
       "demoUrl": "https://trajectoryprediction-smkzdwtf7ewsszxrv6leb7.streamlit.app/",
       "codeUrl": "https://github.com/cavalcanteprofissional/trajectory_prediction",
       "icon": "map",
-      "featured": false
+      "featured": true
     },
     {
       "id": 5,
