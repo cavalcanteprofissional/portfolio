@@ -44,9 +44,9 @@
       "id": 4,
       "titleKey": "project.4.title",
       "descriptionKey": "project.4.description",
-      "tech": ["Python", "Geopandas", "PostgreSQL", "Folium"],
-      "demoUrl": "#",
-      "codeUrl": "https://github.com/cavalcanteprofissional",
+      "tech": ["Python", "Scikit-learn", "XGBoost", "Streamlit", "Folium"],
+      "demoUrl": "https://trajectoryprediction-smkzdwtf7ewsszxrv6leb7.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/trajectory_prediction",
       "icon": "map",
       "featured": false
     },
