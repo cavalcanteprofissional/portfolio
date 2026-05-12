@@ -109,6 +109,16 @@
       "codeUrl": "https://github.com/cavalcanteprofissional/ceara-alternativo",
       "icon": "newspaper",
       "featured": true
+    },
+    {
+      "id": 12,
+      "titleKey": "project.12.title",
+      "descriptionKey": "project.12.description",
+      "tech": ["Python", "Streamlit", "Plotly", "Pandas"],
+      "demoUrl": "https://cpmrdgawhuua3mwkbpefeo.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard-",
+      "icon": "chart-line",
+      "featured": true
     }
   ]
 }

@@ -21,7 +21,8 @@ const translations = {
       "8": { title: "ERP de Oficina Automotiva", description: "Sistema de gestão para oficinas." },
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
       "10": { title: "Mako® Soluções Industriais", description: "Website institucional." },
-      "11": { title: "Blog & CMS Portal de Notícias", description: "Sistema CMS com Next. js e Supabase para portal de notícias." }
+      "11": { title: "Blog & CMS Portal de Notícias", description: "Sistema CMS com Next. js e Supabase para portal de notícias." },
+      "12": { title: "Dashboard Sanova Micromedição", description: "Dashboard Streamlit para análise de micromedição de saneamento com detecção de anomalias e oportunidades de recuperação de receita." }
     },
     experience: {
       current: "Atual",
@@ -106,7 +107,8 @@ const translations = {
       "8": { title: "Automotive Shop ERP", description: "Management system for workshops." },
       "9": { title: "Paraiso Frames Landing Page", description: "Institutional landing page." },
       "10": { title: "Mako® Industrial Solutions", description: "Institutional website." },
-      "11": { title: "News Blog & CMS Portal", description: "CMS system with Next. js and Supabase for news portal." }
+      "11": { title: "News Blog & CMS Portal", description: "CMS system with Next. js and Supabase for news portal." },
+      "12": { title: "Sanova Micro-Metering Dashboard", description: "Streamlit dashboard for sanitation micro-metering analysis with anomaly detection and revenue recovery opportunities." }
     },
     experience: {
       current: "Current",
@@ -191,7 +193,8 @@ const translations = {
       "8": { title: "ERP de Taller Automotriz", description: "Sistema de gestión." },
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
       "10": { title: "Mako® Soluciones Industriales", description: "Sitio web institucional." },
-      "11": { title: "Blog & CMS Portal de Noticias", description: "Sistema CMS con Next.js y Supabase para portal de noticias." }
+      "11": { title: "Blog & CMS Portal de Noticias", description: "Sistema CMS con Next.js y Supabase para portal de noticias." },
+      "12": { title: "Dashboard Sanova Micromedición", description: "Dashboard Streamlit para análisis de micromedición de saneamiento con detección de anomalías y oportunidades de recuperación de ingresos." }
     },
     experience: {
       current: "Actual",

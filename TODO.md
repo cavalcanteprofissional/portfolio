@@ -15,6 +15,16 @@ Atualizar os campos textuais do projeto com base no CONTENT.md
 
 ---
 
+### 2. Adicionar Projeto Sanova Micromedição
+- **Arquivo:** `src/data/projects.json`, `src/i18n/index.ts`, `CONTENT.md`
+- **Descrição:** Adicionado novo card de projeto com dashboard de micromedição sanitation
+- **Demo:** https://cpmrdgawhuua3mwkbpefeo.streamlit.app/
+- **Repo:** https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard-
+- **Status:** ✅ CONCLUÍDO
+- **Data:** 2026-05-12
+
+---
+
 ## Tarefas Atuais
 
 ### 2. Corrigir i18n - Race Condition

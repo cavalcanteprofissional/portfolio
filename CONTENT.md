@@ -156,11 +156,11 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 
 ---
 
-## 8. Projects / Portfolio (11 Projetos)
+## 8. Projects / Portfolio (12 Projetos)
 
 | # | Chave | Título PT | Repo GitHub | Demo |
-|---|------|---------|------------------|-----------|
-| 0 | `project.0` | LabGas Manager | https://github.com/cavalcanteprofissional/lagbas-manager | https://lagbas-manager-v2.vercel.app/ |
+---|------|---------|------------------|-----------|
+| 0 | `project.0` | LabGas Manager | https://github.com/cavalcanteprofissional/lagbas-manager | https://labgas-manager.vercel.app/ |
 | 1 | `project.1` | Dashboard de Análise de Vendas | https://github.com/cavalcanteprofessional/dashboard_selling | https://dashboardselling-xguerbqzokekuhkezhgbdx.streamlit.app/ |
 | 2 | `project.2` | Chatbot de Oficina Automotiva | https://github.com/cavalcanteprofessional/chatbot_oficina | https://github.com/cavalcanteprofissional/chatbot_oficina |
 | 3 | `project.3` | Dashboard de Reconhecimento Humano | https://github.com/cavalcanteprofessional/human_recognition | https://huggingface.co/spaces/CavalcanteProfissional/human_recognition |
@@ -172,19 +172,24 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 9 | `project.9` | Landing Page Paraiso Frames | https://github.com/cavalcanteprofessional/paraiso_frames | https://paraiso-frames.vercel.app/ |
 | 10 | `project.10` | Mako® Soluções Industriais | https://github.com/cavalcanteprofessional/mako | https://mako-inky.vercel.app/ |
 | 11 | `project.11` | Ceará Alternativo | https://github.com/cavalcanteprofessional/ceara-alternativo | https://ceara-alternativo.vercel.app/ |
+| 12 | `project.12` | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://cpmrdgawhuua3mwkbpefeo.streamlit.app/ |
 
 ### Projetos com Links
 
-| Projeto | GitHub Repository | Live Demo |
-|---------|------------------|-----------|
-| LabGas Manager | https://github.com/cavalcanteprofissional/labgas-manager | https://labgas-manager.vercel.app/ |
-| Mako® Soluções Industriais | https://github.com/cavalcanteprofissional/mako-site | https://mako.ind.br/ |
-| ERP de Oficina Automotiva | https://github.com/cavalcanteprofissional/oficina-erp | - |
-| Pipeline de Dados Geoespaciais | https://github.com/cavalcanteprofissional/geospatial-pipeline | - |
-| Sistema de Previsão de Séries Temporais | https://github.com/cavalcanteprofissional/time-series-forecast | - |
-| Análise de Sentimento em Tweets | https://github.com/cavalcanteprofissional/sentiment-analysis | - |
-| Dashboard de Análise de Vendas | https://github.com/cavalcanteproficional/sales-dashboard | - |
-| Chatbot de Oficina Automotiva | https://github.com/cavalcanteprofissional/chatbot-oficina | - |
+| # | Projeto | GitHub Repository | Live Demo |
+|---|---------|------------------|-----------|
+| 0 | LabGas Manager | https://github.com/cavalcanteprofissional/labgas-manager | https://labgas-manager.vercel.app/ |
+| 1 | Dashboard de Análise de Vendas | https://github.com/cavalcanteprofissional/dashboard_selling | https://dashboardselling-xguerbqzokekuhkezhgbdx.streamlit.app/ |
+| 2 | Chatbot de Oficina Automotiva | https://github.com/cavalcanteprofissional/chatbot_oficina | https://chatbotoficina-5c2dsw4ekk6cxkssjjxjbh.streamlit.app/ |
+| 3 | Dashboard de Reconhecimento Humano | https://github.com/cavalcanteprofissional/human_recognition | https://huggingface.co/spaces/CavalcanteProfissional/human_recognition |
+| 4 | Predição de Trajetórias GPS | https://github.com/cavalcanteprofissional/trajectory_prediction | https://trajectoryprediction-smkzdwtf7ewsszxrv6leb7.streamlit.app/ |
+| 5 | Sistema de Previsão de Séries Temporais | https://github.com/cavalcanteprofissional | - |
+| 6 | Análise de Sentimento em Tweets | https://github.com/cavalcanteprofissional/tweet-sentiment-analysis | https://tweet-sentiment-analysis-cqtwxwniwxgkyfr4f7jxhp.streamlit.app/ |
+| 7 | Dashboard de Análise QA Multi-Modelo | https://github.com/cavalcanteprofissional/qa_analysis | https://appanalysis-fbvminpttqk7fthidekc5b.streamlit.app/ |
+| 8 | ERP de Oficina Automotiva | https://github.com/cavalcanteprofissional/oficina-manager | https://oficina-manager.vercel.app/ |
+| 9 | Landing Page Paraiso Frames | https://github.com/cavalcanteprofissional/paraiso_frames | https://paraiso-frames.vercel.app/ |
+| 11 | Ceará Alternativo | https://github.com/cavalcanteprofissional/ceara-alternativo | https://ceara-alternativo.vercel.app/ |
+| 12 | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://cpmrdgawhuua3mwkbpefeo.streamlit.app/ |
 
 ---
 
