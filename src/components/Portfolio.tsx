@@ -84,19 +84,15 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           </p>
 
           <div className="flex flex-wrap gap-2 mb-6">
-            {project.tech.slice(0, 3).map((tech) => (
-              <span
+            {project.tech.map((tech) => (
+              <motion.span
                 key={tech}
-                className="px-3 py-1.5 rounded-full bg-secondary/50 text-secondary-foreground text-xs font-medium"
+                whileHover={{ scale: 1.05 }}
+                className="px-3 py-1.5 rounded-full bg-secondary/50 text-secondary-foreground text-xs font-medium cursor-default"
               >
                 {tech}
-              </span>
+              </motion.span>
             ))}
-            {project.tech.length > 3 && (
-              <span className="px-3 py-1.5 rounded-full bg-secondary/50 text-secondary-foreground text-xs font-medium">
-                +{project.tech.length - 3}
-              </span>
-            )}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
