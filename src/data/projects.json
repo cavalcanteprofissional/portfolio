@@ -114,7 +114,7 @@
       "id": 12,
       "titleKey": "project.12.title",
       "descriptionKey": "project.12.description",
-      "tech": ["Python", "Streamlit", "Pandas", "Plotly", "LangChain", "FAISS", "sentence-transformers", "HuggingFace", "Llama-3.1-8B-Instruct"],
+      "tech": ["Python", "Streamlit", "Pandas", "NumPy", "Plotly", "HuggingFace", "Llama-3.1-8B-Instruct", "Poetry", "Pytest"],
       "demoUrl": "https://sanova-micromedicao-dashboard-hlmw3spgxuthzebvxa7thg.streamlit.app/",
       "codeUrl": "https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard-",
       "icon": "chart-line",
