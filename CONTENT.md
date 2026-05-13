@@ -172,7 +172,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 9 | `project.9` | Landing Page Paraiso Frames | https://github.com/cavalcanteprofessional/paraiso_frames | https://paraiso-frames.vercel.app/ |
 | 10 | `project.10` | Mako® Soluções Industriais | https://github.com/cavalcanteprofessional/mako | https://mako-inky.vercel.app/ |
 | 11 | `project.11` | Ceará Alternativo | https://github.com/cavalcanteprofessional/ceara-alternativo | https://ceara-alternativo.vercel.app/ |
-| 12 | `project.12` | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://cpmrdgawhuua3mwkbpefeo.streamlit.app/ |
+| 12 | `project.12` | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://sanova-micromedicao-dashboard-dmghsgshg2hswercuhmqio.streamlit.app/ |
 
 ### Projetos com Links
 
@@ -189,7 +189,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 8 | ERP de Oficina Automotiva | https://github.com/cavalcanteprofissional/oficina-manager | https://oficina-manager.vercel.app/ |
 | 9 | Landing Page Paraiso Frames | https://github.com/cavalcanteprofissional/paraiso_frames | https://paraiso-frames.vercel.app/ |
 | 11 | Ceará Alternativo | https://github.com/cavalcanteprofissional/ceara-alternativo | https://ceara-alternativo.vercel.app/ |
-| 12 | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://cpmrdgawhuua3mwkbpefeo.streamlit.app/ |
+| 12 | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://sanova-micromedicao-dashboard-dmghsgshg2hswercuhmqio.streamlit.app/ |
 
 ---
 
