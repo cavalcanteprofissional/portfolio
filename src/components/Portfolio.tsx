@@ -19,6 +19,7 @@ import {
   FlaskConical,
   Newspaper,
   TestTube,
+  MessageCircleQuestion,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -37,6 +38,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   wrench: Wrench,
   video: Video,
   linechart: LineChart,
+  'message-circle-question': MessageCircleQuestion,
 };
 
 interface ProjectCardProps {

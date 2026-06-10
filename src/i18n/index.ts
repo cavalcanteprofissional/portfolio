@@ -22,7 +22,8 @@ const translations = {
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
       "10": { title: "Mako® Soluções Industriais", description: "Website institucional." },
       "11": { title: "Blog & CMS Portal de Notícias", description: "Sistema CMS com Next. js e Supabase para portal de notícias." },
-      "12": { title: "Dashboard Sanova Micromedição", description: "Dashboard Streamlit para análise de micromedição de saneamento com detecção de anomalias e oportunidades de recuperação de receita." }
+      "12": { title: "Dashboard Sanova Micromedição", description: "Dashboard Streamlit para análise de micromedição de saneamento com detecção de anomalias e oportunidades de recuperação de receita." },
+      "13": { title: "Pro Git QA Bot", description: "Chatbot com RAG para responder perguntas sobre Git usando LangChain e Streamlit." }
     },
     experience: {
       current: "Atual",
@@ -108,7 +109,8 @@ const translations = {
       "9": { title: "Paraiso Frames Landing Page", description: "Institutional landing page." },
       "10": { title: "Mako® Industrial Solutions", description: "Institutional website." },
       "11": { title: "News Blog & CMS Portal", description: "CMS system with Next. js and Supabase for news portal." },
-      "12": { title: "Sanova Micro-Metering Dashboard", description: "Streamlit dashboard for sanitation micro-metering analysis with anomaly detection and revenue recovery opportunities." }
+      "12": { title: "Sanova Micro-Metering Dashboard", description: "Streamlit dashboard for sanitation micro-metering analysis with anomaly detection and revenue recovery opportunities." },
+      "13": { title: "Pro Git QA Bot", description: "RAG chatbot for answering Git questions using LangChain and Streamlit." }
     },
     experience: {
       current: "Current",
@@ -194,7 +196,8 @@ const translations = {
       "9": { title: "Landing Page Paraiso Frames", description: "Landing page institucional." },
       "10": { title: "Mako® Soluciones Industriales", description: "Sitio web institucional." },
       "11": { title: "Blog & CMS Portal de Noticias", description: "Sistema CMS con Next.js y Supabase para portal de noticias." },
-      "12": { title: "Dashboard Sanova Micromedición", description: "Dashboard Streamlit para análisis de micromedición de saneamiento con detección de anomalías y oportunidades de recuperación de ingresos." }
+      "12": { title: "Dashboard Sanova Micromedición", description: "Dashboard Streamlit para análisis de micromedición de saneamiento con detección de anomalías y oportunidades de recuperación de ingresos." },
+      "13": { title: "Pro Git QA Bot", description: "Chatbot RAG para responder preguntas sobre Git usando LangChain y Streamlit." }
     },
     experience: {
       current: "Actual",

@@ -25,6 +25,16 @@ Atualizar os campos textuais do projeto com base no CONTENT.md
 
 ---
 
+### 3. Adicionar Projeto Pro Git QA Bot
+- **Arquivos:** `src/data/projects.json`, `src/components/Portfolio.tsx`, `src/i18n/index.ts`, `CONTENT.md`
+- **Descrição:** Adicionado novo card de projeto com chatbot RAG sobre Git
+- **Demo:** https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/
+- **Repo:** https://github.com/cavalcanteprofissional/pro-git-qa-bot
+- **Status:** ✅ CONCLUÍDO
+- **Data:** 2026-06-10
+
+---
+
 ## Tarefas Atuais
 
 ### 2. Corrigir i18n - Race Condition

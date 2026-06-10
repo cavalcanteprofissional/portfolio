@@ -119,6 +119,16 @@
       "codeUrl": "https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard-",
       "icon": "chart-line",
       "featured": true
+    },
+    {
+      "id": 13,
+      "titleKey": "project.13.title",
+      "descriptionKey": "project.13.description",
+      "tech": ["Python", "Streamlit", "LangChain", "Ollama", "Git"],
+      "demoUrl": "https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/pro-git-qa-bot",
+      "icon": "message-circle-question",
+      "featured": true
     }
   ]
 }
