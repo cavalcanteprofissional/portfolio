@@ -54,11 +54,11 @@
       "id": 5,
       "titleKey": "project.5.title",
       "descriptionKey": "project.5.description",
-      "tech": ["Python", "TensorFlow", "Prophet", "ARIMA", "LSTM"],
-      "demoUrl": "#",
-      "codeUrl": "https://github.com/cavalcanteprofissional",
+      "tech": ["Python", "Streamlit", "Plotly", "Prophet", "PyTorch", "Yahoo Finance"],
+      "demoUrl": "https://br-stocks-ts-pipeline-sca7v3vvdzvpfc42zdkxkg.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/br-stocks-ts-pipeline",
       "icon": "brain",
-      "featured": false
+      "featured": true
     },
     {
       "id": 6,

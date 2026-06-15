@@ -165,7 +165,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 2 | `project.2` | Chatbot de Oficina Automotiva | https://github.com/cavalcanteprofessional/chatbot_oficina | https://github.com/cavalcanteprofissional/chatbot_oficina |
 | 3 | `project.3` | Dashboard de Reconhecimento Humano | https://github.com/cavalcanteprofessional/human_recognition | https://huggingface.co/spaces/CavalcanteProfissional/human_recognition |
 | 4 | `project.4` | Pipeline de Dados Geoespaciais | - | - |
-| 5 | `project.5` | Sistema de Previsão de Séries Temporais | - | - |
+| 5 | `project.5` | BR Stocks — Pipeline de Séries Temporais | https://github.com/cavalcanteprofissional/br-stocks-ts-pipeline | https://br-stocks-ts-pipeline-sca7v3vvdzvpfc42zdkxkg.streamlit.app/ |
 | 6 | `project.6` | Análise de Sentimento em Tweets | https://github.com/cavalcanteprofessional/tweet-sentiment-analysis | https://tweet-sentiment-analysis-cqtwxwniwxgkyfr4f7jxhp.streamlit.app/ |
 | 7 | `project.7` | Dashboard de Análise QA Multi-Modelo | https://github.com/cavalcanteprofessional/qa_analysis | https://appanalysis-fbvminpttqk7fthidekc5b.streamlit.app/ |
 | 8 | `project.8` | ERP de Oficina Automotiva | https://github.com/cavalcanteprofessional/oficina-manager | https://oficina-manager.vercel.app/ |
@@ -184,7 +184,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 2 | Chatbot de Oficina Automotiva | https://github.com/cavalcanteprofissional/chatbot_oficina | https://chatbotoficina-5c2dsw4ekk6cxkssjjxjbh.streamlit.app/ |
 | 3 | Dashboard de Reconhecimento Humano | https://github.com/cavalcanteprofissional/human_recognition | https://huggingface.co/spaces/CavalcanteProfissional/human_recognition |
 | 4 | Predição de Trajetórias GPS | https://github.com/cavalcanteprofissional/trajectory_prediction | https://trajectoryprediction-smkzdwtf7ewsszxrv6leb7.streamlit.app/ |
-| 5 | Sistema de Previsão de Séries Temporais | https://github.com/cavalcanteprofissional | - |
+| 5 | BR Stocks — Pipeline de Séries Temporais | https://github.com/cavalcanteprofissional/br-stocks-ts-pipeline | https://br-stocks-ts-pipeline-sca7v3vvdzvpfc42zdkxkg.streamlit.app/ |
 | 6 | Análise de Sentimento em Tweets | https://github.com/cavalcanteprofissional/tweet-sentiment-analysis | https://tweet-sentiment-analysis-cqtwxwniwxgkyfr4f7jxhp.streamlit.app/ |
 | 7 | Dashboard de Análise QA Multi-Modelo | https://github.com/cavalcanteprofissional/qa_analysis | https://appanalysis-fbvminpttqk7fthidekc5b.streamlit.app/ |
 | 8 | ERP de Oficina Automotiva | https://github.com/cavalcanteprofissional/oficina-manager | https://oficina-manager.vercel.app/ |
