@@ -7,16 +7,12 @@ import {
   TrendingUp,
   Bot,
   Eye,
-  Database,
   Brain,
   PieChart,
   HelpCircle,
-  Building2,
   Map,
   Wrench,
   Video,
-  LineChart,
-  FlaskConical,
   Newspaper,
   TestTube,
   MessageCircleQuestion,
@@ -26,18 +22,14 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   'chart-line': TrendingUp,
   robot: Bot,
   eye: Eye,
-  database: Database,
   brain: Brain,
   'pie-chart': PieChart,
   'help-circle': HelpCircle,
-  building: Building2,
-  flask: FlaskConical,
-  'newspaper': Newspaper,
+  newspaper: Newspaper,
   testtube: TestTube,
   map: Map,
   wrench: Wrench,
   video: Video,
-  linechart: LineChart,
   'message-circle-question': MessageCircleQuestion,
 };
 
@@ -48,7 +40,7 @@ interface ProjectCardProps {
 
 function ProjectCard({ project, index }: ProjectCardProps) {
   const { t } = useTranslation();
-  const Icon = iconMap[project.icon] || Database;
+  const Icon = iconMap[project.icon] || TrendingUp;
 
   return (
     <motion.div

@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-const translations = {
+export const translations = {
   pt: {
     nav: { home: "Início", showcase: "Showcase", experience: "Experiência", portfolio: "Projetos", skills: "Habilidades", certifications: "Certificações", languages: "Idiomas", menu: "Menu", swipeToClose: "Deslize para fechar" },
     hero: { name: "Lucas Cavalcante", title: "Analista de Dados | IA & Machine Learning | Visão Computacional", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM.", resume: "/portfolio/documents/resumes/cv_br_lucas_cavalcante.pdf" },
@@ -76,10 +76,9 @@ const translations = {
     },
     footer: { contact: "Entre em Contato", message: "Estou sempre aberto a novas oportunidades e colaborações.", rights: "Todos os direitos reservados." },
     cta: { title: "Vamos Trabalhar Juntos?", subtitle: "Estou sempre aberto a novas oportunidades e colaborações. Vamos conversar sobre seu próximo projeto?", contact: "Entre em Contato", whatsapp: "Fale no WhatsApp", linkedin: "Conecte no LinkedIn", hero: "Contato" },
-    showcase: { title: "Showcase", subtitle: "Visualizações de Dados e IA", description: "Demonstração interativa de um pipeline ETL." },
     companies: { title: "Empresas Atendidas", subtitle: "Parceiros que confiam no meu trabalho" },
     techstack: { title: "Tech Stack", subtitle: "Tecnologias e ferramentas que domino" },
-    stats: { title: "Resultados", years: "Anos de Experiência", yearsValue: "3+", projects: "Projetos Realizados", projectsValue: "8+", clients: "Clientes Atendidos", clientsValue: "17+", certifications: "Certificações", certificationsValue: "11+" },
+    stats: { title: "Resultados", years: "Anos de Experiência", projects: "Projetos Realizados", clients: "Clientes Atendidos", certifications: "Certificações" },
     faq: {
       title: "Perguntas Frequentes",
       "0": { question: "Qual é o prazo médio para entrega de um projeto?", answer: "O prazo varia de 3 a 5 semanas, dependendo da complexidade do projeto. Projetos menores podem ser entregues em menor tempo." },
@@ -87,11 +86,19 @@ const translations = {
       "2": { question: "Quais tecnologias você utiliza?", answer: "Trabalho principalmente com Python e suas bibliotecas: Pandas e Scikit-learn para análise e machine learning, Streamlit e Flask para aplicações web, LangChain e Hugging Face para NLP, OpenCV para visão computacional, além de Streamlit e Folium para visualização de dados em séries temporais e geoespaciais." },
       "3": { question: "Qual a sua experiência profissional?", answer: "Tenho experiência prática em empresas de pequeno e médio porte, atuação em setores institucional/educacional e também no setor industrial. Trabalhei com projetos de análise de dados, desenvolvimento de chatbots, dashboards e pipelines de dados." }
     },
-    availability: { label: "Disponível para projetos", badge: "Disponível" }
+    availability: { label: "Disponível para projetos", badge: "Disponível" },
+    showcase: {
+      title: "Showcase",
+      subtitle: "Visualizações de Dados e IA",
+      description: "Demonstração interativa de um pipeline ETL. Visualize o fluxo de dados através das etapas de extração, transformação e carregamento com métricas em tempo real.",
+      labels: { extract: "Extração", transform: "Transformação", load: "Carregamento" },
+      metrics: { sources: "3 fontes", steps: "12 etapas", speed: "< 2s" },
+    },
+    acessibilidade: { skipToContent: "Pular para o conteúdo", scrollToTop: "Voltar ao topo", navAria: "Navegação principal" },
   },
   en: {
     nav: { home: "Home", showcase: "Showcase", experience: "Experience", portfolio: "Projects", skills: "Skills", certifications: "Certifications", languages: "Languages", menu: "Menu", swipeToClose: "Swipe to close" },
-    hero: { name: "Lucas Cavalcante", title: "Data Analyst | AI & Machine Learning | Computer Vision", description: "Data Analyst with experience in AI, automation, and digital marketing projects.", resume: "/portfolio/documents/resumes/cv_en_lucas_cavalcante.pdf" },
+    hero: { name: "Lucas Cavalcante", title: "Data Analyst | AI & Machine Learning | Computer Vision", description: "Data Analyst with experience in AI, automation, and digital marketing projects. Specialized in developing chatbots, interactive dashboards, time series and geospatial data pipelines, and implementing SEO/SEM strategies.", resume: "/portfolio/documents/resumes/cv_en_lucas_cavalcante.pdf" },
     contact: { location: "Fortaleza - CE, Brazil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Resume", view: "View Certificate", demo: "Demo", code: "Code", resume: "Resume" },
     sections: { experience: "Professional Experience", portfolio: "Featured Projects", skills: "Technical Skills", certifications: "Certifications", languages: "Languages" },
@@ -163,10 +170,9 @@ const translations = {
     },
     footer: { contact: "Contact Me", message: "I am always open to new opportunities and collaborations.", rights: "All rights reserved." },
     cta: { title: "Let's Work Together?", subtitle: "I'm always open to new opportunities and collaborations. Let's talk about your next project?", contact: "Get in Touch", whatsapp: "Message on WhatsApp", linkedin: "Connect on LinkedIn", hero: "Contact" },
-    showcase: { title: "Showcase", subtitle: "Data & AI Visualizations", description: "Interactive demonstration of an ETL pipeline." },
     companies: { title: "Companies", subtitle: "Partners who trust my work" },
     techstack: { title: "Tech Stack", subtitle: "Technologies and tools I master" },
-    stats: { title: "Results", years: "Years of Experience", yearsValue: "3+", projects: "Projects Completed", projectsValue: "8+", clients: "Clients Served", clientsValue: "17+", certifications: "Certifications", certificationsValue: "11+" },
+    stats: { title: "Results", years: "Years of Experience", projects: "Projects Completed", clients: "Clients Served", certifications: "Certifications" },
     faq: {
       title: "Frequently Asked Questions",
       "0": { question: "What is the average delivery time for a project?", answer: "The timeframe varies from 3 to 5 weeks, depending on the complexity of the project. Smaller projects can be delivered in less time." },
@@ -174,11 +180,19 @@ const translations = {
       "2": { question: "What technologies do you use?", answer: "I work mainly with Python and its libraries: Pandas and Scikit-learn for analysis and machine learning, Streamlit and Flask for web apps, LangChain and Hugging Face for NLP, OpenCV for computer vision, and Streamlit and Folium for data visualization in time series and geospatial data." },
       "3": { question: "What is your professional experience?", answer: "I have practical experience in small and medium-sized companies, working in institutional/educational sectors and also in the industrial sector. I have worked on data analysis projects, chatbot development, dashboards and data pipelines." }
     },
-    availability: { label: "Available for projects", badge: "Available" }
+    availability: { label: "Available for projects", badge: "Available" },
+    showcase: {
+      title: "Showcase",
+      subtitle: "Data & AI Visualizations",
+      description: "Interactive demonstration of an ETL pipeline. Visualize the data flow through extraction, transformation, and loading stages with real-time metrics.",
+      labels: { extract: "Extraction", transform: "Transformation", load: "Loading" },
+      metrics: { sources: "3 sources", steps: "12 steps", speed: "< 2s" },
+    },
+    acessibilidade: { skipToContent: "Skip to content", scrollToTop: "Back to top", navAria: "Main navigation" },
   },
   es: {
     nav: { home: "Inicio", showcase: "Showcase", experience: "Experiencia", portfolio: "Proyectos", skills: "Habilidades", certifications: "Certificaciones", languages: "Idiomas", menu: "Menú", swipeToClose: "Desliza para cerrar" },
-    hero: { name: "Lucas Cavalcante", title: "Analista de Datos | IA & Machine Learning | Visión Computacional", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital.", resume: "/portfolio/documents/resumes/cv_es_lucas_cavalcante.pdf" },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Datos | IA & Machine Learning | Visión Computacional", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital. Especializado en el desarrollo de chatbots, dashboards interactivos, pipelines de datos de series temporales y geoespaciales, e implementación de estrategias SEO/SEM.", resume: "/portfolio/documents/resumes/cv_es_lucas_cavalcante.pdf" },
     contact: { location: "Fortaleza - CE, Brasil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículum", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículum" },
     sections: { experience: "Experiencia Profesional", portfolio: "Proyectos Destacados", skills: "Habilidades Técnicas", certifications: "Certificaciones", languages: "Idiomas" },
@@ -250,10 +264,16 @@ const translations = {
     },
     footer: { contact: "Contáctame", message: "Siempre estoy abierto a nuevas oportunidades y colaboraciones.", rights: "Todos los derechos reservados." },
     cta: { title: "¿Trabajamos Juntos?", subtitle: "Siempre estoy abierto a nuevas oportunidades y colaboraciones. Hablemos sobre tu próximo proyecto?", contact: "Contáctame", whatsapp: "Escríbeme en WhatsApp", linkedin: "Conecta en LinkedIn", hero: "Contacto" },
-    showcase: { title: "Showcase", subtitle: "Visualizaciones de Datos e IA", description: "Demostración interactiva de un pipeline ETL." },
+    showcase: {
+      title: "Showcase",
+      subtitle: "Visualizaciones de Datos e IA",
+      description: "Demostración interactiva de un pipeline ETL. Visualice el flujo de datos a través de las etapas de extracción, transformación y carga con métricas en tiempo real.",
+      labels: { extract: "Extracción", transform: "Transformación", load: "Carga" },
+      metrics: { sources: "3 fuentes", steps: "12 pasos", speed: "< 2s" },
+    },
     companies: { title: "Empresas Atendidas", subtitle: "Socios que confían en mi trabajo" },
     techstack: { title: "Tech Stack", subtitle: "Tecnologías y herramientas que domino" },
-    stats: { title: "Resultados", years: "Años de Experiencia", yearsValue: "3+", projects: "Proyectos Realizados", projectsValue: "8+", clients: "Clientes Atendidos", clientsValue: "17+", certifications: "Certificaciones", certificationsValue: "11+" },
+    stats: { title: "Resultados", years: "Años de Experiencia", projects: "Proyectos Realizados", clients: "Clientes Atendidos", certifications: "Certificaciones" },
     faq: {
       title: "Preguntas Frecuentes",
       "0": { question: "¿Cuál es el tiempo promedio de entrega de un proyecto?", answer: "El plazo varía de 3 a 5 semanas, dependiendo de la complejidad del proyecto. Proyectos más pequeños pueden entregarse en menor tiempo." },
@@ -261,7 +281,8 @@ const translations = {
       "2": { question: "¿Qué tecnologías utiliza?", answer: "Trabajo principalmente con Python y sus librerías: Pandas y Scikit-learn para análisis y machine learning, Streamlit y Flask para aplicaciones web, LangChain y Hugging Face para NLP, OpenCV para visión computacional, además de Streamlit y Folium para visualización de datos en series temporales y geoespaciales." },
       "3": { question: "¿Cuál es su experiencia profesional?", answer: "Tengo experiencia práctica en empresas pequeñas y medianas, actuación en sectores institucional/educacional y también en el sector industrial. He trabajado en proyectos de análisis de datos, desarrollo de chatbots, dashboards y pipelines de datos." }
     },
-    availability: { label: "Disponible para proyectos", badge: "Disponible" }
+    availability: { label: "Disponible para proyectos", badge: "Disponible" },
+    acessibilidade: { skipToContent: "Saltar al contenido", scrollToTop: "Volver arriba", navAria: "Navegación principal" },
   }
 };
 

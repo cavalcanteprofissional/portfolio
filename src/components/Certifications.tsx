@@ -118,7 +118,7 @@ export function Certifications() {
             {t('sections.certifications')}
           </h2>
           <p className="text-muted-foreground">{t('certifications.subtitle')}</p>
-          <div className="w-24 h-1.5 bg-primary mx-auto rounded-full mt-4" />
+          <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full mt-4" />
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

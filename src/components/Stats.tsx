@@ -2,6 +2,29 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useThemeStore } from '../stores/themeStore';
 import { Award, Users, Briefcase, Clock } from 'lucide-react';
+import projectsData from '../data/projects.json';
+import companiesData from '../data/companies.json';
+import experiencesData from '../data/experiences.json';
+import { translations } from '../i18n';
+
+const certCount = Object.keys(translations.pt.cert).length;
+const projectCount = projectsData.projects.length;
+const clientCount = companiesData.companies.length;
+const years = experiencesData.experiences.reduce(
+  (acc, e) => ({
+    min: Math.min(acc.min, parseInt(e.year)),
+    max: Math.max(acc.max, parseInt(e.year)),
+  }),
+  { min: Infinity, max: -Infinity }
+);
+const yearSpan = years.max - years.min + 1;
+
+const statValues: Record<string, string> = {
+  years: `${yearSpan}+`,
+  projects: `${projectCount}+`,
+  clients: `${clientCount}+`,
+  certifications: `${certCount}+`,
+};
 
 const statIcons = [
   { key: 'years', icon: Clock },
@@ -56,7 +79,7 @@ export function Stats() {
                   transition={{ delay: index * 0.1 + 0.3 }}
                   className="text-3xl md:text-4xl font-bold text-primary mb-2"
                 >
-                  {t(`stats.${stat.key}Value`)}
+                  {statValues[stat.key]}
                 </motion.div>
                 <div className="text-muted-foreground text-sm">
                   {t(`stats.${stat.key}`)}

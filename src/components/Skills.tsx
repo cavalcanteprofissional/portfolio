@@ -145,13 +145,13 @@ const iconComponents: Record<string, React.ComponentType<{ className?: string }>
 };
 
 const softSkills = [
-  { key: 'skills.communication', value: 'Comunicação' },
-  { key: 'skills.teamwork', value: 'Trabalho em Equipe' },
-  { key: 'skills.problem-solving', value: 'Resolução de Problemas' },
-  { key: 'skills.adaptability', value: 'Adaptabilidade' },
-  { key: 'skills.time-management', value: 'Gestão de Tempo' },
-  { key: 'skills.critical-thinking', value: 'Pensamento Crítico' },
-  { key: 'skills.creativity', value: 'Criatividade' },
+  { key: 'skills.communication' },
+  { key: 'skills.teamwork' },
+  { key: 'skills.problem-solving' },
+  { key: 'skills.adaptability' },
+  { key: 'skills.time-management' },
+  { key: 'skills.critical-thinking' },
+  { key: 'skills.creativity' },
 ];
 
 export function Skills() {

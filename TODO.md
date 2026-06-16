@@ -1,107 +1,57 @@
-# TODO - Atualização de Campos Textuais do Projeto
+# Plano de Melhorias — 2ª Onda: Performance, SEO, i18n e Qualidade
 
-## Data: 2026-04-23
+## Data: 2026-06-15
 
 ## Objetivo
-Atualizar os campos textuais do projeto com base no CONTENT.md
+Corrigir issues críticas de performance, SEO, internacionalização e qualidade de código.
 
 ---
 
-## Tarefas Concluídas
+## Progresso
 
-### 1. Adicionar ISElétrica ao companies.json
-- **Arquivo:** `src/data/companies.json`
-- **Status:** ✅ CONCLUÍDO
+### 🔴 Críticas
 
----
+| # | Tarefa | Status |
+|---|--------|--------|
+| C1 | Deletar `src/data/projects. json` (arquivo duplicado com espaço) | ⏳ |
+| C2 | Expandir Hero description EN/ES (13 → 38 palavras como PT) | ⏳ |
+| C3 | Traduzir Showcase — usar chaves i18n em vez de hardcoded PT | ⏳ |
+| C4 | Otimizar foto de perfil (2.3MB → ~100KB) | ⏳ |
+| C5 | Desligar sourcemaps em produção (`vite.config.ts`) | ⏳ |
+| C6 | Corrigir JSON-LD image URL (faltando `/images/`) | ⏳ |
 
-### 2. Adicionar Projeto Sanova Micromedição
-- **Arquivo:** `src/data/projects.json`, `src/i18n/index.ts`, `CONTENT.md`
-- **Descrição:** Adicionado novo card de projeto com dashboard de micromedição sanitation
-- **Demo:** https://cpmrdgawhuua3mwkbpefeo.streamlit.app/
-- **Repo:** https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard-
-- **Status:** ✅ CONCLUÍDO
-- **Data:** 2026-05-12
+### 🟡 Altas
 
----
+| # | Tarefa | Status |
+|---|--------|--------|
+| H1 | Adicionar `loading="lazy"` + `width`/`height` em todas imagens | ⏳ |
+| H2 | Traduzir skip-to-content link + scroll-to-top aria-label | ⏳ |
+| H3 | Adicionar Error Boundary | ⏳ |
+| H4 | Corrigir OG meta tags (width/height, URL absoluta) | ⏳ |
+| H5 | Otimizar `mako.svg` (388KB) | ⏳ |
+| H6 | Usar `experience.companyKey` para traduzir nome da empresa | ⏳ |
 
-### 3. Adicionar Projeto Pro Git QA Bot
-- **Arquivos:** `src/data/projects.json`, `src/components/Portfolio.tsx`, `src/i18n/index.ts`, `CONTENT.md`
-- **Descrição:** Adicionado novo card de projeto com chatbot RAG sobre Git
-- **Demo:** https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/
-- **Repo:** https://github.com/cavalcanteprofissional/pro-git-qa-bot
-- **Status:** ✅ CONCLUÍDO
-- **Data:** 2026-06-10
+### 🔵 Médias
 
----
+| # | Tarefa | Status |
+|---|--------|--------|
+| M1 | Code splitting com `React.lazy()` para seções abaixo da dobra | ⏳ |
+| M2 | Scripts npm: `test`, `typecheck`, `format` | ⏳ |
+| M3 | Corrigir `Companies.tsx` dark mode (ainda com brightness-0 invert) | ⏳ |
+| M4 | Stats derivados dos dados reais em vez de hardcoded | ⏳ |
+| M5 | Framer Motion respeitar `prefers-reduced-motion` | ⏳ |
+| M6 | Showcase description completa no i18n (2 frases como CONTENT.md) | ⏳ |
 
-## Tarefas Atuais
+### ⚪ Baixas
 
-### 2. Corrigir i18n - Race Condition
-
-**Problema:**
-- O `loadResources()` em `src/i18n/index.ts` é chamado mas não aguarda conclusão
-- Componentes renderizam antes das traduções carregarem
-- Resultado: chaves como `hero.name` aparecem vazias
-
-**Solução:** Mudar de fetch assíncrono para import estático
-
-**Arquivo:** `src/i18n/index.ts`
-
-**Mudança:**
-```typescript
-// ANTIGO (problema):
-async function loadResources() {
-  const [pt, en, es] = await Promise.all([
-    fetch('/locales/pt.json').then(r => r.json()),
-    // ...
-  ]);
-}
-loadResources(); // Não aguarda!
-
-// NOVO (solução):
-// Importar diretamente os arquivos JSON
-import ptTranslation from '/locales/pt.json?raw';
-import enTranslation from '/locales/en.json?raw';
-import esTranslation from '/locales/es.json?raw';
-
-const resources = {
-  pt: { translation: JSON.parse(ptTranslation).translation },
-  en: { translation: JSON.parse(enTranslation).translation },
-  es: { translation: JSON.parse(esTranslation).translation },
-};
-
-i18n.init({
-  resources,
-  lng: 'pt',
-  fallbackLng: 'pt',
-  interpolation: { escapeValue: false },
-});
-```
+| # | Tarefa | Status |
+|---|--------|--------|
+| L1 | Trocar `key={index}` no TechStack por `tech.name` | ⏳ |
+| L2 | Inline style do Experience → classe CSS | ⏳ |
+| L3 | Juntar imports do Footer num único statement | ⏳ |
+| L4 | Version `1.0.0` no package.json | ⏳ |
 
 ---
 
-### 3. Adicionar Dropdown de Idioma no Navbar
-
-**Arquivo:** `src/components/Nav.tsx`
-
-**Implementação:**
-- Adicionar botão dropdown no header do Navbar
-- Opções: PT, EN, ES
-- Persistir escolha no localStorage
-- Atualizar idioma com `i18n.changeLanguage()`
-
-**Estrutura:**
-```typescript
-// Estado
-const [currentLang, setCurrentLang] = useState('pt');
-
-// Botão dropdown
-// Languages: [{ code: 'pt', label: 'PT' }, { code: 'en', label: 'EN' }, { code: 'es', label: 'ES' }]
-```
-
----
-
-## Referência
-- CONTENT.md
-- package.json: i18next ^25.8.4, react-i18next ^16.5.4
+## V1 Concluída (14 tarefas)
+- FAQ JSON-LD, icon map, dead code, Showcase section, Nav ativo, overlay, scroll-to-top, divisores, card width, dark mode logos, skip-to-content, reduced-motion, Nav/Hero separados, Playwright E2E

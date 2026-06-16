@@ -11,16 +11,6 @@ const faqItems = [
   { id: '3', questionKey: 'faq.3.question', answerKey: 'faq.3.answer' },
 ];
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqItems.map((item) => ({
-    '@type': 'Question',
-    name: item.questionKey,
-    acceptedAnswer: { '@type': 'Answer', text: item.answerKey },
-  })),
-};
-
 export function FAQ() {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
@@ -28,6 +18,16 @@ export function FAQ() {
 
   const toggleItem = (id: string) => {
     setOpenId(openId === id ? null : id);
+  };
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: t(item.questionKey),
+      acceptedAnswer: { '@type': 'Answer', text: t(item.answerKey) },
+    })),
   };
 
   return (

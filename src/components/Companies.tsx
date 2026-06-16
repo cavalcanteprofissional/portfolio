@@ -42,7 +42,10 @@ export function Companies() {
               <img
                 src={company.logo}
                 alt={company.name}
-                className="w-full h-full object-contain dark:brightness-0 dark:invert opacity-80 hover:opacity-100 transition-opacity"
+                width={120}
+                height={60}
+                loading="lazy"
+                className="w-full h-full object-contain dark:brightness-0 dark:invert hover:opacity-100 transition-all"
               />
             </motion.a>
           ))}

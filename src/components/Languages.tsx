@@ -40,7 +40,7 @@ export function Languages() {
           <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
             {t('sections.languages')}
           </h2>
-          <div className="w-24 h-1.5 bg-primary mx-auto rounded-full" />
+          <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full" />
         </motion.div>
 
         <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">

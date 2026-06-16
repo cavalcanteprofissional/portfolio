@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Mail, Linkedin, Sun, Moon, Menu, X, Globe, ChevronDown, Github, FileText } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { Sun, Moon, Menu, X, Globe, ChevronDown, Home, Eye, Briefcase, FolderGit2, Wrench, Award, Languages } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useThemeStore } from '../stores/themeStore';
 import i18n from '../i18n';
 
@@ -11,6 +11,16 @@ const languages = [
   { code: 'es', label: 'ES', name: 'Español' },
 ];
 
+const navItems = [
+  { key: 'home', href: '#hero', icon: Home },
+  { key: 'experience', href: '#experience', icon: Briefcase },
+  { key: 'portfolio', href: '#portfolio', icon: FolderGit2 },
+  { key: 'skills', href: '#skills', icon: Wrench },
+  { key: 'showcase', href: '#showcase', icon: Eye },
+  { key: 'certifications', href: '#certifications', icon: Award },
+  { key: 'languages', href: '#languages', icon: Languages },
+];
+
 export function Nav() {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useThemeStore();
@@ -18,10 +28,12 @@ export function Nav() {
   const [currentLang, setCurrentLang] = useState(() => i18n.language || 'pt');
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
   const langMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,6 +45,35 @@ export function Nav() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const navHeight = 64;
+      const offset = navHeight + 20;
+      let current = 'hero';
+      for (const item of navItems) {
+        const el = document.querySelector(item.href) as HTMLElement | null;
+        if (el && el.offsetTop - offset <= window.scrollY) {
+          current = item.href.replace('#', '');
+        }
+      }
+      setActiveSection(current);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isOpen) setIsOpen(false);
+    };
+    if (isOpen) {
+      window.addEventListener('scroll', handleScroll, { once: true });
+    }
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isOpen]);
 
   const changeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode);
@@ -49,18 +90,11 @@ export function Nav() {
     }
   }, []);
 
-  const navItems = [
-    { key: 'home', href: '#hero' },
-    { key: 'experience', href: '#experience' },
-    { key: 'portfolio', href: '#portfolio' },
-    { key: 'skills', href: '#skills' },
-    { key: 'certifications', href: '#certifications' },
-    { key: 'languages', href: '#languages' },
-  ];
+  const closeMobileMenu = useCallback(() => setIsOpen(false), []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-soft">
-      <div className="section-container">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-soft" role="navigation" aria-label={t('acessibilidade.navAria')}>
+      <div className="section-container relative z-10">
         <div className="flex items-center justify-between h-16">
           <a href="#hero" className="flex items-center justify-center">
             {mounted && (
@@ -69,21 +103,31 @@ export function Nav() {
                   ? '/portfolio/images/navbar/logo-navbar-darkmode.png' 
                   : '/portfolio/images/navbar/logo-navbar-lightmode.png'}
                 alt="LC"
+                width={32}
+                height={32}
                 className="h-8 w-auto"
               />
             )}
           </a>
 
           <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
-              <a
-                key={item.key}
-                href={item.href}
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-secondary/50 rounded-full transition-all"
-              >
-                {t(`nav.${item.key}`)}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const sectionId = item.href.replace('#', '');
+              const isActive = activeSection === sectionId;
+              return (
+                <a
+                  key={item.key}
+                  href={item.href}
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all ${
+                    isActive
+                      ? 'text-primary bg-primary/10'
+                      : 'text-muted-foreground hover:text-primary hover:bg-secondary/50'
+                  }`}
+                >
+                  {t(`nav.${item.key}`)}
+                </a>
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-2">
@@ -136,155 +180,63 @@ export function Nav() {
             </button>
           </div>
         </div>
+      </div>
 
+      <AnimatePresence>
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-border">
-            <div className="flex flex-col gap-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.key}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
-                >
-                  {t(`nav.${item.key}`)}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-}
-
-export function Hero() {
-  const { t } = useTranslation();
-  const { theme } = useThemeStore();
-
-  return (
-    <section
-      id="hero"
-      className="min-h-screen pt-24 pb-16 flex items-center relative overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-gradient-blue-light dark:bg-gradient-blue-dark opacity-50" />
-      <div className="absolute top-40 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-40 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px]" />
-
-      <div className="section-container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              {t('availability.label')}
-            </div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm md:hidden"
+              onClick={closeMobileMenu}
+              aria-hidden="true"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className={`text-4xl md:text-6xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="md:hidden"
             >
-              {t('hero.name')}
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-xl md:text-2xl text-muted-foreground font-medium"
-            >
-              {t('hero.title')}
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-muted-foreground text-lg max-w-xl"
-            >
-              {t('hero.description')}
-            </motion.p>
-
-<motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="flex flex-nowrap items-center gap-2 overflow-x-auto"
-            >
-              <a
-                href={`mailto:${t('contact.email')}`}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-gradient-blue text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity"
-              >
-                <Mail className="w-3.5 h-3.5" />
-                {t('contact.email')}
-              </a>
-              <a
-                href={t('contact.linkedin')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
-              >
-                <Linkedin className="w-3.5 h-3.5" />
-                LinkedIn
-              </a>
-              <a
-                href={t('contact.github')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
-              >
-                <Github className="w-3.5 h-3.5" />
-                GitHub
-              </a>
-              <a
-                href={t('hero.resume')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
-              >
-                <FileText className="w-3.5 h-3.5" />
-                {t('buttons.resume')}
-              </a>
+              <div className="py-4 px-4 space-y-1 bg-background/95 backdrop-blur-xl border-t border-border/50">
+                {navItems.map((item, index) => {
+                  const Icon = item.icon;
+                  const sectionId = item.href.replace('#', '');
+                  const isActive = activeSection === sectionId;
+                  return (
+                    <motion.a
+                      key={item.key}
+                      href={item.href}
+                      onClick={closeMobileMenu}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ delay: index * 0.05, duration: 0.2 }}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                        isActive
+                          ? 'bg-primary/10 text-primary'
+                          : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      {t(`nav.${item.key}`)}
+                      {isActive && (
+                        <motion.div
+                          layoutId="mobileActiveIndicator"
+                          className="ml-auto w-1.5 h-1.5 rounded-full bg-primary"
+                        />
+                      )}
+                    </motion.a>
+                  );
+                })}
+              </div>
             </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="relative"
-          >
-            <div className="relative w-72 h-80 md:w-88 md:h-96 mx-auto">
-              <div className="absolute inset-0 bg-gradient-blue rounded-2xl" />
-              <div className="absolute inset-0 bg-card/90 rounded-xl overflow-hidden shadow-soft">
-                <img
-                  src="/portfolio/images/profile/foto-perfil.png"
-                  alt="Lucas Cavalcante"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full flex items-center justify-center">
-                <img
-                  src={theme === 'dark' 
-                    ? '/portfolio/images/navbar/logo-navbar-darkmode.png' 
-                    : '/portfolio/images/navbar/logo-navbar-lightmode.png'}
-                  alt="LC"
-                  className="w-20 h-20"
-                />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+          </>
+        )}
+      </AnimatePresence>
+    </nav>
   );
 }

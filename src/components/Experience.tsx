@@ -93,7 +93,7 @@ export function Experience() {
                 viewport={{ once: true }}
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.3 }}
-                className="flex-shrink-0 w-[85vw] sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-48px)/3.25)]"
+                className="flex-shrink-0 w-[85vw] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
               >
                 <div className="h-full bg-card/80 backdrop-blur-sm rounded-soft-xl border border-border/30 flex flex-col overflow-hidden relative shadow-soft hover:shadow-soft-lg transition-all">
                   <div className="p-6 border-b border-border/20">
@@ -107,7 +107,7 @@ export function Experience() {
                       {t(exp.titleKey)}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {exp.company}
+                      {t(`experience.${exp.id}.company`, { defaultValue: exp.company })}
                     </p>
                   </div>
 
