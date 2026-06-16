@@ -39,7 +39,7 @@ npm run preview    # preview do build
 
 ## 🌐 URL
 
-**https://cavalcanteprofissional.com.br/**
+**https://cavalcanteprofissional.github.io/portfolio/**
 
 Hospedado via GitHub Pages com domínio personalizado e HTTPS.
 
