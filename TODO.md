@@ -27,7 +27,7 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | H1 | Adicionar `loading="lazy"` + `width`/`height` em todas imagens | ⏳ |
 | H2 | Traduzir skip-to-content link + scroll-to-top aria-label | ⏳ |
 | H3 | Adicionar Error Boundary | ⏳ |
-| H4 | Corrigir OG meta tags (width/height, URL absoluta) | ⏳ |
+| H4 | Corrigir OG meta tags (width/height, URL absoluta) | ✅ |
 | H5 | Otimizar `mako.svg` (388KB) | ⏳ |
 | H6 | Usar `experience.companyKey` para traduzir nome da empresa | ⏳ |
 
@@ -53,5 +53,5 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 
 ---
 
-## V1 Concluída (14 tarefas)
-- FAQ JSON-LD, icon map, dead code, Showcase section, Nav ativo, overlay, scroll-to-top, divisores, card width, dark mode logos, skip-to-content, reduced-motion, Nav/Hero separados, Playwright E2E
+## V1 Concluída (15 tarefas)
+- FAQ JSON-LD, icon map, dead code, Showcase section, Nav ativo, overlay, scroll-to-top, divisores, card width, dark mode logos, skip-to-content, reduced-motion, Nav/Hero separados, Playwright E2E, OG card image (WhatsApp thumbnail)
