@@ -129,6 +129,16 @@
       "codeUrl": "https://github.com/cavalcanteprofissional/pro-git-qa-bot",
       "icon": "message-circle-question",
       "featured": true
+    },
+    {
+      "id": 14,
+      "titleKey": "project.14.title",
+      "descriptionKey": "project.14.description",
+      "tech": ["Python", "FastAPI", "scikit-learn", "XGBoost", "React", "TypeScript", "Tailwind CSS", "Docker"],
+      "demoUrl": "https://jobmatch-frontend-u6vt.onrender.com",
+      "codeUrl": "https://github.com/cavalcanteprofissional/jobmatch-ai",
+      "icon": "scan-search",
+      "featured": true
     }
   ]
 }

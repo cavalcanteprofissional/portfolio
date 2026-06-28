@@ -31,6 +31,12 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | H5 | Otimizar `mako.svg` (388KB) | ⏳ |
 | H6 | Usar `experience.companyKey` para traduzir nome da empresa | ⏳ |
 
+### 🆕 Novos
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| N1 | Adicionar JobMatch AI ao portfólio (projeto id 14) | ✅ |
+
 ### 🔵 Médias
 
 | # | Tarefa | Status |

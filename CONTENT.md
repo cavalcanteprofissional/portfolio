@@ -174,6 +174,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 11 | `project.11` | Ceará Alternativo | https://github.com/cavalcanteprofessional/ceara-alternativo | https://ceara-alternativo.vercel.app/ |
 | 12 | `project.12` | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://sanova-micromedicao-dashboard-hlmw3spgxuthzebvxa7thg.streamlit.app/ |
 | 13 | `project.13` | Pro Git QA Bot | https://github.com/cavalcanteprofissional/pro-git-qa-bot | https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/ |
+| 14 | `project.14` | JobMatch AI | https://github.com/cavalcanteprofissional/jobmatch-ai | https://jobmatch-frontend-u6vt.onrender.com |
 
 ### Projetos com Links
 
@@ -192,6 +193,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 11 | Ceará Alternativo | https://github.com/cavalcanteprofissional/ceara-alternativo | https://ceara-alternativo.vercel.app/ |
 | 12 | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://sanova-micromedicao-dashboard-hlmw3spgxuthzebvxa7thg.streamlit.app/ |
 | 13 | Pro Git QA Bot | https://github.com/cavalcanteprofissional/pro-git-qa-bot | https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/ |
+| 14 | JobMatch AI | https://github.com/cavalcanteprofissional/jobmatch-ai | https://jobmatch-frontend-u6vt.onrender.com |
 
 ---
 
