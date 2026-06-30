@@ -41,7 +41,7 @@
           "@id": "https://cavalcanteprofissional.github.io/portfolio/#person",
           "name": "Lucas Cavalcante dos Santos",
           "url": "https://cavalcanteprofissional.github.io/portfolio/",
-          "image": "https://cavalcanteprofissional.github.io/portfolio/images/profile/foto-perfil.png",
+          "image": "https://cavalcanteprofissional.github.io/portfolio/images/profile/foto-perfil.webp",
           "jobTitle": "Data Analyst & AI Specialist",
           "email": "cavalcanteprofissional@outlook.com",
           "telephone": "+55-85-996859051",
@@ -66,7 +66,7 @@
           "name": "Lucas Cavalcante - Data Analyst & AI",
           "description": "Serviços de análise de dados, inteligência artificial, machine learning e computer vision. Especializado em desenvolvimento de chatbots, dashboards interativos e pipelines de dados.",
           "url": "https://cavalcanteprofissional.github.io/portfolio/",
-          "image": "https://cavalcanteprofissional.github.io/portfolio/images/profile/foto-perfil.png",
+          "image": "https://cavalcanteprofissional.github.io/portfolio/images/profile/foto-perfil.webp",
           "telephone": "+55-85-996859051",
           "email": "cavalcanteprofissional@outlook.com",
           "address": {
@@ -103,7 +103,30 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="boot-splash">
+        <style>
+          #boot-splash{position:fixed;inset:0;background:hsl(215,45%,8%)}
+        </style>
+      </div>
+    </div>
+    <script>
+      setTimeout(() => document.getElementById('boot-splash')?.remove(), 5000);
+      try {
+        window.__bootAudioCtx = new AudioContext();
+        window.__bootAudioCtx.resume();
+        function wakeBootAudio() {
+          if (window.__bootAudioCtx && window.__bootAudioCtx.state === 'suspended')
+            window.__bootAudioCtx.resume();
+          document.removeEventListener('mousemove', wakeBootAudio);
+          document.removeEventListener('touchstart', wakeBootAudio);
+          document.removeEventListener('scroll', wakeBootAudio);
+        }
+        document.addEventListener('mousemove', wakeBootAudio, { once: true });
+        document.addEventListener('touchstart', wakeBootAudio, { once: true });
+        document.addEventListener('scroll', wakeBootAudio, { once: true, passive: true });
+      } catch (e) {}
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

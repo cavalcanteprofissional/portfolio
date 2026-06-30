@@ -4,6 +4,7 @@
       "id": 6,
       "year": "2026",
       "titleKey": "experience.7.title",
+      "companyKey": "experience.7.company",
       "company": "SiDi",
       "descriptionKeys": [
         "experience.7.1",
@@ -18,6 +19,7 @@
       "id": 1,
       "year": "2025",
       "titleKey": "experience.2.title",
+      "companyKey": "experience.2.company",
       "company": "Rebualf",
       "descriptionKeys": [
         "experience.2.1",
@@ -30,6 +32,7 @@
       "id": 2,
       "year": "2024",
       "titleKey": "experience.3.title",
+      "companyKey": "experience.3.company",
       "company": "Zents",
       "descriptionKeys": [
         "experience.3.1",
@@ -43,6 +46,7 @@
       "id": 3,
       "year": "2023",
       "titleKey": "experience.4.title",
+      "companyKey": "experience.4.company",
       "company": "Iselétrica LTDA.",
       "descriptionKeys": [
         "experience.4.1",
@@ -56,6 +60,7 @@
       "id": 4,
       "year": "2022",
       "titleKey": "experience.5.title",
+      "companyKey": "experience.5.company",
       "company": "Instituto de Educação Portal",
       "descriptionKeys": [
         "experience.5.1",
@@ -67,6 +72,7 @@
       "id": 5,
       "year": "2013",
       "titleKey": "experience.6.title",
+      "companyKey": "experience.6.company",
       "company": "Autônomo",
       "descriptionKeys": [
         "experience.6.1",

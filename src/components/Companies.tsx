@@ -45,7 +45,7 @@ export function Companies() {
                 width={120}
                 height={60}
                 loading="lazy"
-                className="w-full h-full object-contain dark:brightness-0 dark:invert hover:opacity-100 transition-all"
+                className="w-full h-full object-contain dark:brightness-0 dark:invert transition-all"
               />
             </motion.a>
           ))}

@@ -83,7 +83,6 @@ export function Experience() {
           <div
             ref={scrollRef}
             className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide cursor-grab active:cursor-grabbing"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {sortedExperiences.map((exp, index) => (
               <motion.div
@@ -107,7 +106,7 @@ export function Experience() {
                       {t(exp.titleKey)}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {t(`experience.${exp.id}.company`, { defaultValue: exp.company })}
+                      {t(exp.companyKey)}
                     </p>
                   </div>
 

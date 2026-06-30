@@ -13,3 +13,4 @@ export { TechStack } from './TechStack';
 export { FAQ } from './FAQ';
 export { Contact } from './Contact';
 export { Footer } from './Footer';
+export { BootScreen } from './BootScreen';

@@ -109,17 +109,14 @@ export function Hero() {
             className="relative"
           >
             <div className="relative w-64 h-72 md:w-88 md:h-96 mx-auto">
-              <picture className="block w-full h-full">
-                <source srcSet="/portfolio/images/profile/foto-perfil.webp" type="image/webp" />
-                <img
-                  src="/portfolio/images/profile/foto-perfil.png"
-                  alt="Lucas Cavalcante"
-                  width={288}
-                  height={320}
-                  loading="eager"
-                  className="w-full h-full object-cover rounded-2xl"
-                />
-              </picture>
+              <img
+                src="/portfolio/images/profile/foto-perfil.webp"
+                alt="Lucas Cavalcante"
+                width={288}
+                height={320}
+                loading="eager"
+                className="w-full h-full object-cover rounded-2xl"
+              />
               <div className="absolute -bottom-8 -right-4 w-28 h-28 md:w-32 md:h-32 rounded-full flex items-center justify-center">
                 <img
                   src={theme === 'dark'

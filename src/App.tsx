@@ -1,8 +1,9 @@
-import { useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { useThemeStore } from './stores/themeStore';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { Nav, Hero, Stats, Footer, ScrollToTop } from './components';
+import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen } from './components';
 import './i18n';
 
 const Companies = lazy(() => import('./components/Companies').then(m => ({ default: m.Companies })));
@@ -25,6 +26,14 @@ const SectionFallback = () => (
 function App() {
   const { theme } = useThemeStore();
   const { t } = useTranslation();
+  const [booted, setBooted] = useState(
+    () => sessionStorage.getItem('booted') === 'true'
+  );
+
+  const handleBootComplete = useCallback(() => {
+    sessionStorage.setItem('booted', 'true');
+    setBooted(true);
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
@@ -33,6 +42,10 @@ function App() {
 
   return (
     <ErrorBoundary>
+      <AnimatePresence>
+        {!booted && <BootScreen onComplete={handleBootComplete} />}
+      </AnimatePresence>
+
       <div className="min-h-screen bg-background text-foreground">
         <a href="#main-content" className="skip-to-content">
           {t('acessibilidade.skipToContent')}

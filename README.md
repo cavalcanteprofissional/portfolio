@@ -4,6 +4,7 @@
 
 ## ✨ O que tem por aqui
 
+- 🖥️ **BootScreen estilo BIOS** — animação de boot com digitação e beep (sessão única, pula no refresh)
 - 🌓 **Modo escuro/claro** — com detecção automática
 - 🌎 **3 idiomas** — Português, English, Español (seleção manual)
 - 🎯 **Scroll ativo na nav** — destaca a seção conforme você navega
@@ -13,6 +14,7 @@
 - ♿ **Acessibilidade** — skip-to-content, reduced-motion, aria-labels
 - 📱 **QR Code** pra acesso mobile rápido
 - 🔗 **Preview no WhatsApp** — card personalizado ao compartilhar o link
+- ⚡ **Performance** — lazy loading, code splitting, sourcemaps desligados, WebP otimizado
 
 ## 🛠️ Tecnologias
 

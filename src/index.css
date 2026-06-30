@@ -136,6 +136,16 @@
   }
 }
 
+/* Esconder scrollbar mas manter scroll */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Acessibilidade */
 .skip-to-content {
   position: absolute;

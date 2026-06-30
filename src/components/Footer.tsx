@@ -1,5 +1,4 @@
-import { Linkedin, Github, Mail, Phone } from 'lucide-react';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Github, Linkedin, Mail, Phone } from 'lucide-react';
 
 const socialLinks = [
   { 

@@ -112,9 +112,9 @@ export function TechStack() {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-3 sm:gap-4"
         >
-          {techStacks.map((tech, index) => (
+          {techStacks.map((tech) => (
             <motion.div
-              key={index}
+              key={tech.name}
               variants={itemVariants}
               whileHover={{ scale: 1.1, y: -4 }}
               className="relative group"

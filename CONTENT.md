@@ -446,5 +446,55 @@ Paleta corporativa em tons de azul, com degrade suave e profissional.
 
 ---
 
+---
+
+## 24. BootScreen — BIOS POST Animation Text
+
+The following text is displayed as a typing animation on first visit. It simulates a motherboard BIOS/POST boot sequence.
+
+```
+  MSI MS-7C56 — American Megatrends UEFI v1.K0
+  BIOS Date: 02/09/2025 — Host: MUITOMALAKOI
+
+  CPU: AMD Ryzen 5 3600 @ 3.60GHz............... [OK]
+  RAM: 16384MB DDR4.............................. [OK]
+  GPU: NVIDIA GeForce RTX 4060 8GB.............. [OK]
+  NVMe: Storage 1024GB.......................... [OK]
+
+  Enumerating expansion modules:
+    labgas-manager [Flask + Supabase].......... [OK]
+    sales-dashboard [Streamlit + Pandas]....... [OK]
+    chatbot-oficina [LangChain + FAISS]........ [OK]
+    human-recognition [OpenCV + sklearn]....... [OK]
+    trajectory-prediction [XGBoost + Folium]... [OK]
+    br-stocks-pipeline [PyTorch + Prophet]..... [OK]
+    tweet-sentiment [BERT + NLTK].............. [OK]
+    app-reviews-qa [Hugging Face].............. [OK]
+    oficina-manager [Next.js + Supabase]....... [OK]
+    paraiso-frames [React + TypeScript]........ [OK]
+    ceara-alternativo [Next.js + Tailwind]..... [OK]
+    sanova-micromedicao [Cohere + Plotly]...... [OK]
+    pro-git-bot [LangChain + Ollama]........... [OK]
+    jobmatch-ai [FastAPI + XGBoost + Docker]... [OK]
+
+  POST complete — all systems nominal.
+  Booting C:\Windows 11 Pro 10.0.26200
+```
+
+### Behavior
+
+| Aspect | Detail |
+|--------|--------|
+| **Font** | Cascadia Code / JetBrains Mono / Fira Code / monospace |
+| **Color** | White text on dark background (`hsl(215,45%,8%)`) |
+| **Typing speed** | 5ms per character |
+| **Section pause** | 350ms between hardware / devices / projects / final |
+| **Sound** | Single 880Hz square wave beep on start (PC speaker style) |
+| **Exit** | AnimatePresence fade-out (opacity 0 + scale 0.95), 600ms |
+| **Skip** | Key press, click, or auto-advance after 1.5s at prompt |
+| **Session** | Skipped on page refresh within same tab via `sessionStorage` |
+
+---
+
 *Documento gerado automaticamente a partir dos arquivos de locale e estrutura do projeto.*
 *Última atualização: Abril 2026*

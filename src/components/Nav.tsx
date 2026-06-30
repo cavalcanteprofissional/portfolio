@@ -105,6 +105,7 @@ export function Nav() {
                 alt="LC"
                 width={32}
                 height={32}
+                loading="lazy"
                 className="h-8 w-auto"
               />
             )}
