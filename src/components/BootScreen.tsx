@@ -27,7 +27,7 @@ const BOOT_LINES = [
   '    jobmatch-ai [FastAPI + XGBoost + Docker]... [OK]',
   '',
   '  POST complete — all systems nominal.',
-  '  Booting C:\\Windows 11 Pro 10.0.26200',
+  '  Booting: Lucas Cavalcante Systems v2.4.1',
 ];
 
 function playBeep() {
@@ -47,11 +47,11 @@ function playBeep() {
   } catch {}
 }
 
-const CHAR_DELAY = 1;
-const LINE_GAP = 3;
-const SECTION_PAUSE = 67;
-const PROMPT_DELAY = 500;
-const AUTO_PROCEED = 1500;
+const CHAR_DELAY = 0;
+const LINE_GAP = 0;
+const SECTION_PAUSE = 10;
+const PROMPT_DELAY = 200;
+const AUTO_PROCEED = 500;
 
 interface BootScreenProps {
   onComplete: () => void;

@@ -478,7 +478,7 @@ The following text is displayed as a typing animation on first visit. It simulat
     jobmatch-ai [FastAPI + XGBoost + Docker]... [OK]
 
   POST complete — all systems nominal.
-  Booting C:\Windows 11 Pro 10.0.26200
+  Booting: Lucas Cavalcante Systems v2.4.1
 ```
 
 ### Behavior
@@ -487,8 +487,8 @@ The following text is displayed as a typing animation on first visit. It simulat
 |--------|--------|
 | **Font** | Cascadia Code / JetBrains Mono / Fira Code / monospace |
 | **Color** | White text on dark background (`hsl(215,45%,8%)`) |
-| **Typing speed** | 5ms per character |
-| **Section pause** | 350ms between hardware / devices / projects / final |
+| **Typing speed** | Instant (0ms per character) |
+| **Section pause** | 10ms between hardware / devices / projects / final |
 | **Sound** | Single 880Hz square wave beep on start (PC speaker style) |
 | **Exit** | AnimatePresence fade-out (opacity 0 + scale 0.95), 600ms |
 | **Skip** | Key press, click, or auto-advance after 1.5s at prompt |
