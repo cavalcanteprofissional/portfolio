@@ -59,7 +59,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
     await expect(page.locator('#hero')).toBeVisible();
     await expect(page.locator('#showcase')).toBeVisible();
     await expect(page.locator('#experience')).toBeVisible();
-    await expect(page.locator('#portfolio')).toBeVisible();
+    await expect(page.locator('#projects')).toBeVisible();
     await expect(page.locator('#skills')).toBeVisible();
     await expect(page.locator('#certifications')).toBeVisible();
     await expect(page.locator('#languages')).toBeVisible();
@@ -69,9 +69,9 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('projetos devem ter links de demo e código', async ({ page }) => {
     await page.goto('/portfolio/');
-    await page.locator('#portfolio').scrollIntoViewIfNeeded();
+    await page.locator('#projects').scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
-    const section = page.locator('#portfolio');
+    const section = page.locator('#projects');
     const demoLinks = section.locator('a[target="_blank"]');
     const count = await demoLinks.count();
     expect(count).toBeGreaterThan(0);

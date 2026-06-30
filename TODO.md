@@ -65,11 +65,12 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 ### ⚪ Baixas
 
 | # | Tarefa | Status |
-|---|--------|--------|
+|----|--------|--------|
 | L1 | Trocar `key={index}` no TechStack por `tech.name` | ✅ |
 | L2 | Inline style do Experience → classe CSS | ✅ |
 | L3 | Juntar imports do Footer num único statement | ✅ |
 | L4 | Version `1.0.0` no package.json | ✅ |
+| R1 | Renomear rota `#portfolio` → `#projects` (Portfolio.tsx, Nav.tsx, e2e) | ✅ |
 
 ---
 

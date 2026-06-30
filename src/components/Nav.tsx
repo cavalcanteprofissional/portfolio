@@ -14,7 +14,7 @@ const languages = [
 const navItems = [
   { key: 'home', href: '#hero', icon: Home },
   { key: 'experience', href: '#experience', icon: Briefcase },
-  { key: 'portfolio', href: '#portfolio', icon: FolderGit2 },
+  { key: 'portfolio', href: '#projects', icon: FolderGit2 },
   { key: 'skills', href: '#skills', icon: Wrench },
   { key: 'showcase', href: '#showcase', icon: Eye },
   { key: 'certifications', href: '#certifications', icon: Award },
