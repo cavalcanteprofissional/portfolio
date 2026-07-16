@@ -9,7 +9,8 @@
 - 🌎 **3 idiomas** — Português, English, Español (seleção manual)
 - 🎯 **Scroll ativo na nav** — destaca a seção conforme você navega
 - 🖼️ **Cards de projeto** com link direto e imagem de capa
-- 📊 **Estatísticas dinâmicas** baseadas em dados reais
+- 💿 **CD Price Tracker** — scraper semanal de preços de CDs com dashboard Next.js
+- 📊 **Estatísticas** — resultados e métricas de carreira
 - ❓ **FAQ** com dados estruturados pra busca do Google
 - ♿ **Acessibilidade** — skip-to-content, reduced-motion, aria-labels
 - 📱 **QR Code** pra acesso mobile rápido

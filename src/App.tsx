@@ -11,7 +11,7 @@ const TechStack = lazy(() => import('./components/TechStack').then(m => ({ defau
 const Experience = lazy(() => import('./components/Experience').then(m => ({ default: m.Experience })));
 const Portfolio = lazy(() => import('./components/Portfolio').then(m => ({ default: m.Portfolio })));
 const Skills = lazy(() => import('./components/Skills').then(m => ({ default: m.Skills })));
-const Showcase = lazy(() => import('./components/Showcase').then(m => ({ default: m.Showcase })));
+// const Showcase = lazy(() => import('./components/Showcase').then(m => ({ default: m.Showcase })));
 const Certifications = lazy(() => import('./components/Certifications').then(m => ({ default: m.Certifications })));
 const Languages = lazy(() => import('./components/Languages').then(m => ({ default: m.Languages })));
 const FAQ = lazy(() => import('./components/FAQ').then(m => ({ default: m.FAQ })));
@@ -60,7 +60,7 @@ function App() {
           <Suspense fallback={<SectionFallback />}><Experience /></Suspense>
           <Suspense fallback={<SectionFallback />}><Portfolio /></Suspense>
           <Suspense fallback={<SectionFallback />}><Skills /></Suspense>
-          <Suspense fallback={<SectionFallback />}><Showcase /></Suspense>
+          {/* <Suspense fallback={<SectionFallback />}><Showcase /></Suspense> */}
           <Suspense fallback={<SectionFallback />}><Certifications /></Suspense>
           <Suspense fallback={<SectionFallback />}><Languages /></Suspense>
           <Suspense fallback={<SectionFallback />}><FAQ /></Suspense>

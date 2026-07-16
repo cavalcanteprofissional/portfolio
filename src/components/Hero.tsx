@@ -45,7 +45,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-xl md:text-2xl text-muted-foreground font-medium"
+              className="text-xl lg:text-lg text-muted-foreground font-medium lg:whitespace-nowrap"
             >
               {t('hero.title')}
             </motion.p>

@@ -17,6 +17,7 @@ import {
   TestTube,
   MessageCircleQuestion,
   ScanSearch,
+  ShoppingCart,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -33,6 +34,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   video: Video,
   'message-circle-question': MessageCircleQuestion,
   'scan-search': ScanSearch,
+  'shopping-cart': ShoppingCart,
 };
 
 interface ProjectCardProps {

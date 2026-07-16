@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Sun, Moon, Menu, X, Globe, ChevronDown, Home, Eye, Briefcase, FolderGit2, Wrench, Award, Languages } from 'lucide-react';
+import { Sun, Moon, Menu, X, Globe, ChevronDown, Home, Briefcase, FolderGit2, Wrench, Award, Languages } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useThemeStore } from '../stores/themeStore';
@@ -16,7 +16,7 @@ const navItems = [
   { key: 'experience', href: '#experience', icon: Briefcase },
   { key: 'portfolio', href: '#projects', icon: FolderGit2 },
   { key: 'skills', href: '#skills', icon: Wrench },
-  { key: 'showcase', href: '#showcase', icon: Eye },
+  // { key: 'showcase', href: '#showcase', icon: Eye },
   { key: 'certifications', href: '#certifications', icon: Award },
   { key: 'languages', href: '#languages', icon: Languages },
 ];

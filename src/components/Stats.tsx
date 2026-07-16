@@ -4,23 +4,14 @@ import { useThemeStore } from '../stores/themeStore';
 import { Award, Users, Briefcase, Clock } from 'lucide-react';
 import projectsData from '../data/projects.json';
 import companiesData from '../data/companies.json';
-import experiencesData from '../data/experiences.json';
 import { translations } from '../i18n';
 
 const certCount = Object.keys(translations.pt.cert).length;
 const projectCount = projectsData.projects.length;
 const clientCount = companiesData.companies.length;
-const years = experiencesData.experiences.reduce(
-  (acc, e) => ({
-    min: Math.min(acc.min, parseInt(e.year)),
-    max: Math.max(acc.max, parseInt(e.year)),
-  }),
-  { min: Infinity, max: -Infinity }
-);
-const yearSpan = years.max - years.min + 1;
 
 const statValues: Record<string, string> = {
-  years: `${yearSpan}+`,
+  years: '6+',
   projects: `${projectCount}+`,
   clients: `${clientCount}+`,
   certifications: `${certCount}+`,

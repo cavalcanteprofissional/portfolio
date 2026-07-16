@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.0] - 2026-07-16
+
+### 🛠️ Ajustes e novo projeto
+
+- 🚫 **Showcase desabilitada** temporariamente — comentada em App.tsx e Nav.tsx, será aprimorada depois
+- 📊 **Stats corrigido** — anos de experiência agora fixo "6+" em vez de cálculo automático (14+)
+- 📏 **Hero title menor no desktop** — fonte reduzida para `text-lg` com `whitespace-nowrap`, sem quebra de linha
+- 💿 **Novo projeto: CD Price Tracker** — scraper semanal de preços de CDs com Python/Playwright, dashboard Next.js + Recharts, Supabase
+- 🖥️ **BootScreen atualizado** — inclui `cd-price-tracker` na lista de módulos enumerados
+- 📄 **CONTENT.md e TODO.md** — documentação atualizada
+
 ## [1.0.0] - 2026-06-15
 
 ### ✅ V1 — Lançamento Inicial

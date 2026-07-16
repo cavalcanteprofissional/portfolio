@@ -139,6 +139,16 @@
       "codeUrl": "https://github.com/cavalcanteprofissional/jobmatch-ai",
       "icon": "scan-search",
       "featured": true
+    },
+    {
+      "id": 15,
+      "titleKey": "project.15.title",
+      "descriptionKey": "project.15.description",
+      "tech": ["Python", "Playwright", "Next.js", "TypeScript", "Supabase", "Recharts", "GitHub Actions"],
+      "demoUrl": "#",
+      "codeUrl": "https://github.com/cavalcanteprofissional/cd-price-tracker",
+      "icon": "shopping-cart",
+      "featured": true
     }
   ]
 }

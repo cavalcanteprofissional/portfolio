@@ -24,7 +24,8 @@ export const translations = {
       "11": { title: "Blog & CMS Portal de Notícias", description: "Sistema CMS com Next. js e Supabase para portal de notícias." },
       "12": { title: "Dashboard Sanova Micromedição", description: "Dashboard Streamlit para análise de micromedição de saneamento com detecção de anomalias e oportunidades de recuperação de receita." },
       "13": { title: "Pro Git QA Bot", description: "Chatbot com RAG para responder perguntas sobre Git usando LangChain e Streamlit." },
-      "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos e vagas de emprego com FastAPI e frontend React." }
+      "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos e vagas de emprego com FastAPI e frontend React." },
+      "15": { title: "CD Price Tracker", description: "Scraper semanal de preços de CDs em Amazon, Mercado Livre e Shopee com dashboard Next.js e gráficos Recharts." }
     },
     experience: {
       current: "Atual",
@@ -119,7 +120,8 @@ export const translations = {
       "11": { title: "News Blog & CMS Portal", description: "CMS system with Next. js and Supabase for news portal." },
       "12": { title: "Sanova Micro-Metering Dashboard", description: "Streamlit dashboard for sanitation micro-metering analysis with anomaly detection and revenue recovery opportunities." },
       "13": { title: "Pro Git QA Bot", description: "RAG chatbot for answering Git questions using LangChain and Streamlit." },
-      "14": { title: "JobMatch AI", description: "End-to-end ML system for intelligent resume-job matching with FastAPI and React frontend." }
+      "14": { title: "JobMatch AI", description: "End-to-end ML system for intelligent resume-job matching with FastAPI and React frontend." },
+      "15": { title: "CD Price Tracker", description: "Weekly CD price scraper across Amazon, Mercado Livre, and Shopee with Next.js dashboard and Recharts charts." }
     },
     experience: {
       current: "Current",
@@ -214,7 +216,8 @@ export const translations = {
       "11": { title: "Blog & CMS Portal de Noticias", description: "Sistema CMS con Next.js y Supabase para portal de noticias." },
       "12": { title: "Dashboard Sanova Micromedición", description: "Dashboard Streamlit para análisis de micromedición de saneamiento con detección de anomalías y oportunidades de recuperación de ingresos." },
       "13": { title: "Pro Git QA Bot", description: "Chatbot RAG para responder preguntas sobre Git usando LangChain y Streamlit." },
-      "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos y ofertas de empleo con FastAPI y frontend React." }
+      "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos y ofertas de empleo con FastAPI y frontend React." },
+      "15": { title: "CD Price Tracker", description: "Scraper semanal de precios de CD en Amazon, Mercado Libre y Shopee con panel Next.js y gráficos Recharts." }
     },
     experience: {
       current: "Actual",

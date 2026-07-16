@@ -175,6 +175,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 12 | `project.12` | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://sanova-micromedicao-dashboard-hlmw3spgxuthzebvxa7thg.streamlit.app/ |
 | 13 | `project.13` | Pro Git QA Bot | https://github.com/cavalcanteprofissional/pro-git-qa-bot | https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/ |
 | 14 | `project.14` | JobMatch AI | https://github.com/cavalcanteprofissional/jobmatch-ai | https://jobmatch-frontend-u6vt.onrender.com |
+| 15 | `project.15` | CD Price Tracker | https://github.com/cavalcanteprofissional/cd-price-tracker | # |
 
 ### Projetos com Links
 
@@ -194,6 +195,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 12 | Dashboard Sanova Micromedição | https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard- | https://sanova-micromedicao-dashboard-hlmw3spgxuthzebvxa7thg.streamlit.app/ |
 | 13 | Pro Git QA Bot | https://github.com/cavalcanteprofissional/pro-git-qa-bot | https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/ |
 | 14 | JobMatch AI | https://github.com/cavalcanteprofissional/jobmatch-ai | https://jobmatch-frontend-u6vt.onrender.com |
+| 15 | CD Price Tracker | https://github.com/cavalcanteprofissional/cd-price-tracker | # |
 
 ---
 

@@ -58,9 +58,17 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | M1 | Code splitting com `React.lazy()` para seções abaixo da dobra | ✅ |
 | M2 | Scripts npm: `test`, `typecheck`, `format` | ✅ |
 | M3 | Corrigir `Companies.tsx` dark mode — dead code removido | ✅ |
-| M4 | Stats derivados dos dados reais em vez de hardcoded | ⏳ |
+| M4 | Stats derivados dos dados reais em vez de hardcoded | ✅ (substituído por fixo 6+) |
 | M5 | Framer Motion respeitar `prefers-reduced-motion` | ✅ |
 | M6 | Showcase description completa no i18n (2 frases como CONTENT.md) | ✅ |
+
+### ⚪ Baixas
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| N3 | Desabilitar seção Showcase temporariamente (removida de App.tsx e Nav) | ✅ |
+| N4 | Corrigir anos experiência no Stats — fixo "6+" em vez de cálculo dinâmico | ✅ |
+| N5 | Adicionar CD Price Tracker (project.15) — projects.json, i18n, Portfolio, BootScreen, CONTENT.md | ✅ |
 
 ### ⚪ Baixas
 
