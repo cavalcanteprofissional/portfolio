@@ -24,14 +24,6 @@ export function Hero() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
-              <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" aria-hidden="true"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              {t('availability.label')}
-            </div>
-
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -40,6 +32,44 @@ export function Hero() {
             >
               {t('hero.name')}
             </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="lg:hidden"
+            >
+              <div className="relative w-48 h-56 mx-auto">
+                <img
+                  src="/portfolio/images/profile/foto-perfil.webp"
+                  alt="Lucas Cavalcante"
+                  width={192}
+                  height={224}
+                  loading="eager"
+                  className="w-full h-full object-cover rounded-2xl"
+                />
+                <div className="absolute -bottom-5 -right-3 w-20 h-20 rounded-full flex items-center justify-center">
+                  <img
+                    src={theme === 'dark'
+                      ? '/portfolio/images/navbar/logo-navbar-darkmode.png'
+                      : '/portfolio/images/navbar/logo-navbar-lightmode.png'}
+                    alt="LC"
+                    width={56}
+                    height={56}
+                    loading="lazy"
+                    className="w-14 h-14"
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
+              <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" aria-hidden="true"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              {t('availability.label')}
+            </div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -106,7 +136,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="relative"
+            className="relative hidden lg:block"
           >
             <div className="relative w-64 h-72 md:w-88 md:h-96 mx-auto">
               <img

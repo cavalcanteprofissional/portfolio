@@ -96,7 +96,11 @@ export function Nav() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-soft" role="navigation" aria-label={t('acessibilidade.navAria')}>
       <div className="section-container relative z-10">
         <div className="flex items-center justify-between h-16">
-          <a href="#hero" className="flex items-center justify-center">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center justify-center cursor-pointer"
+            aria-label="Voltar ao topo"
+          >
             {mounted && (
               <img
                 src={theme === 'dark' 
@@ -109,7 +113,7 @@ export function Nav() {
                 className="h-8 w-auto"
               />
             )}
-          </a>
+          </button>
 
           <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {

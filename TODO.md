@@ -75,6 +75,8 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | N9 | Mobile UX: touch-pan-y no scroll horizontal do Experience | ✅ |
 | N10 | Mobile UX: reduzir py-24 → py-16 md:py-24 em seções leves (Languages) | ✅ |
 | N11 | Mobile UX: TechStack ícones 64px uniformes (w-16 h-16) + w-8 h-8 | ✅ |
+| N12 | Hero: reordenar mobile — Nome → Foto → demais elementos (availability/title/desc/buttons) | ✅ |
+| N13 | Nav: logo agora faz smooth scroll ao topo (igual ScrollToTop) | ✅ |
 
 ### ⚪ Baixas
 
