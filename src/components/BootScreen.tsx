@@ -31,10 +31,8 @@ const BOOT_LINES = [
   '  Booting: Lucas Cavalcante Systems v2.4.1',
 ];
 
-function playBeep() {
+function createBeep(ctx: AudioContext) {
   try {
-    const ctx = (window as any).__bootAudioCtx || new AudioContext();
-    ctx.resume();
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
@@ -66,7 +64,22 @@ export function BootScreen({ onComplete }: BootScreenProps) {
   onCompleteRef.current = onComplete;
 
   useEffect(() => {
-    playBeep();
+    const ctx = new AudioContext();
+
+    const handleGesture = () => {
+      ctx.resume().then(() => createBeep(ctx));
+      window.removeEventListener('keydown', handleGesture);
+      window.removeEventListener('click', handleGesture);
+    };
+
+    window.addEventListener('keydown', handleGesture, { once: true });
+    window.addEventListener('click', handleGesture, { once: true });
+
+    return () => {
+      window.removeEventListener('keydown', handleGesture);
+      window.removeEventListener('click', handleGesture);
+      ctx.close();
+    };
   }, []);
 
   useEffect(() => {

@@ -77,6 +77,7 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | N11 | Mobile UX: TechStack ícones 64px uniformes (w-16 h-16) + w-8 h-8 | ✅ |
 | N12 | Hero: reordenar mobile — Nome → Foto → demais elementos (availability/title/desc/buttons) | ✅ |
 | N13 | Nav: logo agora faz smooth scroll ao topo (igual ScrollToTop) | ✅ |
+| N14 | BootScreen: AudioContext adiado para primeiro gesto do usuário (elimina warning) | ✅ |
 
 ### ⚪ Baixas
 
