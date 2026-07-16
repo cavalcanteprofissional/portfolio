@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 import { useThemeStore } from '../stores/themeStore';
 import {
   FaPython,
@@ -86,6 +87,7 @@ const itemVariants = {
 export function TechStack() {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const [activeTech, setActiveTech] = useState<string | null>(null);
 
   return (
     <section id="techstack" className="py-24 bg-muted/20 overflow-hidden">
@@ -120,17 +122,20 @@ export function TechStack() {
               className="relative group"
             >
               <motion.div
-                className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all cursor-pointer"
+                onClick={() => setActiveTech(activeTech === tech.name ? null : tech.name)}
+                className="flex items-center justify-center w-16 h-16 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all cursor-pointer"
               >
                 <tech.icon
-                  className="w-7 h-7 sm:w-8 sm:h-8 transition-transform"
+                  className="w-8 h-8 transition-transform"
                 />
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 whileHover={{ opacity: 1, y: 0 }}
-                className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10"
+                className={`absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded whitespace-nowrap transition-opacity pointer-events-none z-10 ${
+                  activeTech === tech.name ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                }`}
               >
                 {tech.name}
               </motion.div>

@@ -67,7 +67,7 @@ export function FAQ() {
                     aria-expanded={isOpen}
                   >
                     <div className="flex items-start gap-3 pr-4">
-                      <HelpCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <HelpCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
                       <span className="font-medium text-sm sm:text-base">
                         {t(item.questionKey)}
                       </span>
@@ -76,7 +76,7 @@ export function FAQ() {
                       animate={{ rotate: isOpen ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                      <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" aria-hidden="true" />
                     </motion.div>
                   </button>
 

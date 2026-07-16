@@ -136,7 +136,7 @@ export function Certifications() {
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2.5 rounded-full bg-gradient-blue text-white">
-                    <IconComponent className="w-5 h-5" />
+                    <IconComponent className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
                     {t(cert.yearKey)}
@@ -155,7 +155,7 @@ export function Certifications() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-medium"
                     >
-                      <ExternalLink className="w-3 h-3" />
+                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
                       {t('buttons.view')}
                     </a>
                   ) : (

@@ -200,7 +200,7 @@ export function Skills() {
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 rounded-full bg-gradient-blue text-white">
-                      <IconComponent className="w-5 h-5" />
+                      <IconComponent className="w-5 h-5" aria-hidden="true" />
                     </div>
                     <h3 className="font-semibold text-left">{t(category.titleKey)}</h3>
                   </div>
@@ -208,7 +208,7 @@ export function Skills() {
                     animate={{ rotate: isExpanded ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                    <ChevronDown className="w-5 h-5 text-muted-foreground" aria-hidden="true" />
                   </motion.div>
                 </button>
 
@@ -252,7 +252,7 @@ export function Skills() {
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2.5 rounded-full bg-gradient-blue text-white">
-              <Brain className="w-5 h-5" />
+              <Brain className="w-5 h-5" aria-hidden="true" />
             </div>
             <h3 className="text-xl font-semibold">{t('skills.soft')}</h3>
           </div>

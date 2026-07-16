@@ -67,7 +67,7 @@ export function Contact() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className="w-5 h-5" aria-hidden="true" />
                     <span>{t(btn.labelKey)}</span>
                   </motion.a>
                 );

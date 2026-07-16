@@ -11,6 +11,15 @@
 - 🖥️ **BootScreen atualizado** — inclui `cd-price-tracker` na lista de módulos enumerados
 - 📄 **CONTENT.md e TODO.md** — documentação atualizada
 
+### 📱 Mobile UX — Touch Targets, Acessibilidade e Layout
+
+- 👆 **Touch targets maiores** — Hero botões `px-3 py-2` → `px-4 py-3`, Nav `p-2` → `p-2.5` (toggles, hamburger, idioma)
+- ♿ **`aria-hidden`** em todos os ícones decorativos (50+ ícones lucide-react) — leitores de tela ignoram decoração
+- 📍 **TechStack tooltip adaptável** — hover no desktop, click/tap no mobile (com `useState`)
+- 🖱️ **`touch-pan-y`** no Experience — gesto horizontal não conflita com scroll vertical
+- 📏 **Padding responsivo** — Languages: `py-24` → `py-16 md:py-24` (menos espaço vertical no mobile)
+- 🔲 **Ícones TechStack uniformes** — `w-16 h-16` em todas as telas (64px), ícones `w-8 h-8`
+
 ## [1.0.0] - 2026-06-15
 
 ### ✅ V1 — Lançamento Inicial

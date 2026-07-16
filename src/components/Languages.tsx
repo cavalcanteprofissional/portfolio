@@ -29,7 +29,7 @@ export function Languages() {
   const { theme } = useThemeStore();
 
   return (
-    <section id="languages" className="py-24">
+    <section id="languages" className="py-16 md:py-24">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -79,6 +79,7 @@ export function Languages() {
                           ? starColors[lang.stars as keyof typeof starColors]
                           : 'text-muted/30'
                       } fill-current`}
+                      aria-hidden="true"
                     />
                   </motion.div>
                 ))}

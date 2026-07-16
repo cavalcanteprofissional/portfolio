@@ -138,9 +138,9 @@ export function Nav() {
                 className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-secondary transition-colors text-sm font-medium"
                 aria-label="Select language"
               >
-                <Globe className="w-4 h-4" />
+                <Globe className="w-4 h-4" aria-hidden="true" />
                 <span className="w-6">{currentLang.toUpperCase()}</span>
-                <ChevronDown className={`w-3 h-3 transition-transform ${langMenuOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3 h-3 transition-transform ${langMenuOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
               </button>
               
               {langMenuOpen && (
@@ -163,21 +163,21 @@ export function Nav() {
             
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg hover:bg-secondary transition-colors"
+              className="p-2.5 rounded-lg hover:bg-secondary transition-colors"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
-                <Sun className="w-5 h-5" />
+                <Sun className="w-5 h-5" aria-hidden="true" />
               ) : (
-                <Moon className="w-5 h-5" />
+                <Moon className="w-5 h-5" aria-hidden="true" />
               )}
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
+              className="md:hidden p-2.5 rounded-lg hover:bg-secondary transition-colors"
               aria-label="Toggle menu"
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
             </button>
           </div>
         </div>
@@ -222,7 +222,7 @@ export function Nav() {
                           : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
                       }`}
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="w-4 h-4" aria-hidden="true" />
                       {t(`nav.${item.key}`)}
                       {isActive && (
                         <motion.div

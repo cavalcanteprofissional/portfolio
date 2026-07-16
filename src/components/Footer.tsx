@@ -44,7 +44,7 @@ export function Footer() {
                 className="p-2.5 rounded-full bg-secondary/30 hover:bg-gradient-blue hover:text-white transition-all group shadow-sm hover:shadow-soft"
                 title={link.name}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-5 h-5" aria-hidden="true" />
               </a>
             );
           })}

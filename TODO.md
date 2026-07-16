@@ -69,6 +69,12 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | N3 | Desabilitar seção Showcase temporariamente (removida de App.tsx e Nav) | ✅ |
 | N4 | Corrigir anos experiência no Stats — fixo "6+" em vez de cálculo dinâmico | ✅ |
 | N5 | Adicionar CD Price Tracker (project.15) — projects.json, i18n, Portfolio, BootScreen, CONTENT.md | ✅ |
+| N6 | Mobile UX: aumentar touch targets Hero (px-3 py-2 → px-4 py-3) e Nav (p-2 → p-2.5) | ✅ |
+| N7 | Mobile UX: aria-hidden em todos os ícones decorativos (lucide-react) | ✅ |
+| N8 | Mobile UX: TechStack tooltip com suporte a click/touch | ✅ |
+| N9 | Mobile UX: touch-pan-y no scroll horizontal do Experience | ✅ |
+| N10 | Mobile UX: reduzir py-24 → py-16 md:py-24 em seções leves (Languages) | ✅ |
+| N11 | Mobile UX: TechStack ícones 64px uniformes (w-16 h-16) + w-8 h-8 | ✅ |
 
 ### ⚪ Baixas
 

@@ -61,7 +61,7 @@ export function Stats() {
                   transition={{ delay: index * 0.1 + 0.2, type: 'spring' }}
                   className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 mb-4"
                 >
-                  <Icon className="w-6 h-6 text-primary" />
+                  <Icon className="w-6 h-6 text-primary" aria-hidden="true" />
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0 }}

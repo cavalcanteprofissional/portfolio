@@ -64,7 +64,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
             className="w-18 h-18 rounded-soft-xl bg-white/90 dark:bg-white/10 shadow-lg flex items-center justify-center backdrop-blur-sm"
             whileHover={{ scale: 1.1, rotate: 5 }}
           >
-            <Icon className="w-9 h-9 text-primary" />
+             <Icon className="w-9 h-9 text-primary" aria-hidden="true" />
           </motion.div>
           {project.featured && (
             <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-gradient-blue text-white text-xs font-semibold">
@@ -102,7 +102,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4" aria-hidden="true" />
               {t('buttons.demo')}
             </motion.a>
             <motion.a
@@ -113,7 +113,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Github className="w-4 h-4" />
+              <Github className="w-4 h-4" aria-hidden="true" />
               {t('buttons.code')}
             </motion.a>
           </div>

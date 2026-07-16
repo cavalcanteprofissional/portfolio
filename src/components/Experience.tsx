@@ -82,7 +82,7 @@ export function Experience() {
         <div className="relative">
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide cursor-grab active:cursor-grabbing"
+            className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-y"
           >
             {sortedExperiences.map((exp, index) => (
               <motion.div

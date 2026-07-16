@@ -26,7 +26,7 @@ export function Hero() {
           >
             <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" aria-hidden="true"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
               {t('availability.label')}
@@ -67,36 +67,36 @@ export function Hero() {
             >
               <a
                 href={`mailto:${t('contact.email')}`}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-gradient-blue text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity"
+                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full bg-gradient-blue text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity"
               >
-                <Mail className="w-3.5 h-3.5" />
+                <Mail className="w-3.5 h-3.5" aria-hidden="true" />
                 {t('contact.email')}
               </a>
               <a
                 href={t('contact.linkedin')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
+                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
               >
-                <Linkedin className="w-3.5 h-3.5" />
+                <Linkedin className="w-3.5 h-3.5" aria-hidden="true" />
                 LinkedIn
               </a>
               <a
                 href={t('contact.github')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
+                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
               >
-                <Github className="w-3.5 h-3.5" />
+                <Github className="w-3.5 h-3.5" aria-hidden="true" />
                 GitHub
               </a>
               <a
                 href={t('hero.resume')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
+                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
               >
-                <FileText className="w-3.5 h-3.5" />
+                <FileText className="w-3.5 h-3.5" aria-hidden="true" />
                 {t('buttons.resume')}
               </a>
             </motion.div>
