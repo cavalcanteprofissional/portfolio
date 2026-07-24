@@ -104,8 +104,8 @@ export function Nav() {
             {mounted && (
               <img
                 src={theme === 'dark' 
-                  ? '/portfolio/images/navbar/logo-navbar-darkmode.png' 
-                  : '/portfolio/images/navbar/logo-navbar-lightmode.png'}
+                  ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png' 
+                  : '/portfolio-cavalcante/images/navbar/logo-navbar-lightmode.png'}
                 alt="LC"
                 width={32}
                 height={32}

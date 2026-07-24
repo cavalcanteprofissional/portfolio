@@ -3,25 +3,25 @@
     {
       "id": "mako",
       "name": "Mako",
-      "logo": "/portfolio/companies/mako.svg",
+      "logo": "/portfolio-cavalcante/companies/mako.svg",
       "website": "https://mako.ind.br/"
     },
     {
       "id": "iep",
       "name": "IEP",
-      "logo": "/portfolio/companies/iep.svg",
+      "logo": "/portfolio-cavalcante/companies/iep.svg",
       "website": "https://portaliep.org.br/"
     },
     {
       "id": "iseletrica",
       "name": "ISElétrica",
-      "logo": "/portfolio/companies/iseletrica.svg",
+      "logo": "/portfolio-cavalcante/companies/iseletrica.svg",
       "website": "https://iseletrica.com.br/"
     },
     {
       "id": "suprimmil",
       "name": "Grupo Suprimmil",
-      "logo": "/portfolio/companies/grupo-suprimmil.svg",
+      "logo": "/portfolio-cavalcante/companies/grupo-suprimmil.svg",
       "website": "https://suprimmil.com.br/"
     }
   ]

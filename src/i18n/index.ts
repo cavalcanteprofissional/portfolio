@@ -4,11 +4,11 @@ import { initReactI18next } from 'react-i18next';
 export const translations = {
   pt: {
     nav: { home: "Início", showcase: "Showcase", experience: "Experiência", portfolio: "Projetos", skills: "Habilidades", certifications: "Certificações", languages: "Idiomas", menu: "Menu", swipeToClose: "Deslize para fechar" },
-    hero: { name: "Lucas Cavalcante", title: "Analista de Dados | IA & Machine Learning | Visão Computacional", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM.", resume: "/portfolio/documents/resumes/cv_br_lucas_cavalcante.pdf" },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Dados | IA & Machine Learning | Visão Computacional", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM.", resume: "/portfolio-cavalcante/documents/resumes/cv_br_lucas_cavalcante.pdf" },
     contact: { location: "Fortaleza - CE", phone: "(85) 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículo", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículo" },
     sections: { experience: "Experiência Profissional", portfolio: "Projetos em Destaque", skills: "Habilidades Técnicas", certifications: "Certificações", languages: "Idiomas" },
-    portfolio: { subtitle: "Conheça alguns dos meus projetos recentes em Data Science e AI", featured: "Implementado" },
+    portfolio: { subtitle: "Conheça alguns dos meus projetos recentes em Data Science e AI", featured: "Implementado", status: { concluido: "Concluído", andamento: "Em andamento" } },
     project: {
       "0": { title: "LabGas Manager", description: "Dashboard para gestão de cilindro de gás em laboratório de química." },
       "1": { title: "Dashboard de Análise de Vendas", description: "Dashboard interativo com Streamlit para análise de vendas." },
@@ -25,7 +25,8 @@ export const translations = {
       "12": { title: "Dashboard Sanova Micromedição", description: "Dashboard Streamlit para análise de micromedição de saneamento com detecção de anomalias e oportunidades de recuperação de receita." },
       "13": { title: "Pro Git QA Bot", description: "Chatbot com RAG para responder perguntas sobre Git usando LangChain e Streamlit." },
       "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos e vagas de emprego com FastAPI e frontend React." },
-      "15": { title: "CD Price Tracker", description: "Scraper semanal de preços de CDs em Amazon, Mercado Livre e Shopee com dashboard Next.js e gráficos Recharts." }
+      "15": { title: "CD Price Tracker", description: "Scraper semanal de preços de CDs em Amazon, Mercado Livre e Shopee com dashboard Next.js e gráficos Recharts." },
+      "16": { title: "LinkTree Cavalcante", description: "Agregador de links pessoais com dashboard de analytics, feed do Instagram, modo escuro e tema 3D interativo com Three.js." }
     },
     experience: {
       current: "Atual",
@@ -100,11 +101,11 @@ export const translations = {
   },
   en: {
     nav: { home: "Home", showcase: "Showcase", experience: "Experience", portfolio: "Projects", skills: "Skills", certifications: "Certifications", languages: "Languages", menu: "Menu", swipeToClose: "Swipe to close" },
-    hero: { name: "Lucas Cavalcante", title: "Data Analyst | AI & Machine Learning | Computer Vision", description: "Data Analyst with experience in AI, automation, and digital marketing projects. Specialized in developing chatbots, interactive dashboards, time series and geospatial data pipelines, SEO/SEM strategies implementation, and delivering data-driven insights for business decision-making.", resume: "/portfolio/documents/resumes/cv_en_lucas_cavalcante.pdf" },
+    hero: { name: "Lucas Cavalcante", title: "Data Analyst | AI & Machine Learning | Computer Vision", description: "Data Analyst with experience in AI, automation, and digital marketing projects. Specialized in developing chatbots, interactive dashboards, time series and geospatial data pipelines, SEO/SEM strategies implementation, and delivering data-driven insights for business decision-making.", resume: "/portfolio-cavalcante/documents/resumes/cv_en_lucas_cavalcante.pdf" },
     contact: { location: "Fortaleza - CE, Brazil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Resume", view: "View Certificate", demo: "Demo", code: "Code", resume: "Resume" },
     sections: { experience: "Professional Experience", portfolio: "Featured Projects", skills: "Technical Skills", certifications: "Certifications", languages: "Languages" },
-    portfolio: { subtitle: "Check out some of my recent Data Science and AI projects", featured: "Featured" },
+    portfolio: { subtitle: "Check out some of my recent Data Science and AI projects", featured: "Featured", status: { concluido: "Completed", andamento: "In progress" } },
     project: {
       "0": { title: "LabGas Manager", description: "Dashboard for gas cylinder management in chemistry lab." },
       "1": { title: "Sales Analysis Dashboard", description: "Interactive dashboard with Streamlit for sales analysis." },
@@ -121,7 +122,8 @@ export const translations = {
       "12": { title: "Sanova Micro-Metering Dashboard", description: "Streamlit dashboard for sanitation micro-metering analysis with anomaly detection and revenue recovery opportunities." },
       "13": { title: "Pro Git QA Bot", description: "RAG chatbot for answering Git questions using LangChain and Streamlit." },
       "14": { title: "JobMatch AI", description: "End-to-end ML system for intelligent resume-job matching with FastAPI and React frontend." },
-      "15": { title: "CD Price Tracker", description: "Weekly CD price scraper across Amazon, Mercado Livre, and Shopee with Next.js dashboard and Recharts charts." }
+      "15": { title: "CD Price Tracker", description: "Weekly CD price scraper across Amazon, Mercado Livre, and Shopee with Next.js dashboard and Recharts charts." },
+      "16": { title: "LinkTree Cavalcante", description: "Personal link aggregator with analytics dashboard, Instagram feed, dark mode, and interactive 3D theme with Three.js." }
     },
     experience: {
       current: "Current",
@@ -196,11 +198,11 @@ export const translations = {
   },
   es: {
     nav: { home: "Inicio", showcase: "Showcase", experience: "Experiencia", portfolio: "Proyectos", skills: "Habilidades", certifications: "Certificaciones", languages: "Idiomas", menu: "Menú", swipeToClose: "Desliza para cerrar" },
-    hero: { name: "Lucas Cavalcante", title: "Analista de Datos | IA & Machine Learning | Visión Computacional", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital. Especializado en el desarrollo de chatbots, dashboards interactivos, pipelines de datos de series temporales y geoespaciales, e implementación de estrategias SEO/SEM.", resume: "/portfolio/documents/resumes/cv_es_lucas_cavalcante.pdf" },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Datos | IA & Machine Learning | Visión Computacional", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital. Especializado en el desarrollo de chatbots, dashboards interactivos, pipelines de datos de series temporales y geoespaciales, e implementación de estrategias SEO/SEM.", resume: "/portfolio-cavalcante/documents/resumes/cv_es_lucas_cavalcante.pdf" },
     contact: { location: "Fortaleza - CE, Brasil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículum", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículum" },
     sections: { experience: "Experiencia Profesional", portfolio: "Proyectos Destacados", skills: "Habilidades Técnicas", certifications: "Certificaciones", languages: "Idiomas" },
-    portfolio: { subtitle: "Conoce algunos de mis proyectos recientes en Data Science e IA", featured: "Destacado" },
+    portfolio: { subtitle: "Conoce algunos de mis proyectos recientes en Data Science e IA", featured: "Destacado", status: { concluido: "Completado", andamento: "En progreso" } },
     project: {
       "0": { title: "LabGas Manager", description: "Dashboard para gestión de gas en laboratorio." },
       "1": { title: "Dashboard de Análisis de Ventas", description: "Dashboard interactivo con Streamlit." },
@@ -217,7 +219,8 @@ export const translations = {
       "12": { title: "Dashboard Sanova Micromedición", description: "Dashboard Streamlit para análisis de micromedición de saneamiento con detección de anomalías y oportunidades de recuperación de ingresos." },
       "13": { title: "Pro Git QA Bot", description: "Chatbot RAG para responder preguntas sobre Git usando LangChain y Streamlit." },
       "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos y ofertas de empleo con FastAPI y frontend React." },
-      "15": { title: "CD Price Tracker", description: "Scraper semanal de precios de CD en Amazon, Mercado Libre y Shopee con panel Next.js y gráficos Recharts." }
+      "15": { title: "CD Price Tracker", description: "Scraper semanal de precios de CD en Amazon, Mercado Libre y Shopee con panel Next.js y gráficos Recharts." },
+      "16": { title: "LinkTree Cavalcante", description: "Agregador de enlaces personales con dashboard de analytics, feed de Instagram, modo oscuro y tema 3D interactivo con Three.js." }
     },
     experience: {
       current: "Actual",

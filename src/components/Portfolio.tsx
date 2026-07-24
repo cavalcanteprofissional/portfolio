@@ -18,6 +18,7 @@ import {
   MessageCircleQuestion,
   ScanSearch,
   ShoppingCart,
+  Link2,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -35,6 +36,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   'message-circle-question': MessageCircleQuestion,
   'scan-search': ScanSearch,
   'shopping-cart': ShoppingCart,
+  'link-2': Link2,
 };
 
 interface ProjectCardProps {
@@ -59,18 +61,32 @@ function ProjectCard({ project, index }: ProjectCardProps) {
         whileHover={{ y: -8 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="relative h-44 bg-gradient-blue-light dark:bg-gradient-blue-dark flex items-center justify-center overflow-hidden">
+<div className="relative h-44 bg-gradient-blue-light dark:bg-gradient-blue-dark flex items-center justify-center overflow-hidden">
           <motion.div
             className="w-18 h-18 rounded-soft-xl bg-white/90 dark:bg-white/10 shadow-lg flex items-center justify-center backdrop-blur-sm"
             whileHover={{ scale: 1.1, rotate: 5 }}
           >
              <Icon className="w-9 h-9 text-primary" aria-hidden="true" />
           </motion.div>
-          {project.featured && (
-            <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-gradient-blue text-white text-xs font-semibold">
-              {t('portfolio.featured')}
-            </div>
-          )}
+          <div className="absolute top-4 right-4">
+            {project.status === "andamento" ? (
+              <div className="px-3 py-1.5 rounded-full bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30 text-xs font-semibold flex items-center gap-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75" aria-hidden="true" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500" />
+                </span>
+                {t('portfolio.status.andamento')}
+              </div>
+            ) : (
+              <div className="px-3 py-1.5 rounded-full bg-green-500/20 text-green-600 dark:text-green-400 border border-green-500/30 text-xs font-semibold flex items-center gap-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" aria-hidden="true" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                </span>
+                {t('portfolio.status.concluido')}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="p-5 sm:p-6 flex-1 flex flex-col">

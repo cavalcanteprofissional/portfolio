@@ -1,21 +1,23 @@
-# 👨‍💻 Portfólio de Lucas Cavalcante
+# 👨‍💻 Portfolio-cavalcante
 
-**Data Analyst & AI Specialist** — meu cantinho na web pra mostrar projetos, experiências e um pouco do que sei fazer.
+**Data Analyst & AI Specialist** — meu cantinho na web onde mostro projetos, experimentos e um pouco do que sei fazer com dados, IA e código.
 
 ## ✨ O que tem por aqui
 
-- 🖥️ **BootScreen estilo BIOS** — animação de boot com digitação e beep (sessão única, pula no refresh)
-- 🌓 **Modo escuro/claro** — com detecção automática
-- 🌎 **3 idiomas** — Português, English, Español (seleção manual)
-- 🎯 **Scroll ativo na nav** — destaca a seção conforme você navega
-- 🖼️ **Cards de projeto** com link direto e imagem de capa
-- 💿 **CD Price Tracker** — scraper semanal de preços de CDs com dashboard Next.js
-- 📊 **Estatísticas** — resultados e métricas de carreira
-- ❓ **FAQ** com dados estruturados pra busca do Google
+- 🖥️ **BootScreen estilo BIOS** — animação de boot com digitação e beep (só uma vez, depois pula direto)
+- 🌓 **Modo escuro/claro** — com detecção automática do sistema
+- 🌎 **3 idiomas** — Português, English, Español
+- 🎯 **Nav com scroll ativo** — destaca a seção enquanto você navega
+- 🖼️ **Cards de projeto** com link pra demo, código e status (🟢 concluído / 🟡 em andamento)
+- 🏷️ **Badges de progresso** — indicador visual com circle glow para cada projeto
+- 📊 **TechStack verdadeiro** — baseado nos projetos reais do GitHub, sem firula
+- 💿 **CD Price Tracker** — scraper semanal de preços de CDs
+- 🔗 **LinkTree Cavalcante** — agregador de links com dashboard e analytics
+- ❓ **FAQ** com dados estruturados (aparece na busca do Google)
 - ♿ **Acessibilidade** — skip-to-content, reduced-motion, aria-labels
 - 📱 **QR Code** pra acesso mobile rápido
-- 🔗 **Preview no WhatsApp** — card personalizado ao compartilhar o link
-- ⚡ **Performance** — lazy loading, code splitting, sourcemaps desligados, WebP otimizado
+- 🔗 **Preview bonito no WhatsApp** ao compartilhar o link
+- ⚡ **Performance** — lazy loading, code splitting, WebP otimizado
 
 ## 🛠️ Tecnologias
 

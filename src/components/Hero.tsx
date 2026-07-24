@@ -13,6 +13,12 @@ export function Hero() {
       className="min-h-screen pt-20 md:pt-24 pb-16 flex items-center relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-blue-light dark:bg-gradient-blue-dark opacity-50" />
+      <img
+        src="/portfolio-cavalcante/images/map/fortaleza-blueprint.svg"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-10 dark:opacity-5"
+      />
       <div className="absolute top-40 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-40 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px]" />
 
@@ -41,7 +47,7 @@ export function Hero() {
             >
               <div className="relative w-48 h-56 mx-auto">
                 <img
-                  src="/portfolio/images/profile/foto-perfil.webp"
+                  src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
                   alt="Lucas Cavalcante"
                   width={192}
                   height={224}
@@ -51,8 +57,8 @@ export function Hero() {
                 <div className="absolute -bottom-5 -right-3 w-20 h-20 rounded-full flex items-center justify-center">
                   <img
                     src={theme === 'dark'
-                      ? '/portfolio/images/navbar/logo-navbar-darkmode.png'
-                      : '/portfolio/images/navbar/logo-navbar-lightmode.png'}
+                      ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png'
+                      : '/portfolio-cavalcante/images/navbar/logo-navbar-lightmode.png'}
                     alt="LC"
                     width={56}
                     height={56}
@@ -140,7 +146,7 @@ export function Hero() {
           >
             <div className="relative w-64 h-72 md:w-88 md:h-96 mx-auto">
               <img
-                src="/portfolio/images/profile/foto-perfil.webp"
+                src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
                 alt="Lucas Cavalcante"
                 width={288}
                 height={320}
@@ -150,8 +156,8 @@ export function Hero() {
               <div className="absolute -bottom-8 -right-4 w-28 h-28 md:w-32 md:h-32 rounded-full flex items-center justify-center">
                 <img
                   src={theme === 'dark'
-                    ? '/portfolio/images/navbar/logo-navbar-darkmode.png'
-                    : '/portfolio/images/navbar/logo-navbar-lightmode.png'}
+                    ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png'
+                    : '/portfolio-cavalcante/images/navbar/logo-navbar-lightmode.png'}
                   alt="LC"
                   width={80}
                   height={80}

@@ -1,6 +1,35 @@
 # Changelog
 
-## [1.1.0] - 2026-07-16
+## [1.3.0] - 2026-07-24
+
+### 🏷️ Status badges nos cards de projeto
+
+- 🔴🟢 Badges de "Concluído" (verde) e "Em andamento" (amarelo) com circle glow animado
+- 🗑️ Tag "Implementado" removida dos cards
+- 📦 Favicon substituído pelo mesmo do LinkTree
+- 🔄 Cards reordenados do mais recente para o mais antigo
+- ➕ Novo projeto: **LinkTree Cavalcante** — agregador de links com dashboard, analytics e 3D
+- 📝 Status atualizados: ERP Oficina, Paraiso Frames, Blog CMS, CD Price Tracker como "Em andamento"
+- 📄 CONTENT.md atualizado com status e novo projeto
+
+## [1.2.0] - 2026-07-24
+
+### 📦 Repositório renomeado para `portfolio-cavalcante`
+
+- 🏷️ Repositório renomeado de `portfolio` → `portfolio-cavalcante`
+- 🔗 Base path do Vite atualizado para `/portfolio-cavalcante/`
+- 🌐 Homepage, OG tags e Schema.org redirecionados para o novo URL
+- 🔄 Remote local atualizado
+
+### 🧰 TechStack baseado em projetos reais
+
+- 🗑️ **Removidas**: Keras, AWS, Azure, Google Cloud, MySQL, MongoDB, Firebase, Figma, Canva, Jira, Trello, Linux — sem evidência de uso em projetos
+- ➕ **Adicionadas**: TypeScript, Next.js, Tailwind CSS, Flask, FastAPI, LangChain, HuggingFace, OpenCV, Plotly, GitHub Actions, Vite, Vercel, Power BI
+- 🎯 Agora reflete fielmente as stacks dos 15+ projetos do GitHub
+
+### 🎨 Hero background
+
+- 🗺️ Mapa azul de Fortaleza adicionado como background sutíl (`opacity-10 dark:opacity-5`)
 
 ### 🛠️ Ajustes e novo projeto
 

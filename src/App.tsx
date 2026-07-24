@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useThemeStore } from './stores/themeStore';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen } from './components';
+import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen, PoolEffect } from './components';
 import './i18n';
 
 const Companies = lazy(() => import('./components/Companies').then(m => ({ default: m.Companies })));
@@ -51,6 +51,8 @@ function App() {
           {t('acessibilidade.skipToContent')}
         </a>
         <Nav />
+
+        <PoolEffect />
 
         <main id="main-content" className="pb-20">
           <Hero />

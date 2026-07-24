@@ -91,5 +91,30 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 
 ---
 
+### 🌟 PoolEffect — Glow Background com Mouse Tracking
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| P1 | Criar `PoolEffect.tsx` — radial-gradient azul seguindo o mouse com lerp suave | ✅ |
+| P2 | Export no barrel `components/index.ts` | ✅ |
+| P3 | Integrar no `App.tsx` antes do `<main>` | ✅ |
+| P4 | Usar `hsl(var(--primary) / X)` para alinhar com tema claro/escuro | ✅ |
+| P5 | Verificar typecheck e build | ✅ |
+
+---
+
+### 🗺️ Mapa Blueprint de Fortaleza no Hero
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| M1 | Mover SVG para `public/images/map/fortaleza-blueprint.svg` | ✅ |
+| M2 | Adicionar como background no Hero com opacidade (10% light / 5% dark) | ✅ |
+| M3 | Adicionar location card (Fortaleza/CE) na coluna direita (desktop) | ✅ |
+| M4 | Trocar cor do ping dot de verde para `bg-primary` | ✅ |
+| M5 | Reorganizar Hero: unificar imports, remover foto duplicada, mobile/desktop | ✅ |
+| M6 | Verificar typecheck e build | ✅ |
+
+---
+
 ## V1 Concluída (17 tarefas)
 - FAQ JSON-LD, icon map, dead code, Showcase section, Nav ativo, overlay, scroll-to-top, divisores, card width, dark mode logos, skip-to-content, reduced-motion, Nav/Hero separados, Playwright E2E, OG card image (WhatsApp thumbnail), robots.txt (permite facebookexternalhit), migrar URLs do domínio personalizado para github.io

@@ -1,144 +1,15 @@
 {
   "projects": [
     {
-      "id": 0,
-      "titleKey": "project.0.title",
-      "descriptionKey": "project.0.description",
-      "tech": ["Python", "Flask", "Jinja2", "Supabase"],
-      "demoUrl": "https://labgas-manager.vercel.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/labgas-manager",
-      "icon": "testtube",
-      "featured": true
-    },
-    {
-      "id": 1,
-      "titleKey": "project.1.title",
-      "descriptionKey": "project.1.description",
-      "tech": ["Python", "Streamlit", "Plotly", "Pandas"],
-      "demoUrl": "https://dashboardselling-xguerbqzokekuhkezhgbdx.streamlit.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/dashboard_selling",
-      "icon": "chart-line",
-      "featured": true
-    },
-    {
-      "id": 2,
-      "titleKey": "project.2.title",
-      "descriptionKey": "project.2.description",
-      "tech": ["Python", "Streamlit", "LangChain", "FAISS", "Ollama Cloud", "Supabase"],
-      "demoUrl": "https://chatbotoficina-5c2dsw4ekk6cxkssjjxjbh.streamlit.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/chatbot_oficina",
-      "icon": "robot",
-      "featured": true
-    },
-    {
-      "id": 3,
-      "titleKey": "project.3.title",
-      "descriptionKey": "project.3.description",
-      "tech": ["Python", "OpenCV", "LBP", "Scikit-learn", "Gradio"],
-      "demoUrl": "https://huggingface.co/spaces/CavalcanteProfissional/human_recognition",
-      "codeUrl": "https://github.com/cavalcanteprofissional/human_recognition",
-      "icon": "eye",
-      "featured": true
-    },
-    {
-      "id": 4,
-      "titleKey": "project.4.title",
-      "descriptionKey": "project.4.description",
-      "tech": ["Python", "Scikit-learn", "XGBoost", "Streamlit", "Folium"],
-      "demoUrl": "https://trajectoryprediction-smkzdwtf7ewsszxrv6leb7.streamlit.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/trajectory_prediction",
-      "icon": "map",
-      "featured": true
-    },
-    {
-      "id": 5,
-      "titleKey": "project.5.title",
-      "descriptionKey": "project.5.description",
-      "tech": ["Python", "Streamlit", "Plotly", "Prophet", "PyTorch", "Yahoo Finance"],
-      "demoUrl": "https://br-stocks-ts-pipeline-sca7v3vvdzvpfc42zdkxkg.streamlit.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/br-stocks-ts-pipeline",
-      "icon": "brain",
-      "featured": true
-    },
-    {
-      "id": 6,
-      "titleKey": "project.6.title",
-      "descriptionKey": "project.6.description",
-      "tech": ["Python", "BERT", "Scikit-learn", "NLTK", "Power BI"],
-      "demoUrl": "https://tweet-sentiment-analysis-cqtwxwniwxgkyfr4f7jxhp.streamlit.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/tweet-sentiment-analysis",
-      "icon": "pie-chart",
-      "featured": false
-    },
-    {
-      "id": 7,
-      "titleKey": "project.7.title",
-      "descriptionKey": "project.7.description",
-      "tech": ["Python", "Hugging Face", "Transformers", "Streamlit"],
-      "demoUrl": "https://appanalysis-fbvminpttqk7fthidekc5b.streamlit.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/qa_analysis",
-      "icon": "help-circle",
-      "featured": true
-    },
-    {
-      "id": 8,
-      "titleKey": "project.8.title",
-      "descriptionKey": "project.8.description",
-      "tech": ["Next.js", "React", "Tailwind CSS", "Supabase", "TypeScript", "Vercel"],
-      "demoUrl": "https://oficina-manager.vercel.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/oficina-manager",
-      "icon": "wrench",
-      "featured": true
-    },
-    {
-      "id": 9,
-      "titleKey": "project.9.title",
-      "descriptionKey": "project.9.description",
-      "tech": ["React", "TypeScript", "SCSS", "Vite", "Vercel"],
-      "demoUrl": "https://paraiso-frames.vercel.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/paraiso_frames",
-      "icon": "video",
-      "featured": true
-    },
-{
-      "id": 11,
-      "titleKey": "project.11.title",
-      "descriptionKey": "project.11.description",
-      "tech": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
-      "demoUrl": "https://ceara-alternativo.vercel.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/ceara-alternativo",
-      "icon": "newspaper",
-      "featured": true
-    },
-    {
-      "id": 12,
-      "titleKey": "project.12.title",
-      "descriptionKey": "project.12.description",
-      "tech": ["Python", "Streamlit", "Pandas", "NumPy", "Plotly", "Cohere API", "Poetry", "Pytest"],
-      "demoUrl": "https://sanova-micromedicao-dashboard-hlmw3spgxuthzebvxa7thg.streamlit.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard-",
-      "icon": "chart-line",
-      "featured": true
-    },
-    {
-      "id": 13,
-      "titleKey": "project.13.title",
-      "descriptionKey": "project.13.description",
-      "tech": ["Python", "Streamlit", "LangChain", "Ollama", "Git"],
-      "demoUrl": "https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/",
-      "codeUrl": "https://github.com/cavalcanteprofissional/pro-git-qa-bot",
-      "icon": "message-circle-question",
-      "featured": true
-    },
-    {
-      "id": 14,
-      "titleKey": "project.14.title",
-      "descriptionKey": "project.14.description",
-      "tech": ["Python", "FastAPI", "scikit-learn", "XGBoost", "React", "TypeScript", "Tailwind CSS", "Docker"],
-      "demoUrl": "https://jobmatch-frontend-u6vt.onrender.com",
-      "codeUrl": "https://github.com/cavalcanteprofissional/jobmatch-ai",
-      "icon": "scan-search",
-      "featured": true
+      "id": 16,
+      "titleKey": "project.16.title",
+      "descriptionKey": "project.16.description",
+      "tech": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Three.js", "Upstash Redis"],
+      "demoUrl": "https://linktree-cavalcante.vercel.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/linktree-cavalcante",
+      "icon": "link-2",
+      "featured": true,
+      "status": "andamento"
     },
     {
       "id": 15,
@@ -148,7 +19,162 @@
       "demoUrl": "#",
       "codeUrl": "https://github.com/cavalcanteprofissional/cd-price-tracker",
       "icon": "shopping-cart",
-      "featured": true
+      "featured": true,
+      "status": "andamento"
+    },
+    {
+      "id": 14,
+      "titleKey": "project.14.title",
+      "descriptionKey": "project.14.description",
+      "tech": ["Python", "FastAPI", "scikit-learn", "XGBoost", "React", "TypeScript", "Tailwind CSS", "Docker"],
+      "demoUrl": "https://jobmatch-frontend-u6vt.onrender.com",
+      "codeUrl": "https://github.com/cavalcanteprofissional/jobmatch-ai",
+      "icon": "scan-search",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 13,
+      "titleKey": "project.13.title",
+      "descriptionKey": "project.13.description",
+      "tech": ["Python", "Streamlit", "LangChain", "Ollama", "Git"],
+      "demoUrl": "https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/pro-git-qa-bot",
+      "icon": "message-circle-question",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 12,
+      "titleKey": "project.12.title",
+      "descriptionKey": "project.12.description",
+      "tech": ["Python", "Streamlit", "Pandas", "NumPy", "Plotly", "Cohere API", "Poetry", "Pytest"],
+      "demoUrl": "https://sanova-micromedicao-dashboard-hlmw3spgxuthzebvxa7thg.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/sanova-micromedicao-dashboard-",
+      "icon": "chart-line",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 11,
+      "titleKey": "project.11.title",
+      "descriptionKey": "project.11.description",
+      "tech": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel"],
+      "demoUrl": "https://ceara-alternativo.vercel.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/ceara-alternativo",
+      "icon": "newspaper",
+      "featured": true,
+      "status": "andamento"
+    },
+    {
+      "id": 9,
+      "titleKey": "project.9.title",
+      "descriptionKey": "project.9.description",
+      "tech": ["React", "TypeScript", "SCSS", "Vite", "Vercel"],
+      "demoUrl": "https://paraiso-frames.vercel.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/paraiso_frames",
+      "icon": "video",
+      "featured": true,
+      "status": "andamento"
+    },
+    {
+      "id": 8,
+      "titleKey": "project.8.title",
+      "descriptionKey": "project.8.description",
+      "tech": ["Next.js", "React", "Tailwind CSS", "Supabase", "TypeScript", "Vercel"],
+      "demoUrl": "https://oficina-manager.vercel.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/oficina-manager",
+      "icon": "wrench",
+      "featured": true,
+      "status": "andamento"
+    },
+    {
+      "id": 7,
+      "titleKey": "project.7.title",
+      "descriptionKey": "project.7.description",
+      "tech": ["Python", "Hugging Face", "Transformers", "Streamlit"],
+      "demoUrl": "https://appanalysis-fbvminpttqk7fthidekc5b.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/qa_analysis",
+      "icon": "help-circle",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 6,
+      "titleKey": "project.6.title",
+      "descriptionKey": "project.6.description",
+      "tech": ["Python", "BERT", "Scikit-learn", "NLTK", "Power BI"],
+      "demoUrl": "https://tweet-sentiment-analysis-cqtwxwniwxgkyfr4f7jxhp.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/tweet-sentiment-analysis",
+      "icon": "pie-chart",
+      "featured": false,
+      "status": "concluido"
+    },
+    {
+      "id": 5,
+      "titleKey": "project.5.title",
+      "descriptionKey": "project.5.description",
+      "tech": ["Python", "Streamlit", "Plotly", "Prophet", "PyTorch", "Yahoo Finance"],
+      "demoUrl": "https://br-stocks-ts-pipeline-sca7v3vvdzvpfc42zdkxkg.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/br-stocks-ts-pipeline",
+      "icon": "brain",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 4,
+      "titleKey": "project.4.title",
+      "descriptionKey": "project.4.description",
+      "tech": ["Python", "Scikit-learn", "XGBoost", "Streamlit", "Folium"],
+      "demoUrl": "https://trajectoryprediction-smkzdwtf7ewsszxrv6leb7.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/trajectory_prediction",
+      "icon": "map",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 3,
+      "titleKey": "project.3.title",
+      "descriptionKey": "project.3.description",
+      "tech": ["Python", "OpenCV", "LBP", "Scikit-learn", "Gradio"],
+      "demoUrl": "https://huggingface.co/spaces/CavalcanteProfissional/human_recognition",
+      "codeUrl": "https://github.com/cavalcanteprofissional/human_recognition",
+      "icon": "eye",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 2,
+      "titleKey": "project.2.title",
+      "descriptionKey": "project.2.description",
+      "tech": ["Python", "Streamlit", "LangChain", "FAISS", "Ollama Cloud", "Supabase"],
+      "demoUrl": "https://chatbotoficina-5c2dsw4ekk6cxkssjjxjbh.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/chatbot_oficina",
+      "icon": "robot",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 1,
+      "titleKey": "project.1.title",
+      "descriptionKey": "project.1.description",
+      "tech": ["Python", "Streamlit", "Plotly", "Pandas"],
+      "demoUrl": "https://dashboardselling-xguerbqzokekuhkezhgbdx.streamlit.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/dashboard_selling",
+      "icon": "chart-line",
+      "featured": true,
+      "status": "concluido"
+    },
+    {
+      "id": 0,
+      "titleKey": "project.0.title",
+      "descriptionKey": "project.0.description",
+      "tech": ["Python", "Flask", "Jinja2", "Supabase"],
+      "demoUrl": "https://labgas-manager.vercel.app/",
+      "codeUrl": "https://github.com/cavalcanteprofissional/labgas-manager",
+      "icon": "testtube",
+      "featured": true,
+      "status": "concluido"
     }
   ]
 }
