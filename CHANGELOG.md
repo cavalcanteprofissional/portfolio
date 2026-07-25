@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1] - 2026-07-25
+
+### 🚨 Hotfix — GitHub Pages tela branca
+
+- 🔧 **Base path corrigido** — branches divergiam: remoto usava `/portfolio/` mas o repo se chama `portfolio-cavalcante`, gerando 404 em todos os assets JS/CSS
+- 🔀 **Merge resolvido** — commit `deb71ab` (status field) integrado ao branch local com conflito em `projects.json` resolvido
+- ✅ Deploy com `base: '/portfolio-cavalcante/'` agora bate com o nome do repo e a URL do GitHub Pages
+
 ## [1.3.0] - 2026-07-24
 
 ### 🏷️ Status badges nos cards de projeto

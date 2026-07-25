@@ -116,5 +116,17 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 
 ---
 
+### 🚨 Hotfix — GitHub Pages Tela Branca (2026-07-25)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| F1 | Merge do commit remoto `deb71ab` (status field) no branch local divergente | ✅ |
+| F2 | Garantir `base: '/portfolio-cavalcante/'` no `vite.config.ts` (bate com nome do repo) | ✅ |
+| F3 | Push para `origin/main` — workflow deploy corrige o GitHub Pages | ✅ |
+
+**Causa:** branches divergidas — remoto tinha `base: '/portfolio/'` mas o site serve em `/portfolio-cavalcante/`, gerando 404 em todos os assets JS/CSS.
+
+---
+
 ## V1 Concluída (17 tarefas)
 - FAQ JSON-LD, icon map, dead code, Showcase section, Nav ativo, overlay, scroll-to-top, divisores, card width, dark mode logos, skip-to-content, reduced-motion, Nav/Hero separados, Playwright E2E, OG card image (WhatsApp thumbnail), robots.txt (permite facebookexternalhit), migrar URLs do domínio personalizado para github.io
