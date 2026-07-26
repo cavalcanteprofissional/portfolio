@@ -152,3 +152,4 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | CV13 | Validar PDFs gerados e links no frontend | ✅ |
 | CV14 | Hero: voltar para 1 botão CV dinâmico por idioma (remover 3 botões) | ✅ |
 | CV15 | Bug: `cargo` em experiencia_profissional não é traduzido (EN/ES) | ✅ |
+| CV16 | Bug: tradução MarianMT com artefatos de encoding (ex: "experienceCIa", "EatCIal", "TechniCIan") — melhorar qualidade ou usar override manual | ⬜ |
