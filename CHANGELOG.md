@@ -4,12 +4,13 @@
 
 ### 🔄 Modelo de tradução atualizado (MarianMT → mBART)
 
-- ➕ **mBART-large-50** substitui MarianMT — modelo de600M params com tradução direta PT→EN e PT→ES (sem chain)
-- 🛡️ **Word boundaries no glossário** — termos curtos como "CI" não eram mais protegidos dentro de palavras normais
+- ➕ **mBART-large-50** substitui MarianMT — modelo de 600M params com tradução direta PT→EN e PT→ES (sem chain)
+- 🛡️ **Word boundaries no glossário** — termos curtos como "CI" não são mais protegidos dentro de palavras normais (ex: "Experiencia" não vira "experienceCIa" mais)
 - 🌍 **Batch translation** — todas as frases traduzidas em uma única inferência (mais rápido)
 - 🔑 **HF_TOKEN** — token Hugging Face configurado via `.env.local` / GitHub Secrets para downloads mais rápidos
 - 📦 **sacremoses** adicionado ao `deploy.yml`
 - 🗑️ **Modelos MarianMT removidos** — `geralt/Opus-mt-pt-en`, `Helsinki-NLP/opus-mt-en-es` não são mais necessários
+- 🌍 **Nomes geográficos brasileiros** adicionados ao glossário (Ceará, Fortaleza, São Paulo, etc.)
 
 ## [1.4.0] - 2026-07-26
 

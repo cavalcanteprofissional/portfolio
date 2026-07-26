@@ -12,8 +12,6 @@
 - 🏷️ **Badges de progresso** — indicador visual com circle glow para cada projeto
 - 📊 **TechStack verdadeiro** — baseado nos projetos reais do GitHub, sem firula
 - 📄 **Currículo automático** — pipeline gera PDFs em PT/EN/ES a partir de uma fonte YAML, com tradução por IA
-- 💿 **CD Price Tracker** — scraper semanal de preços de CDs
-- 🔗 **LinkTree Cavalcante** — agregador de links com dashboard e analytics
 - ❓ **FAQ** com dados estruturados (aparece na busca do Google)
 - ♿ **Acessibilidade** — skip-to-content, reduced-motion, aria-labels
 - 📱 **QR Code** pra acesso mobile rápido
@@ -31,7 +29,7 @@
 | **i18n** | i18next + react-i18next |
 | **Estado** | Zustand |
 | **Ícones** | Lucide React + React Icons |
-| **Currículo** | Python + MarianMT + Jinja2 + Playwright |
+| **Currículo** | Python + mBART-large-50 + Jinja2 + Playwright |
 | **Teste** | Playwright (E2E) |
 | **Deploy** | GitHub Actions + GitHub Pages |
 
@@ -47,12 +45,18 @@ npm run preview    # preview do build
 ### 📄 Gerar currículos (PDF)
 
 ```bash
-pip install transformers torch sentencepiece jinja2 python-frontmatter pyyaml sacremoses playwright
+pip install transformers torch sentencepiece sacremoses jinja2 python-frontmatter pyyaml playwright
 playwright install chromium
 python resume/build.py
 ```
 
-Os PDFs são gerados em `public/cv/` e copiados para `dist/` no build. Edite `resume/curriculo-fonte.md` para atualizar os dados — a pipeline traduz e renderiza automaticamente.
+Opcionalmente, crie um `.env.local` com seu token do Hugging Face para downloads mais rápidos:
+
+```
+HF_TOKEN=hf_seu_token_aqui
+```
+
+Os PDFs são gerados em `public/cv/` e copiados para `dist/` no build. Edite `resume/curriculo-fonte.md` para atualizar os dados — a pipeline traduz (mBART-large-50) e renderiza automaticamente em PT/EN/ES.
 
 ## 🌐 URL
 
