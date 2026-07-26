@@ -51,6 +51,10 @@ next-env.d.ts
 prisma/*.db
 prisma/*.db-journal
 
+# Resume build output
+resume/output/
+public/cv/*.pdf
+
 # Misc
 *.log
 *.pid

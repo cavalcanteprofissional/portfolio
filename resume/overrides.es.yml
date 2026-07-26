@@ -1,0 +1,17 @@
+# =============================================================
+# SPANISH OVERRIDES — Manual translations for specific fields
+# =============================================================
+# Use this file to override automatically translated fields.
+# Only include fields you want to change — the rest will be
+# translated automatically by MarianMT.
+#
+# Format example:
+#   resumo_profissional: "Analista de Datos con experiencia en proyectos de IA..."
+#   experiencia_profissional:
+#     - cargo: "Analista de Datos"
+#       atividades:
+#         2: "Procesamiento de Lenguaje Natural"
+#
+# The pipeline does a deep merge: auto-translated data serves
+# as base, overrides replace by index/key when present.
+# =============================================================

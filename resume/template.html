@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="{{ lang_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV — {{ dados_pessoais.nome }}</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-size: 10pt;
+      line-height: 1.45;
+      color: #1e293b;
+      background: #fff;
+    }
+
+    /* ── Header ─────────────────────────────────────── */
+    .header {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #0ea5e9;
+      margin-bottom: 14px;
+    }
+
+    .header h1 {
+      font-size: 22pt;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+      margin-bottom: 4px;
+    }
+
+    .header .title {
+      font-size: 11pt;
+      font-weight: 500;
+      color: #0ea5e9;
+      margin-bottom: 8px;
+    }
+
+    .contact-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      font-size: 8.5pt;
+      color: #475569;
+    }
+
+    .contact-row span {
+      white-space: nowrap;
+    }
+
+    .contact-row a {
+      color: #0ea5e9;
+      text-decoration: none;
+    }
+
+    .separator {
+      color: #cbd5e1;
+    }
+
+    /* ── Section ────────────────────────────────────── */
+    .section {
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+
+    .section-title {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-bottom: 2px solid #0ea5e9;
+      padding-bottom: 3px;
+      margin-bottom: 8px;
+    }
+
+    /* ── Summary ────────────────────────────────────── */
+    .summary {
+      font-size: 9.5pt;
+      color: #334155;
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    /* ── Experience ─────────────────────────────────── */
+    .exp-item {
+      margin-bottom: 10px;
+      page-break-inside: avoid;
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+
+    .exp-role {
+      font-size: 10pt;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .exp-period {
+      font-size: 8.5pt;
+      color: #64748b;
+      white-space: nowrap;
+    }
+
+    .exp-company {
+      font-size: 9.5pt;
+      font-weight: 500;
+      color: #7c3aed;
+      margin-bottom: 3px;
+    }
+
+    .exp-activities {
+      list-style: none;
+      padding: 0;
+    }
+
+    .exp-activities li {
+      position: relative;
+      padding-left: 14px;
+      font-size: 9pt;
+      color: #334155;
+      margin-bottom: 1.5px;
+    }
+
+    .exp-activities li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5.5px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #0ea5e9;
+    }
+
+    /* ── Education / Certifications ─────────────────── */
+    .edu-item, .cert-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+      page-break-inside: avoid;
+    }
+
+    .edu-course, .cert-name {
+      font-size: 9.5pt;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .edu-institution, .cert-institution {
+      font-size: 8.5pt;
+      color: #64748b;
+    }
+
+    .edu-year, .cert-year {
+      font-size: 8.5pt;
+      color: #64748b;
+      white-space: nowrap;
+      margin-left: 8px;
+    }
+
+    /* ── Skills ─────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 20px;
+    }
+
+    .skill-group {
+      margin-bottom: 4px;
+    }
+
+    .skill-label {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #0ea5e9;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 2px;
+    }
+
+    .skill-items {
+      font-size: 8.5pt;
+      color: #334155;
+      line-height: 1.4;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 3px;
+      padding: 1px 5px;
+      margin: 1px 2px;
+      font-size: 8pt;
+      color: #334155;
+    }
+
+    .skill-tag.highlight {
+      background: #ede9fe;
+      border-color: #c4b5fd;
+      color: #6d28d9;
+    }
+
+    /* ── Languages ──────────────────────────────────── */
+    .lang-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+    }
+
+    .lang-item {
+      font-size: 9.5pt;
+    }
+
+    .lang-name {
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .lang-level {
+      color: #64748b;
+      font-size: 8.5pt;
+    }
+
+    /* ── Footer ─────────────────────────────────────── */
+    .footer {
+      margin-top: 16px;
+      padding-top: 8px;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+      font-size: 7.5pt;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>{{ dados_pessoais.nome }}</h1>
+    <div class="title">{{ titulo }}</div>
+    <div class="contact-row">
+      <span>{{ dados_pessoais.cidade }}</span>
+      <span class="separator">|</span>
+      <span>{{ dados_pessoais.telefone }}</span>
+      <span class="separator">|</span>
+      <a href="mailto:{{ dados_pessoais.email }}">{{ dados_pessoais.email }}</a>
+      <span class="separator">|</span>
+      <a href="{{ dados_pessoais.linkedin }}">LinkedIn</a>
+      <span class="separator">|</span>
+      <a href="{{ dados_pessoais.github }}">GitHub</a>
+      {% if dados_pessoais.portfolio %}
+      <span class="separator">|</span>
+      <a href="{{ dados_pessoais.portfolio }}">Portfolio</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Professional Summary -->
+  <div class="section">
+    <div class="section-title">{{ labels.resumo }}</div>
+    <div class="summary">{{ resumo_profissional }}</div>
+  </div>
+
+  <!-- Professional Experience -->
+  <div class="section">
+    <div class="section-title">{{ labels.experiencia }}</div>
+    {% for exp in experiencia_profissional %}
+    <div class="exp-item">
+      <div class="exp-header">
+        <span class="exp-role">{{ exp.cargo }}</span>
+        <span class="exp-period">{{ exp.periodo }}</span>
+      </div>
+      <div class="exp-company">{{ exp.empresa }}</div>
+      <ul class="exp-activities">
+        {% for ativ in exp.atividades %}
+        <li>{{ ativ }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Education -->
+  <div class="section">
+    <div class="section-title">{{ labels.formacao }}</div>
+    {% for edu in formacao_academica %}
+    <div class="edu-item">
+      <div>
+        <span class="edu-course">{{ edu.curso }}</span>
+        <span class="edu-institution"> — {{ edu.instituicao }}</span>
+      </div>
+      <span class="edu-year">{{ edu.ano }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Certifications -->
+  <div class="section">
+    <div class="section-title">{{ labels.certificacoes }}</div>
+    {% for cert in certificacoes %}
+    <div class="cert-item">
+      <div>
+        <span class="cert-name">{{ cert.nome }}</span>
+        <span class="cert-institution"> — {{ cert.instituicao }}</span>
+      </div>
+      <span class="cert-year">{{ cert.ano }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Technical Skills -->
+  <div class="section">
+    <div class="section-title">{{ labels.habilidades }}</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-label">{{ labels.linguagens }}</div>
+        <div class="skill-items">
+          {% for item in habilidades_tecnicas.linguagens_e_bibliotecas %}
+          <span class="skill-tag">{{ item }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">{{ labels.ml }}</div>
+        <div class="skill-items">
+          {% for item in habilidades_tecnicas.machine_learning.ensembles_e_boosting %}
+          <span class="skill-tag highlight">{{ item }}</span>
+          {% endfor %}
+          {% for item in habilidades_tecnicas.machine_learning.modelos_lineares_e_auxiliares %}
+          <span class="skill-tag">{{ item }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">{{ labels.dl }}</div>
+        <div class="skill-items">
+          {% for item in habilidades_tecnicas.machine_learning.deep_learning %}
+          <span class="skill-tag highlight">{{ item }}</span>
+          {% endfor %}
+          {% for item in habilidades_tecnicas.computer_vision %}
+          <span class="skill-tag highlight">{{ item }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">{{ labels.plataformas }}</div>
+        <div class="skill-items">
+          {% for item in habilidades_tecnicas.plataformas_e_ferramentas.cloud_e_conteinerizacao %}
+          <span class="skill-tag">{{ item }}</span>
+          {% endfor %}
+          {% for item in habilidades_tecnicas.plataformas_e_ferramentas.visualizacao_dashboards %}
+          <span class="skill-tag">{{ item }}</span>
+          {% endfor %}
+          {% for item in habilidades_tecnicas.plataformas_e_ferramentas.engenharia_de_dados %}
+          <span class="skill-tag">{{ item }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">{{ labels.marketing }}</div>
+        <div class="skill-items">
+          {% for item in habilidades_tecnicas.marketing_digital %}
+          <span class="skill-tag">{{ item }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">{{ labels.gestao }}</div>
+        <div class="skill-items">
+          {% for item in habilidades_tecnicas.gestao_e_metodologias %}
+          <span class="skill-tag">{{ item }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Languages -->
+  <div class="section">
+    <div class="section-title">{{ labels.idiomas }}</div>
+    <div class="lang-list">
+      {% for lang in idiomas %}
+      <div class="lang-item">
+        <span class="lang-name">{{ lang.idioma }}</span>
+        <span class="lang-level"> — {{ lang.nivel }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="footer">
+    {{ dados_pessoais.nome }} — {{ titulo }}
+  </div>
+
+</body>
+</html>

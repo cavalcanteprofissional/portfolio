@@ -130,3 +130,25 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 
 ## V1 Concluída (17 tarefas)
 - FAQ JSON-LD, icon map, dead code, Showcase section, Nav ativo, overlay, scroll-to-top, divisores, card width, dark mode logos, skip-to-content, reduced-motion, Nav/Hero separados, Playwright E2E, OG card image (WhatsApp thumbnail), robots.txt (permite facebookexternalhit), migrar URLs do domínio personalizado para github.io
+
+---
+
+### 🚀 Pipeline de Currículo (PT/EN/ES → PDF)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| CV1 | Registrar plano no TODO.md | ✅ |
+| CV2 | Mover `curriculo-fonte.md` e `SKILL-pipeline-curriculo.md` para `resume/` | ✅ |
+| CV3 | Criar `resume/overrides.en.yml` e `resume/overrides.es.yml` (vazios) | ✅ |
+| CV4 | Criar `resume/template.html` (layout CV HTML/CSS, paleta portfólio) | ✅ |
+| CV5 | Criar `resume/translate.py` (MarianMT + glossário + overrides) | ✅ |
+| CV6 | Criar `resume/render_pdf.py` (Playwright → PDF A4) | ✅ |
+| CV7 | Criar `resume/build.py` (orquestrador: parse → traduz → renderiza) | ✅ |
+| CV8 | Atualizar `.gitignore` (resume/output/, public/cv/*.pdf) | ✅ |
+| CV9 | Remover PDFs antigos `public/documents/resumes/` | ✅ |
+| CV10 | Integrar steps Python no `deploy.yml` (antes do npm ci) | ✅ |
+| CV11 | Atualizar i18n paths dos CVs (`/cv/cv_{lang}.pdf`) | ✅ |
+| CV12 | Atualizar `Hero.tsx` — botões CV por idioma (PT/EN/ES) | ✅ |
+| CV13 | Validar PDFs gerados e links no frontend | ✅ |
+| CV14 | Hero: voltar para 1 botão CV dinâmico por idioma (remover 3 botões) | ✅ |
+| CV15 | Bug: `cargo` em experiencia_profissional não é traduzido (EN/ES) | ✅ |
