@@ -53,6 +53,7 @@ prisma/*.db-journal
 
 # Resume build output
 resume/output/
+resume/__pycache__/
 public/cv/*.pdf
 
 # Misc
