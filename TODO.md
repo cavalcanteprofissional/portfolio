@@ -141,7 +141,7 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | CV2 | Mover `curriculo-fonte.md` e `SKILL-pipeline-curriculo.md` para `resume/` | ✅ |
 | CV3 | Criar `resume/overrides.en.yml` e `resume/overrides.es.yml` (vazios) | ✅ |
 | CV4 | Criar `resume/template.html` (layout CV HTML/CSS, paleta portfólio) | ✅ |
-| CV5 | Criar `resume/translate.py` (MarianMT + glossário + overrides) | ✅ |
+| CV5 | Criar `resume/translate.py` (mBART-large-50 + glossário + overrides) | ✅ |
 | CV6 | Criar `resume/render_pdf.py` (Playwright → PDF A4) | ✅ |
 | CV7 | Criar `resume/build.py` (orquestrador: parse → traduz → renderiza) | ✅ |
 | CV8 | Atualizar `.gitignore` (resume/output/, public/cv/*.pdf) | ✅ |
@@ -152,4 +152,5 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | CV13 | Validar PDFs gerados e links no frontend | ✅ |
 | CV14 | Hero: voltar para 1 botão CV dinâmico por idioma (remover 3 botões) | ✅ |
 | CV15 | Bug: `cargo` em experiencia_profissional não é traduzido (EN/ES) | ✅ |
-| CV16 | Bug: tradução MarianMT com artefatos de encoding (ex: "experienceCIa", "EatCIal", "TechniCIan") — melhorar qualidade ou usar override manual | ⬜ |
+| CV16 | ~~Bug: tradução MarianMT com artefatos de encoding ("experienceCIa")~~ Resolvido: trocado para mBART-large-50 | ✅ |
+| CV17 | Qualidade mBART: frases curtas sem contexto ainda paraphraseiam (ex: "Formacao" → "Academic Formula") — usar overrides.en.yml/es.yml | ⬜ |

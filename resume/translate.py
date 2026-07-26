@@ -1,21 +1,24 @@
 """
-translate.py — PT → EN/ES translation using MarianMT.
+translate.py — PT → EN/ES translation using mBART-large-50.
 
-Uses community OPUS-MT models with a glossary of protected terms
-(tech names, companies, acronyms) that are never translated.
-Reads and merges manual overrides before returning final results.
+Uses Facebook's mBART-large-50-many-to-many-mmt (600M params) for
+higher quality multilingual translation. Single model handles all
+3 languages without chaining.
 
-Models:
-  - PT→EN: geralt/Opus-mt-pt-en (public, no auth needed)
-  - PT→ES: Chain PT→EN→ES via geralt/Opus-mt-pt-en + geralt/Opus-mt-en-es
+Glossary of protected terms (tech names, companies, acronyms)
+are never translated. Manual overrides are merged after translation.
 """
 
+import os
 import re
 from pathlib import Path
 from typing import Any
 
 import yaml
-from transformers import MarianMTModel, MarianTokenizer
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+# Load HF token from env if available (faster downloads, no auth warnings)
+HF_TOKEN = os.environ.get("HF_TOKEN")
 
 # ── Glossary: terms that must NEVER be translated ──────────────
 GLOSSARIO_NAO_TRADUZIR = [
@@ -49,42 +52,57 @@ GLOSSARIO_NAO_TRADUZIR = [
     "CPC", "CPA", "CTR", "ROI", "DER", "TCP/IP", "Wi-Fi",
     "LLM", "DNN", "CNN", "RNN", "LSTM", "SVR", "MLP", "KNN",
     "API", "CI", "CD", "ETL", "GPU", "CPU", "RAM",
+    # Brazilian geographic names
+    "Ceará", "Fortaleza", "São Paulo", "Rio de Janeiro",
+    "Minas Gerais", "Bahia", "Pernambuco", "Paraná",
+    "Santa Catarina", "Rio Grande do Sul", "Goiás",
+    "Mato Grosso", "Pará", "Amazonas", "Maranhão",
+    "Piauí", "Rio Grande do Norte", "Paraíba", "Alagoas",
+    "Sergipe", "Espírito Santo", "Distrito Federal",
 ]
 
 # Build a set for O(1) lookup
 _PROTECTED_SET = {term.lower(): term for term in GLOSSARIO_NAO_TRADUZIR}
 
-# Model mapping — public community models, no auth required
-MODELS = {
-    "pt_en": "geralt/Opus-mt-pt-en",
-    "en_es": "Helsinki-NLP/opus-mt-en-es",
+# mBART language codes
+MBART_LANG_CODES = {
+    "en": "en_XX",
+    "es": "es_XX",
+    "pt": "pt_XX",
 }
 
-# Cache for loaded models
+# Model name
+MODEL_NAME = "facebook/mbart-large-50-many-to-many-mmt"
+
+# Cache for loaded model
 _model_cache: dict[str, tuple] = {}
 
 
-def _load_model(key: str):
-    """Load MarianMT model and tokenizer, with caching."""
-    if key in _model_cache:
-        return _model_cache[key]
+def _load_model():
+    """Load mBART model and tokenizer, with caching."""
+    if "mbart" in _model_cache:
+        return _model_cache["mbart"]
 
-    model_name = MODELS[key]
-    tokenizer = MarianTokenizer.from_pretrained(model_name)
-    model = MarianMTModel.from_pretrained(model_name)
-    _model_cache[key] = (model, tokenizer)
+    kwargs = {"trust_remote_code": True}
+    if HF_TOKEN:
+        kwargs["token"] = HF_TOKEN
+
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, **kwargs)
+    model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME, **kwargs)
+    _model_cache["mbart"] = (model, tokenizer)
     return model, tokenizer
 
 
 def _protect_terms(text: str) -> tuple[str, dict[str, str]]:
-    """Replace protected terms with placeholders before translation."""
+    """Replace protected terms with placeholders before translation.
+    Uses word boundaries to avoid matching inside normal words."""
     placeholders = {}
     protected_text = text
 
     for term_lower, term_orig in sorted(_PROTECTED_SET.items(), key=lambda x: -len(x[0])):
         if term_lower in protected_text.lower():
             placeholder = f"PROTECTED{len(placeholders)}X"
-            pattern = re.compile(re.escape(term_orig), re.IGNORECASE)
+            pattern = re.compile(r'\b' + re.escape(term_orig) + r'\b', re.IGNORECASE)
             if pattern.search(protected_text):
                 protected_text = pattern.sub(placeholder, protected_text)
                 placeholders[placeholder] = term_orig
@@ -100,48 +118,57 @@ def _restore_terms(text: str, placeholders: dict[str, str]) -> str:
     return restored
 
 
-def _run_translation(text: str, model, tokenizer) -> str:
-    """Run translation on a single text string."""
-    if not text or not text.strip():
-        return text
+def _batch_translate(texts: list[str], lang: str) -> list[str]:
+    """Translate a batch of texts using mBART with batched inference."""
+    if not texts:
+        return texts
 
-    protected, placeholders = _protect_terms(text)
-    inputs = tokenizer(protected, return_tensors="pt", padding=True, truncation=True, max_length=512)
-    outputs = model.generate(**inputs, max_length=512, num_beams=4)
-    translated = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    return _restore_terms(translated, placeholders)
+    model, tokenizer = _load_model()
+    target_code = MBART_LANG_CODES[lang]
 
+    # Protect terms in all texts
+    pairs = [_protect_terms(t) for t in texts]
+    protected_texts = [p[0] for p in pairs]
 
-def translate_to_en(text: str) -> str:
-    """Translate PT → EN."""
-    model, tokenizer = _load_model("pt_en")
-    return _run_translation(text, model, tokenizer)
+    # Filter out empty strings, keep track of indices
+    non_empty = [(i, t) for i, t in enumerate(protected_texts) if t.strip()]
+    if not non_empty:
+        return texts
 
+    indices, batch_texts = zip(*non_empty)
 
-def translate_en_to_es(text: str) -> str:
-    """Translate EN → ES."""
-    model, tokenizer = _load_model("en_es")
-    return _run_translation(text, model, tokenizer)
+    tokenizer.src_lang = "pt_XX"
+    inputs = tokenizer(
+        list(batch_texts), return_tensors="pt", padding=True,
+        truncation=True, max_length=512
+    )
+    outputs = model.generate(
+        **inputs,
+        forced_bos_token_id=tokenizer.convert_tokens_to_ids(target_code),
+        max_length=512,
+        num_beams=2,
+    )
+    translations = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
-
-def translate_to_es(text: str) -> str:
-    """Translate PT → ES via PT→EN→ES chain."""
-    en_text = translate_to_en(text)
-    return translate_en_to_es(en_text)
+    # Restore terms and reassemble
+    result = list(texts)
+    for idx, trans in zip(indices, translations):
+        result[idx] = _restore_terms(trans, pairs[idx][1])
+    return result
 
 
 def translate_text(text: str, lang: str) -> str:
     """Translate a single text string from PT to the target language."""
-    if lang == "en":
-        return translate_to_en(text)
-    elif lang == "es":
-        return translate_to_es(text)
-    return text
+    if lang == "pt":
+        return text
+    return _batch_translate([text], lang)[0]
 
 
 def translate_list(items: list[str], lang: str) -> list[str]:
     """Translate a list of text strings."""
-    return [translate_text(item, lang) for item in items]
+    if lang == "pt":
+        return items
+    return _batch_translate(items, lang)
 
 
 def _deep_merge(base: Any, override: Any) -> Any:
@@ -180,53 +207,49 @@ def translate_resume(data_pt: dict, lang: str, resume_dir: Path) -> dict:
     """
     Translate the entire resume data from PT to the target language.
 
-    - Translates only free-text fields: resumo_profissional, atividades,
-      titulo, curso, nivel
-    - Never translates: nome, empresa, instituicao, email, links, datas
-    - Merges with manual overrides after translation
+    Collects all translatable texts, batch-translates them, then writes
+    results back. Merges with manual overrides after translation.
     """
     import copy
     data = copy.deepcopy(data_pt)
 
-    # Translate resumo_profissional
-    if "resumo_profissional" in data:
-        data["resumo_profissional"] = translate_text(
-            data["resumo_profissional"], lang
-        )
+    if lang == "pt":
+        return data
 
-    # Translate experiencia_profissional (cargo + atividades)
+    # Collect (text, setter) pairs — setter writes the translated text back
+    batch: list[tuple[str, callable]] = []
+
+    if "resumo_profissional" in data:
+        batch.append((data["resumo_profissional"], lambda v, d=data: d.__setitem__("resumo_profissional", v)))
+
     if "experiencia_profissional" in data:
         for exp in data["experiencia_profissional"]:
             if "cargo" in exp:
-                exp["cargo"] = translate_text(exp["cargo"], lang)
+                batch.append((exp["cargo"], lambda v, e=exp: e.__setitem__("cargo", v)))
             if "atividades" in exp:
-                exp["atividades"] = translate_list(
-                    exp["atividades"], lang
-                )
+                for j, _atv in enumerate(exp["atividades"]):
+                    batch.append((exp["atividades"][j], lambda v, e=exp, idx=j: e.__setitem__("atividades", [v if i == idx else e["atividades"][i] for i in range(len(e["atividades"]))])))
 
-    # Translate formacao_academica (curso only)
     if "formacao_academica" in data:
         for edu in data["formacao_academica"]:
             if "curso" in edu:
-                edu["curso"] = translate_text(
-                    edu["curso"], lang
-                )
+                batch.append((edu["curso"], lambda v, e=edu: e.__setitem__("curso", v)))
 
-    # Translate certificacoes (nome only)
     if "certificacoes" in data:
         for cert in data["certificacoes"]:
             if "nome" in cert:
-                cert["nome"] = translate_text(
-                    cert["nome"], lang
-                )
+                batch.append((cert["nome"], lambda v, c=cert: c.__setitem__("nome", v)))
 
-    # Translate idiomas (nivel only)
     if "idiomas" in data:
         for lang_item in data["idiomas"]:
             if "nivel" in lang_item:
-                lang_item["nivel"] = translate_text(
-                    lang_item["nivel"], lang
-                )
+                batch.append((lang_item["nivel"], lambda v, li=lang_item: li.__setitem__("nivel", v)))
+
+    raw_texts = [t[0] for t in batch]
+    translated = _batch_translate(raw_texts, lang)
+
+    for (_, setter), trans in zip(batch, translated):
+        setter(trans)
 
     # Merge with overrides
     overrides = load_overrides(lang, resume_dir)
