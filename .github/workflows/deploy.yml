@@ -40,7 +40,8 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip install transformers torch sentencepiece sacremoses jinja2 python-frontmatter pyyaml playwright
+          pip install --upgrade pip
+          pip install transformers torch sentencepiece sacremoses jinja2 python-frontmatter pyyaml playwright protobuf tiktoken
 
       - name: Install Playwright Chromium
         run: playwright install --with-deps chromium

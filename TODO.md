@@ -154,3 +154,12 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | CV15 | Bug: `cargo` em experiencia_profissional não é traduzido (EN/ES) | ✅ |
 | CV16 | ~~Bug: tradução MarianMT com artefatos de encoding ("experienceCIa")~~ Resolvido: trocado para mBART-large-50 | ✅ |
 | CV17 | Qualidade mBART: frases curtas sem contexto ainda paraphraseiam (ex: "Formacao" → "Academic Formula") — usar overrides.en.yml/es.yml | ⬜ |
+---
+
+### 🚨 Hotfix — Deploy quebrado: mBART tokenizer sem protobuf/tiktoken (2026-07-28)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| D1 | Adicionar `protobuf` e `tiktoken` ao `pip install` no `deploy.yml` | ✅ |
+
+**Causa:** O tokenizer do `facebook/mbart-large-50-many-to-many-mmt` precisa de `protobuf` (SentencePieceExtractor) e `tiktoken` (leitura do arquivo `.tiktoken`) em tempo de execução. O CI instalava apenas `transformers torch sentencepiece sacremoses jinja2 python-frontmatter pyyaml playwright` — sem esses dois pacotes, o `resume/build.py` quebrava com `ImportError` e `ModuleNotFoundError`.
