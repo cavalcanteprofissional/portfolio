@@ -26,7 +26,7 @@ export const translations = {
       "13": { title: "Pro Git QA Bot", description: "Chatbot com RAG para responder perguntas sobre Git usando LangChain e Streamlit." },
       "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos e vagas de emprego com FastAPI e frontend React." },
       "15": { title: "CD Price Tracker", description: "Scraper semanal de preços de CDs em Amazon, Mercado Livre e Shopee com dashboard Next.js e gráficos Recharts." },
-      "16": { title: "LinkTree Cavalcante", description: "Agregador de links pessoais com dashboard de analytics, feed do Instagram, modo escuro e tema 3D interativo com Three.js." }
+      "16": { title: "LinkTree Pessoal", description: "Agregador de links pessoais com dashboard de analytics, feed do Instagram, modo escuro e tema 3D interativo com Three.js." }
     },
     experience: {
       current: "Atual",
@@ -134,7 +134,7 @@ export const translations = {
       "13": { title: "Pro Git QA Bot", description: "RAG chatbot for answering Git questions using LangChain and Streamlit." },
       "14": { title: "JobMatch AI", description: "End-to-end ML system for intelligent resume-job matching with FastAPI and React frontend." },
       "15": { title: "CD Price Tracker", description: "Weekly CD price scraper across Amazon, Mercado Livre, and Shopee with Next.js dashboard and Recharts charts." },
-      "16": { title: "LinkTree Cavalcante", description: "Personal link aggregator with analytics dashboard, Instagram feed, dark mode, and interactive 3D theme with Three.js." }
+      "16": { title: "LinkTree Pessoal", description: "Personal link aggregator with analytics dashboard, Instagram feed, dark mode, and interactive 3D theme with Three.js." }
     },
     experience: {
       current: "Current",
@@ -242,7 +242,7 @@ export const translations = {
       "13": { title: "Pro Git QA Bot", description: "Chatbot RAG para responder preguntas sobre Git usando LangChain y Streamlit." },
       "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos y ofertas de empleo con FastAPI y frontend React." },
       "15": { title: "CD Price Tracker", description: "Scraper semanal de precios de CD en Amazon, Mercado Libre y Shopee con panel Next.js y gráficos Recharts." },
-      "16": { title: "LinkTree Cavalcante", description: "Agregador de enlaces personales con dashboard de analytics, feed de Instagram, modo oscuro y tema 3D interactivo con Three.js." }
+      "16": { title: "LinkTree Pessoal", description: "Agregador de enlaces personales con dashboard de analytics, feed de Instagram, modo oscuro y tema 3D interactivo con Three.js." }
     },
     experience: {
       current: "Actual",

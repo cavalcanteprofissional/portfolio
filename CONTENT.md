@@ -156,7 +156,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 
 ---
 
-## 8. Projects / Portfolio (15 Projetos)
+## 8. Projects / Portfolio (16 Projetos)
 
 | # | Chave | Título PT | Status | Repo GitHub | Demo |
 |---|------|---------|--------|------------------|-----------|
@@ -175,6 +175,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 13 | `project.13` | Pro Git QA Bot | concluido | https://github.com/cavalcanteprofissional/pro-git-qa-bot | https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/ |
 | 14 | `project.14` | JobMatch AI | concluido | https://github.com/cavalcanteprofissional/jobmatch-ai | https://jobmatch-frontend-u6vt.onrender.com |
 | 15 | `project.15` | CD Price Tracker | concluido | https://github.com/cavalcanteprofissional/cd-price-tracker | # |
+| 16 | `project.16` | LinkTree Pessoal | concluido | https://github.com/cavalcanteprofissional/linktree-cavalcante | https://linktree-cavalcante.vercel.app/ |
 
 ### Projetos com Links
 
@@ -195,6 +196,7 @@ Este documento contém todo o conteúdo textual do projeto, espelhando as chaves
 | 13 | Pro Git QA Bot | concluido | https://github.com/cavalcanteprofissional/pro-git-qa-bot | https://pro-git-app-bot-owjnuwabjucpds3nannzwh.streamlit.app/ |
 | 14 | JobMatch AI | concluido | https://github.com/cavalcanteprofissional/jobmatch-ai | https://jobmatch-frontend-u6vt.onrender.com |
 | 15 | CD Price Tracker | concluido | https://github.com/cavalcanteprofissional/cd-price-tracker | # |
+| 16 | LinkTree Pessoal | concluido | https://github.com/cavalcanteprofissional/linktree-cavalcante | https://linktree-cavalcante.vercel.app/ |
 
 ---
 

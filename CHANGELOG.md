@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.11.0] - 2026-08-03
+
+### 🚀 LinkTree Pessoal — Card finalizado + Renome
+
+- ✅ **Status `concluido`** — projeto id 16 (LinkTree) em `src/data/projects.json` agora marcado como concluído (badge "Concluído" no card)
+- ✏️ **Renome** — título "LinkTree Cavalcante" → **"LinkTree Pessoal"** no i18n pt/en/es (`src/i18n/index.ts`)
+- 📝 **`CONTENT.md`** — seção 8 atualizada: cabeçalho `(15 Projetos)` → `(16 Projetos)` e linha do projeto 16 (LinkTree Pessoal, `concluido`, repo + demo) adicionada nas duas tabelas de projetos
+- ✅ Typecheck e build verificados
+
 ## [1.10.0] - 2026-08-03
 
 ### ✨ Revelação coordenada ao fim do boot — Focus Reveal

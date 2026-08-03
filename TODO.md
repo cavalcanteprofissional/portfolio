@@ -327,3 +327,15 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | R7 | Reduced-motion global: `<MotionConfig reducedMotion="user">` no App (opacidade mantida, transform/layout desativados) | ✅ |
 | R8 | `CHANGELOG.md` bump `1.9.0` → `1.10.0` | ✅ |
 | R9 | Verificar typecheck e build | ✅ |
+
+---
+
+### 🚀 LinkTree Pessoal — Card finalizado + Renome (2026-08-03)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| L1 | Status do projeto id 16 em `projects.json` alterado de `andamento` → `concluido` | ✅ |
+| L2 | Título renomeado "LinkTree Cavalcante" → "LinkTree Pessoal" no i18n (pt/en/es) | ✅ |
+| L3 | `CONTENT.md` seção 8 — cabeçalho `(15 Projetos)` → `(16 Projetos)` + linha do projeto 16 nas duas tabelas (status `concluido`, nome "LinkTree Pessoal") | ✅ |
+| L4 | `CHANGELOG.md` bump `1.10.0` → `1.11.0` | ✅ |
+| L5 | Verificar typecheck e build | ✅ |
