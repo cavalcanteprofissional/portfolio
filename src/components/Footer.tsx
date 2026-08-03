@@ -1,4 +1,5 @@
 import { BookOpen, Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const socialLinks = [
   { 
@@ -30,7 +31,12 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-t border-border/30 py-3">
+    <motion.footer
+      initial={{ opacity: 0, y: 40, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+      className="fixed bottom-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-t border-border/30 py-3"
+    >
       <div className="section-container">
         <div className="flex items-center justify-center gap-3">
           {socialLinks.map((link) => {
@@ -50,6 +56,6 @@ export function Footer() {
           })}
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

@@ -163,3 +163,92 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | D1 | Adicionar `protobuf` e `tiktoken` ao `pip install` no `deploy.yml` | ✅ |
 
 **Causa:** O tokenizer do `facebook/mbart-large-50-many-to-many-mmt` precisa de `protobuf` (SentencePieceExtractor) e `tiktoken` (leitura do arquivo `.tiktoken`) em tempo de execução. O CI instalava apenas `transformers torch sentencepiece sacremoses jinja2 python-frontmatter pyyaml playwright` — sem esses dois pacotes, o `resume/build.py` quebrava com `ImportError` e `ModuleNotFoundError`.
+
+---
+
+### 🧰 TechStack — Agrupamento + Grade Responsiva (2026-08-02)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| T1 | Agrupar 28 techs em 6 grupos (Linguagens, IA/ML, Data Science, Frontend, Backend, DevOps) | ✅ |
+| T2 | Adicionar labels dos grupos em i18n pt/en/es (`techstack.groups.*`) | ✅ |
+| T3 | Grade responsiva dos cards: mobile 2×3 (`grid-cols-2`), desktop/tablet 3×2 (`md:grid-cols-3`), sem card, `items-start` | ✅ |
+| T4 | Verificar typecheck e build | ✅ |
+| T5 | Título dos grupos com altura fixa (`min-h-12`) + centralizado verticalmente — alinha a 1ª linha de ícones entre cards (fix Data Science × Frontend no mobile) | ✅ |
+| T6 | Grade interna de ícones por card: 3 por linha (md+) / 2 por linha (mobile), colunas `auto` + `justify-center` (ícones agrupados, não esticados) | ✅ |
+| T7 | Forçar exatamente 2 linhas de ícones por card no desktop (`lg:grid-rows-[repeat(2,4rem)]`) | ✅ |
+| T8 | Aplicar 2 linhas + 3 colunas também no tablet (`md:`), com `md:gap-2` para caber em 768px | ✅ |
+| T9 | Verificar typecheck e build | ✅ |
+| T10 | Remover Power BI do grupo Data Science (5 techs no grupo) — sem evidência de uso em projetos | ✅ |
+| T11 | Remover import `FaChartBar` (agora sem uso) e verificar typecheck e build | ✅ |
+
+---
+
+### 🎬 BootScreen — Preloader Proporcional ao Carregamento (2026-08-02)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| B1 | Pacing proporcional: `CHAR_DELAY` derivado do total de caracteres para preencher piso de 2500ms (legível, nunca flash) | ✅ |
+| B2 | `loaded` via `document.readyState`/`window.load` + fallback — boot só termina após página carregada | ✅ |
+| B3 | Auto-proceed `loaded && elapsed >= MIN_BOOT_MS` (intervalo 100ms) + skip manual preservado (tecla/clique) | ✅ |
+| B4 | Animações de entrada: Nav `y:-80`, Hero `y:60`, Footer `y:40 + scale:.97` (ease `[0.16,1,0.3,1]`) | ✅ |
+| B5 | Nav/Hero/Footer montados apenas após `booted` (`{booted && ...}` — sem flash de seções durante o boot) | ✅ |
+| B6 | Centralizar prontidão no `App.tsx`: `resourcesReady` = `window.load` + todos os chunks lazy (Companies→Contact) + fallback 8s | ✅ |
+| B7 | BootScreen recebe prop `ready` (removeu controle `loaded` interno duplicado); auto-proceed agora `ready && elapsed >= 2500ms` | ✅ |
+| B8 | Verificar typecheck e build | ✅ |
+
+---
+
+### 🎬 BootScreen — Overhaul: Tela Cheia, CRT, Som e Conteúdo (2026-08-02)
+
+#### 🔴 Fix — Assimetria / Bugs
+| # | Tarefa | Status |
+|---|--------|--------|
+| F1 | Normalizar indentação das linhas de módulos — `jobmatch-ai`/`cd-price-tracker` com 4 espaços extras vs. demais | ✅ |
+| F2 | Unificar áudio: reusar `window.__bootAudioCtx` (index.html) em vez de criar AudioContext paralelo; ouvir `pointerdown`+`keydown` | ✅ |
+
+#### 🖥️ Tela Cheia Ponta a Ponta (Responsive)
+| # | Tarefa | Status |
+|---|--------|--------|
+| R1 | Trocar container `max-w-xl` por `w-full` com padding responsivo (`px-3 sm:px-8 lg:px-16 py-8 sm:py-12`) | ✅ |
+| R2 | Fonte responsiva por viewport: `text-[11px] sm:text-sm md:text-base lg:text-lg` — linha mais longa não estoura no mobile | ✅ |
+| R3 | Moldura de "monitor": frame inset com `border` + glow em `--primary` | ✅ |
+
+#### 🎨 Visual CRT (Paleta do Portfólio)
+| # | Tarefa | Status |
+|---|--------|--------|
+| V1 | Scanlines: overlay `repeating-linear-gradient`, `pointer-events-none` | ✅ |
+| V2 | Vignette CRT: `radial-gradient` escurecendo cantos | ✅ |
+| V3 | Flicker sutil em keyframes + desabilitado em `prefers-reduced-motion` | ✅ |
+| V4 | Glow do texto: `text-shadow` em hsl `--primary` | ✅ |
+| V5 | `[OK]` ciano com pop de escala ao aparecer (separado do texto digitado) | ✅ |
+
+#### 📝 Conteúdo das Linhas
+| # | Tarefa | Status |
+|---|--------|--------|
+| C1 | Adicionar `linktree-cavalcante [Next.js + Three.js]` (16º módulo, alinha com `projects.json` id 16) | ✅ |
+| C2 | Bump de versão da última linha: `v2.4.1` → `v2.5.0` | ✅ |
+| C3 | Linhas estruturadas `{ text, dots, ok, type }` com indentação consistente | ✅ |
+
+#### 🔊 Som — POST + Chime, Mutável
+| # | Tarefa | Status |
+|---|--------|--------|
+| S1 | Criar `bootSound.ts`: `beep(freq, dur, type, vol)` com envelope de ganho | ✅ |
+| S2 | Beep de POST (~1kHz, 100ms) ao completar o POST | ✅ |
+| S3 | Chime de boas-vindas (3 tons) quando o boot termina | ✅ |
+| S4 | Mudo com botão `Volume2`/`VolumeX`, persistido em `localStorage` | ✅ |
+| S5 | Áudio só inicia após 1º gesto (`pointerdown`/`keydown`) — autoplay preservado | ✅ |
+
+#### ⏱️ Timing / Pacing
+| # | Tarefa | Status |
+|---|--------|--------|
+| T1 | Velocidade por tipo de linha: hardware mais lento, módulos/headers rápidos (steps fixos por tipo) | ✅ |
+| T2 | `[OK]` com delay: digitar nome + dots → pausa → `[OK]` ciano com pop | ✅ |
+| T3 | Pacing determinístico com `TICK_MS` (4ms) + `TYPE_STEP` por tipo — corrige clamp de setTimeout; piso de 2800ms | ✅ |
+| T4 | Manter auto-proceed `ready && elapsed >= MIN_BOOT_MS` + skip manual | ✅ |
+
+#### 🧪 Verificação
+| # | Tarefa | Status |
+|---|--------|--------|
+| B1 | `npm run typecheck` e `npm run build` | ✅ |
+| B2 | Atualizar `CHANGELOG.md` (bump `1.6.1` → `1.7.0`) | ✅ |

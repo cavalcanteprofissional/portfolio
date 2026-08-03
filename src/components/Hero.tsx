@@ -8,8 +8,11 @@ export function Hero() {
   const { theme } = useThemeStore();
 
   return (
-    <section
+    <motion.section
       id="hero"
+      initial={{ opacity: 0, y: 60 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
       className="min-h-screen pt-20 md:pt-24 pb-16 flex items-center relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-blue-light dark:bg-gradient-blue-dark opacity-50" />
@@ -169,6 +172,6 @@ export function Hero() {
           </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

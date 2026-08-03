@@ -29,6 +29,45 @@ function App() {
   const [booted, setBooted] = useState(
     () => sessionStorage.getItem('booted') === 'true'
   );
+  const [resourcesReady, setResourcesReady] = useState(false);
+
+  useEffect(() => {
+    if (booted) return;
+
+    let cancelled = false;
+    const finish = () => {
+      if (!cancelled) setResourcesReady(true);
+    };
+
+    const chunks = Promise.all([
+      import('./components/Companies'),
+      import('./components/TechStack'),
+      import('./components/Experience'),
+      import('./components/Portfolio'),
+      import('./components/Skills'),
+      import('./components/Certifications'),
+      import('./components/Languages'),
+      import('./components/FAQ'),
+      import('./components/Contact'),
+    ]).catch(() => {});
+
+    const load = new Promise<void>((resolve) => {
+      if (document.readyState === 'complete') resolve();
+      else window.addEventListener('load', () => resolve(), { once: true });
+    });
+
+    const fallback = setTimeout(finish, 8000);
+
+    Promise.all([chunks, load]).then(() => {
+      clearTimeout(fallback);
+      finish();
+    });
+
+    return () => {
+      cancelled = true;
+      clearTimeout(fallback);
+    };
+  }, [booted]);
 
   const handleBootComplete = useCallback(() => {
     sessionStorage.setItem('booted', 'true');
@@ -43,19 +82,19 @@ function App() {
   return (
     <ErrorBoundary>
       <AnimatePresence>
-        {!booted && <BootScreen onComplete={handleBootComplete} />}
+        {!booted && <BootScreen onComplete={handleBootComplete} ready={resourcesReady} />}
       </AnimatePresence>
 
       <div className="min-h-screen bg-background text-foreground">
         <a href="#main-content" className="skip-to-content">
           {t('acessibilidade.skipToContent')}
         </a>
-        <Nav />
+        {booted && <Nav />}
 
         <PoolEffect />
 
         <main id="main-content" className="pb-20">
-          <Hero />
+          {booted && <Hero />}
           <Stats />
           <Suspense fallback={<SectionFallback />}><Companies /></Suspense>
           <Suspense fallback={<SectionFallback />}><TechStack /></Suspense>
@@ -69,7 +108,7 @@ function App() {
           <Suspense fallback={<SectionFallback />}><Contact /></Suspense>
         </main>
 
-        <Footer />
+        {booted && <Footer />}
         <ScrollToTop />
       </div>
     </ErrorBoundary>

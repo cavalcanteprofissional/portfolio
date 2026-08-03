@@ -1,5 +1,46 @@
 # Changelog
 
+## [1.7.0] - 2026-08-02
+
+### 🎬 BootScreen — Overhaul: Tela Cheia, CRT, Som e Conteúdo
+
+- 🖥️ **Tela cheia ponta a ponta** — container `max-w-xl` → `w-full` com padding responsivo (`px-3 sm:px-8 lg:px-16`) e fonte por viewport (`text-[11px] sm:text-sm md:text-base lg:text-lg`); moldura de "monitor" com glow em `--primary`
+- 🎨 **Efeitos CRT** — scanlines (`repeating-linear-gradient`), vignette radial, flicker sutil (respeita `prefers-reduced-motion`) e glow azul/ciano no texto
+- 🟢 **`[OK]` com pop** — status agora aparece separado do texto digitado: nome + dots → pausa → `[OK]` ciano com scale pop
+- 🔊 **Som reestruturado** — novo `bootSound.ts`: `AudioContext` único (reusa `window.__bootAudioCtx` do preloader, eliminando contexto paralelo), beep de POST (~1kHz) ao completar o POST e chime de boas-vindas (3 tons) ao terminar; botão de mudo `Volume2`/`VolumeX` persistido em `localStorage`; áudio só após o 1º gesto
+- ⏱️ **Pacing determinístico** — steps fixos por tipo de linha (hardware 5, módulos 8 chars/tick em ticks de 4ms), `[OK]` com delay de 40ms, piso de 2800ms; auto-proceed e skip manual preservados
+- 📝 **Conteúdo** — adicionado módulo `linktree-cavalcante [Next.js + Three.js]` (16º, alinha com `projects.json`); versão bump `v2.4.1` → `v2.5.0`; indentação normalizada (linhas de módulos uniformes)
+- 🔧 **Fixes** — assimetria de indentação nas linhas `jobmatch-ai`/`cd-price-tracker` corrigida; áudio unificado
+
+## [1.6.1] - 2026-08-02
+
+### 🧰 TechStack — Remoção do Power BI
+
+- 🗑️ **Power BI removido** do grupo Data Science & Visualização — sem evidência de uso nos projetos (agora 27 techs no total, 5 no grupo)
+- 🧹 **Import `FaChartBar` removido** — sem imports não utilizados
+- ✅ Typecheck e build verificados
+
+## [1.6.0] - 2026-08-02
+
+### 🎬 BootScreen — Preloader Proporcional ao Carregamento
+
+- ⏱️ **Duração proporcional ao carregamento real** — o boot agora espera `window.load` + todos os chunks lazy (Companies, TechStack, Experience, Portfolio, Skills, Certifications, Languages, FAQ, Contact), com fallback de 8s; duração = `max(carregamento, 2500ms)`
+- ⌨️ **Pacing legível** — `CHAR_DELAY` derivado do total de caracteres em runtime, preenche o piso de 2500ms sem flash e sem arrastar
+- 🖥️ **Prontidão centralizada no App** — `resourcesReady` no `App.tsx` substitui o controle `loaded` interno do BootScreen (agora prop `ready`)
+- ⏭️ **Skip manual preservado** — tecla ou clique continua pulando o boot a qualquer momento
+- ✨ **Animações de entrada** — Nav desce (`y:-80`), Hero sobe (`y:60`), Footer entra com `y:40 + scale:.97` (ease `[0.16,1,0.3,1]`), montados só após o boot — sem flash de seções durante o boot
+
+## [1.5.0] - 2026-08-02
+
+### 🧰 TechStack — Grupos + Grade Responsiva
+
+- 🗂️ **28 techs agrupadas em 6 grupos** — Linguagens, IA & ML, Data Science & Visualização, Frontend, Backend & APIs, DevOps & Deploy
+- 🌍 **Rótulos dos grupos i18n** — `techstack.groups.*` traduzidos em pt/en/es
+- 📐 **Grade responsiva dos cards** — mobile 2×3 (`grid-cols-2`), tablet/desktop 3×2 (`md:grid-cols-3`), altura conforme conteúdo (`items-start`)
+- 🏷️ **Títulos com altura fixa e centralizados** — `min-h-12` + `text-balance`, alinha a 1ª linha de ícones entre cards lado a lado (corrige desalinhamento Data Science × Frontend no mobile)
+- 🔲 **Ícones em grade por card** — 3 por linha (md+) / 2 por linha (mobile), colunas `auto` + `justify-center` (ícones agrupados no centro, sem esticar pela largura do card)
+- 📏 **2 linhas de ícones forçadas** em tablet e desktop (`md:grid-rows-[repeat(2,4rem)]`) — altura uniforme entre todos os cards, com `md:gap-2` para caber em tablets de 768px
+
 ## [1.4.1] - 2026-07-26
 
 ### 🔄 Modelo de tradução atualizado (MarianMT → mBART)

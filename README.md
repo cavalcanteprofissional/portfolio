@@ -4,13 +4,13 @@
 
 ## ✨ O que tem por aqui
 
-- 🖥️ **BootScreen estilo BIOS** — animação de boot com digitação e beep (só uma vez, depois pula direto)
+- 🖥️ **BootScreen estilo BIOS** — tela cheia com efeito CRT (scanlines, vignette, flicker, glow), digitação com `[OK]` animado, beep de POST + chime de boas-vindas e botão de mudo (só uma vez, depois pula direto)
 - 🌓 **Modo escuro/claro** — com detecção automática do sistema
 - 🌎 **3 idiomas** — Português, English, Español
 - 🎯 **Nav com scroll ativo** — destaca a seção enquanto você navega
 - 🖼️ **Cards de projeto** com link pra demo, código e status (🟢 concluído / 🟡 em andamento)
 - 🏷️ **Badges de progresso** — indicador visual com circle glow para cada projeto
-- 📊 **TechStack verdadeiro** — baseado nos projetos reais do GitHub, sem firula
+- 📊 **TechStack verdadeiro** — baseado nos projetos reais do GitHub, agrupado em 6 categorias (Linguagens, IA/ML, Data Science, Frontend, Backend, DevOps), sem firula
 - 📄 **Currículo automático** — pipeline gera PDFs em PT/EN/ES a partir de uma fonte YAML, com tradução por IA
 - ❓ **FAQ** com dados estruturados (aparece na busca do Google)
 - ♿ **Acessibilidade** — skip-to-content, reduced-motion, aria-labels

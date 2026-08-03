@@ -134,6 +134,41 @@
   .rounded-soft-xl {
     border-radius: 1.5rem;
   }
+
+  /* BootScreen — efeitos CRT */
+  .boot-scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.18) 3px,
+      rgba(0, 0, 0, 0.18) 4px
+    );
+  }
+
+  .boot-vignette {
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+  }
+
+  .boot-glow-text {
+    text-shadow: 0 0 6px hsl(212 75% 55% / 0.55), 0 0 2px hsl(212 75% 55% / 0.35);
+  }
+
+  .boot-ok {
+    color: hsl(187 92% 55%);
+    text-shadow: 0 0 8px hsl(187 92% 55% / 0.7);
+  }
+}
+
+@keyframes boot-flicker {
+  0%, 91%, 93%, 95%, 97%, 100% { opacity: 1; }
+  92% { opacity: 0.94; }
+  94% { opacity: 0.97; }
+  96% { opacity: 0.9; }
+}
+
+.boot-flicker {
+  animation: boot-flicker 4s linear infinite;
 }
 
 /* Esconder scrollbar mas manter scroll */

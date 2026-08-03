@@ -80,7 +80,18 @@ export const translations = {
     footer: { contact: "Entre em Contato", message: "Estou sempre aberto a novas oportunidades e colaborações.", rights: "Todos os direitos reservados." },
     cta: { title: "Vamos Trabalhar Juntos?", subtitle: "Estou sempre aberto a novas oportunidades e colaborações. Vamos conversar sobre seu próximo projeto?", contact: "Entre em Contato", whatsapp: "Fale no WhatsApp", linkedin: "Conecte no LinkedIn", hero: "Contato" },
     companies: { title: "Empresas Atendidas", subtitle: "Parceiros que confiam no meu trabalho" },
-    techstack: { title: "Tech Stack", subtitle: "Tecnologias e ferramentas que domino" },
+    techstack: {
+      title: "Tech Stack",
+      subtitle: "Tecnologias e ferramentas que domino",
+      groups: {
+        languages: "Linguagens",
+        ai: "IA & Machine Learning",
+        data: "Data Science & Visualização",
+        frontend: "Frontend",
+        backend: "Backend & APIs",
+        devops: "DevOps & Deploy",
+      },
+    },
     stats: { title: "Resultados", years: "Anos de Experiência", projects: "Projetos Realizados", clients: "Clientes Atendidos", certifications: "Certificações" },
     faq: {
       title: "Perguntas Frequentes",
@@ -177,7 +188,18 @@ export const translations = {
     footer: { contact: "Contact Me", message: "I am always open to new opportunities and collaborations.", rights: "All rights reserved." },
     cta: { title: "Let's Work Together?", subtitle: "I'm always open to new opportunities and collaborations. Let's talk about your next project?", contact: "Get in Touch", whatsapp: "Message on WhatsApp", linkedin: "Connect on LinkedIn", hero: "Contact" },
     companies: { title: "Companies", subtitle: "Partners who trust my work" },
-    techstack: { title: "Tech Stack", subtitle: "Technologies and tools I master" },
+    techstack: {
+      title: "Tech Stack",
+      subtitle: "Technologies and tools I master",
+      groups: {
+        languages: "Languages",
+        ai: "AI & Machine Learning",
+        data: "Data Science & Visualization",
+        frontend: "Frontend",
+        backend: "Backend & APIs",
+        devops: "DevOps & Deploy",
+      },
+    },
     stats: { title: "Results", years: "Years of Experience", projects: "Projects Completed", clients: "Clients Served", certifications: "Certifications" },
     faq: {
       title: "Frequently Asked Questions",
@@ -281,7 +303,18 @@ export const translations = {
       metrics: { sources: "3 fuentes", steps: "12 pasos", speed: "< 2s" },
     },
     companies: { title: "Empresas Atendidas", subtitle: "Socios que confían en mi trabajo" },
-    techstack: { title: "Tech Stack", subtitle: "Tecnologías y herramientas que domino" },
+    techstack: {
+      title: "Tech Stack",
+      subtitle: "Tecnologías y herramientas que domino",
+      groups: {
+        languages: "Lenguajes",
+        ai: "IA & Machine Learning",
+        data: "Data Science & Visualización",
+        frontend: "Frontend",
+        backend: "Backend & APIs",
+        devops: "DevOps & Deploy",
+      },
+    },
     stats: { title: "Resultados", years: "Años de Experiencia", projects: "Proyectos Realizados", clients: "Clientes Atendidos", certifications: "Certificaciones" },
     faq: {
       title: "Preguntas Frecuentes",
