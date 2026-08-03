@@ -4,7 +4,8 @@
 
 ## ✨ O que tem por aqui
 
-- 🖥️ **BootScreen estilo BIOS** — tela cheia com efeito CRT (scanlines, vignette, flicker, glow), digitação com `[OK]` animado, beep de POST + chime de boas-vindas e botão de mudo (só uma vez, depois pula direto)
+- 🖥️ **BootScreen estilo BIOS** — tela cheia com efeito CRT (scanlines, vignette, flicker, glow), digitação rápida com `[OK]` animado, texto borda a borda, glow do mouse 3x durante o boot, beep de POST + chime de boas-vindas e botão de mudo (só uma vez, depois pula direto)
+- ✨ **Revelação em foco ao fim do boot** — transição coordenada: fundo com fade + blur + scale, glow do mouse "assenta" sem pop, Nav desliza de cima, Hero sobe com escala e Footer entra com ícones em sequência
 - 🌓 **Modo escuro/claro** — com detecção automática do sistema
 - 🌎 **3 idiomas** — Português, English, Español
 - 🎯 **Nav com scroll ativo** — destaca a seção enquanto você navega
