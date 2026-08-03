@@ -298,3 +298,32 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | N8 | Efeito foto LinkTree respeita bordas arredondadas — `rounded-2xl` no anchor (glow acompanha os cantos) | ✅ |
 | N9 | Badge da assinatura centralizada na borda/quia inferior direita em todas as viewports | ✅ |
 | N10 | Verificar typecheck, build e Playwright DOM (320/375/768/1024px) | ✅ |
+
+---
+
+### 🎬 BootScreen — Digitação mais rápida + texto borda a borda + Glow 3x (2026-08-03)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| B1 | Acelerar digitação mantendo auto-avanço: `TICK_MS` 4→3ms, steps por tipo (hw 5→7, module/info/footer 8→12, header 10→14), `OK_DELAY` 40→24, `SECTION_PAUSE` 80→60, `LINE_GAP` 12→8, `PROMPT_DELAY` 200→160; `MIN_BOOT_MS` continua 2800ms (prompt ~1.35s antes ~2.18s) | ✅ |
+| B2 | Texto borda a borda — remover moldura de "monitor" (frame inset + glow) e paddings laterais (`px-3 sm:px-8 lg:px-16`); container `w-full` edge-to-edge | ✅ |
+| B3 | Glow do mouse 3x durante o boot — `PoolEffect` com prop `intense` (tamanho 288→864px, alphas ×3, blur 25→60px, z-[65] sobre a tela de boot); `App.tsx` passa `intense={!booted}` | ✅ |
+| B4 | Bump versão do boot `v2.5.0` → `v2.6.0` (BootScreen + CONTENT.md) | ✅ |
+| B5 | `CHANGELOG.md` bump `1.8.0` → `1.9.0` | ✅ |
+| B6 | Verificar typecheck e build | ✅ |
+
+---
+
+### ✨ Revelação coordenada ao fim do boot — Focus Reveal (2026-08-03)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| R1 | Background fade-in (foco de câmera): `<main>` → `motion.main` com `opacity 0→1`, `scale 1.03→1`, `blur(8px)→0` (0.9s, ease `[0.16,1,0.3,1]`) acionado por `booted` | ✅ |
+| R2 | Crossfade escuro → tema: overlay `fixed inset-0 z-[45]` cor do boot (`hsl(215 45% 8%)`), `opacity 1→0` (0.8s, delay 0.05) — abaixo do glow intenso (z-65) e do boot (z-50) | ✅ |
+| R3 | Glow do mouse "assenta" sem pop: `PoolEffect` com 2 camadas cross-fade (864px/×3/blur 60 ↔ 288px/blur 25, 0.6s) + estado `settling` (container z-[65] por 600ms → z-0) | ✅ |
+| R4 | Nav desliza de fora da tela: `y:'-100%'→0` (antes `y:-80`), 0.7s, delay 0.05 | ✅ |
+| R5 | Hero com subida + assentamento: `y:80→0` + `scale 0.99→1` (0.8s, delay 0.1); delays dos filhos reduzidos (~0.05s) | ✅ |
+| R6 | Footer sobe de baixo (`y:60→0`, delay 0.15) com ícones em stagger de ~30ms | ✅ |
+| R7 | Reduced-motion global: `<MotionConfig reducedMotion="user">` no App (opacidade mantida, transform/layout desativados) | ✅ |
+| R8 | `CHANGELOG.md` bump `1.9.0` → `1.10.0` | ✅ |
+| R9 | Verificar typecheck e build | ✅ |

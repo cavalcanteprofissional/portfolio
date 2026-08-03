@@ -94,7 +94,7 @@ export function Nav() {
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -80 }}
+      initial={{ opacity: 0, y: '-100%' }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
       className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-soft"

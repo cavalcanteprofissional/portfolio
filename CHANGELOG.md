@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.10.0] - 2026-08-03
+
+### ✨ Revelação coordenada ao fim do boot — Focus Reveal
+
+- 🎥 **Background fade-in (foco de câmera)** — `<main>` vira `motion.main` com `opacity 0→1`, `scale 1.03→1` e `blur(8px)→0` em 0.9s (ease `[0.16,1,0.3,1]`) quando `booted`; a página inteira "entra em foco" enquanto o boot dissolve
+- 🌑 **Crossfade escuro → tema** — overlay `fixed inset-0 z-[45]` na cor do boot (`hsl(215 45% 8%)`) com `opacity 1→0` (0.8s, delay 0.05), por baixo do glow intenso (z-65) e do boot (z-50)
+- 🖱️ **Glow do mouse "assenta" sem pop** — `PoolEffect` refatorado com duas camadas cross-fade (intenso 864px/alphas ×3/blur 60 ↔ normal 288px/blur 25, 0.6s); container mantém `z-[65]` por 600ms após o boot (estado `settling`) e depois volta a `z-0`
+- 📍 **Nav** — desliza de fora da tela: `y:'-100%'→0` (antes `y:-80`), 0.7s, delay 0.05
+- 🚀 **Hero** — subida com assentamento: `y:80→0` + `scale 0.99→1` (0.8s, delay 0.1); delays dos filhos reduzidos (~0.05s) para sincronizar com o fade
+- 🦶 **Footer** — sobe de baixo (`y:60→0`, 0.7s, delay 0.15) com ícones sociais em stagger de ~30ms
+- ♿ **Reduced-motion global** — `<MotionConfig reducedMotion="user">` no App: mantém fades de opacidade e desativa transform/layout para `prefers-reduced-motion` (cobre a lacuna do framer além do CSS)
+- ✅ Typecheck e build verificados
+
+## [1.9.0] - 2026-08-03
+
+### 🎬 BootScreen — Digitação mais rápida, texto borda a borda e glow 3x
+
+- ⏱️ **Digitação ~40% mais rápida** — `TICK_MS` 4→3ms, steps por tipo maiores (hardware 5→7, módulos 8→12, header 10→14) e delays reduzidos (`OK_DELAY` 40→24, `SECTION_PAUSE` 80→60, `LINE_GAP` 12→8, `PROMPT_DELAY` 200→160); prompt "PRESS ANY KEY" aparece em ~1.35s (antes ~2.18s)
+- ⏭️ **Auto-avanço mantido** — `MIN_BOOT_MS` continua 2800ms; o tempo total até avançar é o mesmo, com mais tempo de espera no prompt
+- 🖥️ **Texto borda a borda** — removida a moldura de "monitor" (frame inset + glow) e os paddings laterais (`px-3 sm:px-8 lg:px-16`); o texto ocupa toda a largura da viewport
+- 🖱️ **Glow do mouse 3x no boot** — `PoolEffect` ganha prop `intense`: durante a animação o glow fica visível sobre a tela de boot com tamanho 3x (288→864px) e brilho 3x (alphas ×3), voltando ao normal após o boot
+- 📝 **Versão bump** — última linha do boot `v2.5.0` → `v2.6.0` (+ `CONTENT.md`)
+- ✅ Typecheck e build verificados
+
 ## [1.8.0] - 2026-08-03
 
 ### 🎯 Hero — Layout responsivo, interações mobile e botões

@@ -39,23 +39,23 @@ const BOOT_LINES: BootLine[] = [
   { type: 'module', text: '    linktree-cavalcante [Next.js + Three.js]', ok: true },
   { type: 'gap', text: '' },
   { type: 'info', text: '  POST complete — all systems nominal.' },
-  { type: 'footer', text: '  Booting: Lucas Cavalcante Systems v2.5.0' },
+  { type: 'footer', text: '  Booting: Lucas Cavalcante Systems v2.6.0' },
 ];
 
 const MIN_BOOT_MS = 2800;
-const SECTION_PAUSE = 80;
-const LINE_GAP = 12;
-const OK_DELAY = 40;
-const PROMPT_DELAY = 200;
+const SECTION_PAUSE = 60;
+const LINE_GAP = 8;
+const OK_DELAY = 24;
+const PROMPT_DELAY = 160;
 const TARGET_WIDTH = 48;
-const TICK_MS = 4;
+const TICK_MS = 3;
 
 const TYPE_STEP: Record<string, number> = {
-  header: 10,
-  hw: 5,
-  module: 8,
-  info: 8,
-  footer: 8,
+  header: 14,
+  hw: 7,
+  module: 12,
+  info: 12,
+  footer: 12,
 };
 
 const POST_LINE_INDEX = BOOT_LINES.findIndex((line) => line.type === 'info');
@@ -189,7 +189,6 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
     >
       <div className="absolute inset-0 bg-gradient-blue-dark/40" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-0 boot-vignette z-[55]" aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-2 sm:inset-4 z-[55] rounded-2xl border border-primary/20 shadow-[inset_0_0_80px_hsl(212_75%_55%/0.10)]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-0 z-[60] boot-scanlines" aria-hidden="true" />
 
       <button
@@ -206,7 +205,7 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
         )}
       </button>
 
-      <div className="relative z-10 w-full px-3 sm:px-8 lg:px-16 py-8 sm:py-12 boot-flicker">
+      <div className="relative z-10 w-full py-6 sm:py-10 boot-flicker">
         {BOOT_LINES.map((line, i) => {
           if (line.type === 'gap') return <div key={i} className="h-2.5 sm:h-3" />;
 

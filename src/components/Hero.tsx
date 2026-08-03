@@ -13,7 +13,7 @@ export function Hero() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.6 }}
+      transition={{ delay: 0.35, duration: 0.6 }}
       className="grid grid-cols-1 gap-y-6 justify-items-center md:justify-items-start"
     >
       <a
@@ -71,9 +71,9 @@ export function Hero() {
   return (
     <motion.section
       id="hero"
-      initial={{ opacity: 0, y: 60 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+      initial={{ opacity: 0, y: 80, scale: 0.99 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
       className="min-h-screen pt-20 md:pt-24 pb-16 flex items-center relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-blue-light dark:bg-gradient-blue-dark opacity-50" />
@@ -97,7 +97,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.6 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
             >
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
                 <span className="relative flex h-1.5 w-1.5">
@@ -111,7 +111,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
+              transition={{ delay: 0.15, duration: 0.6 }}
               className="md:hidden"
             >
               <div className="relative w-48 h-56 mx-auto">
@@ -152,7 +152,7 @@ export function Hero() {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
+              transition={{ delay: 0.25, duration: 0.6 }}
               className={`text-4xl lg:text-6xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}
             >
               {t('hero.name')}
@@ -165,7 +165,7 @@ export function Hero() {
               onClick={() => setBioOpen((v) => !v)}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
+              transition={{ delay: 0.35, duration: 0.6 }}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.96 }}
               className={`md:hidden inline-flex items-center gap-2 text-xl font-medium transition-colors duration-300 ${
@@ -182,7 +182,7 @@ export function Hero() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
+              transition={{ delay: 0.35, duration: 0.6 }}
               className="hidden md:block text-lg text-muted-foreground font-medium md:whitespace-nowrap"
             >
               {t('hero.title')}
@@ -206,7 +206,7 @@ export function Hero() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.6 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
               className="hidden md:block text-muted-foreground text-lg max-w-xl"
             >
               {t('hero.description')}
@@ -220,7 +220,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={{ delay: 0.25, duration: 0.6 }}
             className="relative hidden md:block"
           >
             <div className="relative w-64 h-72 md:w-88 md:h-96 mx-auto">

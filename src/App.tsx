@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
 import { useThemeStore } from './stores/themeStore';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -81,36 +81,57 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <AnimatePresence>
-        {!booted && <BootScreen onComplete={handleBootComplete} ready={resourcesReady} />}
-      </AnimatePresence>
+      <MotionConfig reducedMotion="user">
+        <AnimatePresence>
+          {!booted && <BootScreen onComplete={handleBootComplete} ready={resourcesReady} />}
+        </AnimatePresence>
 
-      <div className="min-h-screen bg-background text-foreground">
-        <a href="#main-content" className="skip-to-content">
-          {t('acessibilidade.skipToContent')}
-        </a>
-        {booted && <Nav />}
+        <motion.div
+          className="fixed inset-0 z-[45] pointer-events-none"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: booted ? 0 : 1 }}
+          transition={{ duration: 0.8, ease: 'easeInOut', delay: booted ? 0.05 : 0 }}
+          style={{ backgroundColor: 'hsl(215 45% 8%)' }}
+          aria-hidden="true"
+        />
 
-        <PoolEffect />
+        <div className="min-h-screen bg-background text-foreground">
+          <a href="#main-content" className="skip-to-content">
+            {t('acessibilidade.skipToContent')}
+          </a>
+          {booted && <Nav />}
 
-        <main id="main-content" className="pb-20">
-          {booted && <Hero />}
-          <Stats />
-          <Suspense fallback={<SectionFallback />}><Companies /></Suspense>
-          <Suspense fallback={<SectionFallback />}><TechStack /></Suspense>
-          <Suspense fallback={<SectionFallback />}><Experience /></Suspense>
-          <Suspense fallback={<SectionFallback />}><Portfolio /></Suspense>
-          <Suspense fallback={<SectionFallback />}><Skills /></Suspense>
-          {/* <Suspense fallback={<SectionFallback />}><Showcase /></Suspense> */}
-          <Suspense fallback={<SectionFallback />}><Certifications /></Suspense>
-          <Suspense fallback={<SectionFallback />}><Languages /></Suspense>
-          <Suspense fallback={<SectionFallback />}><FAQ /></Suspense>
-          <Suspense fallback={<SectionFallback />}><Contact /></Suspense>
-        </main>
+          <PoolEffect intense={!booted} />
 
-        {booted && <Footer />}
-        <ScrollToTop />
-      </div>
+          <motion.main
+            id="main-content"
+            className="pb-20"
+            initial={{ opacity: 0, scale: 1.03, filter: 'blur(8px)' }}
+            animate={
+              booted
+                ? { opacity: 1, scale: 1, filter: 'blur(0px)' }
+                : { opacity: 0, scale: 1.03, filter: 'blur(8px)' }
+            }
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {booted && <Hero />}
+            <Stats />
+            <Suspense fallback={<SectionFallback />}><Companies /></Suspense>
+            <Suspense fallback={<SectionFallback />}><TechStack /></Suspense>
+            <Suspense fallback={<SectionFallback />}><Experience /></Suspense>
+            <Suspense fallback={<SectionFallback />}><Portfolio /></Suspense>
+            <Suspense fallback={<SectionFallback />}><Skills /></Suspense>
+            {/* <Suspense fallback={<SectionFallback />}><Showcase /></Suspense> */}
+            <Suspense fallback={<SectionFallback />}><Certifications /></Suspense>
+            <Suspense fallback={<SectionFallback />}><Languages /></Suspense>
+            <Suspense fallback={<SectionFallback />}><FAQ /></Suspense>
+            <Suspense fallback={<SectionFallback />}><Contact /></Suspense>
+          </motion.main>
+
+          {booted && <Footer />}
+          <ScrollToTop />
+        </div>
+      </MotionConfig>
     </ErrorBoundary>
   );
 }

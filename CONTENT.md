@@ -480,7 +480,7 @@ The following text is displayed as a typing animation on first visit. It simulat
     jobmatch-ai [FastAPI + XGBoost + Docker]... [OK]
 
   POST complete — all systems nominal.
-  Booting: Lucas Cavalcante Systems v2.4.1
+  Booting: Lucas Cavalcante Systems v2.6.0
 ```
 
 ### Behavior

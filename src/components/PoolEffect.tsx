@@ -1,7 +1,31 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
-export function PoolEffect() {
+interface PoolEffectProps {
+  intense?: boolean;
+}
+
+const INTENSE_SIZE = 864;
+const NORMAL_SIZE = 288;
+
+const intenseRadius =
+  'radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.90) 0%, hsl(var(--primary) / 0.36) 30%, transparent 60%)';
+const normalRadius =
+  'radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.30) 0%, hsl(var(--primary) / 0.12) 30%, transparent 55%)';
+
+export function PoolEffect({ intense = false }: PoolEffectProps) {
   const glowRef = useRef<HTMLDivElement>(null);
+  const [settling, setSettling] = useState(false);
+
+  useEffect(() => {
+    if (intense) {
+      setSettling(false);
+      return;
+    }
+    setSettling(true);
+    const t = setTimeout(() => setSettling(false), 600);
+    return () => clearTimeout(t);
+  }, [intense]);
 
   useEffect(() => {
     const mouse = { x: 0.5, y: 0.5 };
@@ -43,19 +67,41 @@ export function PoolEffect() {
     };
   }, []);
 
+  const elevated = intense || settling;
+
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div
+      className={`fixed inset-0 pointer-events-none overflow-hidden ${
+        elevated ? 'z-[65]' : 'z-0'
+      }`}
+    >
       <div
         ref={glowRef}
-        className="absolute w-72 h-72 -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{
-          left: '50%',
-          top: '50%',
-          background:
-            'radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.30) 0%, hsl(var(--primary) / 0.12) 30%, transparent 55%)',
-          filter: 'blur(25px)',
-        }}
-      />
+        className="absolute -translate-x-1/2 -translate-y-1/2"
+        style={{ left: '50%', top: '50%', width: INTENSE_SIZE, height: INTENSE_SIZE }}
+      >
+        <motion.div
+          className="absolute inset-0 rounded-full"
+          style={{ background: intenseRadius, filter: 'blur(60px)' }}
+          initial={false}
+          animate={{ opacity: intense ? 1 : 0 }}
+          transition={{ duration: 0.6 }}
+        />
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            left: '50%',
+            top: '50%',
+            width: NORMAL_SIZE,
+            height: NORMAL_SIZE,
+            background: normalRadius,
+            filter: 'blur(25px)',
+          }}
+          initial={false}
+          animate={{ opacity: intense ? 0 : 1, x: '-50%', y: '-50%' }}
+          transition={{ duration: 0.6 }}
+        />
+      </div>
     </div>
   );
 }
