@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 export const translations = {
   pt: {
     nav: { home: "Início", showcase: "Showcase", experience: "Experiência", portfolio: "Projetos", skills: "Habilidades", certifications: "Certificações", languages: "Idiomas", menu: "Menu", swipeToClose: "Deslize para fechar" },
-    hero: { name: "Lucas Cavalcante", title: "Analista de Dados | IA & Machine Learning | Visão Computacional", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM.", resume: "/portfolio-cavalcante/cv/cv_pt.pdf" },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Dados & IA", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM.", resume: "/portfolio-cavalcante/cv/cv_pt.pdf" },
     contact: { location: "Fortaleza - CE", phone: "(85) 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículo", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículo" },
     sections: { experience: "Experiência Profissional", portfolio: "Projetos em Destaque", skills: "Habilidades Técnicas", certifications: "Certificações", languages: "Idiomas" },
@@ -112,7 +112,7 @@ export const translations = {
   },
   en: {
     nav: { home: "Home", showcase: "Showcase", experience: "Experience", portfolio: "Projects", skills: "Skills", certifications: "Certifications", languages: "Languages", menu: "Menu", swipeToClose: "Swipe to close" },
-    hero: { name: "Lucas Cavalcante", title: "Data Analyst | AI & Machine Learning | Computer Vision", description: "Data Analyst with experience in AI, automation, and digital marketing projects. Specialized in developing chatbots, interactive dashboards, time series and geospatial data pipelines, SEO/SEM strategies implementation, and delivering data-driven insights for business decision-making.", resume: "/portfolio-cavalcante/cv/cv_en.pdf" },
+    hero: { name: "Lucas Cavalcante", title: "Data Analyst & AI", description: "Data Analyst with experience in AI, automation, and digital marketing projects. Specialized in developing chatbots, interactive dashboards, time series and geospatial data pipelines, SEO/SEM strategies implementation, and delivering data-driven insights for business decision-making.", resume: "/portfolio-cavalcante/cv/cv_en.pdf" },
     contact: { location: "Fortaleza - CE, Brazil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Resume", view: "View Certificate", demo: "Demo", code: "Code", resume: "Resume" },
     sections: { experience: "Professional Experience", portfolio: "Featured Projects", skills: "Technical Skills", certifications: "Certifications", languages: "Languages" },
@@ -220,7 +220,7 @@ export const translations = {
   },
   es: {
     nav: { home: "Inicio", showcase: "Showcase", experience: "Experiencia", portfolio: "Proyectos", skills: "Habilidades", certifications: "Certificaciones", languages: "Idiomas", menu: "Menú", swipeToClose: "Desliza para cerrar" },
-    hero: { name: "Lucas Cavalcante", title: "Analista de Datos | IA & Machine Learning | Visión Computacional", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital. Especializado en el desarrollo de chatbots, dashboards interactivos, pipelines de datos de series temporales y geoespaciales, e implementación de estrategias SEO/SEM.", resume: "/portfolio-cavalcante/cv/cv_es.pdf" },
+    hero: { name: "Lucas Cavalcante", title: "Analista de Datos & IA", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital. Especializado en el desarrollo de chatbots, dashboards interactivos, pipelines de datos de series temporales y geoespaciales, e implementación de estrategias SEO/SEM.", resume: "/portfolio-cavalcante/cv/cv_es.pdf" },
     contact: { location: "Fortaleza - CE, Brasil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículum", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículum" },
     sections: { experience: "Experiencia Profesional", portfolio: "Proyectos Destacados", skills: "Habilidades Técnicas", certifications: "Certificaciones", languages: "Idiomas" },

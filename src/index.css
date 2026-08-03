@@ -125,6 +125,16 @@
   .shadow-soft-lg {
     box-shadow: 0 8px 30px -6px rgba(30, 64, 175, 0.15);
   }
+
+  /* Glow hover (efeito foto de perfil — LinkTree) */
+  .glow-hover {
+    box-shadow: 0 0 4px hsla(212, 75%, 55%, 0.3), 0 0 8px hsla(212, 75%, 55%, 0.15);
+    transition: box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .glow-hover:hover {
+    box-shadow: 0 0 8px hsla(212, 75%, 55%, 0.6), 0 0 20px hsla(212, 75%, 55%, 0.4), 0 0 40px hsla(212, 75%, 55%, 0.2);
+  }
   
   /* Borda suave */
   .rounded-soft {

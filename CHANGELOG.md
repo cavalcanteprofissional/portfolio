@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.8.0] - 2026-08-03
+
+### 🎯 Hero — Layout responsivo, interações mobile e botões
+
+- 📐 **Grid tablet** — 2 colunas a partir de 768px (`md:grid-cols-2`); foto mobile some no tablet (`md:hidden`) e a lateral aparece (`hidden md:block`); nome `lg:text-6xl` (desktop mantém 6xl); título `md:text-lg md:whitespace-nowrap`
+- 📱 **Mobile centralizado** — coluna `text-center md:text-left`, botões `justify-center md:justify-start`; ordem: badge → foto → nome → título → bio/CTA
+- 🏷️ **Badge "Disponível para projetos"** — movido para acima do nome em todos os viewports e menor (`text-xs`, `px-3.5 py-1.5`)
+- ✂️ **Título curto** — "Analista de Dados & IA" (pt/en/es: "Data Analyst & AI" / "Analista de Datos & IA") em todas as viewports; key `hero.titleFull` removida
+- 🪗 **Bio com expand/collapse (mobile)** — descrição colapsada por padrão; o próprio título "Analista de Dados & IA" é o gatilho (chevron, hover scale, estado selected em primary); botão pill separado removido; desktop/tablet mantêm descrição sempre visível
+- 📋 **Grid de botões 1×2** — linha 1 só email; linha 2: LinkedIn, **WhatsApp** (novo, `wa.me/5585996859051`), GitHub e Currículo; sempre exatamente 2 linhas (mobile = círculos de ícone, md+ = pills com texto `text-[10px] lg:text-xs`)
+- ↔️ **Distribuição na largura do email** — email expandido (`px-5 py-3.5`, `max-w-xs md:max-w-md`) define a largura; linha 2 com `justify-between` na mesma largura; distância entre linhas aumentada (`gap-y-6`)
+- 📱 **Mobile: botões dentro do expand/collapse** — grid de botões movido para dentro da bio colapsável (0 → 296px), renderizado também num wrapper `hidden md:block` para desktop/tablet
+- ✨ **Efeito foto de perfil (LinkTree)** — `.glow-hover` (glow azul intensifica no hover) + overlay escuro com ícone GitHub revelado no hover, nas fotos mobile e lateral; hover respeita bordas arredondadas (`rounded-2xl` no anchor)
+- 📍 **Badge da assinatura centralizada** — na borda/quia inferior direita da foto (metade dentro/metade fora): `-bottom-10 -right-10` (80px), `-bottom-14 -right-14`/`md:-bottom-16 md:-right-16` (112/128px)
+- ✅ Typecheck, build e verificações Playwright DOM (320/375/768/1024px) ok
+
 ## [1.7.0] - 2026-08-02
 
 ### 🎬 BootScreen — Overhaul: Tela Cheia, CRT, Som e Conteúdo

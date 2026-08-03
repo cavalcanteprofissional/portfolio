@@ -252,3 +252,49 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 |---|--------|--------|
 | B1 | `npm run typecheck` e `npm run build` | ✅ |
 | B2 | Atualizar `CHANGELOG.md` (bump `1.6.1` → `1.7.0`) | ✅ |
+
+---
+
+### 🎯 Hero — Layout Tablet (2 colunas) + Mobile (ordem preservada) (2026-08-02)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| H1 | Grid `lg:grid-cols-2` → `md:grid-cols-2` (2 colunas a partir de 768px) | ✅ |
+| H2 | Foto mobile `lg:hidden` → `md:hidden` (some no tablet) | ✅ |
+| H3 | Foto desktop `hidden lg:block` → `hidden md:block` (aparece no tablet, coluna direita) | ✅ |
+| H4 | Nome `text-4xl md:text-6xl` → `text-4xl lg:text-6xl` (text-6xl estoura coluna do tablet; desktop mantém 6xl) | ✅ |
+| H5 | Título `text-xl lg:text-lg lg:whitespace-nowrap` → `text-xl md:text-lg md:whitespace-nowrap` | ✅ |
+| H6 | Desktop inalterado (classes de foto/fonte mantidas) | ✅ |
+| H7 | Verificar typecheck, build e Playwright DOM (375px / 768px / 1024px, sem overflow) | ✅ |
+
+---
+
+### 🎯 Hero — Mobile centralizado + Badge acima do nome + Bio colapsável + Título curto + Efeito foto LinkTree (2026-08-03)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| M1 | Badge "Disponível para projetos" movido para acima do nome em todos os viewports, menor (`text-xs`, `px-3.5 py-1.5`) | ✅ |
+| M2 | Mobile: tudo centralizado (`text-center md:text-left` + botões `justify-center md:justify-start`) | ✅ |
+| M3 | Mobile: nome "Lucas Cavalcante" abaixo da foto (foto movida para antes do `h1`) | ✅ |
+| M4 | Título alterado para "Analista de Dados & IA" em todos os viewports (i18n pt/en/es) | ✅ |
+| M5 | Bio mobile com expand/collapse animado, acionada pelo próprio título "Analista de Dados & IA" (chefão + chevron rotaciona, hover scale, estado selected em primary) | ✅ |
+| M6 | Desktop/tablet: descrição sempre visível, gatilho/toggle oculto (`md:hidden`) | ✅ |
+| M7 | Efeito foto de perfil do LinkTree (`.glow-hover` + overlay escuro com ícone GitHub no hover) aplicado na foto mobile e na lateral, todas as viewports | ✅ |
+| M8 | Verificar typecheck, build e Playwright DOM (375px / 768px / 1024px) | ✅ |
+
+---
+
+### 🎯 Hero — Botões (grid 1×2), WhatsApp, efeito foto e badge (2026-08-03)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| N1 | Grid de botões 1 coluna × 2 linhas em todas as viewports: linha 1 só email, linha 2 os demais | ✅ |
+| N2 | Botão WhatsApp adicionado (`wa.me/5585996859051`, ícone MessageCircle) | ✅ |
+| N3 | Garantir exatamente 2 linhas (sem wrap): mobile = círculos de ícone; md+ = pills com texto | ✅ |
+| N4 | Desktop/tablet: pills com texto (`text-[10px] lg:text-xs`); email expandido (`px-5 py-3.5`, `max-w-xs md:max-w-md`) | ✅ |
+| N5 | Linha 2 com `justify-between` distribuída na mesma largura do email; mobile alinhado à mesma largura (`max-w-xs`) | ✅ |
+| N6 | Distância entre as linhas aumentada (`gap-y-6`) | ✅ |
+| N7 | Mobile: grid de botões movido para dentro do expand/collapse da bio (0 → 296px); desktop/tablet wrapper `hidden md:block` | ✅ |
+| N8 | Efeito foto LinkTree respeita bordas arredondadas — `rounded-2xl` no anchor (glow acompanha os cantos) | ✅ |
+| N9 | Badge da assinatura centralizada na borda/quia inferior direita em todas as viewports | ✅ |
+| N10 | Verificar typecheck, build e Playwright DOM (320/375/768/1024px) | ✅ |

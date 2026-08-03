@@ -1,11 +1,72 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Mail, Linkedin, Github, FileText } from 'lucide-react';
+import { Mail, Linkedin, Github, FileText, ChevronDown, MessageCircle } from 'lucide-react';
 import { useThemeStore } from '../stores/themeStore';
 
 export function Hero() {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const [bioOpen, setBioOpen] = useState(false);
+
+  const heroButtons = (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4, duration: 0.6 }}
+      className="grid grid-cols-1 gap-y-6 justify-items-center md:justify-items-start"
+    >
+      <a
+        href={`mailto:${t('contact.email')}`}
+        className="w-full max-w-xs md:max-w-md inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-gradient-blue text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity"
+      >
+        <Mail className="w-4 h-4" aria-hidden="true" />
+        {t('contact.email')}
+      </a>
+      <div className="w-full max-w-xs md:max-w-md flex items-center justify-between gap-2">
+        <a
+          href={t('contact.linkedin')}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          className="inline-flex items-center justify-center gap-1.5 w-11 h-11 md:w-auto md:h-auto md:px-3 md:py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-muted-foreground hover:text-primary md:text-[10px] lg:text-xs font-medium whitespace-nowrap transition-all"
+        >
+          <Linkedin className="w-4 h-4 md:w-3.5 md:h-3.5" aria-hidden="true" />
+          <span className="hidden md:inline">LinkedIn</span>
+        </a>
+        <a
+          href="https://wa.me/5585996859051"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          className="inline-flex items-center justify-center gap-1.5 w-11 h-11 md:w-auto md:h-auto md:px-3 md:py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-muted-foreground hover:text-primary md:text-[10px] lg:text-xs font-medium whitespace-nowrap transition-all"
+        >
+          <MessageCircle className="w-4 h-4 md:w-3.5 md:h-3.5" aria-hidden="true" />
+          <span className="hidden md:inline">WhatsApp</span>
+        </a>
+        <a
+          href={t('contact.github')}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          className="inline-flex items-center justify-center gap-1.5 w-11 h-11 md:w-auto md:h-auto md:px-3 md:py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-muted-foreground hover:text-primary md:text-[10px] lg:text-xs font-medium whitespace-nowrap transition-all"
+        >
+          <Github className="w-4 h-4 md:w-3.5 md:h-3.5" aria-hidden="true" />
+          <span className="hidden md:inline">GitHub</span>
+        </a>
+        <a
+          href={t('hero.resume')}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t('buttons.resume')}
+          className="inline-flex items-center justify-center gap-1.5 w-11 h-11 md:w-auto md:h-auto md:px-3 md:py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-muted-foreground hover:text-primary md:text-[10px] lg:text-xs font-medium whitespace-nowrap transition-all"
+        >
+          <FileText className="w-4 h-4 md:w-3.5 md:h-3.5" aria-hidden="true" />
+          <span className="hidden md:inline">{t('buttons.resume')}</span>
+        </a>
+      </div>
+    </motion.div>
+  );
 
   return (
     <motion.section
@@ -26,38 +87,54 @@ export function Hero() {
       <div className="absolute bottom-40 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px]" />
 
       <div className="section-container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-6"
+            className="space-y-6 text-center md:text-left"
           >
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className={`text-4xl md:text-6xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}
+              transition={{ delay: 0.15, duration: 0.6 }}
             >
-              {t('hero.name')}
-            </motion.h1>
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" aria-hidden="true"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary"></span>
+                </span>
+                {t('availability.label')}
+              </div>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="lg:hidden"
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="md:hidden"
             >
               <div className="relative w-48 h-56 mx-auto">
-                <img
-                  src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
-                  alt="Lucas Cavalcante"
-                  width={192}
-                  height={224}
-                  loading="eager"
-                  className="w-full h-full object-cover rounded-2xl"
-                />
-                <div className="absolute -bottom-5 -right-3 w-20 h-20 rounded-full flex items-center justify-center">
+                <a
+                  href={t('contact.github')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="glow-hover group relative block w-full h-full rounded-2xl"
+                >
+                  <img
+                    src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
+                    alt="Lucas Cavalcante"
+                    width={192}
+                    height={224}
+                    loading="eager"
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
+                  <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <Github className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+                  </div>
+                </a>
+                <div className="absolute -bottom-10 -right-10 w-20 h-20 rounded-full flex items-center justify-center pointer-events-none">
                   <img
                     src={theme === 'dark'
                       ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png'
@@ -72,91 +149,101 @@ export function Hero() {
               </div>
             </motion.div>
 
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
-              <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" aria-hidden="true"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              {t('availability.label')}
-            </div>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className={`text-4xl lg:text-6xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}
+            >
+              {t('hero.name')}
+            </motion.h1>
+
+            <motion.button
+              type="button"
+              aria-expanded={bioOpen}
+              aria-controls="hero-bio"
+              onClick={() => setBioOpen((v) => !v)}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.96 }}
+              className={`md:hidden inline-flex items-center gap-2 text-xl font-medium transition-colors duration-300 ${
+                bioOpen ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              <span>{t('hero.title')}</span>
+              <ChevronDown
+                className={`w-4 h-4 shrink-0 transition-transform duration-300 ${bioOpen ? 'rotate-180' : ''}`}
+                aria-hidden="true"
+              />
+            </motion.button>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-xl lg:text-lg text-muted-foreground font-medium lg:whitespace-nowrap"
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="hidden md:block text-lg text-muted-foreground font-medium md:whitespace-nowrap"
             >
               {t('hero.title')}
             </motion.p>
 
+            <motion.div
+              id="hero-bio"
+              initial={false}
+              animate={{ height: bioOpen ? 'auto' : 0, opacity: bioOpen ? 1 : 0 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="md:hidden overflow-hidden"
+            >
+              <p className="text-muted-foreground text-base leading-relaxed mt-3">
+                {t('hero.description')}
+              </p>
+              <div className="mt-4">
+                {heroButtons}
+              </div>
+            </motion.div>
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-muted-foreground text-lg max-w-xl"
+              transition={{ delay: 0.45, duration: 0.6 }}
+              className="hidden md:block text-muted-foreground text-lg max-w-xl"
             >
               {t('hero.description')}
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="flex flex-wrap items-center gap-2"
-            >
-              <a
-                href={`mailto:${t('contact.email')}`}
-                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full bg-gradient-blue text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity"
-              >
-                <Mail className="w-3.5 h-3.5" aria-hidden="true" />
-                {t('contact.email')}
-              </a>
-              <a
-                href={t('contact.linkedin')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
-              >
-                <Linkedin className="w-3.5 h-3.5" aria-hidden="true" />
-                LinkedIn
-              </a>
-              <a
-                href={t('contact.github')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
-              >
-                <Github className="w-3.5 h-3.5" aria-hidden="true" />
-                GitHub
-              </a>
-              <a
-                href={t('hero.resume')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border-2 border-border hover:border-primary/50 bg-card/80 backdrop-blur-sm text-xs font-medium transition-all"
-              >
-                <FileText className="w-3.5 h-3.5" aria-hidden="true" />
-                {t('buttons.resume')}
-              </a>
-            </motion.div>
+            <div className="hidden md:block">
+              {heroButtons}
+            </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="relative hidden lg:block"
+            className="relative hidden md:block"
           >
             <div className="relative w-64 h-72 md:w-88 md:h-96 mx-auto">
-              <img
-                src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
-                alt="Lucas Cavalcante"
-                width={288}
-                height={320}
-                loading="eager"
-                className="w-full h-full object-cover rounded-2xl"
-              />
-              <div className="absolute -bottom-8 -right-4 w-28 h-28 md:w-32 md:h-32 rounded-full flex items-center justify-center">
+              <a
+                href={t('contact.github')}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="glow-hover group relative block w-full h-full rounded-2xl"
+              >
+                <img
+                  src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
+                  alt="Lucas Cavalcante"
+                  width={288}
+                  height={320}
+                  loading="eager"
+                  className="w-full h-full object-cover rounded-2xl"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                  <Github className="w-14 h-14 text-white opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+                </div>
+              </a>
+              <div className="absolute -bottom-14 -right-14 w-28 h-28 md:-bottom-16 md:-right-16 md:w-32 md:h-32 rounded-full flex items-center justify-center pointer-events-none">
                 <img
                   src={theme === 'dark'
                     ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png'
