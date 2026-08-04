@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { ensureBootAudio, playPostBeep, playWelcomeChime } from './bootSound';
 
@@ -88,14 +88,23 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
   const [muted, setMuted] = useState(readBootMuted);
   const mutedRef = useRef(muted);
   const onCompleteRef = useRef(onComplete);
-  const startRef = useRef(performance.now());
-  onCompleteRef.current = onComplete;
-  mutedRef.current = muted;
+  const startRef = useRef(0);
+
+  useEffect(() => {
+    startRef.current = performance.now();
+  }, []);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+    mutedRef.current = muted;
+  }, [onComplete, muted]);
 
   useEffect(() => {
     try {
       localStorage.setItem('boot-muted', muted ? '1' : '0');
-    } catch {}
+    } catch {
+      /* localStorage indisponível */
+    }
   }, [muted]);
 
   useEffect(() => {

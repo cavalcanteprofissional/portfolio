@@ -45,7 +45,9 @@ export function playBootTone(freq: number, duration: number, options: BootToneOp
     gain.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
     osc.start(t0);
     osc.stop(t0 + duration);
-  } catch {}
+  } catch {
+    /* áudio indisponível */
+  }
 }
 
 export function playPostBeep(): void {

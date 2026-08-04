@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 interface PoolEffectProps {
   intense?: boolean;
@@ -18,13 +18,14 @@ export function PoolEffect({ intense = false }: PoolEffectProps) {
   const [settling, setSettling] = useState(false);
 
   useEffect(() => {
+    const timers: number[] = [];
     if (intense) {
-      setSettling(false);
-      return;
+      timers.push(window.setTimeout(() => setSettling(false), 0));
+    } else {
+      timers.push(window.setTimeout(() => setSettling(true), 0));
+      timers.push(window.setTimeout(() => setSettling(false), 600));
     }
-    setSettling(true);
-    const t = setTimeout(() => setSettling(false), 600);
-    return () => clearTimeout(t);
+    return () => timers.forEach((t) => window.clearTimeout(t));
   }, [intense]);
 
   useEffect(() => {

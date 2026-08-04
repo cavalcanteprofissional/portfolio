@@ -26,7 +26,7 @@
 | **Frontend** | React 19 + TypeScript |
 | **Build** | Vite 7 |
 | **Estilo** | Tailwind CSS |
-| **Animação** | Framer Motion |
+| **Animação** | Motion (motion.dev) |
 | **i18n** | i18next + react-i18next |
 | **Estado** | Zustand |
 | **Ícones** | Lucide React + React Icons |
@@ -43,6 +43,14 @@ npm run build      # build de produção
 npm run preview    # preview do build
 ```
 
+### ✅ Qualidade
+
+```bash
+npm run typecheck  # checagem de tipos (tsc --noEmit)
+npm run lint       # lint (ESLint flat config, 0 erros)
+npm run test       # testes E2E (Playwright — 24/24, modo CI com `CI=1`)
+```
+
 ### 📄 Gerar currículos (PDF)
 
 ```bash
@@ -51,11 +59,13 @@ playwright install chromium
 python resume/build.py
 ```
 
-Opcionalmente, crie um `.env.local` com seu token do Hugging Face para downloads mais rápidos:
+Opcionalmente, crie um `.env.local` na raiz do projeto com seu token do Hugging Face para downloads mais rápidos (a pipeline o carrega automaticamente):
 
 ```
 HF_TOKEN=hf_seu_token_aqui
 ```
+
+Crie o token em https://huggingface.co/settings/tokens. Em CI, o mesmo token é injetado via GitHub Secret `HF_TOKEN`.
 
 Os PDFs são gerados em `public/cv/` e copiados para `dist/` no build. Edite `resume/curriculo-fonte.md` para atualizar os dados — a pipeline traduz (mBART-large-50) e renderiza automaticamente em PT/EN/ES.
 

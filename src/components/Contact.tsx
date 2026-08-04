@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { Mail, MessageCircle, Linkedin } from 'lucide-react';
+import { Reveal } from '../lib/motion';
 
 const contactButtons = [
   { icon: Mail, href: 'mailto:cavalcanteprofissional@outlook.com', labelKey: 'cta.contact', primary: true },
@@ -13,11 +14,10 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-20 px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
+      <Reveal
+        distance={40}
+        blur={false}
         viewport={{ once: true, margin: '-100px' }}
-        transition={{ duration: 0.6 }}
         className="max-w-4xl mx-auto"
       >
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 via-background to-secondary/20 border border-border p-8 md:p-12">
@@ -75,7 +75,7 @@ export function Contact() {
             </motion.div>
           </div>
         </div>
-      </motion.div>
+      </Reveal>
     </section>
   );
 }

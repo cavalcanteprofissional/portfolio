@@ -1,9 +1,12 @@
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
-import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
+import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import { useThemeStore } from './stores/themeStore';
+import { useBootStore } from './stores/bootStore';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen, PoolEffect } from './components';
+import { focusReveal } from './lib/motion';
+import { BOOT_TIMELINE, EASE } from './lib/motion';
 import './i18n';
 
 const Companies = lazy(() => import('./components/Companies').then(m => ({ default: m.Companies })));
@@ -25,10 +28,9 @@ const SectionFallback = () => (
 
 function App() {
   const { theme } = useThemeStore();
+  const booted = useBootStore((s) => s.booted);
+  const setBooted = useBootStore((s) => s.setBooted);
   const { t } = useTranslation();
-  const [booted, setBooted] = useState(
-    () => sessionStorage.getItem('booted') === 'true'
-  );
   const [resourcesReady, setResourcesReady] = useState(false);
 
   useEffect(() => {
@@ -72,7 +74,7 @@ function App() {
   const handleBootComplete = useCallback(() => {
     sessionStorage.setItem('booted', 'true');
     setBooted(true);
-  }, []);
+  }, [setBooted]);
 
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
@@ -90,7 +92,7 @@ function App() {
           className="fixed inset-0 z-[45] pointer-events-none"
           initial={{ opacity: 1 }}
           animate={{ opacity: booted ? 0 : 1 }}
-          transition={{ duration: 0.8, ease: 'easeInOut', delay: booted ? 0.05 : 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: booted ? BOOT_TIMELINE.overlay : 0 }}
           style={{ backgroundColor: 'hsl(215 45% 8%)' }}
           aria-hidden="true"
         />
@@ -106,13 +108,9 @@ function App() {
           <motion.main
             id="main-content"
             className="pb-20"
-            initial={{ opacity: 0, scale: 1.03, filter: 'blur(8px)' }}
-            animate={
-              booted
-                ? { opacity: 1, scale: 1, filter: 'blur(0px)' }
-                : { opacity: 0, scale: 1.03, filter: 'blur(8px)' }
-            }
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            initial="hidden"
+            animate={booted ? 'show' : 'hidden'}
+            variants={focusReveal(BOOT_TIMELINE.mainFocus)}
           >
             {booted && <Hero />}
             <Stats />

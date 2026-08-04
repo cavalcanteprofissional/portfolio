@@ -1,5 +1,6 @@
 import { BookOpen, Github, Linkedin, Mail, Phone } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
+import { BOOT_TIMELINE, STAGGER, slideFrom, staggerChild, staggerContainer } from '../lib/motion';
 
 const socialLinks = [
   { 
@@ -32,14 +33,19 @@ const socialLinks = [
 export function Footer() {
   return (
     <motion.footer
-      initial={{ opacity: 0, y: 60 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+      initial="hidden"
+      animate="show"
+      variants={slideFrom('up', 60, BOOT_TIMELINE.footer)}
       className="fixed bottom-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-t border-border/30 py-3"
     >
       <div className="section-container">
-        <div className="flex items-center justify-center gap-3">
-          {socialLinks.map((link, index) => {
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={staggerContainer(STAGGER.child, BOOT_TIMELINE.footer)}
+          className="flex items-center justify-center gap-3"
+        >
+          {socialLinks.map((link) => {
             const Icon = link.icon;
             return (
               <motion.a
@@ -47,9 +53,7 @@ export function Footer() {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + index * 0.03, duration: 0.3 }}
+                variants={staggerChild()}
                 className="p-2.5 rounded-full bg-secondary/30 hover:bg-gradient-blue hover:text-white transition-all group shadow-sm hover:shadow-soft"
                 title={link.name}
               >
@@ -57,7 +61,7 @@ export function Footer() {
               </motion.a>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </motion.footer>
   );

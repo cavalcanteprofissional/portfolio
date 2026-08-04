@@ -26,7 +26,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
     const nav = page.locator('nav');
     await expect(nav.locator('text=Projetos').last()).toBeVisible();
     await expect(nav.locator('text=Habilidades').last()).toBeVisible();
-    await expect(nav.locator('text=Showcase').last()).toBeVisible();
+    await expect(nav.locator('text=Certificações').last()).toBeVisible();
   });
 
   test('deve alternar tema ao clicar no botão', async ({ page }) => {
@@ -57,7 +57,6 @@ test.describe('Portfolio - Navegação e Layout', () => {
   test('seções principais devem estar visíveis', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
     await expect(page.locator('#hero')).toBeVisible();
-    await expect(page.locator('#showcase')).toBeVisible();
     await expect(page.locator('#experience')).toBeVisible();
     await expect(page.locator('#projects')).toBeVisible();
     await expect(page.locator('#skills')).toBeVisible();
@@ -80,6 +79,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
   test('footer deve ter links sociais', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
     const footer = page.locator('footer');
+    await expect(footer).toBeVisible();
     const links = footer.locator('a');
     const count = await links.count();
     expect(count).toBeGreaterThanOrEqual(4);

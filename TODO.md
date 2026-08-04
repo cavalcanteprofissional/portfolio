@@ -339,3 +339,40 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | L3 | `CONTENT.md` seção 8 — cabeçalho `(15 Projetos)` → `(16 Projetos)` + linha do projeto 16 nas duas tabelas (status `concluido`, nome "LinkTree Pessoal") | ✅ |
 | L4 | `CHANGELOG.md` bump `1.10.0` → `1.11.0` | ✅ |
 | L5 | Verificar typecheck e build | ✅ |
+
+---
+
+### 🎬 Framework de Motion Graphics — Motor único motion.dev + Orquestração do boot (2026-08-04)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| G1 | Migrar framer-motion → `motion/react` (npm i motion && npm uninstall framer-motion; trocar imports em 16 arquivos) | ✅ |
+| G2 | Criar `src/lib/motion/tokens.ts` (EASE, durações, VIEWPORT, STAGGER, BOOT_TIMELINE) | ✅ |
+| G3 | Criar `src/lib/motion/variants.ts` (fadeUp, fadeIn, scaleIn, focusReveal, staggerContainer/Child) | ✅ |
+| G4 | Criar `src/lib/motion/Reveal.tsx` (whileInView com direction/delay/blur) | ✅ |
+| G5 | Criar `src/lib/motion/SectionHeader.tsx` (título + underline + subtítulo) | ✅ |
+| G6 | Criar `src/lib/motion/Stagger.tsx` (container/children) + barrel `index.ts` | ✅ |
+| G7 | Criar `src/stores/bootStore.ts` (zustand: booted/setBooted) | ✅ |
+| G8 | Orquestração fim do boot: Nav, Hero (stagger), Stats, Footer via BOOT_TIMELINE | ✅ |
+| G9 | Refatorar Stats, Companies, TechStack, Experience, Portfolio, Skills, Certifications, Languages, FAQ, Contact para Reveal/SectionHeader/Stagger | ✅ |
+| G10 | Verificar typecheck, build, lint, Playwright; teste manual 320/375/768/1024 | ✅ |
+| G11 | CHANGELOG bump + TODO.md | ✅ |
+
+> Nota (atualizada 2026-08-04): lint, typecheck, build e Playwright passam (24/24 em modo CI). As 6 falhas pré-existentes de e2e (referências a `#showcase`/`Showcase` removidos + timing do footer) foram corrigidas.
+
+---
+
+### 🔐 HF_TOKEN + Lint config + E2E fixes (2026-08-04)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| H1 | `resume/translate.py` carrega `.env.local` sem sobrescrever env (CI/Secret tem precedência) | ✅ |
+| H2 | Token HF real em `.env.local` (git-ignored; nunca commitado) | ✅ |
+| H3 | `.env.example` com comentário corrigido (uso no CI via GitHub Secret + local via `.env.local`) | ✅ |
+| H4 | README: instrução de `.env.local` agora condiz com a pipeline | ✅ |
+| H5 | Criar `eslint.config.js` (flat: @eslint/js + typescript-eslint + react-hooks + react-refresh) | ✅ |
+| H6 | Corrigir lint: BootScreen refs/purity/catch, bootSound catch, Nav mounted+currentLang, PoolEffect setState no effect, css.d.ts (remover `*.json` wildcard + declaração morta) | ✅ |
+| H7 | E2E: nav `Showcase`→`Certificações`, remover `#showcase`, footer aguarda `toBeVisible()` | ✅ |
+| H8 | Verificar lint 0 erros, typecheck, build, Playwright 24/24, `py_compile translate.py` | ✅ |
+
+> 🔒 **Segurança**: o token HF foi compartilhado no chat — recomenda-se **rotacionar** (revogar/criar novo em https://huggingface.co/settings/tokens). Para o CI funcionar, o mesmo valor precisa estar como GitHub Secret `HF_TOKEN` no repositório.

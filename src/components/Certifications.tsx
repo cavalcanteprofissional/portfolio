@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../stores/themeStore';
+import { SectionHeader, Stagger, StaggerItem, STAGGER } from '../lib/motion';
 import {
   Database,
   Terminal,
@@ -103,69 +102,56 @@ const iconComponents: Record<string, React.ComponentType<{ className?: string }>
 
 export function Certifications() {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
 
   return (
     <section id="certifications" className="py-24">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
-            {t('sections.certifications')}
-          </h2>
-          <p className="text-muted-foreground">{t('certifications.subtitle')}</p>
-          <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full mt-4" />
-        </motion.div>
+        <SectionHeader
+          title={t('sections.certifications')}
+          subtitle={t('certifications.subtitle')}
+          spacing="mb-16"
+        />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {certifications.map((cert, index) => {
+        <Stagger stagger={STAGGER.card} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {certifications.map((cert) => {
             const IconComponent = iconComponents[cert.icon] || FileText;
 
             return (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-card/80 backdrop-blur-sm rounded-soft-xl border border-border/30 p-5 hover:border-primary/30 hover:shadow-soft-lg transition-all group flex flex-col"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2.5 rounded-full bg-gradient-blue text-white">
-                    <IconComponent className="w-5 h-5" aria-hidden="true" />
+              <StaggerItem key={cert.id}>
+                <div className="bg-card/80 backdrop-blur-sm rounded-soft-xl border border-border/30 p-5 hover:border-primary/30 hover:shadow-soft-lg transition-all group flex flex-col h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2.5 rounded-full bg-gradient-blue text-white">
+                      <IconComponent className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
+                      {t(cert.yearKey)}
+                    </span>
                   </div>
-                  <span className="text-xs font-medium text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
-                    {t(cert.yearKey)}
-                  </span>
+                  
+                  <h3 className="font-semibold text-sm mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                    {t(cert.titleKey)}
+                  </h3>
+                  
+                  <div className="mt-auto pt-2">
+                    {cert.url ? (
+                      <a
+                        href={cert.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-medium"
+                      >
+                        <ExternalLink className="w-3 h-3" aria-hidden="true" />
+                        {t('buttons.view')}
+                      </a>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">-</span>
+                    )}
+                  </div>
                 </div>
-                
-                <h3 className="font-semibold text-sm mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                  {t(cert.titleKey)}
-                </h3>
-                
-                <div className="mt-auto pt-2">
-                  {cert.url ? (
-                    <a
-                      href={cert.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-medium"
-                    >
-                      <ExternalLink className="w-3 h-3" aria-hidden="true" />
-                      {t('buttons.view')}
-                    </a>
-                  ) : (
-                    <span className="text-xs text-muted-foreground">-</span>
-                  )}
-                </div>
-              </motion.div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

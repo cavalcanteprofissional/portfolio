@@ -1,12 +1,11 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { useRef, useState, useEffect } from 'react';
-import { useThemeStore } from '../stores/themeStore';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import experiencesData from '../data/experiences.json';
+import { SectionHeader, Stagger, StaggerItem, scaleIn, STAGGER } from '../lib/motion';
 
 export function Experience() {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
   const { experiences } = experiencesData;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -30,14 +29,14 @@ export function Experience() {
     }
   };
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (scrollRef.current) {
       const { scrollLeft } = scrollRef.current;
       const cardWidth = scrollRef.current.children[0]?.clientWidth || 320;
       const newIndex = Math.round(scrollLeft / (cardWidth + 24));
       setActiveIndex(Math.min(newIndex, sortedExperiences.length - 1));
     }
-  };
+  }, [sortedExperiences.length]);
 
   useEffect(() => {
     const updateCardsPerPage = () => {
@@ -62,39 +61,29 @@ export function Experience() {
       scrollContainer.addEventListener('scroll', handleScroll);
       return () => scrollContainer.removeEventListener('scroll', handleScroll);
     }
-  }, []);
+  }, [handleScroll]);
 
   return (
     <section id="experience" className="py-24 overflow-hidden">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
-            {t('sections.experience')}
-          </h2>
-          <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full" />
-        </motion.div>
+        <SectionHeader title={t('sections.experience')} spacing="mb-16" />
 
         <div className="relative">
-          <div
+          <Stagger
             ref={scrollRef}
+            stagger={STAGGER.card}
             className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-y"
           >
-            {sortedExperiences.map((exp, index) => (
-              <motion.div
+            {sortedExperiences.map((exp) => (
+              <StaggerItem
                 key={exp.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.3 }}
+                variants={scaleIn()}
                 className="flex-shrink-0 w-[85vw] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
               >
-                <div className="h-full bg-card/80 backdrop-blur-sm rounded-soft-xl border border-border/30 flex flex-col overflow-hidden relative shadow-soft hover:shadow-soft-lg transition-all">
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="h-full bg-card/80 backdrop-blur-sm rounded-soft-xl border border-border/30 flex flex-col overflow-hidden relative shadow-soft hover:shadow-soft-lg transition-all"
+                >
                   <div className="p-6 border-b border-border/20">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
@@ -118,7 +107,7 @@ export function Experience() {
                           initial={{ opacity: 0, x: -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
-                          transition={{ delay: index * 0.1 + descIndex * 0.05 }}
+                          transition={{ delay: descIndex * 0.05 }}
                           className="flex items-start gap-2 text-muted-foreground text-sm"
                         >
                           <span className="text-primary mt-1.5 min-w-[4px]">•</span>
@@ -127,11 +116,11 @@ export function Experience() {
                       ))}
                     </ul>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </StaggerItem>
             ))}
             <div className="flex-shrink-0 w-4" />
-          </div>
+          </Stagger>
 
           <div className="flex justify-center gap-3 mt-6">
             {Array.from({ length: totalPages }).map((_, pageIndex) => (

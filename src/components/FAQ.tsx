@@ -1,8 +1,8 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { useThemeStore } from '../stores/themeStore';
 import { HelpCircle, ChevronDown } from 'lucide-react';
+import { SectionHeader, Stagger, StaggerItem, STAGGER } from '../lib/motion';
 
 const faqItems = [
   { id: '0', questionKey: 'faq.0.question', answerKey: 'faq.0.answer' },
@@ -13,7 +13,6 @@ const faqItems = [
 
 export function FAQ() {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
   const [openId, setOpenId] = useState<string | null>('0');
 
   const toggleItem = (id: string) => {
@@ -38,69 +37,56 @@ export function FAQ() {
       />
       <section id="faq" className="py-20 bg-muted/30">
         <div className="section-container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className={`text-2xl md:text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>{t('faq.title')}</h2>
-            <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full" />
-          </motion.div>
+          <SectionHeader title={t('faq.title')} size="sm" spacing="mb-12" />
 
-          <div className="max-w-2xl mx-auto space-y-4">
-            {faqItems.map((item, index) => {
+          <Stagger stagger={STAGGER.row} className="max-w-2xl mx-auto space-y-4">
+            {faqItems.map((item) => {
               const isOpen = openId === item.id;
 
               return (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-card rounded-xl border border-border overflow-hidden"
-                >
-                  <button
-                    onClick={() => toggleItem(item.id)}
-                    className="w-full flex items-center justify-between p-4 sm:p-6 hover:bg-secondary/30 transition-colors text-left"
-                    aria-expanded={isOpen}
-                  >
-                    <div className="flex items-start gap-3 pr-4">
-                      <HelpCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
-                      <span className="font-medium text-sm sm:text-base">
-                        {t(item.questionKey)}
-                      </span>
-                    </div>
-                    <motion.div
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
+                <StaggerItem key={item.id}>
+                  <div className="bg-card rounded-xl border border-border overflow-hidden">
+                    <button
+                      onClick={() => toggleItem(item.id)}
+                      className="w-full flex items-center justify-between p-4 sm:p-6 hover:bg-secondary/30 transition-colors text-left"
+                      aria-expanded={isOpen}
                     >
-                      <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" aria-hidden="true" />
-                    </motion.div>
-                  </button>
-
-                  <AnimatePresence>
-                    {isOpen && (
+                      <div className="flex items-start gap-3 pr-4">
+                        <HelpCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <span className="font-medium text-sm sm:text-base">
+                          {t(item.questionKey)}
+                        </span>
+                      </div>
                       <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
+                        animate={{ rotate: isOpen ? 180 : 0 }}
                         transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
                       >
-                        <div className="px-6 pb-6 pl-12 sm:pl-14">
-                          <p className="text-muted-foreground text-sm leading-relaxed">
-                            {t(item.answerKey)}
-                          </p>
-                        </div>
+                        <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" aria-hidden="true" />
                       </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
+                    </button>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-6 pb-6 pl-12 sm:pl-14">
+                            <p className="text-muted-foreground text-sm leading-relaxed">
+                              {t(item.answerKey)}
+                            </p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </StaggerItem>
               );
             })}
-          </div>
+          </Stagger>
         </div>
       </section>
     </>

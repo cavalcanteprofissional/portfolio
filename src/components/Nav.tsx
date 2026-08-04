@@ -1,9 +1,20 @@
 import { useTranslation } from 'react-i18next';
 import { Sun, Moon, Menu, X, Globe, ChevronDown, Home, Briefcase, FolderGit2, Wrench, Award, Languages } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
+import type { Variants } from 'motion/react';
 import { useThemeStore } from '../stores/themeStore';
+import { BOOT_TIMELINE, EASE } from '../lib/motion';
 import i18n from '../i18n';
+
+const navVariants: Variants = {
+  hidden: { opacity: 0, y: '-100%' },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: EASE, delay: BOOT_TIMELINE.nav },
+  },
+};
 
 const languages = [
   { code: 'pt', label: 'PT', name: 'Português' },
@@ -25,14 +36,12 @@ export function Nav() {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useThemeStore();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState(() => i18n.language || 'pt');
+  const [currentLang, setCurrentLang] = useState(() => {
+    if (typeof window === 'undefined') return i18n.language || 'pt';
+    return localStorage.getItem('portfolio-lang') || i18n.language || 'pt';
+  });
   const [langMenuOpen, setLangMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const langMenuRef = useRef<HTMLDivElement>(null);
 
@@ -84,9 +93,8 @@ export function Nav() {
 
   useEffect(() => {
     const savedLang = localStorage.getItem('portfolio-lang');
-    if (savedLang && savedLang !== currentLang) {
+    if (savedLang && savedLang !== i18n.language) {
       i18n.changeLanguage(savedLang);
-      setCurrentLang(savedLang);
     }
   }, []);
 
@@ -94,9 +102,9 @@ export function Nav() {
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: '-100%' }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+      initial="hidden"
+      animate="show"
+      variants={navVariants}
       className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50 shadow-soft"
       role="navigation"
       aria-label={t('acessibilidade.navAria')}
@@ -108,18 +116,16 @@ export function Nav() {
             className="flex items-center justify-center cursor-pointer"
             aria-label="Voltar ao topo"
           >
-            {mounted && (
-              <img
-                src={theme === 'dark' 
-                  ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png' 
-                  : '/portfolio-cavalcante/images/navbar/logo-navbar-lightmode.png'}
-                alt="LC"
-                width={32}
-                height={32}
-                loading="lazy"
-                className="h-8 w-auto"
-              />
-            )}
+            <img
+              src={theme === 'dark' 
+                ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png' 
+                : '/portfolio-cavalcante/images/navbar/logo-navbar-lightmode.png'}
+              alt="LC"
+              width={32}
+              height={32}
+              loading="lazy"
+              className="h-8 w-auto"
+            />
           </button>
 
           <div className="hidden md:flex items-center gap-1">

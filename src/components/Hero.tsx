@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { Mail, Linkedin, Github, FileText, ChevronDown, MessageCircle } from 'lucide-react';
 import { useThemeStore } from '../stores/themeStore';
+import { BOOT_TIMELINE, EASE, STAGGER, scaleIn, slideFrom, staggerChild, staggerContainer } from '../lib/motion';
 
 export function Hero() {
   const { t } = useTranslation();
@@ -13,7 +14,7 @@ export function Hero() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.35, duration: 0.6 }}
+      transition={{ delay: 0.35, duration: 0.6, ease: EASE }}
       className="grid grid-cols-1 gap-y-6 justify-items-center md:justify-items-start"
     >
       <a
@@ -71,9 +72,9 @@ export function Hero() {
   return (
     <motion.section
       id="hero"
-      initial={{ opacity: 0, y: 80, scale: 0.99 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+      initial="hidden"
+      animate="show"
+      variants={slideFrom('up', 80, BOOT_TIMELINE.hero)}
       className="min-h-screen pt-20 md:pt-24 pb-16 flex items-center relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-blue-light dark:bg-gradient-blue-dark opacity-50" />
@@ -89,16 +90,12 @@ export function Hero() {
       <div className="section-container relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            animate="show"
+            variants={staggerContainer(STAGGER.child, BOOT_TIMELINE.hero + BOOT_TIMELINE.heroChildren)}
             className="space-y-6 text-center md:text-left"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-            >
+            <motion.div variants={staggerChild()}>
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" aria-hidden="true"></span>
@@ -108,12 +105,7 @@ export function Hero() {
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.15, duration: 0.6 }}
-              className="md:hidden"
-            >
+            <motion.div variants={staggerChild()} className="md:hidden">
               <div className="relative w-48 h-56 mx-auto">
                 <a
                   href={t('contact.github')}
@@ -150,9 +142,7 @@ export function Hero() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25, duration: 0.6 }}
+              variants={staggerChild()}
               className={`text-4xl lg:text-6xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}
             >
               {t('hero.name')}
@@ -163,9 +153,7 @@ export function Hero() {
               aria-expanded={bioOpen}
               aria-controls="hero-bio"
               onClick={() => setBioOpen((v) => !v)}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.6 }}
+              variants={staggerChild()}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.96 }}
               className={`md:hidden inline-flex items-center gap-2 text-xl font-medium transition-colors duration-300 ${
@@ -179,20 +167,11 @@ export function Hero() {
               />
             </motion.button>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.6 }}
-              className="hidden md:block text-lg text-muted-foreground font-medium md:whitespace-nowrap"
-            >
-              {t('hero.title')}
-            </motion.p>
-
             <motion.div
               id="hero-bio"
               initial={false}
               animate={{ height: bioOpen ? 'auto' : 0, opacity: bioOpen ? 1 : 0 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.35, ease: EASE }}
               className="md:hidden overflow-hidden"
             >
               <p className="text-muted-foreground text-base leading-relaxed mt-3">
@@ -203,12 +182,11 @@ export function Hero() {
               </div>
             </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="hidden md:block text-muted-foreground text-lg max-w-xl"
-            >
+            <motion.p variants={staggerChild()} className="hidden md:block text-lg text-muted-foreground font-medium md:whitespace-nowrap">
+              {t('hero.title')}
+            </motion.p>
+
+            <motion.p variants={staggerChild()} className="hidden md:block text-muted-foreground text-lg max-w-xl">
               {t('hero.description')}
             </motion.p>
 
@@ -218,9 +196,9 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.25, duration: 0.6 }}
+            initial="hidden"
+            animate="show"
+            variants={scaleIn(0.25)}
             className="relative hidden md:block"
           >
             <div className="relative w-64 h-72 md:w-88 md:h-96 mx-auto">

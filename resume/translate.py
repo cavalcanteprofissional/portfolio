@@ -17,6 +17,27 @@ from typing import Any
 import yaml
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
+
+def _load_env_local() -> None:
+    """Load KEY=VALUE pairs from the repo-root `.env.local` into the process
+    environment without overriding variables already set (e.g. the HF_TOKEN
+    GitHub Secret injected by CI)."""
+    env_path = Path(__file__).resolve().parent.parent / ".env.local"
+    if not env_path.exists():
+        return
+    for line in env_path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+_load_env_local()
+
 # Load HF token from env if available (faster downloads, no auth warnings)
 HF_TOKEN = os.environ.get("HF_TOKEN")
 

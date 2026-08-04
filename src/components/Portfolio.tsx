@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../stores/themeStore';
 import { ExternalLink, Github } from 'lucide-react';
 import projectsData from '../data/projects.json';
+import { SectionHeader, Stagger, StaggerItem, STAGGER } from '../lib/motion';
 import {
   TrendingUp,
   Bot,
@@ -41,21 +41,14 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 interface ProjectCardProps {
   project: (typeof projectsData.projects)[0];
-  index: number;
 }
 
-function ProjectCard({ project, index }: ProjectCardProps) {
+function ProjectCard({ project }: ProjectCardProps) {
   const { t } = useTranslation();
   const Icon = iconMap[project.icon] || TrendingUp;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group"
-    >
+    <StaggerItem>
       <motion.div
         className="bg-card/80 backdrop-blur-sm rounded-soft-xl overflow-hidden border border-border/30 h-full flex flex-col shadow-soft hover:shadow-soft-lg transition-all"
         whileHover={{ y: -8 }}
@@ -135,38 +128,28 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
         </div>
       </motion.div>
-    </motion.div>
+    </StaggerItem>
   );
 }
 
 export function Portfolio() {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
   const { projects } = projectsData;
 
   return (
     <section id="projects" className="py-24">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
-            {t('sections.portfolio')}
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            {t('portfolio.subtitle')}
-          </p>
-          <div className="w-24 h-1.5 bg-gradient-blue mx-auto rounded-full mt-4" />
-        </motion.div>
+        <SectionHeader
+          title={t('sections.portfolio')}
+          subtitle={t('portfolio.subtitle')}
+          spacing="mb-16"
+        />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+        <Stagger stagger={STAGGER.card} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

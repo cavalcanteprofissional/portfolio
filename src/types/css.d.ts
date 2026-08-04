@@ -3,11 +3,6 @@ declare module '*.css' {
   export default content;
 }
 
-declare module '*.json' {
-  const value: any;
-  export default value;
-}
-
 declare module '*?raw' {
   const content: string;
   export default content;
@@ -16,8 +11,4 @@ declare module '*?raw' {
 declare module '*.json?raw' {
   const content: string;
   export default content;
-}
-
-declare module './locales/translations' {
-  export const translations: any;
 }

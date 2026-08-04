@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.13.0] - 2026-08-04
+
+### 🔐 HF_TOKEN funcional + Lint configurado + E2E 24/24
+
+- 🔑 **`HF_TOKEN` deixa de ser placebo** — `resume/translate.py` ganhou `_load_env_local()` que carrega `.env.local` da raiz sem sobrescrever variáveis do ambiente (CI/GitHub Secret mantém precedência); token real preenchido localmente em `.env.local` (git-ignored, nunca commitado)
+- 📝 **`.env.example`** — comentário corrigido: documento do secret usado no CI (`HF_TOKEN` GitHub Secret) + instrução de cópia para `.env.local`; README atualizado para refletir o carregamento automático
+- 🧹 **Lint configurado e zerado** — `eslint.config.js` flat criado (`@eslint/js` + `typescript-eslint` + `react-hooks` + `react-refresh`, regras `recommended-latest`); corrigidos `react-hooks/purity`, `react-hooks/refs`, `react-hooks/set-state-in-effect`, `no-empty` e `no-explicit-any`: BootScreen (refs/`performance.now()` movidos p/ effects), bootSound (catch), Nav (removido `mounted`/SSR-vestigial + `currentLang` lazy do localStorage), PoolEffect (setState síncrono → timers), css.d.ts (removido wildcard `*.json` — `resolveJsonModule` infere tipos reais — e declaração morta `./locales/translations`); Experience `handleScroll` em `useCallback`
+- 🧪 **Playwright 24/24** — e2e alinhados ao app atual: nav `Showcase`→`Certificações`, removida a seção `#showcase` do teste, footer aguarda montagem (`toBeVisible()`) antes de contar links sociais
+- ✅ `npm run lint` (0 erros), typecheck, build e `python -m py_compile resume/translate.py` verificados
+
+## [1.12.0] - 2026-08-04
+
+### 🎬 Framework de Motion Graphics — Motor único motion.dev + Orquestração do boot
+
+- 🔄 **Migração `framer-motion` → `motion/react`** — engine única (Motion.dev, o rebranding oficial do framer-motion); troca mecânica de imports em 16 arquivos, `npm uninstall framer-motion && npm i motion`
+- 🧩 **Camada base `src/lib/motion/`** — tokens (`EASE`, durações, `VIEWPORT`, `STAGGER`, `BOOT_TIMELINE`), variantes reutilizáveis (`fadeUp`, `fadeIn`, `scaleIn`, `slideFrom`, `focusReveal`, `staggerContainer/Child`) e componentes `Reveal` (whileInView com direction/delay/blur), `SectionHeader` (título + underline + subtítulo) e `Stagger`/`StaggerItem` (com `forwardRef` p/ scroll containers)
+- 🗄️ **`src/stores/bootStore.ts`** — estado do boot centralizado em zustand (`booted`/`setBooted`), substituindo o estado local do `App.tsx` e viabilizando a coreografia
+- 🎬 **Orquestração unificada do fim do boot** — `App` usa `focusReveal` no `<main>`; Nav desliza via variants; Hero com `staggerContainer`/`staggerChild` (delays manuais removidos); Stats e Footer sincronizados na `BOOT_TIMELINE`
+- ✨ **Seções abaixo da dobra** — linguagem visual "focus reveal" (blur) unificada via `SectionHeader`/`Stagger` em Companies, TechStack, Experience, Portfolio, Skills, Certifications, Languages, FAQ e Contact; padrões inline `initial/whileInView/viewport` repetidos eliminados (~40 ocorrências)
+- ✅ Typecheck e build verificados; Playwright: 18/24 na época (6 falhas pré-existentes de `#showcase` e timing do footer — corrigidas na v1.13.0, hoje 24/24)
+
 ## [1.11.0] - 2026-08-03
 
 ### 🚀 LinkTree Pessoal — Card finalizado + Renome

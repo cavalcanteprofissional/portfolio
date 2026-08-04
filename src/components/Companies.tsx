@@ -1,55 +1,44 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../stores/themeStore';
 import companiesData from '../data/companies.json';
+import { SectionHeader, Stagger, StaggerItem, STAGGER } from '../lib/motion';
 
 export function Companies() {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
   const { companies } = companiesData;
 
   return (
     <section className="py-16 overflow-hidden">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className={`text-2xl md:text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gradient-blue'}`}>
-            {t('companies.title')}
-          </h2>
-          <p className="text-muted-foreground text-sm">
-            {t('companies.subtitle')}
-          </p>
-        </motion.div>
+        <SectionHeader
+          title={t('companies.title')}
+          subtitle={t('companies.subtitle')}
+          size="sm"
+          spacing="mb-12"
+        />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
-          {companies.map((company, index) => (
-            <motion.a
-              key={company.id}
-              href={company.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.4 }}
-              whileHover={{ scale: 1.05, y: -4 }}
-              className="flex items-center justify-center p-4 rounded-soft bg-card/50 border border-border/50 hover:border-primary/30 hover:shadow-soft transition-all min-h-[100px]"
-            >
-              <img
-                src={company.logo}
-                alt={company.name}
-                width={120}
-                height={60}
-                loading="lazy"
-                className="w-full h-full object-contain dark:brightness-0 dark:invert transition-all"
-              />
-            </motion.a>
+        <Stagger stagger={STAGGER.card} className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+          {companies.map((company) => (
+            <StaggerItem key={company.id}>
+              <motion.a
+                href={company.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, y: -4 }}
+                className="flex items-center justify-center p-4 rounded-soft bg-card/50 border border-border/50 hover:border-primary/30 hover:shadow-soft transition-all min-h-[100px]"
+              >
+                <img
+                  src={company.logo}
+                  alt={company.name}
+                  width={120}
+                  height={60}
+                  loading="lazy"
+                  className="w-full h-full object-contain dark:brightness-0 dark:invert transition-all"
+                />
+              </motion.a>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );
