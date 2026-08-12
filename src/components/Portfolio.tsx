@@ -145,7 +145,7 @@ export function Portfolio() {
           spacing="mb-16"
         />
 
-        <Stagger stagger={STAGGER.card} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Stagger stagger={STAGGER.card} amount={0} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

@@ -376,3 +376,28 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | H8 | Verificar lint 0 erros, typecheck, build, Playwright 24/24, `py_compile translate.py` | ✅ |
 
 > 🔒 **Segurança**: o token HF foi compartilhado no chat — recomenda-se **rotacionar** (revogar/criar novo em https://huggingface.co/settings/tokens). Para o CI funcionar, o mesmo valor precisa estar como GitHub Secret `HF_TOKEN` no repositório.
+
+---
+
+### 🐛 Bug — Cards da seção Projetos invisíveis no mobile (2026-08-12)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| P1 | Registrar bug no TODO.md | ✅ |
+| P2 | **Aplicar Opção A** — `amount={0}` no `<Stagger>` do grid de projetos (`Portfolio.tsx`) | ✅ |
+| P3 | Verificar typecheck e build | ✅ |
+| P4 | **Confirmado visualmente no mobile** — cards da seção `#projects` agora aparecem ao rolar | ✅ |
+| P5 | **Fallback (Opção B)** — reduzir `amount` global de `0.2` → `0.05` em `src/lib/motion/tokens.ts` | ⬜ |
+
+**Sintoma:** apenas no viewport mobile, os cards da seção `#projects` não aparecem.
+
+**Causa raiz:** `src/components/Portfolio.tsx` usa `<Stagger>` sobre o grid inteiro (17 cards). O `Stagger` (`src/lib/motion/Stagger.tsx`) aplica `viewport={VIEWPORT}` = `{ once: true, amount: 0.2 }` (`src/lib/motion/tokens.ts`). No motion, `amount: 0.2` exige que **20% do elemento animado** (o container do grid) esteja visível para disparar o `whileInView`; sem disparar, os filhos ficam no estado `hidden` (`opacity: 0`).
+
+- **Desktop:** grid 3 colunas → container ~6 linhas (~2700px); 20% ≈ 540px cabe no viewport → dispara → cards aparecem.
+- **Mobile:** grid 1 coluna → container ~8000px+; 20% ≈ 1600px > viewport (~700px) → limiar nunca atingido → `whileInView` nunca dispara → cards nunca aparecem.
+
+Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (20% facilmente atingível). O grid de projetos é o único com container enorme em coluna única.
+
+**Correção (Opção A):** `amount={0}` dispara assim que qualquer parte do grid entra no viewport (comportamento padrão para listas longas), mantendo o stagger e sem afetar outras seções.
+
+**Fallback (Opção B):** se a Opção A não resolver, mudar `amount: 0.2` → `amount: 0.05` em `src/lib/motion/tokens.ts` (afeta `Reveal`/`Stagger` globalmente).

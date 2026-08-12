@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.14.0] - 2026-08-12
+
+### 🐛 Fix — Cards da seção Projetos invisíveis no mobile
+
+- 📱 **Bug corrigido** — os cards de projeto não apareciam apenas no viewport mobile (desktop/tablet funcionavam)
+- 🔍 **Causa raiz** — o `<Stagger>` do grid em `Portfolio.tsx` usa `viewport.amount: 0.2` (20% do elemento deve estar visível para disparar o `whileInView`). No mobile o grid vira 1 coluna com 17 cards (~8000px+), então 20% (~1600px) nunca cabe no viewport (~700px) → o limiar nunca era atingido → os cards ficavam em `opacity: 0`
+- ✅ **Correção (Opção A)** — `amount={0}` no `<Stagger>` do grid de projetos: dispara assim que qualquer parte do grid entra no viewport, mantendo o stagger e sem afetar outras seções
+- 🧪 Typecheck, build e verificação visual em viewport mobile confirmados
+
 ## [1.13.0] - 2026-08-04
 
 ### 🔐 HF_TOKEN funcional + Lint configurado + E2E 24/24
