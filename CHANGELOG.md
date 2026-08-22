@@ -8,6 +8,7 @@
 - 🔄 **Auto-sync** — `build.py` ganha `get_site_url()`: extrai `<link rel="canonical">` do `index.html` e força a sincronia de `dados_pessoais.portfolio` após o parse (valor do frontmatter vira apenas fallback); futuras trocas de domínio/base propagam sozinhas para o currículo
 - 🔗 **LinkedIn** — slug padronizado no currículo: `cavalcante-lucas` → `cavalcante-Lucas` (mesma padronização da v1.15.0 aplicada ao site inteiro)
 - ♻️ **PDFs regenerados localmente** e commitados (committed-first); push toca `resume/**` → CI regenera como dupla checagem
+- 📝 **README** — seção "Gerar currículos" documenta os PDFs versionados, o auto-sync do link e o CI seletivo; árvore da Arquitetura atualizada
 - 🛠️ Ambiente local de currículos reconfigurado: deps via pip + Chromium headless v1234 + modelo mBART em cache
 
 ## [1.16.1] - 2026-08-22

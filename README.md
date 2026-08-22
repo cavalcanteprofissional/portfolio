@@ -92,7 +92,12 @@ HF_TOKEN=hf_seu_token_aqui
 
 Crie o token em https://huggingface.co/settings/tokens. Em CI, o mesmo token é injetado via GitHub Secret `HF_TOKEN`.
 
-Os PDFs são gerados em `public/cv/` e copiados para `dist/` no build. Edite `resume/curriculo-fonte.md` para atualizar os dados — a pipeline traduz (mBART-large-50) e renderiza automaticamente em PT/EN/ES.
+Os PDFs são gerados em `public/cv/` e **versionados no repo** (fonte da verdade — o deploy os usa direto do checkout). Edite `resume/curriculo-fonte.md` para atualizar os dados — a pipeline traduz (mBART-large-50) e renderiza automaticamente em PT/EN/ES. Depois de editar, rode `python resume/build.py` e committe os PDFs renovados.
+
+Detalhes automáticos:
+
+- **Auto-sync do link Portfolio** — `build.py` extrai `<link rel="canonical">` do `index.html` e força `dados_pessoais.portfolio` a segui-lo (valor do frontmatter vira só fallback); troca futura de domínio propaga sozinha
+- **CI seletivo** (`deploy.yml`) — a etapa Python (tradução + PDFs) só roda se `resume/**` mudou no push ou se os PDFs não existirem no checkout; caso contrário os commitados são empacotados no `dist/`, e pushes de documentação ficam ~1–2 min
 
 ## 🏗️ Arquitetura
 
@@ -106,7 +111,7 @@ portfolio/
 │   └── index.css       # Tailwind + efeitos CRT/glow
 ├── public/
 │   ├── icons/          # logo-512.png (arte mestre) + ícones derivados
-│   ├── cv/             # PDFs gerados pela pipeline Python
+│   ├── cv/             # PDFs versionados (fonte da verdade) — pipeline Python regenera
 │   ├── og/, companies/, documents/, images/
 │   └── robots.txt · sitemap.xml · site.webmanifest · favicon.ico
 ├── branding/           # fonte .ai da marca — só *.ai versionado (ver 🎨 Branding)
