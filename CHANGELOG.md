@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.16.1] - 2026-08-22
+
+### ⚡ CI — Committed-first: PDFs do repo viram o default, pipeline Python vira fallback
+
+- 🎯 **Lógica invertida** — com os PDFs versionados (v1.16.0), o `actions/cache` de `public/cv` ficou redundante e foi **removido**; novo passo "Check committed CVs" (`compgen -G "public/cv/*.pdf"`) verifica existência no checkout
+- 📌 **Condição dos 5 passos Python** agora é `resume mudou || PDFs ausentes` — pushes só-docs usam diretamente os PDFs commitados, sem cache intermediário nem geração
+- 🛟 **Fallback preservado** — pipeline roda se alguém apagar os PDFs do repo ou se `resume/**` mudar (fonte da verdade desatualizada)
+- 🧪 Run de estreia da v1.16.0 gerou por cache frio (esperado, uma única vez); validação definitiva pendente nos Actions (I7 no TODO.md)
+
 ## [1.16.0] - 2026-08-22
 
 ### ⚡ CI — Deploy condicional: pipeline Python só roda quando o currículo muda

@@ -34,21 +34,23 @@ jobs:
             resume:
               - 'resume/**'
 
-      - name: Restore generated CVs
-        id: cv
-        uses: actions/cache@v4
-        with:
-          path: public/cv
-          key: cvs-${{ hashFiles('resume/**') }}
+      - name: Check committed CVs
+        id: cvs
+        run: |
+          if compgen -G "public/cv/*.pdf" > /dev/null; then
+            echo "missing=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "missing=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Setup Python
-        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
+        if: steps.filter.outputs.resume == 'true' || steps.cvs.outputs.missing == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Cache Hugging Face models
-        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
+        if: steps.filter.outputs.resume == 'true' || steps.cvs.outputs.missing == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
@@ -56,17 +58,17 @@ jobs:
           restore-keys: hf-mbart-
 
       - name: Install Python dependencies
-        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
+        if: steps.filter.outputs.resume == 'true' || steps.cvs.outputs.missing == 'true'
         run: |
           pip install --upgrade pip
           pip install transformers torch sentencepiece sacremoses jinja2 python-frontmatter pyyaml playwright protobuf tiktoken
 
       - name: Install Playwright Chromium
-        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
+        if: steps.filter.outputs.resume == 'true' || steps.cvs.outputs.missing == 'true'
         run: playwright install --with-deps chromium
 
       - name: Generate resume PDFs
-        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
+        if: steps.filter.outputs.resume == 'true' || steps.cvs.outputs.missing == 'true'
         run: python resume/build.py
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}

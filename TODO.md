@@ -586,5 +586,7 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 | I3 | `actions/cache` dos PDFs gerados — `path: public/cv`, chave `cvs-${{ hashFiles('resume/**') }}`; evicção auto-cura (regenera no próximo push que toque resume ou em miss) | ✅ |
 | I4 | `.gitignore`: `public/cv/*.pdf` passa a ser versionado; PDFs atuais commitados como fallback garantido no dist | ✅ |
 | I5 | Validação nos Actions: push só-docs pula Setup Python/HF/pip/Chromium/Generate; push tocando `resume/**` regenera e renova cache | ⬜ |
+| I6 | **Simplificação committed-first** — `actions/cache` de `public/cv` removido (redundante com PDFs versionados); novo passo "Check committed CVs" (`compgen -G public/cv/*.pdf`); condição dos 5 passos Python = `resume == true \|\| missing == true`; PDFs commitados viram o default prioritário e a pipeline vira fallback | ✅ |
+| I7 | Validação final nos Actions: run de estreia da v1.16.0 gerou por cache frio (esperado); próximo push só-docs deve pular os 5 passos Python com PDFs commitados servindo o dist | ⬜ |
 
 > Node build, upload e deploy permanecem incondicionais; `workflow_dispatch` e PR herdam a mesma lógica. Ganho esperado: pushes só-docs caem de ~5–8 min para ~1–2 min.
