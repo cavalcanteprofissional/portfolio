@@ -546,3 +546,25 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 | H5 | README: seção Branding expandida com spec dos arquivos de `branding/` + nova seção Arquitetura mencionando o diretório | ✅ |
 | H6 | Plano da sessão incorporado a esta onda; diretório `.opencode/` removido | ✅ |
 | H7 | Suíte completa verde → commit + push `[1.15.0]`+`[1.15.1]` (deploy via Actions) | ✅ |
+
+---
+
+### 📌 Pendências em aberto — Checklist Pré-Deploy (próximos passos)
+
+> Apontador dos itens ainda abertos (detalhes completos na seção 📋 acima). Atualizado em 21/08/2026, pós-deploy v1.15.0+v1.15.1.
+
+**🔧 Exigem código:**
+
+| Item | Ref. (seção 📋) | Ação proposta |
+|------|-----------------|---------------|
+| Política de privacidade + termos de uso no rodapé | §5 · "Dados no rodapé" | Página/âncora simples com declaração "este site não usa cookies" + link no Footer |
+
+**🤝 Decisão conjunta antes de codificar:**
+
+| Item | Ref. (seção 📋) | Desdobramento se aprovado |
+|------|-----------------|---------------------------|
+| GA4 + banner de cookies | §4 · "Google Analytics" | gtag + banner LGPD (obrigatório junto) |
+| Domínio próprio | §2 · "Domínio próprio" | CNAME/DNS + atualizar canonical, og:url, JSON-LD, sitemap e base do Vite |
+| Hospedagem/SLA (+ headers CSP/HSTS) | §6 · "Hospedagem boa" e "Configurações de segurança" | Permanecer GH Pages × migrar (Cloudflare/Vercel também desbloqueia headers) |
+
+**📱 Validações manuais agora possíveis (site no ar com v1.15.x):** teste em celular físico · rota 404 real (abrir `/rota-inexistente`) · submeter sitemap no Google Search Console · revalidar PageSpeed na URL de produção · conferir favicon novo e manifest ao vivo (aba anônima).
