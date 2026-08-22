@@ -568,3 +568,23 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 | Hospedagem/SLA (+ headers CSP/HSTS) | §6 · "Hospedagem boa" e "Configurações de segurança" | Permanecer GH Pages × migrar (Cloudflare/Vercel também desbloqueia headers) |
 
 **📱 Validações manuais agora possíveis (site no ar com v1.15.x):** teste em celular físico · rota 404 real (abrir `/rota-inexistente`) · submeter sitemap no Google Search Console · revalidar PageSpeed na URL de produção · conferir favicon novo e manifest ao vivo (aba anônima).
+
+---
+
+### ⚠️ CI — Pipeline Python dispara em todo push mesmo sem mudança no currículo (2026-08-22)
+
+> **Problema:** `deploy.yml` dispara em qualquer push para `main` e o job de build executa **sempre** o bloco Python completo (setup-python, cache HF, `pip install transformers torch…`, Playwright Chromium, `python resume/build.py`) — mesmo quando o push só altera docs (ex.: TODO.md), desperdiçando minutos de CI e regenerando PDFs idênticos.
+>
+> **Causa estrutural:** os PDFs são gerados no runner e injetados em `public/cv/` antes do build Vite (eram gitignored) — o build sempre dependia da geração.
+>
+> **Solução aprovada (A+B):** condicional por mudança em `resume/**` + cache dos PDFs + PDFs comitados como fonte da verdade (redundância contra evicção de cache do GitHub).
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| I1 | Registrar problema e plano (esta onda) | ✅ |
+| I2 | `deploy.yml`: detecção de mudanças com `dorny/paths-filter@v3` (`resume: 'resume/**'`) e `if:` nos 5 passos Python (`resume == true \|\| cache-hit != true`) | ✅ |
+| I3 | `actions/cache` dos PDFs gerados — `path: public/cv`, chave `cvs-${{ hashFiles('resume/**') }}`; evicção auto-cura (regenera no próximo push que toque resume ou em miss) | ✅ |
+| I4 | `.gitignore`: `public/cv/*.pdf` passa a ser versionado; PDFs atuais commitados como fallback garantido no dist | ✅ |
+| I5 | Validação nos Actions: push só-docs pula Setup Python/HF/pip/Chromium/Generate; push tocando `resume/**` regenera e renova cache | ⬜ |
+
+> Node build, upload e deploy permanecem incondicionais; `workflow_dispatch` e PR herdam a mesma lógica. Ganho esperado: pushes só-docs caem de ~5–8 min para ~1–2 min.

@@ -51,10 +51,9 @@ next-env.d.ts
 prisma/*.db
 prisma/*.db-journal
 
-# Resume build output
+# Resume build output (PDFs versionados como fonte da verdade — ver onda ⚠️ no TODO.md)
 resume/output/
 resume/__pycache__/
-public/cv/*.pdf
 
 # Misc
 *.log

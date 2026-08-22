@@ -26,12 +26,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Detect changes in resume pipeline
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            resume:
+              - 'resume/**'
+
+      - name: Restore generated CVs
+        id: cv
+        uses: actions/cache@v4
+        with:
+          path: public/cv
+          key: cvs-${{ hashFiles('resume/**') }}
+
       - name: Setup Python
+        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Cache Hugging Face models
+        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
@@ -39,14 +56,17 @@ jobs:
           restore-keys: hf-mbart-
 
       - name: Install Python dependencies
+        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
         run: |
           pip install --upgrade pip
           pip install transformers torch sentencepiece sacremoses jinja2 python-frontmatter pyyaml playwright protobuf tiktoken
 
       - name: Install Playwright Chromium
+        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
         run: playwright install --with-deps chromium
 
       - name: Generate resume PDFs
+        if: steps.filter.outputs.resume == 'true' || steps.cv.outputs.cache-hit != 'true'
         run: python resume/build.py
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}

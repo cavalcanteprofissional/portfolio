@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.16.0] - 2026-08-22
+
+### ⚡ CI — Deploy condicional: pipeline Python só roda quando o currículo muda
+
+- 🐛 **Problema** — qualquer push para `main` (mesmo só-docs, ex.: TODO.md) disparava o bloco Python completo no `deploy.yml`: setup-python, cache HF, `pip install transformers torch…`, Playwright Chromium e `python resume/build.py` regenerando PDFs idênticos; pushes de documentação gastavam minutos de CI à toa
+- 🎯 **Correção (estratégia A+B)** — `dorny/paths-filter@v3` detecta mudança em `resume/**` e os 5 passos Python ganham `if:` (`resume == true || cache-hit != true`); Node build/deploy permanecem incondicionais
+- 💾 **Cache dos PDFs** — `actions/cache` em `public/cv` com chave `cvs-${{ hashFiles('resume/**') }}`: pushes sem mudança restauram os PDFs gerados anteriormente; evicção auto-cura (regenera no próximo miss)
+- 📌 **PDFs versionados** — `public/cv/*.pdf` sai do `.gitignore` e entra no repo como fonte da verdade: mesmo com cache despejado, o dist sempre tem currículos (fallback garantido)
+- ⏱️ **Ganho esperado** — pushes só-docs caem de ~5–8 min para ~1–2 min; `workflow_dispatch` e trigger de PR herdam a mesma condicional
+- 🧪 Validação pendente nos Actions (onda I5 no TODO.md): próximo push só-docs deve pular o bloco Python inteiro
+
 ## [1.15.1] - 2026-08-21
 
 ### 🎨 Favicon da marca (esfera neon) + 🔊 Áudio do boot
