@@ -1,4 +1,4 @@
-# Plano de Melhorias — 2ª Onda: Performance, SEO, i18n e Qualidade
+ ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |# Plano de Melhorias — 2ª Onda: Performance, SEO, i18n e Qualidade
 
 ## Data: 2026-06-15
 
@@ -401,3 +401,148 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 **Correção (Opção A):** `amount={0}` dispara assim que qualquer parte do grid entra no viewport (comportamento padrão para listas longas), mantendo o stagger e sem afetar outras seções.
 
 **Fallback (Opção B):** se a Opção A não resolver, mudar `amount: 0.2` → `amount: 0.05` em `src/lib/motion/tokens.ts` (afeta `Reveal`/`Stagger` globalmente).
+
+---
+
+### 🚀 Checklist Pré-Deploy — Correções da auditoria (2026-08-21)
+
+> Origem: relatório de auditoria (10 resolvidos · 9 pendentes · 1 N/A) — checklist integral agora incorporado ao final deste arquivo. Esta onda corrige as pendências de esforço baixo (itens 1–6 da tabela de prioridades). Itens 7–9 (política de privacidade, GA4 + cookies, domínio próprio) ficam como decisão futura.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| D1 | Registrar plano no TODO.md | ✅ |
+| D2 | **404.html SPA fallback** — plugin Vite `closeBundle` copia `dist/index.html` → `dist/404.html` (funciona local e no CI sem tocar no deploy.yml) | ✅ |
+| D3 | **sitemap.xml** — criar `public/sitemap.xml` (URL única do site) | ✅ |
+| D4 | **robots.txt** — adicionar linha `Sitemap:` apontando para o sitemap.xml | ✅ |
+| D5 | **Ícones PWA** — gerar `apple-touch-icon.png` (180×180) e `icon-{192,512}.png` a partir dos assets existentes (sharp) | ✅ |
+| D6 | **Manifest** — criar `public/site.webmanifest` (name, theme_color `#0ea5e9`, ícones) | ✅ |
+| D7 | **index.html** — links `apple-touch-icon`, `icon` PNG 192/512 e `<link rel="manifest">` | ✅ |
+| D8 | **WhatsApp pré-preenchido** — chave i18n `cta.whatsappMsg` (pt/en/es) aplicada nos links `wa.me` de Hero.tsx, Contact.tsx e Footer.tsx (`encodeURIComponent`) | ✅ |
+| D9 | **Footer.tsx** — Lattes `http://` → `https://lattes.cnpq.br/7686247677030579` | ✅ |
+| D10 | **Slug LinkedIn padronizado** — Footer usa `cavalcante-Lucas` (igual Contact.tsx e index.html) | ✅ |
+| D11 | Validar typecheck, lint, build (`dist/404.html` + sitemap + ícones presentes) e Playwright e2e | ✅ |
+| D12 | Atualizar `CHANGELOG.md` (bump `[1.15.0]`) e marcar itens corrigidos no `checklist-pre-deploy.md` | ✅ |
+| D13 | **E2E dos artefatos** — `e2e/artifacts.spec.ts`: 404≡index, schema sitemap, robots Sitemap:, manifest JSON+ícones, dimensões PNG (IHDR), HTTP 200 dos artefatos e mensagens wa.me por idioma (10 testes × 2 projetos) | ✅ |
+| D14 | Fix extra achado pelo D13 — i18n `contact.linkedin` usava slug `cavalcante-lucas` nos 3 idiomas → padronizado `cavalcante-Lucas`; links de ícones/manifest no index.html convertidos para root-relative (dev server não duplica mais a base) | ✅ |
+| D15 | **Validação manual pelo usuário** antes do commit/push (roteiro: WhatsApp em 3 idiomas, manifest no DevTools, 404 pós-deploy, celular físico) | ⬜ |
+
+> Nota (2026-08-21): suíte completa local com `--workers=1` → **44/44 passed**. Com workers paralelos a suíte tem flakiness pré-existente de timing do BootScreen (falhava 3 testes também no baseline sem mudanças).
+
+---
+
+### 🔵 Favicon da marca (esfera neon) + Áudio do boot (2026-08-21)
+
+> Origem: feedback da validação manual da v1.15.0. Ícones derivam de arte própria do usuário (`favicon.ai` → export PNG 512). Sons novos: sweep inicial + arpejo por [OK]; POST beep e chime final preservados.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| F1 | Registrar plano no TODO.md | ✅ |
+| F2 | Promover export do usuário `1x/favicon.png` → `public/icons/logo-512.png` (arte mestre 512×512, esfera neon flutuante c/ alfa) | ✅ |
+| F3 | Criar `scripts/generate-icons.mjs` (sharp): abas com transparência (`icon-192/512`) · opacos compostos sobre navy `#0F172A` (`icon-180` apple-touch + `maskable-192/512`) · composição de fundo automática à prova de exports futuros | ✅ |
+| F4 | Gerar **`favicon.ico` real** (ICONDIR binário + 3 entradas PNG 16/32/48 embutidas) em `public/favicon.ico` — substitui o PNG 16×16 renomeado legado | ✅ |
+| F5 | Script npm `"icons"` + apagar diretório temporário `1x/`; `favicon.ai` versionado em `branding/` | ✅ |
+| F6 | `site.webmanifest`: `background_color #0F172A` + ícones `purpose: maskable` | ✅ |
+| F7 | `.gitignore`: ignorar temporários do Adobe Illustrator (`~ai-*.tmp`), mantendo o `.ai` versionado | ✅ |
+| F8 | **Som inicial do boot** — `playBootStart()`: whoosh de ruído branco filtrado subindo 160→2800 Hz (~320 ms, envelope de swell) no mount — textura única na paleta (único som não tonal), guarda ref p/ StrictMode | ✅ |
+| F9 | **Som por [OK]** — `playOkBlip(step)`: arpejo pentatônico ascendente em ciclo (A5·B5·C#6·E6·F#6, triangle, 45 ms, vol ~0.055), respeitando mute | ✅ |
+| F10 | POST beep ("POST complete") e chime final **preservados** sem alteração | ✅ |
+| F11 | E2E dos artefatos atualizados: `.ico` real (ICONDIR ≥ 3 entradas), `icon-180` 100% opaco, `background_color #0F172A`, dimensões 180/192/512 | ✅ |
+| F12 | README atualizado (seção ícones/branding + script `icons`); `CHANGELOG.md` bump `[1.15.1]`; nota no `checklist-pre-deploy.md` | ✅ |
+| F13 | Validação completa: `npm run icons` → typecheck · lint · build · Playwright completo (`--workers=1`) | ✅ |
+
+---
+
+### 📋 Checklist Pré-Deploy — Auditoria completa (2026-08-21)
+
+> Incorporado de `checklist-pre-deploy.md` (arquivo removido nesta versão). **Auditoria executada em 21/08/2026** (build local + Lighthouse via Edge headless + curl nos links). Resultado inicial: **10 resolvidos · 9 pendentes · 1 N/A** → após correções v1.15.0/v1.15.1: **13 resolvidos · 7 pendentes**.
+>
+> Use este checklist para validar o projeto antes de publicar. Marque cada item conforme for verificando/corrigindo.
+
+#### 1. Responsividade e UX
+- [ ] **Abrir no celular** — testar o layout completo em viewport mobile (não só redimensionar a janela do desktop)
+  - ↳ *Requer ação manual* (dispositivo físico). Evidência estática favorável: `viewport-fit=cover` (index.html:6), breakpoints `sm:`/`md:` em todas as seções, menu hambúrguer (Nav.tsx:195). O commit `91cc452` já corrigiu cards ocultos no mobile.
+- [x] **Testar formulário** — enviar um teste real em cada formulário do site e confirmar que o envio funciona (front e back-end)
+  - ↳ **N/A**: o site não possui formulário. Contato exclusivamente por links (`mailto:`, WhatsApp, LinkedIn) em Contact.tsx:6-10.
+- [x] **Clicar no WhatsApp** — validar que o link/botão de WhatsApp abre corretamente com número e mensagem pré-preenchida
+  - ↳ Links válidos e HTTP 200: Hero.tsx:39, Contact.tsx:8, Footer.tsx:28 (`wa.me/5585996859051`). **Corrigido (v1.15.0)**: mensagem pré-preenchida via `?text=` com chave i18n `cta.whatsappMsg` (pt/en/es) + `encodeURIComponent`.
+
+#### 2. Roteamento e Domínio
+- [x] **Página 404** — criar/testar página de erro 404 customizada (não a padrão do host)
+  - ↳ **Corrigido (v1.15.0)**: plugin Vite `gh-pages-spa-404` copia `dist/index.html` → `dist/404.html` ao fim do build (`vite.config.ts`); validado no build local. Teste real da rota 404 após o próximo deploy.
+- [ ] **Domínio próprio** — confirmar que o site está apontando para o domínio final, não para o subdomínio de deploy (ex: vercel.app, github.io)
+  - ↳ *Decisão pendente*: canonical, og:url e JSON-LD apontam para `cavalcanteprofissional.github.io/portfolio-cavalcante/` (index.html:10,19,43). Se haverá domínio próprio, atualizar essas URLs + CNAME/DNS; se o endereço atual é o destino final, marcar como resolvido.
+- [x] **HTTPS** — certificado SSL ativo e válido, sem conteúdo misto (mixed content) bloqueado pelo navegador
+  - ↳ OK: GitHub Pages força HTTPS; nenhum recurso `http://` é carregado pela página (verificado no código e ao vivo). Única URL insegura é link externo do Lattes (Footer.tsx:18) — funciona, mas vale trocar por `https://`.
+
+#### 3. Performance
+- [x] **PageSpeed** — rodar Google PageSpeed Insights / Lighthouse e revisar métricas (LCP, CLS, TBT)
+  - ↳ Lighthouse local (Edge headless, emulação mobile, sobre o build de produção): **Perf 91 · A11y 99 · Best Practices 96 · SEO 100** | FCP 2,2s · **LCP 2,8s** · TBT 170ms · **CLS 0,022** · SI 2,2s. Bundle principal 448KB→142KB gzip com code-splitting por seção. Falhas menores: `svg-img-alt` (falso-positivo — Hero.tsx:83 usa `alt=""` + `aria-hidden`, padrão correto p/ decorativa) e `image-aspect-ratio`. Recomendado revalidar PSI na URL de produção.
+- [x] **Comprimir imagens** — otimizar/compactar todas as imagens (WebP/AVIF quando possível, lazy loading)
+  - ↳ Foto de perfil em WebP (337×450), `loading="lazy"` nas imagens fora da dobra (Companies.tsx:35, Nav.tsx:126, Hero.tsx:137/232), `eager` apenas no hero (correto p/ LCP). `og/card.png` (1200×630 ✓) só é consumido por crawlers. `svgo`+`sharp` presentes nos devDeps.
+
+#### 4. SEO e Metadados
+- [x] **Favicon** — favicon presente em todos os tamanhos/formatos necessários (incluindo apple-touch-icon)
+  - ↳ **Corrigido (v1.15.0)**: adicionados `apple-touch-icon` 180×180, `icon-192.png`, `icon-512.png` (monograma "LC" no tema sky) e `site.webmanifest`; links em index.html:6-8.
+  - ↳ **Refinado (v1.15.1)**: identidade própria — esfera azul neon desenhada no Illustrator (`branding/favicon.ai`); `favicon.ico` agora é ICONDIR real (16/32/48), abas com transparência, apple-touch/maskable opacos sobre navy `#0F172A`; regeneração via `npm run icons`.
+- [x] **OG Image** — imagem Open Graph configurada para preview em redes sociais (WhatsApp, LinkedIn, etc.)
+  - ↳ `og:image` + `twitter:image` declaradas em index.html:22-32, arquivo existe (1200×630 PNG) e responde 200 no ar.
+- [x] **Sitemap.xml** — gerado, atualizado e submetido ao Google Search Console
+  - ↳ **Corrigido (v1.15.0)**: `public/sitemap.xml` criado (URL única) + linha `Sitemap:` no robots.txt. *Resta manual*: submeter no Google Search Console após o deploy.
+- [ ] **Google Analytics** — tag instalada e disparando eventos corretamente (validar no GA4 em tempo real)
+  - ↳ **Pendente**: nenhuma tag GA4/gtag encontrada. Decidir se o portfólio terá analytics (se sim, lembrar do banner de consentimento da seção 5).
+- [x] **Títulos e descrições** — `<title>` e `<meta description>` únicos e otimizados por página
+  - ↳ `<title>` (index.html:13) e meta description (index.html:7) bem formulados; canonical e `lang="pt-BR"` corretos; JSON-LD Person/LocalBusiness/WebSite completo (index.html:35-103).
+- [x] **Meta descriptions** — revisar se todas as páginas têm meta description (evitar duplicadas/genéricas)
+  - ↳ OK/N-A: site de página única, uma description única e específica (index.html:7).
+- [x] **Robots.txt** — presente e configurado corretamente (não bloqueando páginas que deveriam ser indexadas)
+  - ↳ `public/robots.txt` permite tudo, incluindo crawlers de preview social; live 200. **Atualizado (v1.15.0)**: linha `Sitemap:` acrescentada.
+
+#### 5. Privacidade e Compliance (LGPD)
+- [ ] **Cookies** — banner de consentimento de cookies implementado e funcional
+  - ↳ **Pendente/decisão**: sem banner. Atenuante: hoje o site não usa cookies de rastreamento nem embeds de terceiros (preferências ficam em localStorage). Se instalar GA4, o banner passa a ser obrigatório; alternativa mínima: declaração "este site não usa cookies" numa política de privacidade.
+- [ ] **Dados no rodapé** — CNPJ, endereço, política de privacidade e termos de uso visíveis no rodapé
+  - ↳ **Pendente**: Footer.tsx exibe só redes sociais. CNPJ: N/A se pessoa física sem CNPJ. Endereço público consta no JSON-LD (Fortaleza/CE). Política de privacidade e termos ausentes — recomendável criar páginas/âncoras simples e linkar no rodapé.
+
+#### 6. Infraestrutura e Segurança
+- [ ] **Hospedagem boa** — confirmar que o provedor de hospedagem tem uptime/SLA adequado para produção
+  - ↳ *Decisão manual*: GitHub Pages não oferece SLA contratual (uptime histórico alto, adequado p/ portfólio); CI/CD sólido via Actions (.github/workflows/deploy.yml). Se precisar de SLA/headers customizados, migrar para Cloudflare Pages/Vercel/Netlify.
+- [x] **Clicar nos links** — checar manualmente (ou com link checker automatizado) todos os links internos e externos, sem 404
+  - ↳ Todos os hrefs testados com `curl -L`: lattes.cnpq.br, github.com/cavalcanteprofissional, linkedin.com/in/cavalcante-Lucas, wa.me → **200**. Assets ao vivo (`/`, favicon.ico, og/card.png, robots.txt, cv_pt.pdf, foto-perfil.webp, PDFs de certificações) → **200**. **Corrigido (v1.15.0)**: Lattes agora `https://` e slug padronizado `cavalcante-Lucas` em Footer, Contact, index.html e chaves i18n `contact.linkedin`.
+- [ ] **Configurações de segurança** — headers de segurança (CSP, X-Frame-Options, HSTS), variáveis de ambiente/segredos fora do repositório
+  - ↳ Segredos **OK**: `.env.local` ignorado pelo git (verificado), `HF_TOKEN` injetado só via GitHub Secret (deploy.yml:51-52), nenhum token hardcoded no repo. Headers **pendentes por limitação de plataforma**: GH Pages não permite CSP/XFO/HSTS customizados. Mitigações existentes: `rel="noopener noreferrer"` em todos os `_blank` (Footer.tsx:55, Contact.tsx:61). Solução completa exigiria proxy Cloudflare ou outro host.
+
+---
+
+#### Resumo da auditoria — pendências priorizadas
+
+| # | Item | Esforço | Status |
+|---|------|---------|--------|
+| 1 | `404.html` copiado do index no build (plugin Vite `gh-pages-spa-404`) | Baixo | ✅ v1.15.0 |
+| 2 | Criar `public/sitemap.xml` + referência no robots.txt | Baixo | ✅ v1.15.0 |
+| 3 | Adicionar `apple-touch-icon` (+ manifest/ícones 192/512) | Baixo | ✅ v1.15.0 |
+| 4 | Mensagem pré-preenchida nos links `wa.me` (`?text=` i18n) | Baixo | ✅ v1.15.0 |
+| 5 | Trocar `http://lattes.cnpq.br` → `https://` (Footer.tsx:18) | Trivial | ✅ v1.15.0 |
+| 6 | Padronizar slug do LinkedIn entre Footer/Contact/index.html | Trivial | ✅ v1.15.0 |
+| 7 | Política de privacidade + dados no rodapé | Médio | ⬜ pendente |
+| 8 | GA4 + banner de cookies (decisão conjunta) | Médio | ⬜ decisão |
+| 9 | Domínio próprio (decisão de negócio) | Manual | ⬜ decisão |
+
+**Pendências manuais remanescentes:** teste em celular físico · submeter sitemap no Search Console · revalidar PSI na URL de produção após deploy.
+
+**Métricas Lighthouse locais (21/08/2026)**: Performance 91 · Acessibilidade 99 · Best Practices 96 · SEO 100 · LCP 2,8s · CLS 0,022 · TBT 170ms. Build de produção validado (`tsc && vite build`, OK). Correções v1.15.0 validadas com typecheck, lint, build e Playwright **24/24** (`--workers=1`).
+
+---
+
+### 🗂️ Housekeeping — gitignore de branding, merge do checklist e plano da sessão (2026-08-21)
+
+> Origem: organização pós-v1.15.1 antes do primeiro commit da release. Registro consolidado do plano da sessão (antes em `.opencode/plans/branding-gitignore-checklist-todo.md`, removido após esta incorporação).
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| H1 | `.gitignore`: `/branding/*` exceto `!/branding/*.ai` — exports (ex.: `branding/1x/`) e temporários `~ai-*.tmp` ignorados sem limpeza manual; fonte Illustrator segue versionada; verificado via `git check-ignore` | ✅ |
+| H2 | `checklist-pre-deploy.md` incorporado ao TODO.md (seção 📋 acima) e arquivo removido; referências históricas (D12/F12, CHANGELOG v1.15.0) preservadas | ✅ |
+| H3 | Som inicial redesenhado até ficar distinto por textura: sweep tonal → power surge grave → **whoosh de ruído branco filtrado** 160→2800 Hz (~320 ms), único som não tonal da paleta | ✅ |
+| H4 | Ícones regenerados a partir do novo export do usuário (`branding/1x/favicon.png` → `public/icons/logo-512.png`) | ✅ |
+| H5 | README: seção Branding expandida com spec dos arquivos de `branding/` + nova seção Arquitetura mencionando o diretório | ✅ |
+| H6 | Plano da sessão incorporado a esta onda; diretório `.opencode/` removido | ✅ |
+| H7 | Suíte completa verde → commit + push `[1.15.0]`+`[1.15.1]` (deploy via Actions) | ✅ |

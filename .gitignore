@@ -60,3 +60,12 @@ public/cv/*.pdf
 *.log
 *.pid
 *.seed
+
+# Branding: versionar apenas as fontes .ai (exports e temporários ignorados)
+/branding/*
+!/branding/*.ai
+
+# Adobe Illustrator temp files (fora de branding/)
+~ai-*.tmp
+~ai-*_.tmp
+.~*

@@ -5,7 +5,7 @@ export const translations = {
   pt: {
     nav: { home: "Início", showcase: "Showcase", experience: "Experiência", portfolio: "Projetos", skills: "Habilidades", certifications: "Certificações", languages: "Idiomas", menu: "Menu", swipeToClose: "Deslize para fechar" },
     hero: { name: "Lucas Cavalcante", title: "Analista de Dados & IA", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM.", resume: "/portfolio-cavalcante/cv/cv_pt.pdf" },
-    contact: { location: "Fortaleza - CE", phone: "(85) 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
+    contact: { location: "Fortaleza - CE", phone: "(85) 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-Lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículo", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículo" },
     sections: { experience: "Experiência Profissional", portfolio: "Projetos em Destaque", skills: "Habilidades Técnicas", certifications: "Certificações", languages: "Idiomas" },
     portfolio: { subtitle: "Conheça alguns dos meus projetos recentes em Data Science e AI", featured: "Implementado", status: { concluido: "Concluído", andamento: "Em andamento" } },
@@ -78,7 +78,7 @@ export const translations = {
       level: { native: "Nativo", advanced: "Avançado", intermediate: "Intermediário", basic: "Básico" }
     },
     footer: { contact: "Entre em Contato", message: "Estou sempre aberto a novas oportunidades e colaborações.", rights: "Todos os direitos reservados." },
-    cta: { title: "Vamos Trabalhar Juntos?", subtitle: "Estou sempre aberto a novas oportunidades e colaborações. Vamos conversar sobre seu próximo projeto?", contact: "Entre em Contato", whatsapp: "Fale no WhatsApp", linkedin: "Conecte no LinkedIn", hero: "Contato" },
+    cta: { title: "Vamos Trabalhar Juntos?", subtitle: "Estou sempre aberto a novas oportunidades e colaborações. Vamos conversar sobre seu próximo projeto?", contact: "Entre em Contato", whatsapp: "Fale no WhatsApp", linkedin: "Conecte no LinkedIn", hero: "Contato", whatsappMsg: "Olá Lucas! Vim pelo seu portfólio e gostaria de conversar." },
     companies: { title: "Empresas Atendidas", subtitle: "Parceiros que confiam no meu trabalho" },
     techstack: {
       title: "Tech Stack",
@@ -113,7 +113,7 @@ export const translations = {
   en: {
     nav: { home: "Home", showcase: "Showcase", experience: "Experience", portfolio: "Projects", skills: "Skills", certifications: "Certifications", languages: "Languages", menu: "Menu", swipeToClose: "Swipe to close" },
     hero: { name: "Lucas Cavalcante", title: "Data Analyst & AI", description: "Data Analyst with experience in AI, automation, and digital marketing projects. Specialized in developing chatbots, interactive dashboards, time series and geospatial data pipelines, SEO/SEM strategies implementation, and delivering data-driven insights for business decision-making.", resume: "/portfolio-cavalcante/cv/cv_en.pdf" },
-    contact: { location: "Fortaleza - CE, Brazil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
+    contact: { location: "Fortaleza - CE, Brazil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-Lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Resume", view: "View Certificate", demo: "Demo", code: "Code", resume: "Resume" },
     sections: { experience: "Professional Experience", portfolio: "Featured Projects", skills: "Technical Skills", certifications: "Certifications", languages: "Languages" },
     portfolio: { subtitle: "Check out some of my recent Data Science and AI projects", featured: "Featured", status: { concluido: "Completed", andamento: "In progress" } },
@@ -186,7 +186,7 @@ export const translations = {
       level: { native: "Native", advanced: "Advanced", intermediate: "Intermediate", basic: "Basic" }
     },
     footer: { contact: "Contact Me", message: "I am always open to new opportunities and collaborations.", rights: "All rights reserved." },
-    cta: { title: "Let's Work Together?", subtitle: "I'm always open to new opportunities and collaborations. Let's talk about your next project?", contact: "Get in Touch", whatsapp: "Message on WhatsApp", linkedin: "Connect on LinkedIn", hero: "Contact" },
+    cta: { title: "Let's Work Together?", subtitle: "I'm always open to new opportunities and collaborations. Let's talk about your next project?", contact: "Get in Touch", whatsapp: "Message on WhatsApp", linkedin: "Connect on LinkedIn", hero: "Contact", whatsappMsg: "Hi Lucas! I came from your portfolio and would like to chat." },
     companies: { title: "Companies", subtitle: "Partners who trust my work" },
     techstack: {
       title: "Tech Stack",
@@ -221,7 +221,7 @@ export const translations = {
   es: {
     nav: { home: "Inicio", showcase: "Showcase", experience: "Experiencia", portfolio: "Proyectos", skills: "Habilidades", certifications: "Certificaciones", languages: "Idiomas", menu: "Menú", swipeToClose: "Desliza para cerrar" },
     hero: { name: "Lucas Cavalcante", title: "Analista de Datos & IA", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital. Especializado en el desarrollo de chatbots, dashboards interactivos, pipelines de datos de series temporales y geoespaciales, e implementación de estrategias SEO/SEM.", resume: "/portfolio-cavalcante/cv/cv_es.pdf" },
-    contact: { location: "Fortaleza - CE, Brasil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-lucas", github: "https://github.com/cavalcanteprofissional" },
+    contact: { location: "Fortaleza - CE, Brasil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-Lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículum", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículum" },
     sections: { experience: "Experiencia Profesional", portfolio: "Proyectos Destacados", skills: "Habilidades Técnicas", certifications: "Certificaciones", languages: "Idiomas" },
     portfolio: { subtitle: "Conoce algunos de mis proyectos recientes en Data Science e IA", featured: "Destacado", status: { concluido: "Completado", andamento: "En progreso" } },
@@ -294,7 +294,7 @@ export const translations = {
       level: { native: "Nativo", advanced: "Avanzado", intermediate: "Intermedio", basic: "Básico" }
     },
     footer: { contact: "Contáctame", message: "Siempre estoy abierto a nuevas oportunidades y colaboraciones.", rights: "Todos los derechos reservados." },
-    cta: { title: "¿Trabajamos Juntos?", subtitle: "Siempre estoy abierto a nuevas oportunidades y colaboraciones. Hablemos sobre tu próximo proyecto?", contact: "Contáctame", whatsapp: "Escríbeme en WhatsApp", linkedin: "Conecta en LinkedIn", hero: "Contacto" },
+    cta: { title: "¿Trabajamos Juntos?", subtitle: "Siempre estoy abierto a nuevas oportunidades y colaboraciones. Hablemos sobre tu próximo proyecto?", contact: "Contáctame", whatsapp: "Escríbeme en WhatsApp", linkedin: "Conecta en LinkedIn", hero: "Contacto", whatsappMsg: "¡Hola Lucas! Vine desde tu portafolio y me gustaría conversar." },
     showcase: {
       title: "Showcase",
       subtitle: "Visualizaciones de Datos e IA",

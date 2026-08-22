@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { Mail, MessageCircle, Linkedin } from 'lucide-react';
 import { Reveal } from '../lib/motion';
 
-const contactButtons = [
-  { icon: Mail, href: 'mailto:cavalcanteprofissional@outlook.com', labelKey: 'cta.contact', primary: true },
-  { icon: MessageCircle, href: 'https://wa.me/5585996859051', labelKey: 'cta.whatsapp', primary: false },
-  { icon: Linkedin, href: 'https://linkedin.com/in/cavalcante-Lucas', labelKey: 'cta.linkedin', primary: false },
-];
-
 export function Contact() {
   const { t } = useTranslation();
+
+  const contactButtons = [
+    { icon: Mail, href: 'mailto:cavalcanteprofissional@outlook.com', labelKey: 'cta.contact', primary: true },
+    { icon: MessageCircle, href: `https://wa.me/5585996859051?text=${encodeURIComponent(t('cta.whatsappMsg'))}`, labelKey: 'cta.whatsapp', primary: false },
+    { icon: Linkedin, href: 'https://linkedin.com/in/cavalcante-Lucas', labelKey: 'cta.linkedin', primary: false },
+  ];
 
   return (
     <section id="contact" className="py-20 px-4">

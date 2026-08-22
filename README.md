@@ -48,8 +48,33 @@ npm run preview    # preview do build
 ```bash
 npm run typecheck  # checagem de tipos (tsc --noEmit)
 npm run lint       # lint (ESLint flat config, 0 erros)
-npm run test       # testes E2E (Playwright — 24/24, modo CI com `CI=1`)
+npm run test       # testes E2E (Playwright — 48/48, modo CI com `CI=1`)
 ```
+
+### 🎨 Branding
+
+A identidade visual — **esfera azul reluzente em neon**, arte original desenhada no Adobe Illustrator — alimenta todos os ícones do site via pipeline automática.
+
+**Conteúdo do diretório `branding/`:**
+
+| Arquivo | Especificação | Git |
+|---------|---------------|-----|
+| `favicon.ai` | Fonte vetorial da arte (Illustrator, artboard 512×512, esfera neon com transparência) | ✅ versionado |
+| `1x/` | Exports temporários de conferência (@1x) gerados pelo Illustrator | 🚫 ignorado |
+| `~ai-*.tmp`, `.~*` | Locks/temporários criados durante a edição no Illustrator | 🚫 ignorado |
+
+Regra no `.gitignore`: `/branding/*` + `!/branding/*.ai` — **só fontes `.ai` entram no histórico**; exports e temporários nunca exigem limpeza manual.
+
+**Fluxo de atualização:** editar `branding/favicon.ai` → exportar PNG 512×512 com transparência → salvar como `public/icons/logo-512.png` → rodar o pipeline:
+
+```bash
+npm run icons      # regenera favicon.ico (16/32/48) + icon-180/192/512 + maskable a partir de public/icons/logo-512.png
+```
+
+Derivados gerados em `public/`:
+
+- **Abas** (`favicon.ico` ICONDIR real com 3 entradas PNG 16/32/48, `icon-192/512.png`): esfera flutuante com transparência
+- **apple-touch-icon** (`icon-180.png`) e variantes **maskable** (`maskable-192/512.png`): compostos sobre o navy da marca `#0F172A`
 
 ### 📄 Gerar currículos (PDF)
 
@@ -68,6 +93,29 @@ HF_TOKEN=hf_seu_token_aqui
 Crie o token em https://huggingface.co/settings/tokens. Em CI, o mesmo token é injetado via GitHub Secret `HF_TOKEN`.
 
 Os PDFs são gerados em `public/cv/` e copiados para `dist/` no build. Edite `resume/curriculo-fonte.md` para atualizar os dados — a pipeline traduz (mBART-large-50) e renderiza automaticamente em PT/EN/ES.
+
+## 🏗️ Arquitetura
+
+```
+portfolio/
+├── src/
+│   ├── components/     # BootScreen (BIOS+CRT), bootSound, Hero, Portfolio, TechStack…
+│   ├── i18n/           # traduções pt/en/es (i18next)
+│   ├── stores/         # estado global (Zustand)
+│   ├── data/           # projects.json
+│   └── index.css       # Tailwind + efeitos CRT/glow
+├── public/
+│   ├── icons/          # logo-512.png (arte mestre) + ícones derivados
+│   ├── cv/             # PDFs gerados pela pipeline Python
+│   ├── og/, companies/, documents/, images/
+│   └── robots.txt · sitemap.xml · site.webmanifest · favicon.ico
+├── branding/           # fonte .ai da marca — só *.ai versionado (ver 🎨 Branding)
+├── scripts/            # generate-icons.mjs — pipeline sharp dos ícones (npm run icons)
+├── resume/             # pipeline de currículos (Python + mBART + Playwright)
+└── e2e/                # Playwright: fluxos do app (portfolio.spec) e artefatos de build (artifacts.spec)
+```
+
+O build (Vite 7) aplica code-splitting por seção, copia `public/` para `dist/` e o plugin `gh-pages-spa-404` duplica `index.html` → `404.html` para fallback de rotas no GitHub Pages.
 
 ## 🌐 URL
 

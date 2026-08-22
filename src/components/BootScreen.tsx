@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Volume2, VolumeX } from 'lucide-react';
-import { ensureBootAudio, playPostBeep, playWelcomeChime } from './bootSound';
+import { ensureBootAudio, playBootStart, playOkBlip, playPostBeep, playWelcomeChime } from './bootSound';
 
 type BootLineType = 'header' | 'hw' | 'module' | 'info' | 'footer';
 
@@ -89,9 +89,19 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
   const mutedRef = useRef(muted);
   const onCompleteRef = useRef(onComplete);
   const startRef = useRef(0);
+  const bootStartedRef = useRef(false);
+  const okCountRef = useRef(0);
 
   useEffect(() => {
     startRef.current = performance.now();
+  }, []);
+
+  useEffect(() => {
+    if (bootStartedRef.current) return;
+    bootStartedRef.current = true;
+    if (!mutedRef.current) {
+      playBootStart();
+    }
   }, []);
 
   useEffect(() => {
@@ -136,7 +146,13 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
     }
 
     if (line.ok && !okLines.includes(typingLine)) {
-      const t = setTimeout(() => setOkLines((lines) => [...lines, typingLine]), OK_DELAY);
+      const t = setTimeout(() => {
+        setOkLines((lines) => [...lines, typingLine]);
+        if (!mutedRef.current) {
+          playOkBlip(okCountRef.current);
+          okCountRef.current += 1;
+        }
+      }, OK_DELAY);
       return () => clearTimeout(t);
     }
 

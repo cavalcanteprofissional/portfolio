@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.15.1] - 2026-08-21
+
+### 🎨 Favicon da marca (esfera neon) + 🔊 Áudio do boot
+
+- 🪩 **Ícones com arte própria** — monograma "LC" substituído pela esfera azul reluzente em neon desenhada no Illustrator (arte mestre `branding/favicon.ai`, export 512×512 `public/icons/logo-512.png`); abas mantêm a esfera flutuante com transparência
+- ⚙️ **Pipeline de ícones** — novo `scripts/generate-icons.mjs` (script `npm run icons`): deriva `favicon.ico` **real** (ICONDIR binário + 3 entradas PNG embutidas 16/32/48 — substitui o PNG renomeado legado), `icon-192/512` (alfa preservado) e versões opacas compostas sobre o navy da marca `#0F172A` (`icon-180` apple-touch + `maskable-192/512` com zona segura); composição automática de fundo à prova de exports futuros com ou sem alfa
+- 📱 **Manifest PWA completo** — `background_color #0F172A` + ícones `purpose: maskable` adicionados ao `site.webmanifest`
+- 🔊 **Som inicial do boot** — `playBootStart()`: whoosh de **ruído branco filtrado** com varredura ascendente 160→2800 Hz (~320 ms, envelope de swell) no início da animação — único som não tonal da paleta, timbre impossível de confundir com o arpejo dos [OK], POST beep ou chime; guarda por ref contra double-mount do StrictMode
+- 🎵 **Arpejo por [OK]** — `playOkBlip(step)`: pentatônica ascendente de A maior em ciclo (A5·B5·C#6·E6·F#6 · triangle · 45 ms · vol ~0.055), uma nota por linha concluída; beep do POST e chime final preservados; mute respeitado nos novos sons
+- 🚫 **`.gitignore`** — `/branding/` inteiro ignorado exceto as fontes `*.ai` (`!/branding/*.ai`): exports e temporários do Illustrator (ex.: `branding/1x/`) nunca mais exigem limpeza manual; fonte `.ai` segue versionada; regras globais `~ai-*.tmp` mantidas para temps fora de branding/
+- 📋 **`checklist-pre-deploy.md` incorporado ao `TODO.md`** (seção "📋 Checklist Pré-Deploy — Auditoria completa") e arquivo removido; conteúdo integral preservado (20 itens, tabela de pendências, métricas Lighthouse), seção meta "Instruções para o opencode" descartada
+- 🗂️ **Housekeeping** — plano da sessão consolidado como onda H no TODO.md; diretório `.opencode/` removido; README com seção Arquitetura nova e Branding expandida (spec dos arquivos de `branding/`)
+- 🚫 **`.gitignore`** — temporários do Adobe Illustrator ignorados (`~ai-*.tmp`), fonte `.ai` permanece versionada em `branding/`; diretório temporário de export `1x/` removido
+- 🧪 **E2E ampliados (24 → 28 testes dos artefatos)** — `.ico` validado byte a byte (ICONDIR + assinatura PNG das entradas + dimensões IHDR), opacidade total de apple-touch/maskable via sharp, manifest com `background_color` e purposes `any`/`maskable`
+- ✅ Typecheck, lint, build e Playwright **48/48** verificados (24 originais + 24 dos artefatos, `--workers=1`)
+
+## [1.15.0] - 2026-08-21
+
+### 🚀 Checklist Pré-Deploy — Correções da auditoria (itens de esforço baixo)
+
+- 🧭 **404 SPA fallback** — plugin Vite `gh-pages-spa-404` (`closeBundle`) copia `dist/index.html` → `dist/404.html` no fim do build; rotas inexistentes no GitHub Pages agora servem o app em vez da 404 padrão (funciona local e no CI sem alterar o deploy.yml)
+- 🗺️ **Sitemap.xml** — `public/sitemap.xml` criado com a URL canônica do site + linha `Sitemap:` no `robots.txt` (submissão ao Search Console permanece manual)
+- 🔣 **Ícones PWA completos** — `apple-touch-icon` 180×180 e ícones 192/512 gerados com sharp (monograma "LC" sobre gradiente sky, coerente com o splash de boot e o `theme-color #0ea5e9`) + `site.webmanifest`; links adicionados ao `index.html`
+- 💬 **WhatsApp pré-preenchido** — nova chave i18n `cta.whatsappMsg` (pt/en/es) aplicada nos 3 links `wa.me` (Hero, Contact, Footer) via `encodeURIComponent`; arrays de links movidos para dentro dos componentes onde dependem de `t()`
+- 🔗 **Links padronizados** — Lattes `http://` → `https://` e slug do LinkedIn unificado (`cavalcante-Lucas` no Footer, Contact, index.html **e agora também nas chaves i18n `contact.linkedin`**, que usavam `cavalcante-lucas`)
+- 🧪 **E2E dos artefatos** — novo `e2e/artifacts.spec.ts` (10 testes × chromium/mobile): igualdade `404.html` ≡ `index.html`, schema do sitemap, linha `Sitemap:` no robots, JSON do manifest com ícones existentes, dimensões reais dos PNGs (IHDR), acessibilidade HTTP dos artefatos e mensagens `wa.me` decodificáveis por idioma
+- 🔧 **Links root-relative no `index.html`** — favicon/ícones/manifest passam a usar `/...` (Vite injeta a base no build); elimina a duplicação `/portfolio-cavalcante/portfolio-cavalcante/...` que o dev server aplicava sobre os hrefs já prefixados
+- 📝 **Plano e relatório** — onda registrada no TODO.md (D1–D12) e pendências remanescentes atualizadas no `checklist-pre-deploy.md` (13 resolvidos · 7 pendentes: GA4+cookies, política LGPD no rodapé, domínio próprio, headers de segurança e testes manuais)
+- ✅ Typecheck, lint, build (artefatos 404/sitemap/manifest/ícones conferidos em `dist/`) e Playwright **44/44** verificados (24 originais + 20 dos artefatos, `--workers=1`)
+
 ## [1.14.0] - 2026-08-12
 
 ### 🐛 Fix — Cards da seção Projetos invisíveis no mobile

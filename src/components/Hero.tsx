@@ -36,7 +36,7 @@ export function Hero() {
           <span className="hidden md:inline">LinkedIn</span>
         </a>
         <a
-          href="https://wa.me/5585996859051"
+          href={`https://wa.me/5585996859051?text=${encodeURIComponent(t('cta.whatsappMsg'))}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"

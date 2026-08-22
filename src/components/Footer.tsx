@@ -1,36 +1,38 @@
 import { BookOpen, Github, Linkedin, Mail, Phone } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { BOOT_TIMELINE, STAGGER, slideFrom, staggerChild, staggerContainer } from '../lib/motion';
 
-const socialLinks = [
-  { 
-    name: 'LinkedIn', 
-    url: 'https://linkedin.com/in/cavalcante-lucas', 
-    icon: Linkedin 
-  },
-  { 
-    name: 'GitHub', 
-    url: 'https://github.com/cavalcanteprofissional', 
-    icon: Github 
-  },
-  { 
-    name: 'Lattes', 
-    url: 'http://lattes.cnpq.br/7686247677030579', 
-    icon: BookOpen 
-  },
-  { 
-    name: 'Email', 
-    url: 'mailto:cavalcanteprofissional@outlook.com', 
-    icon: Mail 
-  },
-  { 
-    name: 'WhatsApp', 
-    url: 'https://wa.me/5585996859051', 
-    icon: Phone 
-  },
-];
-
 export function Footer() {
+  const { t } = useTranslation();
+
+  const socialLinks = [
+    {
+      name: 'LinkedIn',
+      url: 'https://linkedin.com/in/cavalcante-Lucas',
+      icon: Linkedin
+    },
+    {
+      name: 'GitHub',
+      url: 'https://github.com/cavalcanteprofissional',
+      icon: Github
+    },
+    {
+      name: 'Lattes',
+      url: 'https://lattes.cnpq.br/7686247677030579',
+      icon: BookOpen
+    },
+    {
+      name: 'Email',
+      url: 'mailto:cavalcanteprofissional@outlook.com',
+      icon: Mail
+    },
+    {
+      name: 'WhatsApp',
+      url: `https://wa.me/5585996859051?text=${encodeURIComponent(t('cta.whatsappMsg'))}`,
+      icon: Phone
+    },
+  ];
   return (
     <motion.footer
       initial="hidden"
