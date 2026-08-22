@@ -589,4 +589,21 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 | I6 | **Simplificação committed-first** — `actions/cache` de `public/cv` removido (redundante com PDFs versionados); novo passo "Check committed CVs" (`compgen -G public/cv/*.pdf`); condição dos 5 passos Python = `resume == true \|\| missing == true`; PDFs commitados viram o default prioritário e a pipeline vira fallback | ✅ |
 | I7 | Validação final nos Actions: run de estreia da v1.16.0 gerou por cache frio (esperado); próximo push só-docs deve pular os 5 passos Python com PDFs commitados servindo o dist | ⬜ |
 
+---
+
+### 📄 Currículos — hyperlink Portfolio dessincronizado + auto-sync com o site (2026-08-22)
+
+> **Problema:** os 3 PDFs apontavam para URL antiga (`github.io/portfolio`, sem `-cavalcante`) — valor fixado no frontmatter do `curriculo-fonte.md` que não acompanhou a mudança da base do site. Solução aprovada: corrigir o fonte **e** automatizar a sincronia via canonical do `index.html` (fonte única), além de padronizar o slug LinkedIn.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| J1 | Registrar problema e plano (esta onda) | ✅ |
+| J2 | `curriculo-fonte.md`: `portfolio` → `https://cavalcanteprofissional.github.io/portfolio-cavalcante/` + `linkedin` → slug `cavalcante-Lucas` | ✅
+| J3 | `build.py`: `get_site_url()` extrai `<link rel="canonical">` do `index.html`; `parse_source()` força sync de `dados_pessoais.portfolio` (frontmatter vira fallback) — troca futura de domínio propaga sozinha | ✅ |
+| J4 | Regenerar os 3 PDFs localmente (`python resume/build.py`) e commitar (committed-first) | ✅ |
+| J5 | Validação: greps nos HTMLs (0× URL velha, 3× nova por idioma) + timestamps novos em `public/cv/` | ✅ |
+| J6 | CHANGELOG `[1.16.2]` + push (toca `resume/**` → CI regenera como dupla checagem ao vivo) | ✅ |
+
+> Ambiente local reconfigurado nesta onda: deps do README via pip + `playwright install chromium` (headless shell v1234) + modelo mBART baixado — builds locais de currículo voltaram a funcionar.
+
 > Node build, upload e deploy permanecem incondicionais; `workflow_dispatch` e PR herdam a mesma lógica. Ganho esperado: pushes só-docs caem de ~5–8 min para ~1–2 min.

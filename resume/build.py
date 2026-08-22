@@ -5,6 +5,7 @@ Parses the front-matter source, translates to EN/ES, renders
 HTML templates with Jinja2, and generates PDFs for all 3 languages.
 """
 
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -23,6 +24,7 @@ SOURCE_FILE = RESUME_DIR / "curriculo-fonte.md"
 TEMPLATE_FILE = RESUME_DIR / "template.html"
 OUTPUT_DIR = RESUME_DIR / "output"
 PUBLIC_CV_DIR = PROJECT_ROOT / "public" / "cv"
+INDEX_HTML = PROJECT_ROOT / "index.html"
 
 # ── Labels per language (for template rendering) ───────────────
 LABELS = {
@@ -73,11 +75,29 @@ LABELS = {
 LANG_NAMES = {"pt": "pt", "en": "en", "es": "es"}
 
 
+def get_site_url() -> str | None:
+    """Extract the site URL from the canonical link in index.html (single source of truth)."""
+    try:
+        html = INDEX_HTML.read_text(encoding="utf-8")
+        match = re.search(r'<link rel="canonical" href="([^"]+)"', html)
+        return match.group(1) if match else None
+    except OSError:
+        return None
+
+
 def parse_source() -> dict:
     """Parse the front-matter from curriculo-fonte.md."""
     with open(SOURCE_FILE, "r", encoding="utf-8") as f:
         post = frontmatter.load(f)
-    return dict(post.metadata)
+    data = dict(post.metadata)
+
+    site_url = get_site_url()
+    if site_url:
+        current = data.get("dados_pessoais", {}).get("portfolio")
+        if current != site_url:
+            print(f"  [SYNC] portfolio: {current} -> {site_url} (canonical do index.html)")
+        data["dados_pessoais"]["portfolio"] = site_url
+    return data
 
 
 def render_template(data: dict, lang: str) -> str:

@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.16.2] - 2026-08-22
+
+### 📄 Currículos — hyperlink Portfolio corrigido + auto-sync com o canonical do site
+
+- 🔗 **Fix** — os 3 PDFs (pt/en/es) apontavam para URL antiga `github.io/portfolio` (sem `-cavalcante`) fixada no frontmatter; agora apontam para `https://cavalcanteprofissional.github.io/portfolio-cavalcante/`
+- 🔄 **Auto-sync** — `build.py` ganha `get_site_url()`: extrai `<link rel="canonical">` do `index.html` e força a sincronia de `dados_pessoais.portfolio` após o parse (valor do frontmatter vira apenas fallback); futuras trocas de domínio/base propagam sozinhas para o currículo
+- 🔗 **LinkedIn** — slug padronizado no currículo: `cavalcante-lucas` → `cavalcante-Lucas` (mesma padronização da v1.15.0 aplicada ao site inteiro)
+- ♻️ **PDFs regenerados localmente** e commitados (committed-first); push toca `resume/**` → CI regenera como dupla checagem
+- 🛠️ Ambiente local de currículos reconfigurado: deps via pip + Chromium headless v1234 + modelo mBART em cache
+
 ## [1.16.1] - 2026-08-22
 
 ### ⚡ CI — Committed-first: PDFs do repo viram o default, pipeline Python vira fallback

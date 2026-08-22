@@ -17,9 +17,9 @@ dados_pessoais:
   cidade: "Fortaleza – CE"
   telefone: "(85) 9 9685-9051"
   email: "cavalcanteprofissional@outlook.com"
-  linkedin: "https://linkedin.com/in/cavalcante-lucas"
+  linkedin: "https://linkedin.com/in/cavalcante-Lucas"
   github: "https://github.com/cavalcanteprofissional"
-  portfolio: "https://cavalcanteprofissional.github.io/portfolio"
+  portfolio: "https://cavalcanteprofissional.github.io/portfolio-cavalcante/"
 
 resumo_profissional: >
   Analista de Dados com experiência em projetos de IA, automação e marketing
