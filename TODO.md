@@ -78,11 +78,6 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | N12 | Hero: reordenar mobile — Nome → Foto → demais elementos (availability/title/desc/buttons) | ✅ |
 | N13 | Nav: logo agora faz smooth scroll ao topo (igual ScrollToTop) | ✅ |
 | N14 | BootScreen: AudioContext adiado para primeiro gesto do usuário (elimina warning) | ✅ |
-
-### ⚪ Baixas
-
-| # | Tarefa | Status |
-|----|--------|--------|
 | L1 | Trocar `key={index}` no TechStack por `tech.name` | ✅ |
 | L2 | Inline style do Experience → classe CSS | ✅ |
 | L3 | Juntar imports do Footer num único statement | ✅ |
@@ -488,8 +483,8 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
   - ↳ `og:image` + `twitter:image` declaradas em index.html:22-32, arquivo existe (1200×630 PNG) e responde 200 no ar.
 - [x] **Sitemap.xml** — gerado, atualizado e submetido ao Google Search Console
   - ↳ **Corrigido (v1.15.0)**: `public/sitemap.xml` criado (URL única) + linha `Sitemap:` no robots.txt. *Resta manual*: submeter no Google Search Console após o deploy.
-- [ ] **Google Analytics** — tag instalada e disparando eventos corretamente (validar no GA4 em tempo real)
-  - ↳ **Pendente**: nenhuma tag GA4/gtag encontrada. Decidir se o portfólio terá analytics (se sim, lembrar do banner de consentimento da seção 5).
+- [x] **Google Analytics** — decidido: sem analytics
+  - ↳ **Resolvido**: CookieConsent declara em 3 idiomas "não utilizamos cookies de rastreamento ou analytics". Nenhum script GA4/gtag no codebase. Decisão alinhada com política de privacidade do modal.
 - [x] **Títulos e descrições** — `<title>` e `<meta description>` únicos e otimizados por página
   - ↳ `<title>` (index.html:13) e meta description (index.html:7) bem formulados; canonical e `lang="pt-BR"` corretos; JSON-LD Person/LocalBusiness/WebSite completo (index.html:35-103).
 - [x] **Meta descriptions** — revisar se todas as páginas têm meta description (evitar duplicadas/genéricas)
@@ -524,7 +519,7 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 | 5 | Trocar `http://lattes.cnpq.br` → `https://` (Footer.tsx:18) | Trivial | ✅ v1.15.0 |
 | 6 | Padronizar slug do LinkedIn entre Footer/Contact/index.html | Trivial | ✅ v1.15.0 |
 | 7 | Política de privacidade + dados no rodapé | Médio | ⬜ pendente |
-| 8 | GA4 + banner de cookies (decisão conjunta) | Médio | ⬜ decisão |
+| 8 | GA4 + analytics — decidido: não implementar (CookieConsent declara "sem analytics") | — | ✅ resolvido |
 | 9 | Domínio próprio (decisão de negócio) | Manual | ⬜ decisão |
 
 **Pendências manuais remanescentes:** teste em celular físico · submeter sitemap no Search Console · revalidar PSI na URL de produção após deploy.
@@ -563,7 +558,6 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 
 | Item | Ref. (seção 📋) | Desdobramento se aprovado |
 |------|-----------------|---------------------------|
-| GA4 + banner de cookies | §4 · "Google Analytics" | gtag + banner LGPD (obrigatório junto) |
 | Domínio próprio | §2 · "Domínio próprio" | CNAME/DNS + atualizar canonical, og:url, JSON-LD, sitemap e base do Vite |
 | Hospedagem/SLA (+ headers CSP/HSTS) | §6 · "Hospedagem boa" e "Configurações de segurança" | Permanecer GH Pages × migrar (Cloudflare/Vercel também desbloqueia headers) |
 
