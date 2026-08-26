@@ -30,6 +30,7 @@
 
 - 📋 **TODO.md** — onda N1-N3 (light controller), C1-C14 (CookieConsent), B6-B8 (badge) e B14-B18 (causa raiz `w-88` + fix badge desktop) documentadas
 - 📄 **CHANGELOG.md** — v1.18.0 documentada
+- 📄 **README.md** — reescrito com título amigável, badges de tecnologia, thumbnail `public/images/thumbnail.png`, seções simplificadas
 
 ## [1.17.0] - 2026-08-25
 
