@@ -815,3 +815,15 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 | B16 | `Hero.tsx:204` — container: `md:w-88 md:h-88` → `md:w-[22rem] md:h-[22rem]` (352px, classe válida) | ✅ |
 | B17 | `Hero.tsx:221` — badge desktop: `bottom-3 right-3` → `-bottom-5 -right-5 lg:-bottom-6 lg:-right-6` (negativo = sobrepor canto, consistente com mobile) | ✅ |
 | B18 | Verificar typecheck e build | ✅ |
+
+---
+
+### 💡 ProfileLight — Default Z depth reduzido (2026-08-26)
+
+> **Problema:** Luz do monocular light ball iniciava com `initialZ = 0.42` (~47% da faixa -0.66 a 1.65), parecendo intensa demais no carregamento. Usuário queria base mais sutil, mantendo scroll para intensificar.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| Z1 | `light-control.ts:32` — `initialZ` de `0.42` → `0.2` (~36% da faixa) | ✅ |
+| Z2 | `renderer.ts:79` — `defaultRelightingSettings.lightZ` de `0.42` → `0.2` | ✅ |
+| Z3 | Verificar typecheck e build | ✅ |
