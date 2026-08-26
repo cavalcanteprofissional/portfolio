@@ -107,7 +107,7 @@ export function Hero() {
             </motion.div>
 
             <motion.div variants={staggerChild()} className="md:hidden">
-              <div className="relative w-48 h-56 mx-auto">
+              <div className="relative w-48 h-48 mx-auto">
                 <a
                   href={t('contact.github')}
                   target="_blank"
@@ -119,7 +119,7 @@ export function Hero() {
                     src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
                     alt="Lucas Cavalcante"
                     width={192}
-                    height={224}
+                    height={192}
                     className="w-full h-full"
                   />
                   <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
@@ -201,7 +201,7 @@ export function Hero() {
             variants={scaleIn(0.25)}
             className="relative hidden md:block"
           >
-            <div className="relative w-64 h-72 md:w-88 md:h-96 mx-auto">
+            <div className="relative w-64 h-64 md:w-[22rem] md:h-[22rem] mx-auto">
               <a
                 href={t('contact.github')}
                 target="_blank"
@@ -213,13 +213,12 @@ export function Hero() {
                   src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
                   alt="Lucas Cavalcante"
                   width={352}
-                  height={384}
+                  height={352}
                   className="w-full h-full"
                 />
               </a>
               <div
-                className="absolute right-4 bottom-4 w-16 h-16 lg:w-[4.5rem] lg:h-[4.5rem] rounded-full flex items-center justify-center pointer-events-none"
-                style={{ transform: 'translate(50%, 50%)' }}
+                className="absolute -bottom-5 -right-5 w-16 h-16 lg:-bottom-6 lg:-right-6 lg:w-[4.5rem] lg:h-[4.5rem] rounded-full flex items-center justify-center pointer-events-none"
               >
                 <img
                   src={theme === 'dark'
@@ -229,7 +228,7 @@ export function Hero() {
                   width={72}
                   height={72}
                   loading="lazy"
-                  className="w-16 h-16 lg:w-[4.5rem] lg:h-[4.5rem]"
+                  className="w-14 h-14 lg:w-16 lg:h-16"
                 />
               </div>
             </div>

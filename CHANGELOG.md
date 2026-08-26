@@ -24,10 +24,11 @@
 ### 🔧 Fixes
 
 - 🍪 **Cookie dismiss** — click fora do modal agora ignora (volta no próximo acesso) em vez de recusar cookies
+- 🏷️ **Badge assinatura desktop** — container `md:w-88 md:h-88` não existia no Tailwind v3 (escala pula 80→96); substituído por `md:w-[22rem] md:h-[22rem]` (352px). Badge desktop alinhada com mobile: offsets negativos `-bottom-5 -right-5` para sobrepor o canto inferior direito
 
 ### 📝 Docs
 
-- 📋 **TODO.md** — onda N1-N3 (light controller), C1-C14 (CookieConsent) e B6-B8 (badge) documentadas
+- 📋 **TODO.md** — onda N1-N3 (light controller), C1-C14 (CookieConsent), B6-B8 (badge) e B14-B18 (causa raiz `w-88` + fix badge desktop) documentadas
 - 📄 **CHANGELOG.md** — v1.18.0 documentada
 
 ## [1.17.0] - 2026-08-25

@@ -15,3 +15,5 @@ export { Contact } from './Contact';
 export { Footer } from './Footer';
 export { BootScreen } from './BootScreen';
 export { PoolEffect } from './PoolEffect';
+export { ProfileLight } from './ProfileLight';
+export { CookieConsent } from './CookieConsent';

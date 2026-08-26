@@ -224,3 +224,76 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Profile Light - WebGPU illuminated photo */
+.profile-light-container {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.profile-light-canvas {
+  display: block;
+  border-radius: 1rem;
+  pointer-events: none;
+}
+
+/* Neon glow animation for the profile light container */
+.profile-light-container::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(1rem + 2px);
+  background: linear-gradient(
+    var(--neon-angle, 0deg),
+    hsl(212 90% 55% / 0.6),
+    hsl(250 85% 60% / 0.4),
+    hsl(190 90% 50% / 0.5),
+    hsl(212 90% 55% / 0.6)
+  );
+  z-index: -1;
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.profile-light-container:hover::after {
+  opacity: 1;
+  animation: neonRotate 4s linear infinite;
+}
+
+@keyframes neonRotate {
+  to {
+    --neon-angle: 360deg;
+  }
+}
+
+@property --neon-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Cookie consent - accept button neon glow */
+.cookie-accept-glow {
+  box-shadow: 0 0 12px -3px rgba(59, 130, 246, 0.5),
+              0 0 24px -6px rgba(59, 130, 246, 0.3);
+  animation: cookieGlowPulse 2s ease-in-out infinite;
+}
+
+.cookie-accept-glow:hover {
+  box-shadow: 0 0 18px -3px rgba(59, 130, 246, 0.7),
+              0 0 36px -6px rgba(59, 130, 246, 0.4);
+}
+
+@keyframes cookieGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 12px -3px rgba(59, 130, 246, 0.5),
+                0 0 24px -6px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 18px -2px rgba(59, 130, 246, 0.6),
+                0 0 32px -4px rgba(59, 130, 246, 0.35);
+  }
+}

@@ -767,5 +767,51 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 
 | # | Tarefa | Status |
 |---|--------|--------|
-| B9 | Investigar por que o badge não fica na posição correta (possível clip do overflow-hidden no section, ou offset do grid/layout) | ⬜ |
-| B10 | Resolver e testar visualmente | ⬜ |
+| B9 | Investigar por que o badge não fica na posição correta (possível clip do overflow-hidden no section, ou offset do grid/layout) | ✅ |
+| B10 | Resolver e testar visualmente | ✅ |
+
+---
+
+### 📐 Distorção da foto — Container retangular vs. shader quadrado (2026-08-26)
+
+> **Problema:** Após aplicar o efeito monocular (WebGPU relighting), a imagem do perfil fica levemente esticada verticalmente (~9% mais alta que larga). **Causa raiz:** `cameraUvAt()` em `shaders.ts` faz center-crop da fonte para um **quadrado** (`side = min(sourceSize.x, sourceSize.y)`), mas o container Hero.tsx usa dimensões **retangulares** (352×384 desktop, 192×224 mobile). O conteúdo quadrado é mapeado no canvas retangular → stretching não-uniforme. O surface texture (depth map) também é quadrado e sofre o mesmo stretching.
+
+#### 📐 Opção A — Container quadrado
+| # | Tarefa | Status |
+|---|--------|--------|
+| D1 | Registrar diagnóstico e plano no TODO.md | ✅ |
+| D2 | `Hero.tsx`: container mobile `w-48 h-56` → `w-48 h-48` (192×192) | ✅ |
+| D3 | `Hero.tsx`: container desktop `md:w-88 md:h-96` → `md:w-88 md:h-88` (352×352) | ✅ |
+| D4 | `ProfileLight` props: mobile `height={224}` → `height={192}`, desktop `height={384}` → `height={352}` | ✅ |
+| D5 | Ajustar badge offsets para container quadrado se necessário | ✅ (não afetado — offsets relativos) |
+| D6 | Verificar typecheck, build e lint | ✅ |
+
+---
+
+### 🏷️ Badge assinatura — Desktop desalinhado vs. mobile (2026-08-26)
+
+> **Problema:** Badge no desktop usa abordagem diferente do mobile (`right-4 bottom-4` + `translate(50%,50%)` vs `-bottom-5 -right-5`), resultando em offset 16px do canto (desktop) vs 12px (mobile). Badge desktop fica deslocado para dentro. **Fix:** padronizar desktop com mesma abordagem do mobile (offset direto sem translate).
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| B11 | Registrar diagnóstico e plano no TODO.md | ✅ |
+| B12 | `Hero.tsx:220-222` — badge desktop: `right-4 bottom-4` → `-bottom-5 -right-5` + `lg:-bottom-6 lg:-right-6` + remover `translate(50%,50%)` | ✅ |
+| B13 | Verificar typecheck, build e lint | ✅ |
+
+---
+
+### 🏷️ Badge assinatura — Causa raiz: container desktop sem dimensões (2026-08-26)
+
+> **Problema:** Badge posicionada incorretamente em desktop/tablet. Múltiplas tentativas de ajustar offsets falharam.
+>
+> **Causa raiz:** `md:w-88 md:h-88` não existe no Tailwind v3 (escala de spacing pula de 80→96). O CSS compilado não tinha nenhuma regra para essas classes — o container desktop ficava sem dimensões explícitas, herdando tamanho do grid/content. Badge posicionava contra container com tamanho imprevisível.
+>
+> **Segundo problema:** Badge desktop usava offsets positivos (`bottom-3 right-3`) empurrando para dentro, enquanto mobile usava negativos (`-bottom-5 -right-5`) sobrepondo o canto. Abordagens inconsistentes.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| B14 | Reverter mobile ao original (estava perfeito): `bottom-2 right-2 w-14 h-14` → `-bottom-5 -right-5 w-16 h-16` | ✅ |
+| B15 | Reverter img mobile: `w-12 h-12` → `w-14 h-14` | ✅ |
+| B16 | `Hero.tsx:204` — container: `md:w-88 md:h-88` → `md:w-[22rem] md:h-[22rem]` (352px, classe válida) | ✅ |
+| B17 | `Hero.tsx:221` — badge desktop: `bottom-3 right-3` → `-bottom-5 -right-5 lg:-bottom-6 lg:-right-6` (negativo = sobrepor canto, consistente com mobile) | ✅ |
+| B18 | Verificar typecheck e build | ✅ |
