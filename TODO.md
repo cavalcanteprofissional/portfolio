@@ -498,8 +498,8 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
   - ↳ `public/robots.txt` permite tudo, incluindo crawlers de preview social; live 200. **Atualizado (v1.15.0)**: linha `Sitemap:` acrescentada.
 
 #### 5. Privacidade e Compliance (LGPD)
-- [ ] **Cookies** — banner de consentimento de cookies implementado e funcional
-  - ↳ **Pendente/decisão**: sem banner. Atenuante: hoje o site não usa cookies de rastreamento nem embeds de terceiros (preferências ficam em localStorage). Se instalar GA4, o banner passa a ser obrigatório; alternativa mínima: declaração "este site não usa cookies" numa política de privacidade.
+- [x] **Cookies** — banner de consentimento de cookies implementado e funcional
+  - ↳ **Implementado (2026-08-25)**: Modal `CookieConsent.tsx` estilo BIOS/BootScreen (typing animation, scanlines, monospace font). Consentimento salvo em `localStorage('portfolio-consent')`. ProfileLight tem gate: sem consentimento → foto estática; com consentimento → pipeline WebGPU (download do modelo + cache via Cache API). Modal aparece 800ms após boot + hero entrance. Suporta PT/EN/ES.
 - [ ] **Dados no rodapé** — CNPJ, endereço, política de privacidade e termos de uso visíveis no rodapé
   - ↳ **Pendente**: Footer.tsx exibe só redes sociais. CNPJ: N/A se pessoa física sem CNPJ. Endereço público consta no JSON-LD (Fortaleza/CE). Política de privacidade e termos ausentes — recomendável criar páginas/âncoras simples e linkar no rodapé.
 
@@ -607,3 +607,165 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 > Ambiente local reconfigurado nesta onda: deps do README via pip + `playwright install chromium` (headless shell v1234) + modelo mBART baixado — builds locais de currículo voltaram a funcionar.
 
 > Node build, upload e deploy permanecem incondicionais; `workflow_dispatch` e PR herdam a mesma lógica. Ganho esperado: pushes só-docs caem de ~5–8 min para ~1–2 min.
+
+---
+
+### 💡 TypeGPU — Correção do pipeline de iluminação + Cookie Consent (2026-08-25)
+
+> **Problema:** O efeito de iluminação 3D na foto do perfil (ProfileLight) não funciona. Erro: `Missing metadata for tgpu.fn function body (either missing 'use gpu' directive, or misconfigured 'unplugin-typegpu')`. Causa: `unplugin-typegpu` não está instalado nem configurado no Vite. Sem ele, as 35 funções GPU em 20 arquivos não são transpiladas para WGSL.
+>
+> **Segundo problema:** O modelo ML (depthart, 13MB) é baixado e cacheado via Cache API automaticamente, sem consentimento do usuário. Necessário modal de cookie consent antes de qualquer armazenamento local.
+>
+> **Sobre o modelo:** É pré-treinado para inferência — não precisa treinar. O modelo `depthart` é baixado do HuggingFace, roda localmente na GPU do cliente (inferência → mapa de profundidade), e o shader WebGPU usa esse mapa para simular iluminação 3D em tempo real.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| K1 | `npm install --save-dev unplugin-typegpu@0.12.2` | ✅ |
+| K2 | `vite.config.ts`: import `typegpu` de `unplugin-typegpu/vite` + `typegpu()` antes de `react()` | ✅ |
+| K3 | Build test — `npm run build` sem erros de resolução TypeGPU | ✅ |
+| K4 | `src/stores/consentStore.ts`: Zustand store com persistência em `localStorage('portfolio-consent')` | ✅ |
+| K5 | `src/components/CookieConsent.tsx`: modal estilo BIOS/BootScreen (typing animation, scanlines, monospace font, glow azul) | ✅ |
+| K6 | `src/components/ProfileLight.tsx`: gate `initPipeline()` atrás do consentimento; sem consentimento → foto estática + modal | ✅ |
+| K7 | `src/App.tsx`: montar `<CookieConsent />` após BootScreen + Hero entrance completion | ✅ |
+| K8 | `src/i18n/index.ts`: textos traduzidos PT/EN/ES para o modal | ✅ (inline no componente) |
+| K9 | `src/components/index.ts`: exportar `CookieConsent` | ✅ |
+| K10 | Build final + verificação completa | ✅ |
+
+---
+
+### 🔧 Ajustes pós-implantação — CookieConsent, espelho e hover/orbit (2026-08-25)
+
+> **Problemas reportados após teste funcional:**
+> 1. Modal CookieConsent é centralizado fullscreen — padrão de sites é barra fixa no rodapé
+> 2. Foto do perfil aparece espelhada horizontalmente (`mirror: true` no defaultRelightingSettings)
+> 3. Luz não acompanha perfeitamente o mouse — falta lógica hover vs orbit automático
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| L1 | `CookieConsent.tsx`: reaplicar como banner footer fixo (bottom-0, slide-up, sem overlay fullscreen) | ✅ |
+| L2 | `ProfileLight.tsx`: adicionar `mirror: false` no `renderer.update()` | ✅ |
+| L3 | `ProfileLight.tsx`: render loop com lógica `hoveringRef ? updateFromMouse : orbitTick` | ✅ |
+| L4 | Build + verificação | ✅ |
+| L5 | `renderer.ts`: `#syncCanvasSize()` usar `clientWidth × clientHeight` (não quadrado) — corrige distorção | ✅ |
+| L6 | `ProfileLight.tsx`: hover takeover — luz pula para posição do mouse no mouseenter | ✅ |
+| L7 | `CookieConsent.tsx`: `>` do header pisca com glow neon + botão aceitar com `cookieGlowPulse` | ✅ |
+| L8 | `ProfileLight.tsx`: loading animation estilo BIOS (typing + progress bar) durante download do modelo | ✅ |
+| L9 | `ProfileLight.tsx`: suporte mobile — `<ProfileLight>` substitui `<img>` no Hero mobile | ✅ |
+| L10 | `CHANGELOG.md` + `README.md` atualizados | ✅ |
+
+---
+
+### 🔧 Fix futuro — Ajustar texto modal cookie no viewport mobile
+
+> **Problema**: em viewports mobile estreitos, o texto do corpo do modal de cookie quebra em pontos inadequados. Exemplo: "seu navegador. >quebra linha< O modelo é..." — a quebra de linha deveria ser mais natural, respeitando palavras inteiras.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| M1 | `CookieConsent.tsx`: body dividido em array de parágrafos, typing por linha com `<p>` separados | ✅ |
+
+---
+
+### 🔧 Fix — Monocular Ball Light: Trajetória contínua + Distorção + Badge (2026-08-26)
+
+> **Problema raiz:** `updateFromMouse()` e `orbitTick()` setam `lightPosition` direto (snap instantâneo). Sem interpolação entre modos. Mouse usa coordenadas globais (tela inteira), não relativas ao canvas. Canvas sem `ResizeObserver`. Badge desalinhada da borda arredondada.
+
+#### 🖱️ N1 — Movimentação hover/orbit contínua
+| # | Tarefa | Status |
+|---|--------|--------|
+| N1a | `light-control.ts`: dois estágios — `targetPosition` (setado por orbit ou mouse) + `tick()` com lerp (0.12/frame) → `lightPosition` | ✅ |
+| N1b | `light-control.ts`: `updateFromWheel()` seta `targetZ` em vez de `lightZ` direto | ✅ |
+| N1c | `ProfileLight.tsx`: remover `useMouseStore` (global), adicionar `mousePosRef` com normalização via `getBoundingClientRect()` | ✅ |
+| N1d | `ProfileLight.tsx`: adicionar `mousemove`/`touchmove` listeners no container | ✅ |
+| N1e | `ProfileLight.tsx`: no render loop, chamar `updateFromMouse()` ou `orbitTick()` + `tick()` sempre; remover branch `justEntered` morto | ✅ |
+
+#### 📐 N2 — Distorção da profile picture
+| # | Tarefa | Status |
+|---|--------|--------|
+| N2a | `renderer.ts`: expor `syncSize()` público (wrapper de `#syncCanvasSize()`) | ✅ |
+| N2b | `ProfileLight.tsx`: `ResizeObserver` no container, chama `renderer.syncSize()` + `resetHistory()` | ✅ |
+| N2c | `ProfileLight.tsx`: setar `canvas.width`/`canvas.height` iniciais no `initPipeline()` | ✅ |
+
+#### 🏷️ N3 — Badge de assinatura na borda
+| # | Tarefa | Status |
+|---|--------|--------|
+| N3a | `Hero.tsx`: ajustar offset badge mobile (`-bottom-5 -right-5 w-16 h-16`) | ✅ |
+| N3b | `Hero.tsx`: ajustar offset badge desktop (`-bottom-6 -right-6 w-20 h-20 md:-bottom-8 md:-right-8 md:w-24 md:h-24`) | ✅ |
+
+#### 🧪 Verificação
+| # | Tarefa | Status |
+|---|--------|--------|
+| V1 | `npm run typecheck` e `npm run build` | ✅ |
+| V2 | Atualizar `TODO.md` (marcar N1/N2/N3 como ✅) | ✅ |
+
+---
+
+### 🍪 CookieConsent — Backdrop, 2 modais e política de privacidade (2026-08-26)
+
+> **Problema:** Modal sem backdrop, sem política de privacidade, click outside não fecha, sem transição entre modais.
+
+#### 🖼️ Backdrop + Click-outside
+| # | Tarefa | Status |
+|---|--------|--------|
+| C1 | `CookieConsent.tsx`: adicionar `<motion.div>` backdrop `fixed inset-0 z-[54] bg-black/60` | ✅ |
+| C2 | Backdrop click no modal 1 → `setDismissed(true)` (ignora, volta no próximo acesso) | ✅ |
+| C3 | Backdrop click no modal 2 → `setModalStep('consent')` (voltar ao 1) | ✅ |
+| C4 | Container do modal com `stopPropagation` para evitar close ao clicar dentro | ✅ |
+
+#### 🔄 Botão "Saiba mais" + Modal 2
+| # | Tarefa | Status |
+|---|--------|--------|
+| C5 | Trocar `decline` por `learnMore` em todos os 3 idiomas (`pt: '[ Saiba mais ]'`, `en: '[ Learn more ]'`, `es: '[ Saber más ]'`) | ✅ |
+| C6 | `handleLearnMore` → `setModalStep('privacy')` (NÃO recusa cookies) | ✅ |
+| C7 | Criar conteúdo da política inline (3 idiomas, 6 frases cada) | ✅ |
+| C8 | Modal 2: mesmo estilo BIOS/scanlines, header `> POLÍTICA DE PRIVACIDADE`, body com typing, botão `[ Voltar ]` | ✅ |
+| C9 | `handleBack` → `setModalStep('consent')` | ✅ |
+
+#### ✨ Transição entre modais
+| # | Tarefa | Status |
+|---|--------|--------|
+| C10 | Modal 1 sai: `y: 0 → -100%`, opacity 0 (0.3s) | ✅ |
+| C11 | Modal 2 entra: `y: 100% → 0`, opacity 1 (0.3s, delay 0.15s) | ✅ |
+| C12 | Transição reversa (modal 2 → modal 1) com mesma timing | ✅ |
+
+#### 🧪 Verificação
+| # | Tarefa | Status |
+|---|--------|--------|
+| C13 | `npm run typecheck` e `npm run build` | ✅ |
+| C14 | Atualizar `TODO.md` | ✅ |
+
+---
+
+### 🏷️ Badge desktop — Redimensionar e reposicionar (2026-08-26)
+
+> **Problema:** Badge perfeita no mobile mas desalinhada no canto inferior direito da borda em desktop/tablet.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| B1 | `Hero.tsx`: badge desktop `md:-bottom-4 md:-right-4 md:w-16 md:h-16` (64px, offset 16px) | ✅ |
+| B2 | `Hero.tsx`: badge lg `lg:-bottom-5 lg:-right-5 lg:w-[4.5rem] lg:h-[4.5rem]` (72px, offset 20px) | ✅ |
+| B3 | `Hero.tsx`: ajustar `width`/`height`/`className` do img desktop para acompanhar | ✅ |
+| B4 | `npm run typecheck` e `npm run build` | ✅ |
+| B5 | Atualizar `TODO.md` | ✅ |
+
+---
+
+### 🏷️ Badge desktop — translate(50%, 50%) (2026-08-26)
+
+> **Problema:** Badge com offsets manuais frágeis entre viewports. Usar translate para auto-sizing.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| B6 | `Hero.tsx:220`: badge desktop → `right-4 bottom-4` + `style={{ transform: 'translate(50%, 50%)' }}` | ✅ |
+| B7 | `npm run typecheck` | ✅ |
+| B8 | Atualizar `TODO.md` | ✅ |
+
+---
+
+### 🏷️ Badge assinatura — Posição ainda incorreta (pendente)
+
+> **Problema:** Badge da assinatura no canto inferior direito da profile picture no hero não fica na posição correta. Testamos: offsets manuais, translate(50%,50%). Nenhuma abordagem funcionou. A investigar.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| B9 | Investigar por que o badge não fica na posição correta (possível clip do overflow-hidden no section, ou offset do grid/layout) | ⬜ |
+| B10 | Resolver e testar visualmente | ⬜ |
