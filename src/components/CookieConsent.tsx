@@ -122,16 +122,16 @@ export function CookieConsent({ visible }: CookieConsentProps) {
     if (!visible || consent !== null) return;
 
     if (typedHeader < t.header.length) {
-      const timer = setTimeout(() => setTypedHeader((p) => p + 1), 18);
+      const timer = setTimeout(() => setTypedHeader((p) => p + 1), step === 'privacy' ? 6 : 18);
       return () => clearTimeout(timer);
     }
 
     if (typedBody < flatBody.length) {
-      const timer = setTimeout(() => setTypedBody((p) => p + 1), 8);
+      const timer = setTimeout(() => setTypedBody((p) => p + 1), step === 'privacy' ? 3 : 8);
       return () => clearTimeout(timer);
     }
 
-    const timer = setTimeout(() => setShowButtons(true), 200);
+    const timer = setTimeout(() => setShowButtons(true), step === 'privacy' ? 60 : 200);
     return () => clearTimeout(timer);
   }, [visible, consent, typedHeader, typedBody, t, flatBody]);
 
@@ -236,7 +236,7 @@ export function CookieConsent({ visible }: CookieConsentProps) {
           initial={{ y: '100%', opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: '-100%', opacity: 0 }}
-          transition={{ duration: DURATION.base, ease: EASE }}
+          transition={{ duration: 0.12, ease: EASE }}
           className="fixed bottom-0 inset-x-0 z-[55] p-3 sm:p-4 md:p-6 pointer-events-auto"
           onClick={handleContainerClick}
         >
