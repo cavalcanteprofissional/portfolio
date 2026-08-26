@@ -824,6 +824,6 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 
 | # | Tarefa | Status |
 |---|--------|--------|
-| Z1 | `light-control.ts:32` — `initialZ` de `0.42` → `0.2` (~36% da faixa) | ✅ |
-| Z2 | `renderer.ts:79` — `defaultRelightingSettings.lightZ` de `0.42` → `0.2` | ✅ |
-| Z3 | Verificar typecheck e build | ✅ |
+| Z1 | `light-control.ts:32` — `initialZ` de `0.42` → `0.2` → `-0.2` (~22% da faixa, bem sutil) | ✅ |
+| Z2 | `renderer.ts:79` — `defaultRelightingSettings.lightZ` de `0.42` → `0.2` → `-0.2` | ✅ |
+| Z3 | `light-control.ts:5` — `WHEEL_SENSITIVITY` de `0.001` → `0.0004` (2.5x menos sensível) | ✅ |

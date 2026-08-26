@@ -76,7 +76,7 @@ type RelightingSettings = Partial<RelightingState>;
 
 export const defaultRelightingSettings: RelightingState = {
   lightPosition: [0.34, 0.34],
-  lightZ: 0.2,
+  lightZ: -0.2,
   mirror: true,
   lightColor: [1, 0.72, 0.46],
   exposure: 0.5,

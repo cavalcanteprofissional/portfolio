@@ -29,7 +29,7 @@ export interface LightController {
 
 export function createLightController(
   initialPosition: [number, number] = [0.34, 0.34],
-  initialZ: number = 0.2,
+  initialZ: number = -0.2,
 ): LightController {
   let lightPosition: [number, number] = [...initialPosition];
   let lightZ = initialZ;
