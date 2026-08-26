@@ -2,7 +2,7 @@ import { LIGHT_Z_MIN, LIGHT_Z_MAX } from './renderer';
 
 const ORBIT_SPEED = 0.00024;
 const ORBIT_RADIUS = 0.26;
-const WHEEL_SENSITIVITY = 0.001;
+const WHEEL_SENSITIVITY = 0.0004;
 const LERP = 0.12;
 
 function lerp(a: number, b: number, t: number): number {
