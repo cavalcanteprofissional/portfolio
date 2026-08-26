@@ -246,7 +246,7 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
                 visible ? '' : 'invisible'
               } text-[11px] sm:text-sm md:text-base lg:text-lg`}
             >
-              <span>
+              <span className="flex-1 overflow-hidden">
               {isTyping ? (
                 <>
                   {line.text.slice(0, Math.min(typingPos, line.text.length))}
@@ -263,7 +263,7 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
               ) : (
                 <>
                   {line.text}
-                  {lineDots(line) > 0 && '.'.repeat(lineDots(line))}
+                  {'.'.repeat(100)}
                 </>
               )}
               </span>
