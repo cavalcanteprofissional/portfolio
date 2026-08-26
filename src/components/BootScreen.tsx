@@ -242,11 +242,10 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
           return (
             <p
               key={i}
-              className={`flex justify-between items-baseline whitespace-pre leading-relaxed text-white boot-glow-text ${
+              className={`whitespace-pre leading-relaxed text-white boot-glow-text ${
                 visible ? '' : 'invisible'
               } text-[11px] sm:text-sm md:text-base lg:text-lg`}
             >
-              <span>
               {isTyping ? (
                 <>
                   {line.text.slice(0, Math.min(typingPos, line.text.length))}
@@ -266,16 +265,15 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
                   {lineDots(line) > 0 && '.'.repeat(lineDots(line))}
                 </>
               )}
-              </span>
 
               {okShown && (
                 <motion.span
                   initial={{ opacity: 0, scale: 0.6 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.18 }}
-                  className="boot-ok inline-block font-semibold flex-shrink-0"
+                  className="boot-ok inline-block font-semibold"
                 >
-                  [OK]
+                  {' '}[OK]
                 </motion.span>
               )}
             </p>

@@ -827,15 +827,3 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 | Z1 | `light-control.ts:32` — `initialZ` de `0.42` → `0.2` → `-0.2` (~22% da faixa, bem sutil) | ✅ |
 | Z2 | `renderer.ts:79` — `defaultRelightingSettings.lightZ` de `0.42` → `0.2` → `-0.2` | ✅ |
 | Z3 | `light-control.ts:5` — `WHEEL_SENSITIVITY` de `0.001` → `0.0004` (2.5x menos sensível) | ✅ |
-
----
-
-### 🖥️ BootScreen — [OK] alinhado à borda direita (2026-08-26)
-
-> **Problema:** `[OK]` ficava após os dots (coluna 48+4=52) sem ocupar toda a largura da viewport. Usuário quer `[OK]` encostado na borda direita.
-
-| # | Tarefa | Status |
-|---|--------|--------|
-| K1 | `BootScreen.tsx:243` — `<p>` com `flex justify-between items-baseline` | ✅ |
-| K2 | `BootScreen.tsx:249-267` — conteúdo de typing/texto envolto em `<span>` | ✅ |
-| K3 | `BootScreen.tsx:269-278` — `[OK]` em `<span>` com `flex-shrink-0`, remover espaço `{' '}` | ✅ |
