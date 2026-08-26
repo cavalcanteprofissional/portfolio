@@ -18,14 +18,17 @@
 - 📱 **QR Code** pra acesso mobile rápido
 - 🔗 **Preview bonito no WhatsApp** ao compartilhar o link
 - ⚡ **Performance** — lazy loading, code splitting, WebP otimizado
+- 🖼️ **ProfileLight 3D** — foto de perfil com iluminação relight em tempo real via WebGPU (TypeGPU + ML depth estimation); luz neon azul/ciano/roxo que segue o mouse ou orbita automaticamente; controle de profundidade via scroll; consentimento de cookies antes do download do modelo (~13MB)
+- 🍪 **CookieConsent** — modal estilo BIOS com backdrop escuro, duas etapas (consent + política de privacidade), typing animation, transições suaves e click-outside para fechar sem recusar
 
 ## 🛠️ Tecnologias
 
 | Camada | Stack |
 |--------|-------|
 | **Frontend** | React 19 + TypeScript |
-| **Build** | Vite 7 |
+| **Build** | Vite 7 + unplugin-typegpu |
 | **Estilo** | Tailwind CSS |
+| **GPU** | TypeGPU (WebGPU compute + render) |
 | **Animação** | Motion (motion.dev) |
 | **i18n** | i18next + react-i18next |
 | **Estado** | Zustand |
@@ -104,11 +107,12 @@ Detalhes automáticos:
 ```
 portfolio/
 ├── src/
-│   ├── components/     # BootScreen (BIOS+CRT), bootSound, Hero, Portfolio, TechStack…
+│   ├── components/     # BootScreen (BIOS+CRT), bootSound, Hero, ProfileLight, CookieConsent…
 │   ├── i18n/           # traduções pt/en/es (i18next)
-│   ├── stores/         # estado global (Zustand)
+│   ├── stores/         # estado global (Zustand — boot, theme, mouse, consent)
+│   ├── lib/typegpu/    # WebGPU renderer, shaders WGSL, ML inference (depthart), light control
 │   ├── data/           # projects.json
-│   └── index.css       # Tailwind + efeitos CRT/glow
+│   └── index.css       # Tailwind + efeitos CRT/glow/neon
 ├── public/
 │   ├── icons/          # logo-512.png (arte mestre) + ícones derivados
 │   ├── cv/             # PDFs versionados (fonte da verdade) — pipeline Python regenera

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Mail, Linkedin, Github, FileText, ChevronDown, MessageCircle } from 'lucide-react';
 import { useThemeStore } from '../stores/themeStore';
 import { BOOT_TIMELINE, EASE, STAGGER, scaleIn, slideFrom, staggerChild, staggerContainer } from '../lib/motion';
+import { ProfileLight } from './ProfileLight';
 
 export function Hero() {
   const { t } = useTranslation();
@@ -106,7 +107,7 @@ export function Hero() {
             </motion.div>
 
             <motion.div variants={staggerChild()} className="md:hidden">
-              <div className="relative w-48 h-56 mx-auto">
+              <div className="relative w-48 h-48 mx-auto">
                 <a
                   href={t('contact.github')}
                   target="_blank"
@@ -114,19 +115,18 @@ export function Hero() {
                   aria-label="GitHub"
                   className="glow-hover group relative block w-full h-full rounded-2xl"
                 >
-                  <img
+                  <ProfileLight
                     src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
                     alt="Lucas Cavalcante"
                     width={192}
-                    height={224}
-                    loading="eager"
-                    className="w-full h-full object-cover rounded-2xl"
+                    height={192}
+                    className="w-full h-full"
                   />
                   <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                     <Github className="w-10 h-10 text-white opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                   </div>
                 </a>
-                <div className="absolute -bottom-10 -right-10 w-20 h-20 rounded-full flex items-center justify-center pointer-events-none">
+                <div className="absolute -bottom-5 -right-5 w-16 h-16 rounded-full flex items-center justify-center pointer-events-none">
                   <img
                     src={theme === 'dark'
                       ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png'
@@ -201,36 +201,34 @@ export function Hero() {
             variants={scaleIn(0.25)}
             className="relative hidden md:block"
           >
-            <div className="relative w-64 h-72 md:w-88 md:h-96 mx-auto">
+            <div className="relative w-64 h-64 md:w-[22rem] md:h-[22rem] mx-auto">
               <a
                 href={t('contact.github')}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="glow-hover group relative block w-full h-full rounded-2xl"
+                className="block w-full h-full rounded-2xl"
               >
-                <img
+                <ProfileLight
                   src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
                   alt="Lucas Cavalcante"
-                  width={288}
-                  height={320}
-                  loading="eager"
-                  className="w-full h-full object-cover rounded-2xl"
+                  width={352}
+                  height={352}
+                  className="w-full h-full"
                 />
-                <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                  <Github className="w-14 h-14 text-white opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
-                </div>
               </a>
-              <div className="absolute -bottom-14 -right-14 w-28 h-28 md:-bottom-16 md:-right-16 md:w-32 md:h-32 rounded-full flex items-center justify-center pointer-events-none">
+              <div
+                className="absolute -bottom-5 -right-5 w-16 h-16 lg:-bottom-6 lg:-right-6 lg:w-[4.5rem] lg:h-[4.5rem] rounded-full flex items-center justify-center pointer-events-none"
+              >
                 <img
                   src={theme === 'dark'
                     ? '/portfolio-cavalcante/images/navbar/logo-navbar-darkmode.png'
                     : '/portfolio-cavalcante/images/navbar/logo-navbar-lightmode.png'}
                   alt="LC"
-                  width={80}
-                  height={80}
+                  width={72}
+                  height={72}
                   loading="lazy"
-                  className="w-20 h-20"
+                  className="w-14 h-14 lg:w-16 lg:h-16"
                 />
               </div>
             </div>

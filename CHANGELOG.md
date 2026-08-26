@@ -1,5 +1,77 @@
 # Changelog
 
+## [1.18.0] - 2026-08-26
+
+### 🖼️ ProfileLight — Light controller two-stage + Canvas-relative mouse
+
+- ⚙️ **Two-stage light controller** — `createLightController()` em `light-control.ts` reescrito com `targetPosition`/`targetZ` (lerp 0.12/frame); `orbitTick()`, `updateFromMouse()`, `updateFromWheel()` agora definem alvos; `tick()` interpola suavemente
+- 🖱️ **Canvas-relative mouse** — `ProfileLight.tsx` remove `useMouseStore` (coords globais do viewport); normalização via `getBoundingClientRect()` com listeners `mousemove`/`touchmove` no container
+- 🔧 **Renderer `syncSize()`** — método público em `renderer.ts` expõe `#syncCanvasSize()` para chamadas externas
+- 📐 **ResizeObserver** — observa mudanças de tamanho do container, chamando `renderer.syncSize()` + `resetHistory()`
+- 📏 **Initial canvas size** — `renderer.syncSize()` chamado em `initPipeline()` após `renderer.attach(plan)` para garantir proporção correta desde o primeiro frame
+
+### 🍪 CookieConsent — Backdrop, 2 modais e política de privacidade
+
+- 🖼️ **Backdrop** — `<motion.div>` overlay `fixed inset-0 z-[54] bg-black/60` fecha o site enquanto o modal está ativo
+- 🔄 **Dois modais** — consent (modal 1) e privacy policy (modal 2) com transição `AnimatePresence mode="wait"`
+- 🔒 **Política de privacidade** — conteúdo inline em 3 idiomas (6 frases cada), estilo BIOS/scanlines, header `> POLÍTICA DE PRIVACIDADE`, typing animation
+- ⌨️ **Typing animation** — header digitado caractere a caractere (18ms/char), corpo digitado (8ms/char), cursor piscante
+- ↔️ **Transição suave** — modal 1 sai: `y: 0 → -100%`, opacity 0 (0.3s); modal 2 entra: `y: 100% → 0`, opacity 1 (0.3s, delay 0.15s); reversão com mesma timing
+- 🖱️ **Click-outside** — backdrop click no modal 1 fecha sem recusar (`dismissed` state, reaparece no próximo acesso); backdrop click no modal 2 volta ao modal 1
+- 🛑 **`stopPropagation`** — container do modal impede close ao clicar dentro
+- 🔤 **"Saiba mais"** — botão "Recusar" substituído por "Saiba mais" / "Learn more" / "Saber más" (pt/en/es)
+
+### 🔧 Fixes
+
+- 🍪 **Cookie dismiss** — click fora do modal agora ignora (volta no próximo acesso) em vez de recusar cookies
+- 🏷️ **Badge assinatura desktop** — container `md:w-88 md:h-88` não existia no Tailwind v3 (escala pula 80→96); substituído por `md:w-[22rem] md:h-[22rem]` (352px). Badge desktop alinhada com mobile: offsets negativos `-bottom-5 -right-5` para sobrepor o canto inferior direito
+
+### 📝 Docs
+
+- 📋 **TODO.md** — onda N1-N3 (light controller), C1-C14 (CookieConsent), B6-B8 (badge) e B14-B18 (causa raiz `w-88` + fix badge desktop) documentadas
+- 📄 **CHANGELOG.md** — v1.18.0 documentada
+
+## [1.17.0] - 2026-08-25
+
+### 🖼️ ProfileLight — Iluminação 3D via WebGPU (TypeGPU + ML Depth Estimation)
+
+- 🎮 **TypeGPU integration** — `unplugin-typegpu@0.12.2` adicionado como devDependency; plugin `typegpu()` configurado no `vite.config.ts` antes de `react()` para transpilar as 35 funções GPU (34 computeFn + 1 fragmentFn) em 20 arquivos para WGSL
+- 🧠 **ML Depth Estimation** — modelo `depthart-relative-s-448-balanced` (~13MB) baixado do HuggingFace e cacheado via Cache API; roda 100% no cliente (GPU via WebGPU)
+- 💡 **Light control** — `createLightController()` gerencia posição XY (orbit automático ou mouse tracking) e profundidade Z (controle via scroll/wheel)
+- 🎨 **Neon color cycle** — cor da luz alterna automaticamente azul → ciano → roxo (`hue = 210 + sin(time * 0.0008) * 40`)
+- 🖱️ **Hover takeover** — ao entrar na foto, a luz pula para a posição do mouse (sem salto brusco); ao sair, retoma orbit automático
+- 🔄 **Mirror fix** — `mirror: false` no renderer para evitar espelhamento horizontal da foto
+- 📐 **Aspect ratio fix** — `#syncCanvasSize()` no renderer agora usa `clientWidth × clientHeight` (não mais quadrado) para evitar distorção em containers retangulares
+- 📱 **Mobile support** — `<ProfileLight>` substitui `<img>` no mobile do Hero; em mobile a luz orbita automaticamente (sem interação de mouse)
+- ⏳ **BIOS loading animation** — durante o download do modelo, exibe animação estilo boot: linhas de texto com typing, barra de progresso pulsante, scanlines CRT
+- 🔒 **Consent gate** — `initPipeline()` só inicia após consentimento do cookie; sem consentimento → foto estática com `glow-hover`
+- 🛡️ **WebGPU fallback** — se `navigator.gpu` indisponível ou consentimento recusado, exibe foto original
+- ♿ **IntersectionObserver** — render loop pausa quando a foto sai do viewport
+
+### 🍪 Cookie Consent — Banner Footer estilo BIOS
+
+- 📋 **Modal de consentimento** — barra fixa no rodapé (padrão sites), slide-up animation, tipografia monospace (Cascadia Code/JetBrains Mono)
+- ⌨️ **Typing animation** — header digitado caractere a caractere (18ms/char), corpo digitado (8ms/char), cursor piscante
+- ✨ **Header pulsante** — caractere `>` do header pisca com glow neon (opacity 1→0.3→1, 1.2s cycle)
+- 💫 **Accept button glow** — botão "Aceitar" com box-shadow neon azul pulsante (`cookieGlowPulse` keyframe)
+- 📐 **Layout responsivo** — desktop: flex row (texto esquerda, botões direita, centralizados verticalmente); mobile: flex row com `flex-1` (botões lado a lado, largura igual)
+- 📱 **Texto responsivo** — body dividido em array de 3 parágrafos; mobile exibe 3 `<p>` separados, desktop/tablet mescla as 2 primeiras frases em um `<p>` via `hidden sm:inline`
+- 🔤 **i18n** — textos traduzidos PT/EN/ES inline no componente
+- 💾 **Persistência** — consentimento salvo em `localStorage('portfolio-consent')` via Zustand store (`consentStore.ts`)
+- 🎨 **Estética CRT** — scanlines overlay no card, borda `border-white/10`, glow box-shadow
+
+### 🔧 Fixes
+
+- 📦 **`typegpu@0.12.3`** — dependência runtime adicionada ao `package.json`
+- 📦 **`unplugin-typegpu@0.12.2`** — devDependency para transpilação de `'use gpu'` directives
+- 🗑️ **GitHub hover overlay removido** do desktop Hero — ProfileLight é a interação visual principal
+- 🔗 **Hero mobile** — `<ProfileLight>` substitui `<img>` para suportar efeito 3D em todas as viewports
+
+### 📝 Docs
+
+- 📋 **TODO.md** — K1–K10 (TypeGPU + Cookie) marcados como ✅; L1–L4 (ajustes pós-implantação) marcados como ✅; pendências de cookie atualizadas
+- 📄 **CHANGELOG.md** — v1.17.0 documentada
+
 ## [1.16.2] - 2026-08-22
 
 ### 📄 Currículos — hyperlink Portfolio corrigido + auto-sync com o canonical do site

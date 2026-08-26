@@ -4,7 +4,7 @@ import { useThemeStore } from './stores/themeStore';
 import { useBootStore } from './stores/bootStore';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen, PoolEffect } from './components';
+import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen, PoolEffect, CookieConsent } from './components';
 import { focusReveal } from './lib/motion';
 import { BOOT_TIMELINE, EASE } from './lib/motion';
 import './i18n';
@@ -32,6 +32,7 @@ function App() {
   const setBooted = useBootStore((s) => s.setBooted);
   const { t } = useTranslation();
   const [resourcesReady, setResourcesReady] = useState(false);
+  const [showConsent, setShowConsent] = useState(false);
 
   useEffect(() => {
     if (booted) return;
@@ -81,6 +82,12 @@ function App() {
     document.documentElement.classList.add(theme);
   }, [theme]);
 
+  useEffect(() => {
+    if (!booted) return;
+    const timer = setTimeout(() => setShowConsent(true), 800);
+    return () => clearTimeout(timer);
+  }, [booted]);
+
   return (
     <ErrorBoundary>
       <MotionConfig reducedMotion="user">
@@ -128,6 +135,7 @@ function App() {
 
           {booted && <Footer />}
           <ScrollToTop />
+          <CookieConsent visible={showConsent} />
         </div>
       </MotionConfig>
     </ErrorBoundary>
