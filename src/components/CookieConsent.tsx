@@ -317,17 +317,12 @@ function ModalContent({
   return (
     <>
       <div className="flex-1 min-w-0">
-        <p className="text-xs sm:text-sm text-white whitespace-pre mb-1.5">
-          <motion.span
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
-            className="boot-glow-text"
-          >
-            {headerFirst}
-          </motion.span>
-          {typedHeader > 1 && (
-            <span className="boot-glow-text">{headerChars.slice(1)}</span>
-          )}
+        <motion.p
+          animate={{ opacity: [1, 0.3, 1] }}
+          transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
+          className="text-xs sm:text-sm text-white whitespace-pre mb-1.5 boot-glow-text"
+        >
+          {headerChars}
           {typedHeader < t.header.length && (
             <motion.span
               animate={{ opacity: [1, 0] }}
@@ -336,7 +331,7 @@ function ModalContent({
               aria-hidden="true"
             />
           )}
-        </p>
+        </motion.p>
 
         <div className="space-y-1 mb-1.5">
           <p className="text-[11px] sm:text-xs leading-relaxed text-white/60">
