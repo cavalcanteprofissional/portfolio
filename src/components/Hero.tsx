@@ -179,7 +179,7 @@ export function Hero() {
               transition={{ duration: 0.35, ease: EASE }}
               className="md:hidden overflow-hidden"
             >
-              <p className="text-muted-foreground text-base leading-relaxed mt-3">
+              <p className="text-muted-foreground text-base leading-relaxed mt-3 text-center">
                 {t('hero.description')}
               </p>
             </motion.div>
@@ -192,7 +192,7 @@ export function Hero() {
               {t('hero.title')}
             </motion.p>
 
-            <motion.p variants={staggerChild()} className="hidden md:block text-muted-foreground text-lg max-w-xl">
+            <motion.p variants={staggerChild()} className="hidden md:block text-muted-foreground text-lg max-w-2xl text-left">
               {t('hero.description')}
             </motion.p>
 
