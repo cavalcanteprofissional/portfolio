@@ -4,7 +4,6 @@ export { Stats } from './Stats';
 export { Companies } from './Companies';
 export { Experience } from './Experience';
 export { Portfolio } from './Portfolio';
-export { Showcase } from './Showcase';
 export { ScrollToTop } from './ScrollToTop';
 export { Skills } from './Skills';
 export { Certifications } from './Certifications';

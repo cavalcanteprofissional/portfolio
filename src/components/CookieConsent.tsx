@@ -2,8 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useConsentStore } from '../stores/consentStore';
 import { EASE, DURATION } from '../lib/motion';
-
-const MONO_FONT = "'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace";
+import { MONO_FONT } from '../lib/constants';
 
 const CONSENT_LINES = {
   pt: {

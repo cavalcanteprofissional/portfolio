@@ -13,11 +13,6 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.min(hi, Math.max(lo, v));
 }
 
-export interface LightUpdate {
-  lightPosition?: [number, number];
-  lightZ?: number;
-}
-
 export interface LightController {
   readonly lightPosition: [number, number];
   readonly lightZ: number;

@@ -821,3 +821,175 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 | Z1 | `light-control.ts:32` — `initialZ` de `0.42` → `0.2` → `-0.2` (~22% da faixa, bem sutil) | ✅ |
 | Z2 | `renderer.ts:79` — `defaultRelightingSettings.lightZ` de `0.42` → `0.2` → `-0.2` | ✅ |
 | Z3 | `light-control.ts:5` — `WHEEL_SENSITIVITY` de `0.001` → `0.0004` (2.5x menos sensível) | ✅ |
+
+---
+
+### 🔐 Tracking de Visitantes + Orçamento Automatizado + LGPD (2026-08-27)
+
+> **Objetivo:** Implementar tracking de visitantes, formulário de contato, dashboard admin e sistema de orçamento automatizado — tudo gratuito e sob a luz da LGPD.
+>
+> **Stack:** GitHub Pages (estático) + GitHub Contents API (armazenamento) + ip-api.com (geolocation gratuita) + Web3Forms (formulário gratuito).
+>
+> **Decisões do usuário:** JSON no GitHub + API pública · geolocation automática · formulário no CTA · tudo automático · dashboard admin.
+
+#### 🔧 Fase 1 — Unificar CookieConsent (30 min)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| T1 | `CookieConsent.tsx`: unificar `CONSENT_LINES` e `PRIVACY_LINES` em `PRIVACY_LINES` único | ⬜ |
+| T2 | Remover state `step` ('consent' | 'privacy') → sempre mostra a mesma tela | ⬜ |
+| T3 | Remover botão "Saiba mais" / "Voltar" → apenas `[ Aceitar ]` | ⬜ |
+| T4 | Remover `handleLearnMore` e `handleBack` | ⬜ |
+| T5 | Header: `> POLÍTICA DE PRIVACIDADE` (PT/EN/ES) | ⬜ |
+| T6 | Texto unificado: Cache API + localStorage + sem cookies de rastreamento | ⬜ |
+| T7 | Verificar typecheck e build | ⬜ |
+
+#### 📊 Fase 2 — Tracking de Visitantes (4-6h)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| T8 | Criar `src/lib/tracking.ts` — função `trackVisit()` que coleta dados do dispositivo | ⬜ |
+| T9 | Geolocation via `ip-api.com` (gratuito, 45 req/min) — cidade, região, país | ⬜ |
+| T10 | Coletar: `navigator.userAgent`, `screen.width/height`, `navigator.language` | ⬜ |
+| T11 | Hash SHA-256 do IP (não armazena IP direto — LGPD) | ⬜ |
+| T12 | Criar GitHub Action `.github/workflows/track.yml` — workflow_dispatch para salvar dados | ⬜ |
+| T13 | Criar `data/visits.json` — schema inicial vazio `{"visits": [], "contacts": []}` | ⬜ |
+| T14 | `App.tsx`: useEffect dispara `trackVisit()` quando `consent=true` | ⬜ |
+| T15 | Verificar typecheck e build | ⬜ |
+
+**Schema `data/visits.json`:**
+```json
+{
+  "visits": [
+    {
+      "id": "uuid",
+      "timestamp": "2026-08-27T14:30:00Z",
+      "ip_hash": "sha256...",
+      "city": "Fortaleza",
+      "region": "CE",
+      "country": "BR",
+      "device": "desktop",
+      "browser": "Chrome",
+      "os": "Windows",
+      "screen": "1920x1080",
+      "language": "pt-BR",
+      "consent": true
+    }
+  ],
+  "contacts": []
+}
+```
+
+#### 📝 Fase 3 — Formulário de Contato (CTA) (2-3h)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| T16 | `Contact.tsx`: adicionar formulário com campos Nome, Email, Telefone, Mensagem | ⬜ |
+| T17 | Validação: email obrigatório, telefone opcional, mensagem opcional | ⬜ |
+| T18 | Envio via Web3Forms (gratuito, 250 submissions/mês) — sem backend | ⬜ |
+| T19 | Estilo: modal estilo BIOS (consistente com CookieConsent) | ⬜ |
+| T20 | Mensagem de sucesso/erro após envio | ⬜ |
+| T21 | Adicionar `WEB3FORMS_KEY` em `.env.example` | ⬜ |
+| T22 | Verificar typecheck e build | ⬜ |
+
+**Campos:**
+| Campo | Obrigatório | Tipo |
+|-------|-------------|------|
+| Nome | Não | text |
+| Email | **Sim** | email |
+| Telefone | Não | tel |
+| Mensagem | Não | textarea |
+
+#### 📈 Fase 4 — Dashboard Admin (4-6h)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| T23 | Criar `src/pages/Admin.tsx` — rota `/admin` | ⬜ |
+| T24 | Autenticação: senha hardcoded (constante no código) — simples mas funcional | ⬜ |
+| T25 | Ler `data/visits.json` via GitHub Contents API | ⬜ |
+| T26 | Tabela de visitas: data, local, dispositivo, browser | ⬜ |
+| T27 | Tabela de contatos: nome, email, telefone, mensagem | ⬜ |
+| T28 | Filtros: por data, local, dispositivo | ⬜ |
+| T29 | Exportação CSV | ⬜ |
+| T30 | Gráficos simples: visitas por dia, por cidade, por dispositivo | ⬜ |
+| T31 | Verificar typecheck e build | ⬜ |
+
+**Segurança do Dashboard:**
+| Medida | Implementação |
+|--------|--------------|
+| Autenticação | Senha hardcoded (constante no código) |
+| Rota protegida | `/admin` só acessa com senha |
+| Rate limit | Limitar a 100 leituras/hora |
+
+#### 💰 Fase 5 — Orçamento Automatizado (8-12h, FUTURO)
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| T32 | Criar `src/data/services.json` — lista de serviços com preços base | ⬜ |
+| T33 | Criar `src/lib/pricing.ts` — função `calculatePrice(services, urgency)` | ⬜ |
+| T34 | Multiplicadores: complexidade (baixa 1.0, média 1.3, alta 1.6) | ⬜ |
+| T35 | Multiplicadores: urgência (normal 1.0, urgente 1.2, muito urgente 1.5) | ⬜ |
+| T36 | Criar `src/pages/Quote.tsx` — formulário de orçamento | ⬜ |
+| T37 | Select de serviços (múltipla escolha) + urgência | ⬜ |
+| T38 | Cálculo dinâmico: preço × complexidade × urgência | ⬜ |
+| T39 | Preview do orçamento com lista de serviços, valores e total | ⬜ |
+| T40 | Envio via WhatsApp (link wa.me com mensagem pré-preenchida) | ⬜ |
+| T41 | Envio via email (mailto com assunto e corpo formatados) | ⬜ |
+| T42 | Após aprovação via WhatsApp/email → libera orçamento final | ⬜ |
+| T43 | Verificar typecheck e build | ⬜ |
+
+**Estrutura `src/data/services.json`:**
+```json
+{
+  "services": [
+    {
+      "id": "dashboard",
+      "name": "Dashboard Interativo",
+      "description": "Dashboard com Streamlit, Plotly ou Next.js",
+      "basePrice": 1500,
+      "techStack": ["Python", "Streamlit", "Plotly"],
+      "complexity": "media",
+      "estimatedDays": 14,
+      "githubRepos": ["labgas-manager", "sales-dashboard"]
+    },
+    {
+      "id": "chatbot",
+      "name": "Chatbot com IA",
+      "description": "Chatbot com RAG, LangChain, Streamlit",
+      "basePrice": 2500,
+      "techStack": ["Python", "LangChain", "Streamlit"],
+      "complexity": "alta",
+      "estimatedDays": 21,
+      "githubRepos": ["chatbot-oficina", "pro-git-qa-bot"]
+    }
+  ]
+}
+```
+
+#### 🔒 LGPD — Compliance
+
+| Princípio | Implementação |
+|-----------|--------------|
+| Consentimento | Opt-in explícito no CookieConsent antes de coletar |
+| Finalidade | Declaração clara no modal: "tracking para melhorar o site" |
+| Minimização | Apenas dados de dispositivo, sem cookies de rastreamento |
+| IP hash | SHA-256 do IP (não armazena IP direto) |
+| Acesso | Visitante pode solicitar exclusão via email |
+| Transparência | Política de privacidade no CookieConsent |
+
+#### 📋 Ordem de Implementação
+
+| Fase | Escopo | Esforço | Dependências |
+|------|--------|---------|-------------|
+| **1** | Unificar CookieConsent | 30 min | Nenhuma |
+| **2** | Tracking de visitantes (GitHub API) | 4-6h | Fase 1 |
+| **3** | Formulário de contato (CTA) | 2-3h | Fase 2 |
+| **4** | Dashboard admin | 4-6h | Fase 2 |
+| **5** | Orçamento automatizado | 8-12h | Fase 3 + GitHub API |
+
+#### 🔗 Referências
+
+- [GitHub Contents API](https://docs.github.com/en/rest/repos/contents)
+- [Web3Forms](https://web3forms.com/) — formulários gratuitos sem backend
+- [ip-api.com](https://ip-api.com/) — geolocation gratuita (45 req/min)
+- [LGPD — Lei Geral de Proteção de Dados](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)

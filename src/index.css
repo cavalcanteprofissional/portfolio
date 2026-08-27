@@ -106,17 +106,6 @@
     background-clip: text;
   }
   
-  .border-gradient-blue {
-    border: 2px solid transparent;
-    background: linear-gradient(white, white) padding-box,
-                linear-gradient(135deg, hsl(215 70% 40%), hsl(212 75% 55%)) border-box;
-  }
-  
-  .dark .border-gradient-blue {
-    background: linear-gradient(hsl(215 40% 10%), hsl(215 40% 10%)) padding-box,
-                linear-gradient(135deg, hsl(212 75% 55%), hsl(215 70% 40%)) border-box;
-  }
-  
   /* Suavizar sombras */
   .shadow-soft {
     box-shadow: 0 4px 20px -4px rgba(30, 64, 175, 0.1);
@@ -207,6 +196,14 @@
 
 .skip-to-content:focus {
   top: 0;
+}
+
+/* Grid pattern */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 :focus-visible {

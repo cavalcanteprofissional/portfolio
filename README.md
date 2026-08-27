@@ -116,6 +116,15 @@ portfolio/
 └── e2e/                # Playwright E2E tests
 ```
 
-## Licença
+## Referências
 
-MIT
+| Arquivo | Descrição |
+|---------|-----------|
+| [CHANGELOG.md](CHANGELOG.md) | Histórico completo de versões (semver), desde v1.0.0 até a versão atual — inclui listas de tarefas, melhorias e correções por release |
+| [LICENSE](LICENSE) | Licença MIT — Copyright (c) 2026 Lucas Cavalcante |
+| [CONTENT.md](CONTENT.md) | Guia de conteúdo para manutenção do site (textos, imagens, dados de projetos e experiências) |
+| [TODO.md](TODO.md) | Roadmap de melhorias planejadas, backlog de features e notas de arquitetura |
+
+---
+
+Feito com React 19, TypeGPU e muito café. :wave:

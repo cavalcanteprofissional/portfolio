@@ -9,6 +9,7 @@ import { DepthInferencePlan } from '../lib/typegpu/inference/depthart';
 import { parseDepthBundle } from '../lib/typegpu/inference/bundle';
 import { fetchModel, modelVariant, RECOMMENDED_MODEL } from '../lib/typegpu/model-store';
 import { createLightController } from '../lib/typegpu/light-control';
+import { MONO_FONT, BG_DARK_HSL } from '../lib/constants';
 
 interface ProfileLightProps {
   src: string;
@@ -19,7 +20,6 @@ interface ProfileLightProps {
 }
 
 const NEON_CYCLE_SPEED = 0.0008;
-const MONO_FONT = "'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace";
 
 function neonColor(time: number): [number, number, number] {
   const hue = 210 + Math.sin(time * NEON_CYCLE_SPEED) * 40;
@@ -69,7 +69,7 @@ export function ProfileLight({
   const consent = useConsentStore((s) => s.consent);
 
   useEffect(() => {
-    if (!(navigator as any).gpu) {
+    if (!('gpu' in navigator)) {
       setHasWebGPU(false);
       return;
     }
@@ -288,7 +288,7 @@ export function ProfileLight({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
             className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl overflow-hidden"
-            style={{ backgroundColor: 'hsl(215 45% 8%)' }}
+            style={{ backgroundColor: BG_DARK_HSL }}
           >
             <div className="absolute inset-0 boot-scanlines opacity-30 pointer-events-none" aria-hidden="true" />
             <div className="relative z-10 px-4" style={{ fontFamily: MONO_FONT }}>

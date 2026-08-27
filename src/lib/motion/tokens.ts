@@ -1,7 +1,6 @@
-import type { Transition, ViewportOptions } from 'motion/react';
+import type { ViewportOptions } from 'motion/react';
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
-export const EASE_FAST = [0.22, 1, 0.36, 1] as const;
 
 export const DURATION = {
   fast: 0.3,
@@ -17,13 +16,6 @@ export const STAGGER = {
   card: 0.08,
   child: 0.05,
 } as const;
-
-export const TRANSITION: Record<string, Transition> = {
-  default: { duration: DURATION.base, ease: EASE },
-  fast: { duration: DURATION.fast, ease: EASE_FAST },
-  slow: { duration: DURATION.slow, ease: EASE },
-  focus: { duration: DURATION.focus, ease: EASE },
-};
 
 export const BOOT_TIMELINE = {
   overlay: 0.05,

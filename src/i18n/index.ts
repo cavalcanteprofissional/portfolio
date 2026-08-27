@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 
 export const translations = {
   pt: {
-    nav: { home: "Início", showcase: "Showcase", experience: "Experiência", portfolio: "Projetos", skills: "Habilidades", certifications: "Certificações", languages: "Idiomas", menu: "Menu", swipeToClose: "Deslize para fechar" },
+    nav: { home: "Início", experience: "Experiência", portfolio: "Projetos", skills: "Habilidades", certifications: "Certificações", languages: "Idiomas", menu: "Menu", swipeToClose: "Deslize para fechar" },
     hero: { name: "Lucas Cavalcante", title: "Analista de Dados & IA", description: "Analista de Dados com experiência em projetos de IA, automação e marketing digital. Especializado no desenvolvimento de chatbots, dashboards interativos, pipelines de dados de séries temporais e geoespaciais, e implementação de estratégias de SEO/SEM.", resume: "/portfolio-cavalcante/cv/cv_pt.pdf" },
     contact: { location: "Fortaleza - CE", phone: "(85) 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-Lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículo", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículo" },
@@ -101,17 +101,10 @@ export const translations = {
       "3": { question: "Qual a sua experiência profissional?", answer: "Tenho experiência prática em empresas de pequeno e médio porte, atuação em setores institucional/educacional e também no setor industrial. Trabalhei com projetos de análise de dados, desenvolvimento de chatbots, dashboards e pipelines de dados." }
     },
     availability: { label: "Disponível para projetos", badge: "Disponível" },
-    showcase: {
-      title: "Showcase",
-      subtitle: "Visualizações de Dados e IA",
-      description: "Demonstração interativa de um pipeline ETL. Visualize o fluxo de dados através das etapas de extração, transformação e carregamento com métricas em tempo real.",
-      labels: { extract: "Extração", transform: "Transformação", load: "Carregamento" },
-      metrics: { sources: "3 fontes", steps: "12 etapas", speed: "< 2s" },
-    },
     acessibilidade: { skipToContent: "Pular para o conteúdo", scrollToTop: "Voltar ao topo", navAria: "Navegação principal" },
   },
   en: {
-    nav: { home: "Home", showcase: "Showcase", experience: "Experience", portfolio: "Projects", skills: "Skills", certifications: "Certifications", languages: "Languages", menu: "Menu", swipeToClose: "Swipe to close" },
+    nav: { home: "Home", experience: "Experience", portfolio: "Projects", skills: "Skills", certifications: "Certifications", languages: "Languages", menu: "Menu", swipeToClose: "Swipe to close" },
     hero: { name: "Lucas Cavalcante", title: "Data Analyst & AI", description: "Data Analyst with experience in AI, automation, and digital marketing projects. Specialized in developing chatbots, interactive dashboards, time series and geospatial data pipelines, SEO/SEM strategies implementation, and delivering data-driven insights for business decision-making.", resume: "/portfolio-cavalcante/cv/cv_en.pdf" },
     contact: { location: "Fortaleza - CE, Brazil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-Lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Resume", view: "View Certificate", demo: "Demo", code: "Code", resume: "Resume" },
@@ -209,17 +202,10 @@ export const translations = {
       "3": { question: "What is your professional experience?", answer: "I have practical experience in small and medium-sized companies, working in institutional/educational sectors and also in the industrial sector. I have worked on data analysis projects, chatbot development, dashboards and data pipelines." }
     },
     availability: { label: "Available for projects", badge: "Available" },
-    showcase: {
-      title: "Showcase",
-      subtitle: "Data & AI Visualizations",
-      description: "Interactive demonstration of an ETL pipeline. Visualize the data flow through extraction, transformation, and loading stages with real-time metrics.",
-      labels: { extract: "Extraction", transform: "Transformation", load: "Loading" },
-      metrics: { sources: "3 sources", steps: "12 steps", speed: "< 2s" },
-    },
     acessibilidade: { skipToContent: "Skip to content", scrollToTop: "Back to top", navAria: "Main navigation" },
   },
   es: {
-    nav: { home: "Inicio", showcase: "Showcase", experience: "Experiencia", portfolio: "Proyectos", skills: "Habilidades", certifications: "Certificaciones", languages: "Idiomas", menu: "Menú", swipeToClose: "Desliza para cerrar" },
+    nav: { home: "Inicio", experience: "Experiencia", portfolio: "Proyectos", skills: "Habilidades", certifications: "Certificaciones", languages: "Idiomas", menu: "Menú", swipeToClose: "Desliza para cerrar" },
     hero: { name: "Lucas Cavalcante", title: "Analista de Datos & IA", description: "Analista de Datos con experiencia en proyectos de IA, automatización y marketing digital. Especializado en el desarrollo de chatbots, dashboards interactivos, pipelines de datos de series temporales y geoespaciales, e implementación de estrategias SEO/SEM.", resume: "/portfolio-cavalcante/cv/cv_es.pdf" },
     contact: { location: "Fortaleza - CE, Brasil", phone: "+55 85 9 9685-9051", email: "cavalcanteprofissional@outlook.com", linkedin: "https://linkedin.com/in/cavalcante-Lucas", github: "https://github.com/cavalcanteprofissional" },
     buttons: { cv: "Currículum", view: "Ver Certificado", demo: "Demo", code: "Código", resume: "Currículum" },
@@ -295,13 +281,6 @@ export const translations = {
     },
     footer: { contact: "Contáctame", message: "Siempre estoy abierto a nuevas oportunidades y colaboraciones.", rights: "Todos los derechos reservados." },
     cta: { title: "¿Trabajamos Juntos?", subtitle: "Siempre estoy abierto a nuevas oportunidades y colaboraciones. Hablemos sobre tu próximo proyecto?", contact: "Contáctame", whatsapp: "Escríbeme en WhatsApp", linkedin: "Conecta en LinkedIn", hero: "Contacto", whatsappMsg: "¡Hola Lucas! Vine desde tu portafolio y me gustaría conversar." },
-    showcase: {
-      title: "Showcase",
-      subtitle: "Visualizaciones de Datos e IA",
-      description: "Demostración interactiva de un pipeline ETL. Visualice el flujo de datos a través de las etapas de extracción, transformación y carga con métricas en tiempo real.",
-      labels: { extract: "Extracción", transform: "Transformación", load: "Carga" },
-      metrics: { sources: "3 fuentes", steps: "12 pasos", speed: "< 2s" },
-    },
     companies: { title: "Empresas Atendidas", subtitle: "Socios que confían en mi trabajo" },
     techstack: {
       title: "Tech Stack",

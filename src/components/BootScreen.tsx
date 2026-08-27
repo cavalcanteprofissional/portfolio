@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { ensureBootAudio, playBootStart, playOkBlip, playPostBeep, playWelcomeChime } from './bootSound';
+import { MONO_FONT, BG_DARK_HSL } from '../lib/constants';
 
 type BootLineType = 'header' | 'hw' | 'module' | 'info' | 'footer';
 
@@ -208,8 +209,8 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
       transition={{ duration: 0.6, ease: 'easeInOut' }}
       className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
       style={{
-        backgroundColor: 'hsl(215 45% 8%)',
-        fontFamily: "'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Consolas', 'Courier New', monospace",
+        backgroundColor: BG_DARK_HSL,
+        fontFamily: MONO_FONT,
       }}
     >
       <div className="absolute inset-0 bg-gradient-blue-dark/40" aria-hidden="true" />

@@ -61,7 +61,7 @@ export function Languages() {
                           starIndex < lang.stars
                             ? starColors[lang.stars as keyof typeof starColors]
                             : 'text-muted/30'
-                        } fill-current`}
+                        } fill-current text-current`}
                         aria-hidden="true"
                       />
                     </motion.div>

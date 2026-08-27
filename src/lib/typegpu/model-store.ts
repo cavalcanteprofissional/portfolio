@@ -1,10 +1,9 @@
-export const MODEL_SIZES = ['small', 'base', 'large'] as const;
-export type ModelSize = (typeof MODEL_SIZES)[number];
-
 export interface ModelVariant {
   readonly bundle: string;
   readonly megabytes: number;
 }
+
+type ModelSize = 'small' | 'base' | 'large';
 
 const MODEL_VARIANTS: Record<
   ModelSize,

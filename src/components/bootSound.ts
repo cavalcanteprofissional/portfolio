@@ -4,7 +4,7 @@ declare global {
   }
 }
 
-export function getBootAudio(): AudioContext | null {
+function getBootAudio(): AudioContext | null {
   try {
     if (window.__bootAudioCtx) return window.__bootAudioCtx;
     const ctx = new AudioContext();
@@ -29,7 +29,7 @@ interface BootToneOptions {
   freqEnd?: number;
 }
 
-export function playBootTone(freq: number, duration: number, options: BootToneOptions = {}): void {
+function playBootTone(freq: number, duration: number, options: BootToneOptions = {}): void {
   const { type = 'square', volume = 0.2, when = 0, freqEnd } = options;
   const ctx = getBootAudio();
   if (!ctx || ctx.state !== 'running') return;
