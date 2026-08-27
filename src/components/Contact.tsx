@@ -33,7 +33,7 @@ export function Contact() {
               <motion.button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center justify-center gap-2 px-10 py-3.5 rounded-full font-medium bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all text-base"
+                className="inline-flex items-center justify-center gap-2 px-10 py-3.5 rounded-full font-medium bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl hover:-translate-y-0.5 cta-glow transition-all text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
