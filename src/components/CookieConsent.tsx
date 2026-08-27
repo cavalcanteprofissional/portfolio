@@ -165,7 +165,6 @@ export function CookieConsent({ visible }: CookieConsentProps) {
   const show = visible && consent === null && !dismissed;
 
   const headerChars = t.header.slice(0, typedHeader);
-  const headerFirst = t.header.slice(0, 1);
   const visibleBody = flatBody.slice(0, typedBody);
   const visibleLines = visibleBody.split('\n');
   const isTypingBody = typedBody < flatBody.length;
@@ -202,7 +201,6 @@ export function CookieConsent({ visible }: CookieConsentProps) {
             <ModalContent
               t={consentT}
               headerChars={headerChars}
-              headerFirst={headerFirst}
               typedHeader={typedHeader}
               visibleLines={visibleLines}
               isTypingBody={isTypingBody}
@@ -243,7 +241,6 @@ export function CookieConsent({ visible }: CookieConsentProps) {
             <ModalContent
               t={privacyT}
               headerChars={headerChars}
-              headerFirst={headerFirst}
               typedHeader={typedHeader}
               visibleLines={visibleLines}
               isTypingBody={isTypingBody}
@@ -295,7 +292,6 @@ function ModalCard({ children }: { children: React.ReactNode }) {
 interface ModalContentProps {
   t: { header: string; body: string[]; accept: string; learnMore?: string; back?: string };
   headerChars: string;
-  headerFirst: string;
   typedHeader: number;
   visibleLines: string[];
   isTypingBody: boolean;
@@ -306,7 +302,6 @@ interface ModalContentProps {
 function ModalContent({
   t,
   headerChars,
-  headerFirst,
   typedHeader,
   visibleLines,
   isTypingBody,
