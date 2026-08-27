@@ -826,6 +826,8 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 
 ### 🔐 Tracking de Visitantes + Orçamento Automatizado + LGPD (2026-08-27)
 
+> ⚠️ **SUPERSEDIDO pelo "PLANO REVISADO — Backend Real" abaixo.** O plano original (GitHub API + Web3Forms + Google Sheets) foi substituído por Supabase + Cloudflare Worker + Resend + Umami, conforme decisões do usuário (backend real, manter GitHub Pages, worker no mesmo repo). As subseções F1–F5 abaixo são mantidas como histórico. Consulte o plano revisado para execução.
+
 > **Objetivo:** Implementar tracking de visitantes, formulário de contato, dashboard admin e sistema de orçamento automatizado — tudo gratuito e sob a luz da LGPD.
 >
 > **Stack:** GitHub Pages (estático) + GitHub Contents API (armazenamento) + ip-api.com (geolocation gratuita) + Web3Forms (formulário gratuito).
@@ -993,3 +995,158 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 - [Web3Forms](https://web3forms.com/) — formulários gratuitos sem backend
 - [ip-api.com](https://ip-api.com/) — geolocation gratuita (45 req/min)
 - [LGPD — Lei Geral de Proteção de Dados](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
+
+---
+
+# 🆕 PLANO REVISADO — Backend Real: Visitantes + Orçamento Automatizado (2026-08-27)
+
+> **Motivo da revisão:** o plano original (GitHub API + Google Sheets) tinha limitações de segurança e robustez:
+> - Expor `VITE_GH_TOKEN` no bundle público = risco de segurança (GitHub revoga PATs expostos).
+> - Apps Script/Sheets não tem trigger confiável de "aprovar → dispara na hora" e não versiona código.
+>
+> **Decisão do usuário:** montar um **backend real** (Supabase + Cloudflare Worker + Resend) gratuito, que também serve de **evidência de skill** (Data Analyst & AI Specialist).
+>
+> **Decisões confirmadas:**
+> 1. Geração de PDF + email: **Cloudflare Worker** (Supabase só como banco).
+> 2. Frontend: **manter GitHub Pages** (chama a API do Worker via CORS).
+> 3. Analytics: **Umami** (ver análise abaixo; suplantou a preferência inicial? não — usuário prefere Umami, mantido).
+> 4. Auth do `/admin`: **Supabase Auth** (email/senha).
+> 5. Cálculo de preço: valores/multiplicadores recomendados pelo agente.
+> 6. Worker: **pasta `worker/` no mesmo repo**.
+
+---
+
+## 📊 Decisão de Analytics — Umami vs GoatCounter
+
+> Usuário prefere **Umami**. Análise confirma que é a escolha certa para o contexto.
+
+| Critério | **Umami** ✅ | GoatCounter |
+|----------|------------|-------------|
+| License | MIT (mais permissivo) | EUPL-1.2 |
+| Cloud SELFB-HOSTED grátis | ✅ (Docker, 1 contêiner) | ✅ (binário Go/SQLite) |
+| Dashboard UX | **Moderno, real-time, bonito** | Mínimo/utilitário |
+| Multicanal (3 sites) | ✅ | Parcial |
+| Custom events | ✅ | Limitado |
+| Script | ~2KB | ~3.5KB |
+| Ecossistema | Next.js + Prisma (encaixa na stack JS/TS do projeto) | Go |
+| Rede/ativa | Comunidade ativa, 4.5★ (204 reviews) | 1 mantenedor, sem reviews |
+| Bots (AI crawlers) | Exclui via JS-only tracking | UA filtering |
+| Self-host em free host | Deploy em Render Railway/VPS free | Idem |
+
+**Veredito:** para um dev JS/TS que quer dashboard bom + eventos custom + portfólio, **Umami é o vencedor claro**. GoatCounter só vence em "tudo que tem que rodar é 1 binário" — o que não é o caso (já teremos um Worker/Supabase rodando). **Mantido: Umami.**
+
+---
+
+## 🏗️ Arquitetura Final
+
+```
+FRONTEND                        BACKEND                               SERVIÇOS
+GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Postgres)
+        │                       (PDF + email + auth       (orcamentos, services,
+        │ 1. lista serviços       + API REST)                visitas)
+        │    (GitHub API p/ repos)   │
+        │                            ├──► Resend ──► email p/ VOCÊ (aviso solicitação)
+        │ 2. solicita orçamento ────►│──► wa.me ────► WhatsApp p/ VOCÊ
+        │    (nome,email,whatsapp)   │──► Resend ──► PDF por EMAIL p/ cliente
+        │                            ▼
+        │                       VocÊ aprova no DASHBOARD (/admin)
+        │                            ▼
+        │                       Worker gera PDF + Resend envia p/ cliente
+        │ 3. cliente vê status + baixa PDF ◄────────────┘
+```
+
+### Stack e free-tiers (confirmados 2026)
+
+| Camada | Ferramenta | Grátis | Limites |
+|--------|-----------|--------|---------|
+| Front | GitHub Pages (mantido) | ✅ | — |
+| Banco | **Supabase** (Postgres) | ✅ sem cartão | 500MB DB · 1GB storage · pausa 7d inativo (precisa ping). Novos projetos exigem grants explícitos p/ PostgREST |
+| API/PDF/email | **Cloudflare Worker** | ✅ | 100k req/dia · 10ms CPU/req · 128MB mem · 50 subrequests |
+| Email | **Resend** | ✅ | 3k emails/mês · 100/dia · 1 domínio |
+| Analytics | **Umami** (self-hosted ou Cloud) | ✅ | Cloud: 100k events/mês grátis · self-host free |
+| Auth | **Supabase Auth** | ✅ | até 50k MAU |
+
+> ⚠️ Nota LGPD: prefira hospedar banco/analytics em região adequada; dados de visitantes minimizados (umami é cookieless, hash diário).
+
+---
+
+## 🗓️ Execução
+
+### Fase 1 — Unificar CookieConsent ✅ (já concluída)
+
+### Fase 2 — REVERTER tracking por token + Integrar Umami
+| # | Tarefa | Status |
+|---|--------|--------|
+| R1 | Deletar `src/lib/tracking.ts`, `.github/workflows/track.yml`, `scripts/append-visit.mjs`, `data/` | ✅ |
+| R2 | Remover `useEffect` de `trackVisit` no `App.tsx` e `useConsentStore` se não usado | ✅ |
+| R3 | Remover `VITE_GH_TOKEN` do `.env.example` | ✅ |
+| R4 | Deploy do Umami (Cloud free tier ou self-host em host free) | ⬜ |
+| R5 | Integrar script do Umami no `App.tsx`, disparado quando `consent=true` (on-demand / consent gate) | ✅ (loader criado, aguarda websiteId) |
+| R6 | Verificar typecheck e build | ✅ |
+
+### Fase 3 — Setup Supabase + Cloudflare Worker + Resend
+| # | Tarefa | Status |
+|---|--------|--------|
+| S1 | Criar projeto Supabase (region + tables c/ RLS) — `services`, `orcamentos`, `visitas` | ⬜ |
+| S2 | Criar `worker/` no repo (Wrangler) — rotas `POST /orcamento`, `POST /aprovar`, `GET /status/:id`, `GET /visit` | ⬜ |
+| S3 | Worker: geração de PDF (PDFKit) do orçamento | ⬜ |
+| S4 | Worker: envio via Resend com anexo PDF → email do cliente | ⬜ |
+| S5 | Worker: `POST /visit` registra visita anônima (ou integra com Umami que já cobre) | ⬜ |
+| S6 | Configurar Resend + domínio (verificar SPF/DKIM) | ⬜ |
+| S7 | Guardar credenciais no Worker (`SUPABASE_URL`, `SERVICE_ROLE_KEY`, `RESEND_API_KEY`) — nunca no bundle | ⬜ |
+| S8 | Ping anti-pausa do Supabase (Cron Trigger grátis do Cloudflare, 1x/dia) | ⬜ |
+| S9 | Configurar CORS no Worker p/ origem do GitHub Pages | ⬜ |
+
+### Fase 4 — Formulário de Orçamento no CTA
+
+> **Semântica de UM ÚNICO SUBMIT (decisão do usuário):** o mesmo botão de submit do formulário **registra os dados do cliente E confirma a solicitação do orçamento** — não há passos separados. Um único `POST /orcamento` já carrega: dados do cliente (nome, email, whatsapp) + itens do orçamento (serviço, urgência, descrição). O Worker salva tudo em `orcamentos` (status `PENDENTE`), calcula o valor, dispara notificações e retorna o código de pedido.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| F1 | `Contact.tsx`: formulário Nome, Email, WhatsApp, Serviço, Urgência, Descrição | ⬜ |
+| F2 | Validar (email obrigatório) | ⬜ |
+| F3 | Carregar serviços via GitHub API (repos públicos) mapeados a `services` | ⬜ |
+| F4 | `POST /orcamento` (Worker) — **submit único registra dados + confirma solicitação** + abrir `wa.me` p/ você | ⬜ |
+| F5 | Cálculo de preço (recomendado) + preview dinâmico no cliente | ⬜ |
+| F6 | Confirmação com código de pedido p/ o cliente | ⬜ |
+
+### Fase 5 — Dashboard Admin (`/admin`) + Aprovação
+| # | Tarefa | Status |
+|---|--------|--------|
+| A1 | Rota `/admin` com **Supabase Auth** (login email/senha) | ⬜ |
+| A2 | Lista orçamentos (status PENDENTE/APROVADO/RECUSADO, dados, valor, datas) | ⬜ |
+| A3 | Botão Aprovar/Recusar → `POST /aprovar` → Worker gera PDF + Resend envia p/ cliente | ⬜ |
+| A4 | Aviso p/ você (email) que o orçamento foi enviado ao cliente | ⬜ |
+| A5 | Visão de visitas (via Umami) + exportação CSV | ⬜ |
+
+### 💰 Cálculo de Preços — Recomendação (registrada p/ validação)
+
+> Valores base + multiplicadores configuráveis em `src/data/services.json`.
+
+| Serviço | Repos origem | Base (R$) | Complexidade | Prazo estimado |
+|---------|--------------|-----------|--------------|----------------|
+| Dashboard Interativo | `labgas-manager`, `sales-dashboard` | 1500 | média (×1.3) | 14d |
+| Chatbot IA (RAG) | `chatbot-oficina`, `pro-git-qa-bot` | 2500 | alta (×1.6) | 21d |
+| Análise de Dados / BI | (a definir) | 1200 | média (×1.3) | 10d |
+| Automação/Pipeline | (a definir) | 1800 | média (×1.3) | 12d |
+
+**Multiplicadores:**
+- Complexidade: baixa 1.0 · média 1.3 · alta 1.6
+- Urgência: normal 1.0 · urgente 1.2 · muito urgente 1.5
+- **Preço = Σ(base × complexidade) × urgência**
+
+### 🔒 LGPD — aplicada ao novo design
+| Princípio | Implementação |
+|-----------|--------------|
+| Consentimento | Opt-in no CookieConsent antes de coletar/registrar visita |
+| Minimização | Umami cookieless (hash diário), sem IP direto no banco |
+| Finalidade | Declaração no modal |
+| Segurança | Credenciais apenas no Worker (server-side), nunca no bundle |
+| Acesso/exclusão | Cliente pode solicitar remoção por email; status/PDF no `/admin` |
+
+### 🔗 Referências (revisadas)
+- [Supabase pricing/limits](https://supabase.com/pricing) · [Edge Functions limits](https://supabase.com/docs/guides/functions/limits)
+- [Resend free tier](https://resend.com/pricing)
+- [Cloudflare Workers pricing/limits](https://developers.cloudflare.com/workers/platform/pricing/)
+- [Umami](https://umami.is) · [Umami vs GoatCounter](https://analytics-alternatives.com/compare/goatcounter-vs-umami/)
+- [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)

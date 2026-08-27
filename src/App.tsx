@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen, PoolEffect, CookieConsent } from './components';
 import { useConsentStore } from './stores/consentStore';
-import { trackVisit } from './lib/tracking';
+import { enableUmami } from './lib/analytics';
 import { focusReveal } from './lib/motion';
 import { BOOT_TIMELINE, EASE } from './lib/motion';
 import { BG_DARK_HSL } from './lib/constants';
@@ -38,10 +38,7 @@ function App() {
   const consent = useConsentStore((s) => s.consent);
 
   useEffect(() => {
-    if (consent === true) {
-      const timer = setTimeout(() => trackVisit(true), 1500);
-      return () => clearTimeout(timer);
-    }
+    if (consent === true) enableUmami();
   }, [consent]);
 
   useEffect(() => {
