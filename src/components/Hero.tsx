@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { Mail, Linkedin, Github, FileText, ChevronDown, MessageCircle } from 'lucide-react';
+import { Linkedin, Github, FileText, ChevronDown, MessageCircle } from 'lucide-react';
 import { useThemeStore } from '../stores/themeStore';
 import { BOOT_TIMELINE, EASE, STAGGER, scaleIn, slideFrom, staggerChild, staggerContainer } from '../lib/motion';
 import { ProfileLight } from './ProfileLight';
+import { QuoteModal } from './QuoteModal';
 
 export function Hero() {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const [bioOpen, setBioOpen] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
 
   const heroButtons = (
     <motion.div
@@ -18,13 +20,16 @@ export function Hero() {
       transition={{ delay: 0.35, duration: 0.6, ease: EASE }}
       className="grid grid-cols-1 gap-y-6 justify-items-center md:justify-items-start"
     >
-      <a
-        href={`mailto:${t('contact.email')}`}
-        className="w-full max-w-xs md:max-w-md inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-gradient-blue text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity"
+      <motion.button
+        type="button"
+        onClick={() => setQuoteOpen(true)}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="w-full max-w-xs md:max-w-md inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full font-medium bg-primary text-primary-foreground text-xs hover:bg-primary/90 transition-all cta-glow"
       >
-        <Mail className="w-4 h-4" aria-hidden="true" />
-        {t('contact.email')}
-      </a>
+        <FileText className="w-4 h-4" aria-hidden="true" />
+        {t('quote.requestCta')}
+      </motion.button>
       <div className="w-full max-w-xs md:max-w-md flex items-center justify-between gap-2">
         <a
           href={t('contact.linkedin')}
@@ -235,6 +240,8 @@ export function Hero() {
           </motion.div>
         </div>
       </div>
+
+      <QuoteModal open={quoteOpen} onClose={() => setQuoteOpen(false)} />
     </motion.section>
   );
 }
