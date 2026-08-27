@@ -34,12 +34,12 @@ export function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+              className="pt-2 flex flex-col items-center gap-4"
             >
               <motion.button
                 type="button"
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full font-medium bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all text-base"
+                className="inline-flex items-center justify-center gap-2 px-10 py-3.5 rounded-full font-medium bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -47,23 +47,25 @@ export function Contact() {
                 {t('quote.requestCta')}
               </motion.button>
 
-              {contactButtons.map((btn) => {
-                const Icon = btn.icon;
-                return (
-                  <motion.a
-                    key={btn.labelKey}
-                    href={btn.href}
-                    target={btn.href.startsWith('http') ? '_blank' : undefined}
-                    rel={btn.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium transition-all bg-secondary hover:bg-secondary/80 border border-border hover:border-primary/30 hover:-translate-y-0.5"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Icon className="w-5 h-5" aria-hidden="true" />
-                    <span>{t(btn.labelKey)}</span>
-                  </motion.a>
-                );
-              })}
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                {contactButtons.map((btn) => {
+                  const Icon = btn.icon;
+                  return (
+                    <motion.a
+                      key={btn.labelKey}
+                      href={btn.href}
+                      target={btn.href.startsWith('http') ? '_blank' : undefined}
+                      rel={btn.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium transition-all bg-secondary hover:bg-secondary/80 border border-border hover:border-primary/30 hover:-translate-y-0.5"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Icon className="w-5 h-5" aria-hidden="true" />
+                      <span>{t(btn.labelKey)}</span>
+                    </motion.a>
+                  );
+                })}
+              </div>
             </motion.div>
           </div>
         </div>
