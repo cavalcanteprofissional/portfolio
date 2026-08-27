@@ -5,6 +5,8 @@ import { useBootStore } from './stores/bootStore';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen, PoolEffect, CookieConsent } from './components';
+import { useConsentStore } from './stores/consentStore';
+import { trackVisit } from './lib/tracking';
 import { focusReveal } from './lib/motion';
 import { BOOT_TIMELINE, EASE } from './lib/motion';
 import { BG_DARK_HSL } from './lib/constants';
@@ -33,6 +35,14 @@ function App() {
   const { t } = useTranslation();
   const [resourcesReady, setResourcesReady] = useState(false);
   const [showConsent, setShowConsent] = useState(false);
+  const consent = useConsentStore((s) => s.consent);
+
+  useEffect(() => {
+    if (consent === true) {
+      const timer = setTimeout(() => trackVisit(true), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [consent]);
 
   useEffect(() => {
     if (booted) return;

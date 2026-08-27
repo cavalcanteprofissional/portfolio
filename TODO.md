@@ -848,14 +848,14 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 
 | # | Tarefa | Status |
 |---|--------|--------|
-| T8 | Criar `src/lib/tracking.ts` — função `trackVisit()` que coleta dados do dispositivo | ⬜ |
-| T9 | Geolocation via `ip-api.com` (gratuito, 45 req/min) — cidade, região, país | ⬜ |
-| T10 | Coletar: `navigator.userAgent`, `screen.width/height`, `navigator.language` | ⬜ |
-| T11 | Hash SHA-256 do IP (não armazena IP direto — LGPD) | ⬜ |
-| T12 | Criar GitHub Action `.github/workflows/track.yml` — workflow_dispatch para salvar dados | ⬜ |
-| T13 | Criar `data/visits.json` — schema inicial vazio `{"visits": [], "contacts": []}` | ⬜ |
-| T14 | `App.tsx`: useEffect dispara `trackVisit()` quando `consent=true` | ⬜ |
-| T15 | Verificar typecheck e build | ⬜ |
+| T8 | Criar `src/lib/tracking.ts` — função `trackVisit()` que coleta dados do dispositivo | ✅ |
+| T9 | Geolocation via `ip-api.com` (gratuito, 45 req/min) — cidade, região, país | ✅ |
+| T10 | Coletar: `navigator.userAgent`, `screen.width/height`, `navigator.language` | ✅ |
+| T11 | Hash SHA-256 do IP (não armazena IP direto — LGPD) | ✅ |
+| T12 | Criar GitHub Action `.github/workflows/track.yml` — `repository_dispatch` (tipo `track_visit`) para salvar dados | ✅ |
+| T13 | Criar `data/visits.json` — schema inicial vazio `{"visits": [], "contacts": []}` | ✅ |
+| T14 | `App.tsx`: useEffect dispara `trackVisit()` quando `consent=true` | ✅ |
+| T15 | Verificar typecheck e build | ✅ |
 
 **Schema `data/visits.json`:**
 ```json

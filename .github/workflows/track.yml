@@ -1,0 +1,32 @@
+name: Track visit
+
+on:
+  repository_dispatch:
+    types: [track_visit]
+
+permissions:
+  contents: write
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Append visit to data/visits.json
+        env:
+          VISIT_JSON: ${{ toJson(github.event.client_payload.visit) }}
+        run: |
+          node scripts/append-visit.mjs
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): registrar visita"
+          file_pattern: data/visits.json
