@@ -57,9 +57,12 @@ Meu portfólio pessoal — projetos, experimentos e um pouco do que sei fazer co
 | **Estado** | Zustand |
 | **i18n** | i18next + react-i18next |
 | **Ícones** | Lucide React + React Icons |
+| **Backend** | Cloudflare Worker (TypeScript) + Supabase (Postgres + Auth) |
+| **Email/PDF** | Resend + pdf-lib |
+| **Analytics** | Umami (consent-gated) |
 | **Currículo** | Python + mBART-large-50 + Jinja2 + Playwright |
 | **Teste** | Playwright (E2E) |
-| **Deploy** | GitHub Actions + GitHub Pages |
+| **Deploy** | GitHub Actions + GitHub Pages (site) · Wrangler (Worker) |
 
 ## Rodar local
 
@@ -94,16 +97,49 @@ HF_TOKEN=hf_seu_token_aqui
 
 Os PDFs são gerados em `public/cv/` e versionados no repo. Edite `resume/curriculo-fonte.md` para atualizar — a pipeline traduz e renderiza em PT/EN/ES automaticamente.
 
+## Backend real (orçamentos / admin)
+
+O site tem um backend gratuito para o fluxo de orçamento: **Supabase** (banco + auth), **Cloudflare Worker** (API/PDF/email) e **Resend** (disparo de email). O admin fica em `#/admin`.
+
+### Variáveis do frontend (`.env`)
+
+```bash
+VITE_SUPABASE_URL=          # pública (anon key)
+VITE_SUPABASE_ANON_KEY=     # pública (sb_publishable_...)
+VITE_UMAMI_WEBSITE_ID=      # pública — analytics
+VITE_UMAMI_SRC=             # pública — https://cloud.umami.is/script.js
+VITE_WORKER_URL=            # pública — URL do Cloudflare Worker
+```
+
+### Worker (pasta `worker/`)
+
+```bash
+cd worker
+npm install
+npx wrangler login
+npx wrangler secret put RESEND_API_KEY     # secreto — nunca no repo
+npx wrangler secret put SERVICE_ROLE_KEY   # service_role NOVA (rotacionada) — nunca no repo
+npx wrangler secret put SUPABASE_URL       # chave pública (pode ser variável vars)
+npx wrangler dev        # teste local
+npx wrangler deploy     # deploy
+```
+
+> ⚠️ **Segurança:** credenciais secretas só entram via `wrangler secret put`, nunca no chat nem no bundle. O `service_role` antigo (postado em chat) foi tratado como comprometido e deve ser rotacionado.
+
+O schema do banco fica em `supabase/schema.sql` (RLS restritivo: `services` é leitura pública; `orcamentos` só o Worker acessa via `service_role`).
+
 ## Arquitetura
 
 ```
 portfolio/
 ├── src/
-│   ├── components/     # BootScreen, ProfileLight, CookieConsent, Hero…
+│   ├── components/     # BootScreen, ProfileLight, CookieConsent, Hero, QuoteModal…
 │   ├── i18n/           # traduções pt/en/es (i18next)
 │   ├── stores/         # Zustand (boot, theme, mouse, consent)
 │   ├── lib/typegpu/    # WebGPU renderer, shaders WGSL, ML inference, light control
-│   ├── data/           # projects.json
+│   ├── lib/            # api.ts (worker), pricing.ts, supabase.ts
+│   ├── pages/          # Admin.tsx (hash routing #/admin)
+│   ├── data/           # projects.json, services.ts (catálogo público)
 │   └── index.css       # Tailwind + efeitos CRT/glow/neon
 ├── public/
 │   ├── images/         # thumbnail, og, companies
@@ -113,6 +149,8 @@ portfolio/
 ├── branding/           # fonte .ai da marca (só *.ai versionado)
 ├── scripts/            # generate-icons.mjs (npm run icons)
 ├── resume/             # pipeline de currículos (Python + mBART)
+├── supabase/           # schema.sql (tabelas + RLS)
+├── worker/             # Cloudflare Worker (API, PDF, Resend)
 └── e2e/                # Playwright E2E tests
 ```
 

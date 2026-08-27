@@ -1215,3 +1215,104 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 - [ ] Front: `VITE_` env vars + hash routing `#/admin` + form no `Contact.tsx`
 
 > **Nota:** PDF gerado com **pdf-lib** (compatível com runtime Workers), e não PDFKit (que depende de streams Node indisponíveis no Workers).
+
+---
+
+### ✅ Fase 2–5 do Backend Real — implementação concluída (2026-08-27)
+
+> **Status:** todo o código está escrito, typecheck/build front + worker e `wrangler deploy --dry-run` passando. Falta apenas **provisionar os serviços e injetar credenciais reais** (manual) e fazer o deploy.
+
+#### 🧪 Fase 2 — Tracking por token revertido + Umami consent-gated (commit `21f7926`)
+| # | Tarefa | Status |
+|---|--------|--------|
+| R1 | Deletar `src/lib/tracking.ts`, `.github/workflows/track.yml`, `scripts/append-visit.mjs`, `data/` | ✅ |
+| R2 | Remover `useEffect` de `trackVisit` no `App.tsx` + `useConsentStore` não usado | ✅ |
+| R3 | Remover `VITE_GH_TOKEN` do `.env.example` | ✅ |
+| R4 | Deploy do Umami (Cloud free-tier ou self-host) | ⬜ (provisão manual) |
+| R5 | Loader Umami no `App.tsx`, consent-gated (aguarda `VITE_UMAMI_WEBSITE_ID`) | ✅ |
+| R6 | Verificar typecheck e build | ✅ |
+
+#### 🏗️ Fase 3 — Supabase + Cloudflare Worker + Resend (commit `d0b0cda`)
+| # | Tarefa | Status |
+|---|--------|--------|
+| S1 | `supabase/schema.sql` (RLS restritivo, orcamentos sem policy) | ✅ |
+| S2 | Estrutura `worker/` (Wrangler, pdf-lib, Resend, CORS, cron) | ✅ |
+| S3 | Rotas: `POST /orcamento`, `GET /services`, `GET /orcamento/:codigo`, `GET /health`, cron anti-pausa | ✅ |
+| S4 | PDF via **pdf-lib** (compatível com runtime Workers) | ✅ |
+| S5 | CORS p/ GitHub Pages + cron 1x/dia no `wrangler.toml` | ✅ |
+| S6 | Configurar Resend + domínio (SPF/DKIM) | ⬜ (aguarda credenciais) |
+| S7 | Secrets via `wrangler secret put` (service_role NOVA rotacionada + RESEND_API_KEY) | ⬜ (aguarda credenciais) |
+
+#### 📝 Fase 4 — Formulário/Modal de Orçamento no CTA (commit `ce54447`)
+| # | Tarefa | Status |
+|---|--------|--------|
+| F1 | `src/data/services.ts` + `src/lib/pricing.ts` (front só público) | ✅ |
+| F2 | `src/lib/api.ts`: `fetchServices` (sem preço) + `submitOrcamento` (com `cpf_cnpj`) | ✅ |
+| F3 | `Post /orcamento` submit único | ✅ |
+| F4 | Confirmação com código de pedido | ✅ |
+| F5 | Aviso ao dono por email (Resend) → `cavalcanteprofissional@outlook.com` | ✅ |
+
+#### 🖥️ Fase 5 — Dashboard Admin `#/admin` (commit `27c3f81`)
+| # | Tarefa | Status |
+|---|--------|--------|
+| A1 | Hash routing `#/admin` + `src/pages/Admin.tsx` + `src/lib/supabase.ts` (Supabase Auth) | ✅ |
+| A2 | Listagem orçamentos (`GET /admin/orcamentos`, Bearer token validado via `db.auth.getUser()`) | ✅ |
+| A3 | Aprovar/Recusar (`POST /admin/aprovar` → PDF + Resend p/ cliente) | ✅ |
+| A4 | Aviso ao dono quando orçamento enviado | ✅ |
+| A5 | Visão de visitas (Umami) + exportação CSV | ⬜ (deferido) |
+
+#### 🔁 Revisão UX — Modal de Orçamento em Etapas + sem preços (commit `54daa79`)
+| # | Tarefa | Status |
+|---|--------|--------|
+| M1–M8 | `services.ts` sem preço · `pricing.ts` só `formatBRL` · `QuoteModal.tsx` wizard · `Contact.tsx` botão → modal · i18n · backend `cpf_cnpj` | ✅ |
+
+#### 🐛 Fixes pós-revisão (commits `9f098e6`→`9fed1dc`)
+| # | Tarefa | Status |
+|---|--------|--------|
+| UX1 | CTA alinhado + botão abre modal | ✅ |
+| UX2 | Modal segue scroll (createPortal — fix `position:fixed` quebrado por transform do Reveal) | ✅ |
+| UX3 | Urgência em pills (padrão do projeto; chave i18n `muito_urgente` corrigida) | ✅ |
+| UX4 | CTA 1×3 → só "Solicitar Orçamento" + brilho pulsante (`cta-glow`) | ✅ |
+| UX5 | Hero: botão de email → `cta-glow` "Solicitar Orçamento" (abre modal) | ✅ |
+| UX6 | Mobile: bio expande/collapsa só o texto; botões abaixo; centro no mobile / esquerda+mais larga na tablet | ✅ |
+
+---
+
+### 📌 Próximos passos — Deploy end-to-end (retomar em outra sessão)
+
+> ⚠️ **Regra de segurança:** só chaves públicas vão no chat/repo. Secretas (`service_role` NOVA rotacionada, `RESEND_API_KEY`) vão direto via `wrangler secret put` — nunca no chat.
+
+#### 📐 Passo 1 — Supabase (banco + auth)
+- [ ] Rotacionar `service_role` (a antiga foi postada no chat → comprometida) — Guardar p/ `wrangler secret put`
+- [ ] Rodar `supabase/schema.sql` no SQL Editor (cria `services` + `orcamentos` + RLS)
+- [ ] Criar usuário admin (Auth → Users) p/ login do `#/admin`
+- [ ] Confirmar anon key (pública) e `SUPABASE_URL`
+
+#### ✉️ Passo 2 — Resend (email)
+- [ ] Criar conta em resend.com + verificar domínio (SPF/DKIM)
+- [ ] Gerar `RESEND_API_KEY` (secreto → `wrangler secret put`)
+- [ ] Informar o `from` (substituir placeholder `orcamentos@seu-dominio.com` no `wrangler.toml:8`)
+
+#### ☁️ Passo 3 — Cloudflare Workers (deploy do Worker)
+- [ ] `npx wrangler login`
+- [ ] `wrangler secret put RESEND_API_KEY` + `wrangler secret put SERVICE_ROLE_KEY`
+- [ ] Corrigir `FROM_EMAIL` no `wrangler.toml`
+- [ ] `npx wrangler deploy` → informar URL do Worker p/ `VITE_WORKER_URL`
+
+#### 📊 Passo 4 — Umami (analytics)
+- [ ] Provisionar (cloud.umami.is ou self-host), criar 1 website
+- [ ] Informar (públicos): `VITE_UMAMI_WEBSITE_ID` + `VITE_UMAMI_SRC`
+
+#### 🧾 Passo 5 — Populhar `services` (catálogo/preços — fonte da verdade no backend)
+- [ ] Inserir linhas (slug, name/description jsonb pt/en/es, repo, base_price, complexity, estimated_days, active)
+- [ ] Confirmar lista serviço→repos + base/multiplicadores (recomendação registrada acima)
+
+#### 🚀 Passo 6 — Frontend + deploy do site
+- [ ] Preencher `.env` (públicas): `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_UMAMI_WEBSITE_ID`, `VITE_UMAMI_SRC`, `VITE_WORKER_URL`
+- [ ] Merge branch `feat/tracking` → `main` + Deploy via GitHub Actions (GitHub Pages)
+
+#### ✅ Passo 7 — Validação end-to-end
+- [ ] `GET /health` → `ok:true`
+- [ ] Solicitar orçamento no modal → código + aviso por email ao dono
+- [ ] Login `#/admin` → listar → aprovar → cliente recebe **PDF** por email
+- [ ] Conferir visita no Umami após aceitar cookie
