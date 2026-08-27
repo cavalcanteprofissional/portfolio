@@ -1,0 +1,144 @@
+import { getSupabase, listServices, insertOrcamento, getOrcamento, updateStatus } from './supabase';
+import { computeTotal } from './pricing';
+import { buildQuotePdf } from './pdf';
+import { sendEmail, buildClientEmail, buildOwnerNotice } from './resend';
+import { shortCode } from './types';
+import type { QuoteRequest } from './types';
+
+export interface Env {
+  SUPABASE_URL: string;
+  SERVICE_ROLE_KEY: string;
+  RESEND_API_KEY: string;
+  FROM_EMAIL: string;
+  OWNER_EMAIL: string;
+}
+
+const GITHUB_PAGES_ORIGIN = 'https://cavalcanteprofissional.github.io';
+
+const LANG = 'pt'; // orcamento sempre gerado em pt para o cliente
+
+function corsHeaders(): Record<string, string> {
+  return {
+    'Access-Control-Allow-Origin': GITHUB_PAGES_ORIGIN,
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json; charset=utf-8',
+  };
+}
+
+function json(data: unknown, status = 200): Response {
+  return new Response(JSON.stringify(data), { status, headers: corsHeaders() });
+}
+
+function error(msg: string, status = 400): Response {
+  return json({ error: msg }, status);
+}
+
+function langFrom(req: QuoteRequest): 'pt' | 'en' | 'es' {
+  return LANG;
+}
+
+async function readJson<T>(req: Request): Promise<T> {
+  try {
+    return (await req.json()) as T;
+  } catch {
+    throw new Error('Body invalido');
+  }
+}
+
+export default {
+  async fetch(req: Request, env: Env): Promise<Response> {
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders() });
+    }
+
+    const url = new URL(req.url);
+    const path = url.pathname;
+    const db = getSupabase(env);
+
+    try {
+      // GET /health — ping anti-pausa do Supabase (tambem usado por cron)
+      if (req.method === 'GET' && path === '/health') {
+        const { data } = await db.from('services').select('id').limit(1);
+        return json({ ok: true, supabase: Array.isArray(data) }, 200);
+      }
+
+      // GET /services — lista publica de servicos p/ o form
+      if (req.method === 'GET' && path === '/services') {
+        const services = await listServices(db);
+        return json(services);
+      }
+
+      // GET /orcamento/:codigo — status/publico do pedido
+      if (req.method === 'GET' && path.startsWith('/orcamento/')) {
+        const codigo = path.split('/')[2];
+        const orc = await getOrcamento(db, codigo);
+        if (!orc) return error('Orcamento nao encontrado', 404);
+        return json({ codigo: orc.codigo, status: orc.status, valor: orc.valor });
+      }
+
+      // POST /orcamento — submit unico: registra dados + confirma solicitacao
+      if (req.method === 'POST' && path === '/orcamento') {
+        const body = await readJson<QuoteRequest>(req);
+        if (!body?.nome || !body?.email || !Array.isArray(body?.itens) || body.itens.length === 0) {
+          return error('Campos obrigatorios: nome, email, itens');
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) {
+          return error('Email invalido');
+        }
+
+        const services = await listServices(db);
+        const { lines, subtotal, urgenciaFactor, total } = computeTotal(body, services, langFrom(body));
+
+        if (lines.length === 0) {
+          return error('Nenhum item valido na solicitacao', 422);
+        }
+
+        const codigo = shortCode();
+        const orcamento = {
+          codigo,
+          nome: body.nome,
+          email: body.email,
+          whatsapp: body.whatsapp ?? null,
+          status: 'PENDENTE' as const,
+          itens: body.itens,
+          valor: Math.round(total * 100) / 100,
+          urgencia: body.urgencia ?? 'normal',
+          descricao: body.descricao ?? null,
+        };
+
+        await insertOrcamento(db, orcamento);
+
+        // Aviso ao dono por email
+        await sendEmail(env.RESEND_API_KEY, env.FROM_EMAIL, {
+          ...buildOwnerNotice({ orcamento }),
+          to: env.OWNER_EMAIL,
+        });
+
+        return json({
+          codigo,
+          status: 'PENDENTE',
+          valor: orcamento.valor,
+          subtotal,
+          urgenciaFactor,
+          lines,
+        }, 201);
+      }
+
+      return error('Rota nao encontrada', 404);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'Erro interno';
+      return error(msg, 500);
+    }
+  },
+
+  async scheduled(_event: ScheduledEvent, env: Env): Promise<void> {
+    // Cron: mantem o projeto Supabase ativo (anti-pausa)
+    try {
+      const db = getSupabase(env);
+      await db.from('services').select('id').limit(1);
+    } catch {
+      // falha silenciosa no cron
+    }
+  },
+};

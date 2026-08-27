@@ -1096,15 +1096,15 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 
 | # | Tarefa | Status |
 |---|--------|--------|
-| S1 | `supabase/schema.sql` — tabelas `services`, `orcamentos` + RLS restritivo por padrão (anon só LÊ `services`; `orcamentos` sem policy, acessado só por `service_role` no Worker) | ⬜ |
-| S2 | Criar `worker/` no repo (Wrangler) — rotas `POST /orcamento`, `POST /aprovar`, `GET /status/:id`, `GET /health` | ⬜ |
-| S3 | Worker: geração de PDF (PDFKit) do orçamento, usado no envio p/ cliente | ⬜ |
-| S4 | Worker: envio via Resend com anexo PDF → email do cliente | ⬜ |
+| S1 | `supabase/schema.sql` — tabelas `services`, `orcamentos` + RLS restritivo por padrão (anon só LÊ `services`; `orcamentos` sem policy, acessado só por `service_role` no Worker) | ✅ (`supabase/schema.sql`) |
+| S2 | Criar `worker/` no repo (Wrangler) — rotas `POST /orcamento`, `POST /aprovar`, `GET /status/:id`, `GET /health` | ✅ (estrutura + POST /orcamento, GET /services, GET /orcamento/:codigo, GET /health; `POST /aprovar` na Fase 5) |
+| S3 | Worker: geração de PDF do orçamento (**pdf-lib**, compatível com runtime Workers), usado no envio p/ cliente | ✅ (`worker/src/pdf.ts`) |
+| S4 | Worker: envio via Resend com anexo PDF → email do cliente | ⬜ (estrutura pronta `resend.ts`; `POST /aprovar` na Fase 5) |
 | S5 | (visitas cobertas por Umami — descartada tabela `visitas`) | — |
-| S6 | Configurar Resend + domínio (verificar SPF/DKIM) | ⬜ |
-| S7 | Secrets do Worker: `service_role` (NOVA, rotacionada) + `RESEND_API_KEY` via `wrangler secret put`; `SUPABASE_URL` via vars — nunca no bundle | ⬜ |
-| S8 | Ping anti-pausa do Supabase (Cron Trigger grátis do Cloudflare → `GET /health`, 1x/dia) | ⬜ |
-| S9 | CORS no Worker p/ origem do GitHub Pages (`https://cavalcanteprofissional.github.io`) | ⬜ |
+| S6 | Configurar Resend + domínio (verificar SPF/DKIM) | ⬜ (aguarda credenciais) |
+| S7 | Secrets do Worker: `service_role` (NOVA, rotacionada) + `RESEND_API_KEY` via `wrangler secret put`; `SUPABASE_URL` via vars — nunca no bundle | ⬜ (aguarda credenciais + rotação key) |
+| S8 | Ping anti-pausa do Supabase (Cron Trigger grátis do Cloudflare → `GET /health`, 1x/dia) | ✅ (`wrangler.toml` cron + `scheduled` handler) |
+| S9 | CORS no Worker p/ origem do GitHub Pages (`https://cavalcanteprofissional.github.io`) | ✅ |
 
 ### Fase 4 — Formulário de Orçamento no CTA
 
@@ -1191,6 +1191,8 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 - [x] Aviso ao dono por **email** (Resend) → `cavalcanteprofissional@outlook.com`
 
 #### 📌 Plano de implementação (independe das chaves — pode avançar)
-- [ ] Escrever `supabase/schema.sql` (tabelas + RLS)
-- [ ] Montar estrutura `worker/` (Wrangler config, PDFKit, Resend, CORS, health ping)
+- [x] Escrito `supabase/schema.sql` (tabelas + RLS)
+- [x] Montada estrutura `worker/` (Wrangler, pdf-lib, Resend, CORS, cron health) — testa com `wrangler dev`
 - [ ] Front: `VITE_` env vars + hash routing `#/admin` + form no `Contact.tsx`
+
+> **Nota:** PDF gerado com **pdf-lib** (compatível com runtime Workers), e não PDFKit (que depende de streams Node indisponíveis no Workers).
