@@ -26,7 +26,7 @@ export type OrcamentoInsert = Pick<
   OrcamentoRow,
   'codigo' | 'nome' | 'email' | 'itens' | 'valor'
 > &
-  Partial<Pick<OrcamentoRow, 'whatsapp' | 'urgencia' | 'descricao'>> & {
+  Partial<Pick<OrcamentoRow, 'whatsapp' | 'cpf_cnpj' | 'urgencia' | 'descricao'>> & {
     status: OrcamentoRow['status'];
   };
 

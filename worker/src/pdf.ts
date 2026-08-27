@@ -12,6 +12,7 @@ export async function buildQuotePdf(params: {
   nome: string;
   email: string;
   whatsapp?: string | null;
+  cpfCnpj?: string | null;
   lines: LineItem[];
   subtotal: number;
   urgenciaFactor: number;
@@ -58,6 +59,10 @@ export async function buildQuotePdf(params: {
   if (params.whatsapp) {
     y -= 14;
     write(`WhatsApp: ${params.whatsapp}`, { size: 11, color: MUTED });
+  }
+  if (params.cpfCnpj) {
+    y -= 14;
+    write(`CPF/CNPJ: ${params.cpfCnpj}`, { size: 11, color: MUTED });
   }
   y -= 24;
 

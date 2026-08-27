@@ -19,6 +19,7 @@ export interface QuoteRequest {
   nome: string;
   email: string;
   whatsapp?: string;
+  cpf_cnpj?: string;
   itens: QuoteItem[];
   urgencia?: 'normal' | 'urgente' | 'muito_urgente';
   descricao?: string;
@@ -30,6 +31,7 @@ export interface OrcamentoRow {
   nome: string;
   email: string;
   whatsapp?: string | null;
+  cpf_cnpj?: string | null;
   status: 'PENDENTE' | 'APROVADO' | 'RECUSADO';
   itens: QuoteItem[];
   valor: number;

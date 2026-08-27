@@ -1130,6 +1130,23 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 
 > **Segurança admin:** `GET /admin/orcamentos` e `POST /admin/aprovar` exigem `Authorization: Bearer <token Supabase Auth>`, validado no Worker via `db.auth.getUser()`. `orcamentos` segue sem RLS (só Worker via service_role).
 
+### 🔁 Revisão UX — Modal de Orçamento em Etapas + sem preços no front (2026-08-27)
+
+> **Decisões do usuário:** (1) nunca expor valores dos serviços no front — o cliente só vê o valor no **PDF do orçamento**; (2) o CTA "Solicitar Orçamento" abre um **modal** em etapas; (3) passo 1 = serviço + urgência, passo 2 = dados do cliente (nome, email, WhatsApp, **CPF/CNPJ** + descrição opcional), botão de submit → vai para aprovação; (4) após submit, **mensagem "aguarde PDF no email" + código**; (5) código do pedido continua visível ao cliente.
+
+| # | Tarefa | Status |
+|---|--------|--------|
+| M1 | `src/data/services.ts`: remover `base_price`/`complexity`/`estimated_days` do front (só `slug`/`name`/`description`/`repo`) | ✅ |
+| M2 | `src/lib/pricing.ts`: manter só `formatBRL` (admin); remover `computeQuote`/`getService`/`LineItem`/`URGENCIA_FACTOR` do front | ✅ |
+| M3 | `src/components/QuoteModal.tsx`: modal wizard (passo 1 serviço+urgência; passo 2 dados; passo 3 sucesso) | ✅ |
+| M4 | `src/components/Contact.tsx`: botão "Solicitar Orçamento" abre modal; remover form inline e preview de preço | ✅ |
+| M5 | `src/lib/api.ts`: `fetchServices` só dados públicos (sem preço); `submitOrcamento` com `cpf_cnpj` | ✅ |
+| M6 | i18n pt/en/es: chaves do modal em etapas | ✅ |
+| M7 | Backend `cpf_cnpj`: `schema.sql` + worker `types.ts`/`index.ts`/`pdf.ts` | ✅ |
+| M8 | Validação: typecheck + build front e worker | ✅ |
+
+> **Nota:** a fonte da verdade dos preços passa a ser **somente o Worker/Supabase** (tabela `services`). O front não carrega nenhum valor. O admin (`Admin.tsx`) continua mostrando valores reais vindos do Worker (correto — só o cliente não vê).
+
 ### 💰 Cálculo de Preços — Recomendação (registrada p/ validação)
 
 > Valores base + multiplicadores configuráveis em `src/data/services.json`.

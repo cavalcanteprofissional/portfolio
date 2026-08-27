@@ -38,6 +38,7 @@ create table if not exists public.orcamentos (
   nome        text not null,
   email       text not null,
   whatsapp    text,
+  cpf_cnpj    text,                              -- CPF ou CNPJ do cliente
   status      text not null default 'PENDENTE'
               check (status in ('PENDENTE', 'APROVADO', 'RECUSADO')),
   itens       jsonb not null,                    -- [{ slug, qtd }]

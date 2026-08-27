@@ -3,9 +3,6 @@ export interface Service {
   name: Record<string, string>;
   description?: Record<string, string>;
   repo?: string;
-  base_price: number;
-  complexity: number;
-  estimated_days?: number;
   active?: boolean;
 }
 
@@ -19,9 +16,6 @@ export const SERVICES: Service[] = [
       es: 'Dashboard con visualizaciones y KPIs a medida.',
     },
     repo: 'labgas-manager',
-    base_price: 1500,
-    complexity: 1.3,
-    estimated_days: 14,
   },
   {
     slug: 'chatbot-ia',
@@ -32,9 +26,6 @@ export const SERVICES: Service[] = [
       es: 'Chatbot RAG que responde desde tu base de conocimiento.',
     },
     repo: 'chatbot-oficina',
-    base_price: 2500,
-    complexity: 1.6,
-    estimated_days: 21,
   },
   {
     slug: 'analise-bi',
@@ -44,9 +35,6 @@ export const SERVICES: Service[] = [
       en: 'Exploratory analysis and intelligence reports.',
       es: 'Análisis exploratorio e informes de inteligencia.',
     },
-    base_price: 1200,
-    complexity: 1.3,
-    estimated_days: 10,
   },
   {
     slug: 'automacao',
@@ -56,8 +44,5 @@ export const SERVICES: Service[] = [
       en: 'Data pipeline and process automation.',
       es: 'Pipeline de datos y automatización de procesos.',
     },
-    base_price: 1800,
-    complexity: 1.3,
-    estimated_days: 12,
   },
 ];

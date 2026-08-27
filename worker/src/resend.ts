@@ -5,7 +5,7 @@ import type { OrcamentoRow } from './types';
 
 type NoticeOrcamento = Pick<
   OrcamentoRow,
-  'codigo' | 'nome' | 'email' | 'whatsapp' | 'status' | 'valor'
+  'codigo' | 'nome' | 'email' | 'whatsapp' | 'cpf_cnpj' | 'status' | 'valor'
 >;
 
 type SendParams = {
@@ -69,7 +69,7 @@ export function buildOwnerNotice(p: {
     html: `
       <h2>Novo orcamento</h2>
       <p><b>Codigo:</b> ${p.orcamento.codigo}</p>
-      <p><b>Cliente:</b> ${p.orcamento.nome} (${p.orcamento.email}${p.orcamento.whatsapp ? ` / ${p.orcamento.whatsapp}` : ''})</p>
+      <p><b>Cliente:</b> ${p.orcamento.nome} (${p.orcamento.email}${p.orcamento.whatsapp ? ` / ${p.orcamento.whatsapp}` : ''}${p.orcamento.cpf_cnpj ? ` / ${p.orcamento.cpf_cnpj}` : ''})</p>
       <p><b>Status:</b> ${p.orcamento.status}</p>
       <p><b>Valor:</b> ${formatBRL(p.orcamento.valor)}</p>`,
   };

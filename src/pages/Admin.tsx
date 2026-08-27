@@ -179,6 +179,7 @@ export function Admin() {
               <div className="text-sm text-muted-foreground">
                 {row.nome} · {row.email}
                 {row.whatsapp ? ` · ${row.whatsapp}` : ''}
+                {row.cpf_cnpj ? ` · ${row.cpf_cnpj}` : ''}
               </div>
               <div className="text-sm text-muted-foreground">
                 {row.itens.map((i) => i.slug).join(', ')} · {new Date(row.created_at).toLocaleString()}

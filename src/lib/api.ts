@@ -8,6 +8,7 @@ export interface SubmitQuoteInput {
   nome: string;
   email: string;
   whatsapp?: string;
+  cpf_cnpj?: string;
   itens: { slug: string; qtd: number }[];
   urgencia: Urgencia;
   descricao?: string;
@@ -28,9 +29,18 @@ export async function fetchServices(): Promise<Service[]> {
   try {
     const res = await fetch(`${WORKER_URL}/services`);
     if (!res.ok) return SERVICES;
-    const data = (await res.json()) as Service[];
+    const data = (await res.json()) as Array<Service & Record<string, unknown>>;
     if (!Array.isArray(data) || data.length === 0) return SERVICES;
-    return data.filter((s) => s.active !== false);
+    // Remove qualquer campo sensivel (precos) retornado pelo Worker —
+    // o front nunca deve expor valores de servicos.
+    return data
+      .filter((s) => s.active !== false)
+      .map(({ base_price: _bp, complexity: _c, estimated_days: _ed, ...rest }) => ({
+        slug: rest.slug,
+        name: rest.name,
+        description: rest.description,
+        repo: rest.repo,
+      }));
   } catch {
     return SERVICES;
   }
@@ -60,6 +70,7 @@ export interface AdminOrcamento {
   nome: string;
   email: string;
   whatsapp?: string | null;
+  cpf_cnpj?: string | null;
   status: 'PENDENTE' | 'APROVADO' | 'RECUSADO';
   itens: { slug: string; qtd: number }[];
   valor: number;
