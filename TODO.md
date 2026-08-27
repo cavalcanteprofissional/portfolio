@@ -836,13 +836,13 @@ Demais seções funcionam no mobile porque usam `Reveal` sobre blocos pequenos (
 
 | # | Tarefa | Status |
 |---|--------|--------|
-| T1 | `CookieConsent.tsx`: unificar `CONSENT_LINES` e `PRIVACY_LINES` em `PRIVACY_LINES` único | ⬜ |
-| T2 | Remover state `step` ('consent' | 'privacy') → sempre mostra a mesma tela | ⬜ |
-| T3 | Remover botão "Saiba mais" / "Voltar" → apenas `[ Aceitar ]` | ⬜ |
-| T4 | Remover `handleLearnMore` e `handleBack` | ⬜ |
-| T5 | Header: `> POLÍTICA DE PRIVACIDADE` (PT/EN/ES) | ⬜ |
-| T6 | Texto unificado: Cache API + localStorage + sem cookies de rastreamento | ⬜ |
-| T7 | Verificar typecheck e build | ⬜ |
+| T1 | `CookieConsent.tsx`: unificar `CONSENT_LINES` e `PRIVACY_LINES` em `PRIVACY_LINES` único | ✅ |
+| T2 | Remover state `step` ('consent' | 'privacy') → sempre mostra a mesma tela | ✅ |
+| T3 | Remover botão "Saiba mais" / "Voltar" → apenas `[ Aceitar ]` | ✅ |
+| T4 | Remover `handleLearnMore` e `handleBack` | ✅ |
+| T5 | Header: `> POLÍTICA DE PRIVACIDADE` (PT/EN/ES) | ✅ |
+| T6 | Texto unificado: Cache API + localStorage + sem cookies de rastreamento | ✅ |
+| T7 | Verificar typecheck e build | ✅ |
 
 #### 📊 Fase 2 — Tracking de Visitantes (4-6h)
 
