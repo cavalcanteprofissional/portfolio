@@ -182,10 +182,11 @@ export function Hero() {
               <p className="text-muted-foreground text-base leading-relaxed mt-3">
                 {t('hero.description')}
               </p>
-              <div className="mt-4">
-                {heroButtons}
-              </div>
             </motion.div>
+
+            <div className="md:hidden mt-4">
+              {heroButtons}
+            </div>
 
             <motion.p variants={staggerChild()} className="hidden md:block text-lg text-muted-foreground font-medium md:whitespace-nowrap">
               {t('hero.title')}
