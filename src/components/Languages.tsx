@@ -10,12 +10,7 @@ const languages = [
   { key: 'japanese', stars: 2 },
 ];
 
-const starColors: Record<number, string> = {
-  5: 'text-yellow-500',
-  4: 'text-blue-500',
-  3: 'text-yellow-500',
-  2: 'text-orange-500',
-};
+const filledStarColor = 'text-yellow-500';
 
 const levelLabels: Record<number, string> = {
   5: 'lang.level.native',
@@ -59,7 +54,7 @@ export function Languages() {
                       <Star
                         className={`w-5 h-5 ${
                           starIndex < lang.stars
-                            ? starColors[lang.stars as keyof typeof starColors]
+                            ? filledStarColor
                             : 'text-muted/30'
                         } fill-current text-current`}
                         aria-hidden="true"
