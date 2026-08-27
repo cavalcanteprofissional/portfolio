@@ -1,19 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
-import { FileText, Mail, MessageCircle, Linkedin } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { Reveal } from '../lib/motion';
 import { QuoteModal } from './QuoteModal';
 
 export function Contact() {
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
-
-  const contactButtons = [
-    { icon: Mail, href: 'mailto:cavalcanteprofissional@outlook.com', labelKey: 'cta.contact', primary: false },
-    { icon: MessageCircle, href: `https://wa.me/5585996859051?text=${encodeURIComponent(t('cta.whatsappMsg'))}`, labelKey: 'cta.whatsapp', primary: false },
-    { icon: Linkedin, href: 'https://linkedin.com/in/cavalcante-Lucas', labelKey: 'cta.linkedin', primary: false },
-  ];
 
   return (
     <section id="contact" className="py-20 px-4">
@@ -46,26 +40,6 @@ export function Contact() {
                 <FileText className="w-5 h-5" aria-hidden="true" />
                 {t('quote.requestCta')}
               </motion.button>
-
-              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-                {contactButtons.map((btn) => {
-                  const Icon = btn.icon;
-                  return (
-                    <motion.a
-                      key={btn.labelKey}
-                      href={btn.href}
-                      target={btn.href.startsWith('http') ? '_blank' : undefined}
-                      rel={btn.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium transition-all bg-secondary hover:bg-secondary/80 border border-border hover:border-primary/30 hover:-translate-y-0.5"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <Icon className="w-5 h-5" aria-hidden="true" />
-                      <span>{t(btn.labelKey)}</span>
-                    </motion.a>
-                  );
-                })}
-              </div>
             </motion.div>
           </div>
         </div>
