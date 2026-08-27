@@ -1085,17 +1085,26 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 | R6 | Verificar typecheck e build | ✅ |
 
 ### Fase 3 — Setup Supabase + Cloudflare Worker + Resend
+
+> **Decisões confirmadas pelo usuário:**
+> - Projeto é **Vite** → no front usamos **`VITE_`** (não `NEXT_PUBLIC_`).
+> - `/admin` via **hash routing** (`#/admin`), 100% compatível com GitHub Pages (`base: '/portfolio-cavalcante/'`).
+> - Form do orçamento vai **no CTA existente** (`Contact.tsx`).
+> - Aviso para o dono (você) quando cliente solicitar: **por EMAIL** (Resend) → `cavalcanteprofissional@outlook.com`.
+> - **service_role key**: será **rotacionada pelo usuário no painel na hora de configurar o Worker** (a postada estava comprometida — NÃO usar; tratar como vazada). A NOVA nunca passa pelo chat; vai direto via `wrangler secret put`.
+> - Supabase project: `https://ohtkfjckydmjsfuouyaj.supabase.co` (pública). Anon key = `sb_publishable_...` (pública).
+
 | # | Tarefa | Status |
 |---|--------|--------|
-| S1 | Criar projeto Supabase (region + tables c/ RLS) — `services`, `orcamentos`, `visitas` | ⬜ |
-| S2 | Criar `worker/` no repo (Wrangler) — rotas `POST /orcamento`, `POST /aprovar`, `GET /status/:id`, `GET /visit` | ⬜ |
-| S3 | Worker: geração de PDF (PDFKit) do orçamento | ⬜ |
+| S1 | `supabase/schema.sql` — tabelas `services`, `orcamentos` + RLS restritivo por padrão (anon só LÊ `services`; `orcamentos` sem policy, acessado só por `service_role` no Worker) | ⬜ |
+| S2 | Criar `worker/` no repo (Wrangler) — rotas `POST /orcamento`, `POST /aprovar`, `GET /status/:id`, `GET /health` | ⬜ |
+| S3 | Worker: geração de PDF (PDFKit) do orçamento, usado no envio p/ cliente | ⬜ |
 | S4 | Worker: envio via Resend com anexo PDF → email do cliente | ⬜ |
-| S5 | Worker: `POST /visit` registra visita anônima (ou integra com Umami que já cobre) | ⬜ |
+| S5 | (visitas cobertas por Umami — descartada tabela `visitas`) | — |
 | S6 | Configurar Resend + domínio (verificar SPF/DKIM) | ⬜ |
-| S7 | Guardar credenciais no Worker (`SUPABASE_URL`, `SERVICE_ROLE_KEY`, `RESEND_API_KEY`) — nunca no bundle | ⬜ |
-| S8 | Ping anti-pausa do Supabase (Cron Trigger grátis do Cloudflare, 1x/dia) | ⬜ |
-| S9 | Configurar CORS no Worker p/ origem do GitHub Pages | ⬜ |
+| S7 | Secrets do Worker: `service_role` (NOVA, rotacionada) + `RESEND_API_KEY` via `wrangler secret put`; `SUPABASE_URL` via vars — nunca no bundle | ⬜ |
+| S8 | Ping anti-pausa do Supabase (Cron Trigger grátis do Cloudflare → `GET /health`, 1x/dia) | ⬜ |
+| S9 | CORS no Worker p/ origem do GitHub Pages (`https://cavalcanteprofissional.github.io`) | ⬜ |
 
 ### Fase 4 — Formulário de Orçamento no CTA
 
@@ -1150,3 +1159,38 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 - [Cloudflare Workers pricing/limits](https://developers.cloudflare.com/workers/platform/pricing/)
 - [Umami](https://umami.is) · [Umami vs GoatCounter](https://analytics-alternatives.com/compare/goatcounter-vs-umami/)
 - [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
+
+---
+
+### 🔑 Checklist de Credenciais pendentes (usuário fornece)
+
+> Preenchido conforme respostas do usuário (2026-08-27): rotaciona key depois, passa faltantes em lote, aviso por email.
+> Regra de segurança: **só chaves públicas vão no chat/repo**. Secretas (`service_role` nova, `RESEND_API_KEY`) vão direto via `wrangler secret put` — nunca no chat.
+
+#### 1. Umami (analytics) — precisa provisionar (Cloud free-tier `cloud.umami.is` ou self-host)
+- [ ] `VITE_UMAMI_WEBSITE_ID` (público)
+- [ ] `VITE_UMAMI_SRC` (público) — default `https://cloud.umami.is/script.js`
+
+#### 2. Resend (email)
+- [ ] `RESEND_API_KEY` (**SECRET** → `wrangler secret put RESEND_API_KEY`)
+- [ ] Domínio verificado no Resend (SPF/DKIM)
+- [ ] `from` desejado (ex.: `orcamentos@seudominio.com`)
+
+#### 3. Cloudflare Workers (deploy)
+- [ ] Login Wrangler (`npx wrangler login`)
+- [ ] Subdomain/rota do Worker (ex.: `orcamentos.<sub>.workers.dev`)
+- [ ] **`SERVICE_ROLE_KEY` NOVA** (**SECRET** → `wrangler secret put SERVICE_ROLE_KEY`) — após usuário rotacionar no painel
+
+#### 4. Serviços / preços (Fase 4 — tabela `services`)
+- [ ] Confirmar lista **serviço → repos públicos** (Dashboard, Chatbot IA, Análise/BI, Automação)
+- [ ] Confirmar base/shortcodes de preço (recomendação no plano acima)
+
+#### 5. Confirmado
+- [x] `VITE_SUPABASE_URL` = `https://ohtkfjckydmjsfuouyaj.supabase.co` (pública)
+- [x] `VITE_SUPABASE_ANON_KEY` = `sb_publishable_...` (pública)
+- [x] Aviso ao dono por **email** (Resend) → `cavalcanteprofissional@outlook.com`
+
+#### 📌 Plano de implementação (independe das chaves — pode avançar)
+- [ ] Escrever `supabase/schema.sql` (tabelas + RLS)
+- [ ] Montar estrutura `worker/` (Wrangler config, PDFKit, Resend, CORS, health ping)
+- [ ] Front: `VITE_` env vars + hash routing `#/admin` + form no `Contact.tsx`
