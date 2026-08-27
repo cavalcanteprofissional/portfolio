@@ -51,6 +51,16 @@ export async function getOrcamento(
   return (data as OrcamentoRow) ?? null;
 }
 
+export async function listOrcamentos(db: SupabaseClient): Promise<OrcamentoRow[]> {
+  const { data, error } = await db
+    .from('orcamentos')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(200);
+  if (error) throw new Error(`listOrcamentos: ${error.message}`);
+  return (data as OrcamentoRow[]) ?? [];
+}
+
 export async function updateStatus(
   db: SupabaseClient,
   codigo: string,

@@ -1,9 +1,9 @@
-import { getSupabase, listServices, insertOrcamento, getOrcamento, updateStatus } from './supabase';
+import { getSupabase, listServices, insertOrcamento, getOrcamento, updateStatus, listOrcamentos } from './supabase';
 import { computeTotal } from './pricing';
 import { buildQuotePdf } from './pdf';
 import { sendEmail, buildClientEmail, buildOwnerNotice } from './resend';
 import { shortCode } from './types';
-import type { QuoteRequest } from './types';
+import type { OrcamentoRow, QuoteRequest } from './types';
 
 export interface Env {
   SUPABASE_URL: string;
@@ -21,7 +21,7 @@ function corsHeaders(): Record<string, string> {
   return {
     'Access-Control-Allow-Origin': GITHUB_PAGES_ORIGIN,
     'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Content-Type': 'application/json; charset=utf-8',
   };
 }
@@ -44,6 +44,29 @@ async function readJson<T>(req: Request): Promise<T> {
   } catch {
     throw new Error('Body invalido');
   }
+}
+
+async function requireAdmin(req: Request, db: ReturnType<typeof getSupabase>): Promise<void> {
+  const auth = req.headers.get('Authorization');
+  const token = auth?.startsWith('Bearer ') ? auth.slice(7) : null;
+  if (!token) throw new Error('Não autorizado');
+  const { data, error } = await db.auth.getUser(token);
+  if (error || !data?.user) throw new Error('Não autorizado');
+}
+
+// Recompoe linhas/valor de um orcamento a partir do catalogo de servicos
+async function recomputePrice(
+  orc: OrcamentoRow,
+  db: ReturnType<typeof getSupabase>,
+) {
+  const services = await listServices(db);
+  const req: QuoteRequest = {
+    nome: orc.nome,
+    email: orc.email,
+    itens: orc.itens,
+    urgencia: (orc.urgencia as 'normal' | 'urgente' | 'muito_urgente') || 'normal',
+  };
+  return computeTotal(req, services, 'pt');
 }
 
 export default {
@@ -125,13 +148,69 @@ export default {
         }, 201);
       }
 
+      // GET /admin/orcamentos — protegido por Supabase Auth (admin)
+      if (req.method === 'GET' && path === '/admin/orcamentos') {
+        await requireAdmin(req, db);
+        const orcs = await listOrcamentos(db);
+        return json(orcs);
+      }
+
+      // POST /admin/aprovar — aprova/rejeita e, se aprovado, envia PDF por email
+      if (req.method === 'POST' && path === '/admin/aprovar') {
+        await requireAdmin(req, db);
+        const body = await readJson<{ codigo?: string; status?: string }>(req);
+        if (!body?.codigo || !['APROVADO', 'RECUSADO'].includes(body.status ?? '')) {
+          return error('Campos obrigatorios: codigo, status (APROVADO|RECUSADO)');
+        }
+
+        const orc = await getOrcamento(db, body.codigo!);
+        if (!orc) return error('Orcamento nao encontrado', 404);
+
+        await updateStatus(db, orc.codigo, body.status as OrcamentoRow['status']);
+
+        if (body.status === 'APROVADO') {
+          const { lines, total, subtotal, urgenciaFactor } = await recomputePrice(orc, db);
+          const urgenciaLabel =
+            orc.urgencia === 'muito_urgente' ? 'muito urgente' : orc.urgencia === 'urgente' ? 'urgente' : 'normal';
+
+          const pdf = await buildQuotePdf({
+            codigo: orc.codigo,
+            nome: orc.nome,
+            email: orc.email,
+            whatsapp: orc.whatsapp,
+            lines,
+            subtotal,
+            urgenciaFactor,
+            urgenciaLabel,
+            total: orc.valor,
+            descricao: orc.descricao,
+            lang: 'pt',
+          });
+
+          const clientEmail = buildClientEmail({ orcamento: orc, lines, lang: 'pt' });
+          await sendEmail(env.RESEND_API_KEY, env.FROM_EMAIL, {
+            ...clientEmail,
+            to: orc.email,
+            attachmentData: pdf,
+            attachmentName: `orcamento-${orc.codigo}.pdf`,
+          });
+
+          // Aviso ao dono
+          await sendEmail(env.RESEND_API_KEY, env.FROM_EMAIL, {
+            ...buildOwnerNotice({ orcamento: orc }),
+            to: env.OWNER_EMAIL,
+          });
+        }
+
+        return json({ codigo: orc.codigo, status: body.status });
+      }
+
       return error('Rota nao encontrada', 404);
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'Erro interno';
       return error(msg, 500);
     }
   },
-
   async scheduled(_event: ScheduledEvent, env: Env): Promise<void> {
     // Cron: mantem o projeto Supabase ativo (anti-pausa)
     try {

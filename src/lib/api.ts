@@ -54,3 +54,44 @@ export async function submitOrcamento(input: SubmitQuoteInput): Promise<SubmitQu
   }
   return data as SubmitQuoteResult;
 }
+
+export interface AdminOrcamento {
+  codigo: string;
+  nome: string;
+  email: string;
+  whatsapp?: string | null;
+  status: 'PENDENTE' | 'APROVADO' | 'RECUSADO';
+  itens: { slug: string; qtd: number }[];
+  valor: number;
+  urgencia: string;
+  descricao?: string | null;
+  created_at: string;
+}
+
+function workerUrl(): string {
+  if (!available()) throw new Error('Worker não configurado (VITE_WORKER_URL)');
+  return WORKER_URL;
+}
+
+export async function adminListOrcamentos(token: string): Promise<AdminOrcamento[]> {
+  const res = await fetch(`${workerUrl()}/admin/orcamentos`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json().catch(() => []);
+  if (!res.ok) throw new Error((data as { error?: string }).error ?? 'Falha ao listar orçamentos');
+  return data as AdminOrcamento[];
+}
+
+export async function adminAprovar(
+  token: string,
+  codigo: string,
+  status: 'APROVADO' | 'RECUSADO',
+): Promise<void> {
+  const res = await fetch(`${workerUrl()}/admin/aprovar`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ codigo, status }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error((data as { error?: string }).error ?? 'Falha ao atualizar orçamento');
+}

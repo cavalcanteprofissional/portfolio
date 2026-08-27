@@ -1112,21 +1112,23 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 
 | # | Tarefa | Status |
 |---|--------|--------|
-| F1 | `Contact.tsx`: formulário Nome, Email, WhatsApp, Serviço, Urgência, Descrição | ⬜ |
-| F2 | Validar (email obrigatório) | ⬜ |
-| F3 | Carregar serviços via GitHub API (repos públicos) mapeados a `services` | ⬜ |
-| F4 | `POST /orcamento` (Worker) — **submit único registra dados + confirma solicitação** + abrir `wa.me` p/ você | ⬜ |
-| F5 | Cálculo de preço (recomendado) + preview dinâmico no cliente | ⬜ |
-| F6 | Confirmação com código de pedido p/ o cliente | ⬜ |
+| F1 | `Contact.tsx`: formulário Nome, Email, WhatsApp, Serviço, Urgência, Descrição | ✅ |
+| F2 | Validar (email obrigatório) | ✅ |
+| F3 | Carregar serviços (catálogo local `src/data/services.ts` + `GET /services` do Worker quando `VITE_WORKER_URL` configurado) | ✅ |
+| F4 | `POST /orcamento` (Worker) — **submit único registra dados + confirma solicitação** + abrir `wa.me` p/ você | ✅ (submit único; aviso ao dono por email via Resend) |
+| F5 | Cálculo de preço (recomendado) + preview dinâmico no cliente | ✅ (`src/lib/pricing.ts`) |
+| F6 | Confirmação com código de pedido p/ o cliente | ✅ |
 
 ### Fase 5 — Dashboard Admin (`/admin`) + Aprovação
 | # | Tarefa | Status |
 |---|--------|--------|
-| A1 | Rota `/admin` com **Supabase Auth** (login email/senha) | ⬜ |
-| A2 | Lista orçamentos (status PENDENTE/APROVADO/RECUSADO, dados, valor, datas) | ⬜ |
-| A3 | Botão Aprovar/Recusar → `POST /aprovar` → Worker gera PDF + Resend envia p/ cliente | ⬜ |
-| A4 | Aviso p/ você (email) que o orçamento foi enviado ao cliente | ⬜ |
-| A5 | Visão de visitas (via Umami) + exportação CSV | ⬜ |
+| A1 | Rota `/admin` com **Supabase Auth** (login email/senha) | ✅ (hash routing `#/admin` + `src/pages/Admin.tsx` + `src/lib/supabase.ts`) |
+| A2 | Lista orçamentos (status PENDENTE/APROVADO/RECUSADO, dados, valor, datas) | ✅ (`GET /admin/orcamentos` no Worker + listagem) |
+| A3 | Botão Aprovar/Recusar → `POST /aprovar` → Worker gera PDF + Resend envia p/ cliente | ✅ (`POST /admin/aprovar` no Worker + `src/lib/api.ts`) |
+| A4 | Aviso p/ você (email) que o orçamento foi enviado ao cliente | ✅ (em `POST /admin/aprovar`, status APROVADO) |
+| A5 | Visão de visitas (via Umami) + exportação CSV | ⬜ (deferido; visitas via Umami + botão export p/ depois) |
+
+> **Segurança admin:** `GET /admin/orcamentos` e `POST /admin/aprovar` exigem `Authorization: Bearer <token Supabase Auth>`, validado no Worker via `db.auth.getUser()`. `orcamentos` segue sem RLS (só Worker via service_role).
 
 ### 💰 Cálculo de Preços — Recomendação (registrada p/ validação)
 

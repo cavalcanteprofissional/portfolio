@@ -50,3 +50,4 @@ create table if not exists public.orcamentos (
 
 alter table public.orcamentos enable row level security;
 -- Intencionalmente sem policy: apenas o Worker (service_role) tem acesso.
+-- (O Admin le/grava via /admin/* do Worker, autenticado por token Supabase Auth)
