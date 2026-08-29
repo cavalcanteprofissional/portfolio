@@ -58,7 +58,7 @@ Meu portfólio pessoal — projetos, experimentos e um pouco do que sei fazer co
 | **i18n** | i18next + react-i18next |
 | **Ícones** | Lucide React + React Icons |
 | **Backend** | Cloudflare Worker (TypeScript) + Supabase (Postgres + Auth) |
-| **Email/PDF** | Resend + pdf-lib |
+| **Email/PDF** | Brevo + pdf-lib |
 | **Analytics** | Umami (consent-gated) |
 | **Currículo** | Python + mBART-large-50 + Jinja2 + Playwright |
 | **Teste** | Playwright (E2E) |
@@ -99,7 +99,7 @@ Os PDFs são gerados em `public/cv/` e versionados no repo. Edite `resume/curric
 
 ## Backend real (orçamentos / admin)
 
-O site tem um backend gratuito para o fluxo de orçamento: **Supabase** (banco + auth), **Cloudflare Worker** (API/PDF/email) e **Resend** (disparo de email). O admin fica em `#/admin`.
+O site tem um backend gratuito para o fluxo de orçamento: **Supabase** (banco + auth), **Cloudflare Worker** (API/PDF/email) e **Brevo** (disparo de email). O admin fica em `#/admin`.
 
 ### Variáveis do frontend (`.env`)
 
@@ -117,7 +117,7 @@ VITE_WORKER_URL=            # pública — URL do Cloudflare Worker
 cd worker
 npm install
 npx wrangler login
-npx wrangler secret put RESEND_API_KEY     # secreto — nunca no repo
+npx wrangler secret put BREVO_API_KEY       # secreto — nunca no repo
 npx wrangler secret put SERVICE_ROLE_KEY   # service_role NOVA (rotacionada) — nunca no repo
 npx wrangler secret put SUPABASE_URL       # chave pública (pode ser variável vars)
 npx wrangler dev        # teste local
@@ -150,7 +150,7 @@ portfolio/
 ├── scripts/            # generate-icons.mjs (npm run icons)
 ├── resume/             # pipeline de currículos (Python + mBART)
 ├── supabase/           # schema.sql (tabelas + RLS)
-├── worker/             # Cloudflare Worker (API, PDF, Resend)
+├── worker/             # Cloudflare Worker (API, PDF, Brevo)
 └── e2e/                # Playwright E2E tests
 ```
 

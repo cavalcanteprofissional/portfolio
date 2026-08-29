@@ -1062,7 +1062,7 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 | Front | GitHub Pages (mantido) | ✅ | — |
 | Banco | **Supabase** (Postgres) | ✅ sem cartão | 500MB DB · 1GB storage · pausa 7d inativo (precisa ping). Novos projetos exigem grants explícitos p/ PostgREST |
 | API/PDF/email | **Cloudflare Worker** | ✅ | 100k req/dia · 10ms CPU/req · 128MB mem · 50 subrequests |
-| Email | **Resend** | ✅ | 3k emails/mês · 100/dia · 1 domínio |
+| Email | **Brevo** | ✅ | 300 emails/dia · sem domínio (sender verificado por email) |
 | Analytics | **Umami** (self-hosted ou Cloud) | ✅ | Cloud: 100k events/mês grátis · self-host free |
 | Auth | **Supabase Auth** | ✅ | até 50k MAU |
 
@@ -1084,7 +1084,7 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 | R5 | Integrar script do Umami no `App.tsx`, disparado quando `consent=true` (on-demand / consent gate) | ✅ (loader criado, aguarda websiteId) |
 | R6 | Verificar typecheck e build | ✅ |
 
-### Fase 3 — Setup Supabase + Cloudflare Worker + Resend
+### Fase 3 — Setup Supabase + Cloudflare Worker + Brevo
 
 > **Decisões confirmadas pelo usuário:**
 > - Projeto é **Vite** → no front usamos **`VITE_`** (não `NEXT_PUBLIC_`).
@@ -1184,16 +1184,16 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 ### 🔑 Checklist de Credenciais pendentes (usuário fornece)
 
 > Preenchido conforme respostas do usuário (2026-08-27): rotaciona key depois, passa faltantes em lote, aviso por email.
-> Regra de segurança: **só chaves públicas vão no chat/repo**. Secretas (`service_role` nova, `RESEND_API_KEY`) vão direto via `wrangler secret put` — nunca no chat.
+> Regra de segurança: **só chaves públicas vão no chat/repo**. Secretas (`service_role` nova, `BREVO_API_KEY`) vão direto via `wrangler secret put` — nunca no chat.
 
-#### 1. Umami (analytics) — precisa provisionar (Cloud free-tier `cloud.umami.is` ou self-host)
-- [ ] `VITE_UMAMI_WEBSITE_ID` (público)
-- [ ] `VITE_UMAMI_SRC` (público) — default `https://cloud.umami.is/script.js`
+#### 1. Umami (analytics) — provisionado ✅ (`cloud.umami.is`)
+- [x] `VITE_UMAMI_WEBSITE_ID` (público) = `076f01cd-40c0-45de-87c8-6888cb9efb78`
+- [x] `VITE_UMAMI_SRC` (público) = `https://cloud.umami.is/script.js`
 
-#### 2. Resend (email)
-- [ ] `RESEND_API_KEY` (**SECRET** → `wrangler secret put RESEND_API_KEY`)
-- [ ] Domínio verificado no Resend (SPF/DKIM)
-- [ ] `from` desejado (ex.: `orcamentos@seudominio.com`)
+#### 2. Brevo (email) — sem domínio (sender verificado por email)
+- [ ] `BREVO_API_KEY` (**SECRET** → `wrangler secret put BREVO_API_KEY`)
+- [ ] Sender (ex.: `cavalcanteprofissional@outlook.com` — validar remetente na conta Brevo)
+- [ ] `FROM_EMAIL` desejado (ex.: `Cavalcante <cavalcanteprofissional@outlook.com>`) → atualizar `worker/wrangler.toml:9`
 
 #### 3. Cloudflare Workers (deploy)
 - [ ] Login Wrangler (`npx wrangler login`)
@@ -1288,27 +1288,29 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 - [ ] Criar usuário admin (Auth → Users) p/ login do `#/admin`
 - [ ] Confirmar anon key (pública) e `SUPABASE_URL`
 
-#### ✉️ Passo 2 — Resend (email)
-- [ ] Criar conta em resend.com + verificar domínio (SPF/DKIM)
-- [ ] Gerar `RESEND_API_KEY` (secreto → `wrangler secret put`)
-- [ ] Informar o `from` (substituir placeholder `orcamentos@seu-dominio.com` no `wrangler.toml:8`)
+#### ✉️ Passo 2 — Brevo (email — sem domínio)
+- [ ] Criar conta em **my.brevo.com**; validar **sender** (pode ser `cavalcanteprofissional@outlook.com`)
+- [ ] Gerar `BREVO_API_KEY` (secreto → `wrangler secret put BREVO_API_KEY`)
+- [ ] Informar o `from` (substituir placeholder no `wrangler.toml:9`, ex.: `Cavalcante <cavalcanteprofissional@outlook.com>`)
 
 #### ☁️ Passo 3 — Cloudflare Workers (deploy do Worker)
 - [ ] `npx wrangler login`
-- [ ] `wrangler secret put RESEND_API_KEY` + `wrangler secret put SERVICE_ROLE_KEY`
+- [ ] `wrangler secret put BREVO_API_KEY` + `wrangler secret put SERVICE_ROLE_KEY`
 - [ ] Corrigir `FROM_EMAIL` no `wrangler.toml`
 - [ ] `npx wrangler deploy` → informar URL do Worker p/ `VITE_WORKER_URL`
 
-#### 📊 Passo 4 — Umami (analytics)
-- [ ] Provisionar (cloud.umami.is ou self-host), criar 1 website
-- [ ] Informar (públicos): `VITE_UMAMI_WEBSITE_ID` + `VITE_UMAMI_SRC`
+#### 📊 Passo 4 — Umami (analytics) ✅ provisionado
+- [x] Site criado em `cloud.umami.is` (domain: `cavalcanteprofissional.github.io`)
+- [x] `VITE_UMAMI_WEBSITE_ID` + `VITE_UMAMI_SRC` já no `.env.local`
+- [ ] Apenas **validar** visite após aceitar cookie (Passo 7)
 
 #### 🧾 Passo 5 — Populhar `services` (catálogo/preços — fonte da verdade no backend)
 - [ ] Inserir linhas (slug, name/description jsonb pt/en/es, repo, base_price, complexity, estimated_days, active)
 - [ ] Confirmar lista serviço→repos + base/multiplicadores (recomendação registrada acima)
 
 #### 🚀 Passo 6 — Frontend + deploy do site
-- [ ] Preencher `.env` (públicas): `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_UMAMI_WEBSITE_ID`, `VITE_UMAMI_SRC`, `VITE_WORKER_URL`
+- [x] `.env.local` preenchido: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_UMAMI_WEBSITE_ID`, `VITE_UMAMI_SRC`
+- [ ] `VITE_WORKER_URL` = URL do Worker (após Passo 3)
 - [ ] Merge branch `feat/tracking` → `main` + Deploy via GitHub Actions (GitHub Pages)
 
 #### ✅ Passo 7 — Validação end-to-end
@@ -1316,3 +1318,44 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 - [ ] Solicitar orçamento no modal → código + aviso por email ao dono
 - [ ] Login `#/admin` → listar → aprovar → cliente recebe **PDF** por email
 - [ ] Conferir visita no Umami após aceitar cookie
+
+---
+
+### 📝 Registro de execução — refatoração Resend → Brevo (2026-08-29)
+
+> **Motivo:** usuário não quer pagar domínio → Resend (exige domínio verificado SPF/DKIM) substituído por **Brevo** (gratuito, sem domínio, sender verificado por email).
+
+**Já concluído ✅:**
+- [x] `worker/src/email.ts` (renomeado de `resend.ts`) — SDK `resend` trocado por REST do Brevo (`https://api.brevo.com/v3/smtp/email`); mesma assinatura `sendEmail(apiKey, from, p)`; anexo PDF convertido para base64
+- [x] `worker/src/index.ts` — `RESEND_API_KEY` → `BREVO_API_KEY` (interface `Env` + 3 chamadas); import `./email`
+- [x] `worker/wrangler.toml` — secret renomeado `BREVO_API_KEY`; `FROM_EMAIL` = `Cavalcante <cavalcanteprofissional@outlook.com>`
+- [x] `worker/package.json` + `package-lock.json` — removida dep `resend` (npm install sincronizado)
+- [x] `README.md` / `CHANGELOG.md` / `TODO.md` — referências Resend → Brevo
+- [x] `supabase/seed.sql` — INSERT idempotente de `services` (preços aprovados: Dashboard 1500, Chatbot 2500, Análise/BI 1200, Automação 1800)
+- [x] Validações: `worker` typecheck ✅ · frontend typecheck ✅ · `npm run build` ✅ · `wrangler deploy --dry-run` ✅ (bundle 1571KiB)
+- [x] `.env.local` — comentários em todas as keys; `.env.example` espelhado
+- ⚠️ Lint raiz pré-existente: `eslint .` varre `worker/` (config do frontend) gerando erros de `no-unused-vars`/globals já existentes antese — fora do escopo desta refatoração
+
+**Credenciais públicas já registradas (`.env.local`):**
+- [x] `VITE_SUPABASE_URL` = `https://ohtkfjckydmjsfuouyaj.supabase.co`
+- [x] `VITE_SUPABASE_ANON_KEY` = `sb_publishable_...` (pública — valor no `.env.local`)
+- [x] `VITE_UMAMI_WEBSITE_ID` = `076f01cd-40c0-45de-87c8-6888cb9efb78`
+- [x] `VITE_UMAMI_SRC` = `https://cloud.umami.is/script.js`
+- [x] `VITE_WORKER_URL` = `https://portfolio-cavalcante-worker.cavalcanteprofissional.workers.dev`
+
+**Aguardando usuário (em andamento) ⏳:**
+- [x] Brevo: `BREVO_API_KEY` gerada (recebida 2026-08-29) — aplicada via `wrangler secret put BREVO_API_KEY` ✅
+- [x] Cloudflare: `wrangler login` ✅ (conta `cavalcanteprofissional`); secrets `BREVO_API_KEY` + `SERVICE_ROLE_KEY` aplicados ✅
+- [x] **Subdomínio workers.dev registrado** pelo suporte Cloudflare (`cavalcanteprofissional`) + rota `workers.dev` ativada para o Worker ✅
+- [x] **Worker publicado** ✅ — `GET /health` → `{"ok":true,"supabase":true}` · rota: `https://portfolio-cavalcante-worker.cavalcanteprofissional.workers.dev`
+- [x] **`seed.sql` rodado** ✅ — `GET /services` retorna os 4 serviços (dashboard 1500, chatbot 2500, analise-bi 1200, automacao 1800)
+- [x] `wrangler.toml` — adicionado `workers_dev = true` (evita desativar rota em futuros deploys)
+- [x] **Redeploy final do Worker** ✅ — código atual (rename `email.ts`, `FROM_EMAIL`, `workers_dev`) publicado; `GET /health` → `{"ok":true,"supabase":true}` · `GET /services` → 4 serviços
+- [ ] ⚠️ **Decisão usuária:** manter `SERVICE_ROLE_KEY` atual (NÃO rotacionar agora) — ainda exposta no chat = risco de segurança aceito. **Recomendação permanece:** rotacionar antes de expor publicamente/produção real
+- [ ] Brevo: confirmar **sender verificado** (`cavalcanteprofissional@outlook.com`) — `FROM_EMAIL` já no `wrangler.toml`
+- [ ] Supabase: criar **usuário admin** (Authentication → Users) p/ login `#/admin`
+- [ ] **Merge `feat/tracking` → `main` + deploy site (GitHub Actions) + validação e2e (Passo 7)**
+  - [ ] (PÓS-MERGE) **Adicionar step `wrangler deploy` no `.github/workflows/deploy.yml`** para automatizar o deploy do Worker junto ao do site. *Decisão usuária (2026-08-29): remover integração "Workers Builds" do Cloudflare (Opção A) e, no merge final, centralizar o deploy do Worker no GitHub Actions.*
+  - [ ] (PÓS-MERGE) **Credenciais CI p/ wrangler:** criar `CLOUDFLARE_API_TOKEN` (scoped em Workers Scripts → Edit) + `CLOUDFLARE_ACCOUNT_ID` como **secrets do repositório** (GitHub → Settings → Secrets) — `wrangler login` interativo não funciona no CI; usar `CLOUDFLARE_API_TOKEN` no step.
+
+> **🔗 Vínculo Git–Cloudflare (2026-08-29):** foi criada (por acidente) uma integração "Workers Builds" com `root_directory: /` + `build_command: npm run build` (0 builds, nada quebrou). Removida via suporte Cloudflare (Opção A). Conta limpa: sem Pages, sem Workers Builds, sem conexão de repo. Worker deployado manual via `wrangler deploy`. **Plano:** automatizar no `deploy.yml` (pós-merge). Subdomínio workers.dev já registrado e ativo: `cavalcanteprofissional`.

@@ -1,14 +1,14 @@
 import { getSupabase, listServices, insertOrcamento, getOrcamento, updateStatus, listOrcamentos } from './supabase';
 import { computeTotal } from './pricing';
 import { buildQuotePdf } from './pdf';
-import { sendEmail, buildClientEmail, buildOwnerNotice } from './resend';
+import { sendEmail, buildClientEmail, buildOwnerNotice } from './email';
 import { shortCode } from './types';
 import type { OrcamentoRow, QuoteRequest } from './types';
 
 export interface Env {
   SUPABASE_URL: string;
   SERVICE_ROLE_KEY: string;
-  RESEND_API_KEY: string;
+  BREVO_API_KEY: string;
   FROM_EMAIL: string;
   OWNER_EMAIL: string;
 }
@@ -134,7 +134,7 @@ export default {
         await insertOrcamento(db, orcamento);
 
         // Aviso ao dono por email
-        await sendEmail(env.RESEND_API_KEY, env.FROM_EMAIL, {
+        await sendEmail(env.BREVO_API_KEY, env.FROM_EMAIL, {
           ...buildOwnerNotice({ orcamento }),
           to: env.OWNER_EMAIL,
         });
@@ -190,7 +190,7 @@ export default {
           });
 
           const clientEmail = buildClientEmail({ orcamento: orc, lines, lang: 'pt' });
-          await sendEmail(env.RESEND_API_KEY, env.FROM_EMAIL, {
+          await sendEmail(env.BREVO_API_KEY, env.FROM_EMAIL, {
             ...clientEmail,
             to: orc.email,
             attachmentData: pdf,
@@ -198,7 +198,7 @@ export default {
           });
 
           // Aviso ao dono
-          await sendEmail(env.RESEND_API_KEY, env.FROM_EMAIL, {
+          await sendEmail(env.BREVO_API_KEY, env.FROM_EMAIL, {
             ...buildOwnerNotice({ orcamento: orc }),
             to: env.OWNER_EMAIL,
           });

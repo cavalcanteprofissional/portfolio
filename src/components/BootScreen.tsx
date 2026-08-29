@@ -43,20 +43,20 @@ const BOOT_LINES: BootLine[] = [
   { type: 'footer', text: '  Booting: Lucas Cavalcante Systems v2.6.0' },
 ];
 
-const MIN_BOOT_MS = 2800;
-const SECTION_PAUSE = 60;
-const LINE_GAP = 8;
-const OK_DELAY = 24;
-const PROMPT_DELAY = 160;
+const MIN_BOOT_MS = 1800;
+const SECTION_PAUSE = 40;
+const LINE_GAP = 6;
+const OK_DELAY = 16;
+const PROMPT_DELAY = 80;
 const TARGET_WIDTH = 48;
-const TICK_MS = 3;
+const TICK_MS = 2;
 
 const TYPE_STEP: Record<string, number> = {
-  header: 14,
-  hw: 7,
-  module: 12,
-  info: 12,
-  footer: 12,
+  header: 20,
+  hw: 10,
+  module: 16,
+  info: 16,
+  footer: 16,
 };
 
 const POST_LINE_INDEX = BOOT_LINES.findIndex((line) => line.type === 'info');

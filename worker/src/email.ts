@@ -1,4 +1,3 @@
-import { Resend } from 'resend';
 import { formatBRL } from './pricing';
 import type { LineItem } from './pricing';
 import type { OrcamentoRow } from './types';
@@ -9,6 +8,8 @@ type NoticeOrcamento = Pick<
 >;
 
 type SendParams = {
+  from: string;
+  fromName?: string;
   to: string;
   subject: string;
   html: string;
@@ -16,24 +17,51 @@ type SendParams = {
   attachmentData?: Uint8Array;
 };
 
+function bytesToBase64(bytes: Uint8Array): string {
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary);
+}
+
 export async function sendEmail(
   apiKey: string,
   from: string,
   p: SendParams,
 ): Promise<void> {
-  const resend = new Resend(apiKey);
+  const [senderEmail, senderName] = from.includes('<')
+    ? (() => {
+        const m = /^(.*?)<([^>]+)>$/.exec(from);
+        return m ? [m[2], m[1].trim()] : [from, undefined];
+      })()
+    : [from, p.fromName];
 
-  const resp = await resend.emails.send({
-    from,
-    to: [p.to],
+  const body: Record<string, unknown> = {
+    sender: senderName ? { email: senderEmail, name: senderName } : { email: senderEmail },
+    to: [{ email: p.to }],
     subject: p.subject,
-    html: p.html,
-    attachments: p.attachmentData
-      ? [{ filename: p.attachmentName ?? 'orcamento.pdf', content: p.attachmentData }]
-      : undefined,
+    htmlContent: p.html,
+  };
+
+  if (p.attachmentData && p.attachmentName) {
+    body.attachment = [
+      { content: bytesToBase64(p.attachmentData), name: p.attachmentName },
+    ];
+  }
+
+  const resp = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': apiKey,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(body),
   });
 
-  if (resp.error) throw new Error(`Resend: ${resp.error.message}`);
+  if (!resp.ok) {
+    const errText = await resp.text().catch(() => '');
+    throw new Error(`Brevo: ${resp.status} ${errText.slice(0, 200)}`);
+  }
 }
 
 export function buildClientEmail(p: {
@@ -45,6 +73,7 @@ export function buildClientEmail(p: {
     .map((l) => `<tr><td>${l.name}</td><td>${l.qtd}</td><td>${formatBRL(l.subtotal)}</td></tr>`)
     .join('');
   return {
+    from: '',
     to: p.orcamento.email,
     subject: `Seu orcamento ${p.orcamento.codigo}`,
     html: `
@@ -64,7 +93,8 @@ export function buildOwnerNotice(p: {
   orcamento: NoticeOrcamento;
 }): SendParams {
   return {
-    to: '', // substituido no caller com OWNER_EMAIL
+    from: '',
+    to: '',
     subject: `Novo orcamento ${p.orcamento.codigo} (${p.orcamento.status})`,
     html: `
       <h2>Novo orcamento</h2>

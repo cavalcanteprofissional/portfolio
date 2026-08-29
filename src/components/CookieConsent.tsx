@@ -8,30 +8,30 @@ const PRIVACY_LINES = {
   pt: {
     header: '> POLÍTICA DE PRIVACIDADE',
     body: [
-      'Cache API: modelo de IA (~13MB) processado localmente no seu dispositivo.',
-      'localStorage: preferências (idioma, som) — não enviamos dados a servidores.',
-      'Não utilizamos cookies de rastreamento ou analytics.',
-      'Seus dados nunca são compartilhados com terceiros.',
+      'Valorizamos sua privacidade. Usamos apenas o que é essencial:',
+      '• Estatísticas anônimas (só com sua permissão) para melhorar o site.',
+      '• Preferências como idioma e som, salvas no seu navegador.',
+      '• Nada é vendido, compartilhado ou usado para te rastrear.',
     ],
     accept: '[ Aceitar ]',
   },
   en: {
     header: '> PRIVACY POLICY',
     body: [
-      'Cache API: AI model (~13MB) processed locally on your device.',
-      'localStorage: preferences (language, sound) — no data sent to servers.',
-      'We do not use tracking cookies or analytics.',
-      'Your data is never shared with third parties.',
+      'We value your privacy. We only use what is essential:',
+      '• Anonymous statistics (only with your permission) to improve the site.',
+      '• Preferences like language and sound, saved in your browser.',
+      '• Nothing is sold, shared, or used to track you.',
     ],
     accept: '[ Accept ]',
   },
   es: {
     header: '> POLÍTICA DE PRIVACIDAD',
     body: [
-      'Cache API: modelo de IA (~13MB) procesado localmente en su dispositivo.',
-      'localStorage: preferencias (idioma, sonido) — no enviamos datos a servidores.',
-      'No utilizamos cookies de rastreo ni analytics.',
-      'Sus datos nunca se comparten con terceros.',
+      'Valoramos tu privacidad. Solo usamos lo esencial:',
+      '• Estadísticas anónimas (solo con tu permiso) para mejorar el sitio.',
+      '• Preferencias como idioma y sonido, guardadas en tu navegador.',
+      '• Nada se vende, comparte ni se usa para rastrearte.',
     ],
     accept: '[ Aceptar ]',
   },
@@ -69,16 +69,16 @@ export function CookieConsent({ visible }: CookieConsentProps) {
     if (!visible || consent !== null) return;
 
     if (typedHeader < t.header.length) {
-      const timer = setTimeout(() => setTypedHeader((p) => p + 1), 18);
+      const timer = setTimeout(() => setTypedHeader((p) => p + 1), 8);
       return () => clearTimeout(timer);
     }
 
     if (typedBody < flatBody.length) {
-      const timer = setTimeout(() => setTypedBody((p) => p + 1), 8);
+      const timer = setTimeout(() => setTypedBody((p) => p + 1), 4);
       return () => clearTimeout(timer);
     }
 
-    const timer = setTimeout(() => setShowButtons(true), 200);
+    const timer = setTimeout(() => setShowButtons(true), 120);
     return () => clearTimeout(timer);
   }, [visible, consent, typedHeader, typedBody, t, flatBody]);
 
@@ -210,22 +210,13 @@ function ModalContent({
         </motion.p>
 
         <div className="space-y-1 mb-1.5">
-          <p className="text-[11px] sm:text-xs leading-relaxed text-white/60">
-            {visibleLines[0] ?? ''}
-            <span className="hidden sm:inline">{visibleLines[1] ? ' ' + visibleLines[1] : ''}</span>
-            {isTypingBody && visibleLines.length === 1 && (
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
-                className="inline-block w-[0.5em] h-[1.1em] bg-white/70 align-text-bottom ml-px"
-                aria-hidden="true"
-              />
-            )}
-          </p>
-          {visibleLines[1] && (
-            <p className="text-[11px] sm:text-xs leading-relaxed text-white/60 sm:hidden">
-              {visibleLines[1]}
-              {isTypingBody && visibleLines.length === 2 && (
+          {[0, 1, 2, 3].map((idx) => (
+            <p
+              key={idx}
+              className="text-[11px] sm:text-xs leading-relaxed text-white/60"
+            >
+              {visibleLines[idx] ?? ''}
+              {isTypingBody && visibleLines.length === idx + 1 && (
                 <motion.span
                   animate={{ opacity: [1, 0] }}
                   transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
@@ -234,33 +225,7 @@ function ModalContent({
                 />
               )}
             </p>
-          )}
-          {visibleLines[2] && (
-            <p className="text-[11px] sm:text-xs leading-relaxed text-white/60">
-              {visibleLines[2]}
-              {isTypingBody && visibleLines.length === 3 && (
-                <motion.span
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
-                  className="inline-block w-[0.5em] h-[1.1em] bg-white/70 align-text-bottom ml-px"
-                  aria-hidden="true"
-                />
-              )}
-            </p>
-          )}
-          {visibleLines[3] && (
-            <p className="text-[11px] sm:text-xs leading-relaxed text-white/60">
-              {visibleLines[3]}
-              {isTypingBody && visibleLines.length === 4 && (
-                <motion.span
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
-                  className="inline-block w-[0.5em] h-[1.1em] bg-white/70 align-text-bottom ml-px"
-                  aria-hidden="true"
-                />
-              )}
-            </p>
-          )}
+          ))}
         </div>
       </div>
 

@@ -2,12 +2,12 @@
 
 ## [1.19.0] - 2026-08-27
 
-### 🚀 Backend Real — Supabase + Cloudflare Worker + Resend + Umami
+### 🚀 Backend Real — Supabase + Cloudflare Worker + Brevo + Umami
 
 - ⚙️ **Supabase** — `supabase/schema.sql` cria `services` (leitura pública via RLS) e `orcamentos` (sem policy — só o Worker acessa via `service_role`); Auth para o `/admin`
 - 🔧 **Cloudflare Worker** — pasta `worker/` (Wrangler, TypeScript) no mesmo repo; rotas: `POST /orcamento`, `GET /services`, `GET /orcamento/:codigo`, `GET /admin/orcamentos`, `POST /admin/aprovar`, `GET /health` + cron anti-pausa do Supabase (1x/dia)
 - 📄 **PDF via pdf-lib** — `worker/src/pdf.ts` gera o orçamento em PDF (compatível com runtime Workers — sem Node streams do PDFKit)
-- ✉️ **Resend** — envio de email com anexo PDF ao cliente + aviso ao dono (`cavalcanteprofissional@outlook.com`)
+- ✉️ **Brevo** — envio de email com anexo PDF ao cliente + aviso ao dono (`cavalcanteprofissional@outlook.com`)
 - 🔐 **Admin seguro** — `GET /admin/orcamentos` e `POST /admin/aprovar` exigem `Authorization: Bearer <token Supabase Auth>` validado via `db.auth.getUser()`; credenciais só no Worker (nunca no bundle)
 - 📊 **Umami** — loader analítico consent-gated (só dispara após aceitar o cookie), aguarda `VITE_UMAMI_WEBSITE_ID`
 
