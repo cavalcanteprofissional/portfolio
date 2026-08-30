@@ -83,21 +83,15 @@ jobs:
         run: npm ci
 
       - name: Build
-        env:
-          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
-          VITE_UMAMI_WEBSITE_ID: ${{ vars.VITE_UMAMI_WEBSITE_ID }}
-          VITE_UMAMI_SRC: ${{ vars.VITE_UMAMI_SRC }}
-          VITE_WORKER_URL: ${{ vars.VITE_WORKER_URL }}
         run: |
-          # Vite NAO le process.env nem inlinea os ${{ vars.* }} dentro do heredoc;
-          # por isso o env: do step fornece as VITE_* e o arquivo eh gerado no shell.
-          cat > .env.production <<EOF
-          VITE_SUPABASE_URL=$VITE_SUPABASE_URL
-          VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
-          VITE_UMAMI_WEBSITE_ID=$VITE_UMAMI_WEBSITE_ID
-          VITE_UMAMI_SRC=$VITE_UMAMI_SRC
-          VITE_WORKER_URL=$VITE_WORKER_URL
+          # Valores PUBLICOS (anon/publishable + URLs) — seguros de versionar.
+          # Vite 7 NAO inlineia process.env; gera o .env.production que o build le.
+          cat > .env.production <<'EOF'
+          VITE_SUPABASE_URL=https://ohtkfjckydmjsfuouyaj.supabase.co
+          VITE_SUPABASE_ANON_KEY=sb_publishable_YrJ0_kAcZGUWOrvHtsKebw_lxjJkMnu
+          VITE_UMAMI_WEBSITE_ID=076f01cd-40c0-45de-87c8-6888cb9efb78
+          VITE_UMAMI_SRC=https://cloud.umami.is/script.js
+          VITE_WORKER_URL=https://portfolio-cavalcante-worker.cavalcanteprofissional.workers.dev
           EOF
           npm run build
 
