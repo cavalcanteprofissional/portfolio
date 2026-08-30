@@ -53,16 +53,12 @@ export async function submitOrcamento(input: SubmitQuoteInput): Promise<SubmitQu
     await new Promise((r) => setTimeout(r, 600));
     return { codigo, status: 'PENDENTE', valor: 0 };
   }
-  const res = await fetch(`${WORKER_URL}/orcamento`, {
+  const res = await wf('/orcamento', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(input),
   });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    throw new Error((data as { error?: string }).error ?? 'Erro ao enviar solicitação');
-  }
-  return data as SubmitQuoteResult;
+  return (await res.json()) as SubmitQuoteResult;
 }
 
 export interface AdminOrcamento {
@@ -79,18 +75,28 @@ export interface AdminOrcamento {
   created_at: string;
 }
 
-function workerUrl(): string {
-  if (!available()) throw new Error('Worker não configurado (VITE_WORKER_URL)');
-  return WORKER_URL;
+async function wf(path: string, init?: RequestInit): Promise<Response> {
+  let res: Response;
+  try {
+    res = await fetch(`${WORKER_URL}${path}`, init);
+  } catch {
+    throw new Error(
+      `Não foi possível conectar ao servidor de orçamentos (${WORKER_URL}). ` +
+        `Verifique sua conexão ou o CORS — origem atual: ${window.location.origin}`,
+    );
+  }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error((data as { error?: string }).error ?? `Erro do servidor (${res.status})`);
+  }
+  return res;
 }
 
 export async function adminListOrcamentos(token: string): Promise<AdminOrcamento[]> {
-  const res = await fetch(`${workerUrl()}/admin/orcamentos`, {
+  const res = await wf('/admin/orcamentos', {
     headers: { Authorization: `Bearer ${token}` },
   });
-  const data = await res.json().catch(() => []);
-  if (!res.ok) throw new Error((data as { error?: string }).error ?? 'Falha ao listar orçamentos');
-  return data as AdminOrcamento[];
+  return (await res.json()) as AdminOrcamento[];
 }
 
 export async function adminAprovar(
@@ -98,11 +104,10 @@ export async function adminAprovar(
   codigo: string,
   status: 'APROVADO' | 'RECUSADO',
 ): Promise<void> {
-  const res = await fetch(`${workerUrl()}/admin/aprovar`, {
+  const res = await wf('/admin/aprovar', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ codigo, status }),
   });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error((data as { error?: string }).error ?? 'Falha ao atualizar orçamento');
+  await res.json().catch(() => ({}));
 }

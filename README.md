@@ -99,7 +99,7 @@ Os PDFs são gerados em `public/cv/` e versionados no repo. Edite `resume/curric
 
 ## Backend real (orçamentos / admin)
 
-O site tem um backend gratuito para o fluxo de orçamento: **Supabase** (banco + auth), **Cloudflare Worker** (API/PDF/email) e **Brevo** (disparo de email). O admin fica em `#/admin`.
+O site tem um backend gratuito para o fluxo de orçamento: **Supabase** (banco + auth), **Cloudflare Worker** (API/PDF/email) e **Brevo** (disparo de email). O admin é uma página separada em `admin.html` (também acessível como `/admin`); o antigo `#/admin` redireciona automaticamente.
 
 ### Variáveis do frontend (`.env`)
 
@@ -138,7 +138,8 @@ portfolio/
 │   ├── stores/         # Zustand (boot, theme, mouse, consent)
 │   ├── lib/typegpu/    # WebGPU renderer, shaders WGSL, ML inference, light control
 │   ├── lib/            # api.ts (worker), pricing.ts, supabase.ts
-│   ├── pages/          # Admin.tsx (hash routing #/admin)
+│   ├── pages/          # Admin.tsx (página própria — admin.html + /admin)
+│   ├── admin/          # main.tsx do admin (MPA separado do bundle do site)
 │   ├── data/           # projects.json, services.ts (catálogo público)
 │   └── index.css       # Tailwind + efeitos CRT/glow/neon
 ├── public/

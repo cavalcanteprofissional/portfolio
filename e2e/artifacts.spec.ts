@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { loadSite } from './consent';
 
 const BASE = '/portfolio-cavalcante';
 const SITE_URL = 'https://cavalcanteprofissional.github.io/portfolio-cavalcante';
@@ -31,6 +32,34 @@ test.describe('Artefatos de build (v1.15.0)', () => {
     expect(readFileSync(notFoundPath, 'utf-8')).toBe(indexHtml);
     expect(indexHtml).toContain('id="root"');
     expect(indexHtml).toContain('type="module"');
+  });
+
+  test('admin (MPA): admin.html + /admin/index.html + assets prefixados (v1.20.0)', () => {
+    const distAdminHtml = root('dist/admin.html');
+    test.skip(!existsSync(distAdminHtml), 'rode `npm run build` antes da suíte de artefatos');
+    const adminHtml = readFileSync(distAdminHtml, 'utf-8');
+    expect(adminHtml).toContain('id="root"');
+    expect(adminHtml).toContain('noindex');
+    // Fonte ainda referencia o entry do admin (o build troca pelo bundle)
+    expect(readFileSync(root('admin.html'), 'utf-8')).toContain('/src/admin/main.tsx');
+
+    const pretty = root('dist/admin/index.html');
+    expect(existsSync(pretty)).toBe(true);
+    expect(readFileSync(pretty, 'utf-8')).toBe(adminHtml);
+    expect(existsSync(root('dist/admin/404.html'))).toBe(true);
+
+    // Assets do admin usam o base do projeto
+    const adminAssets = [...adminHtml.matchAll(/(?:src|href)="([^"]{10,})"/g)].map((m) => m[1]);
+    expect(adminAssets.length).toBeGreaterThan(0);
+    for (const asset of adminAssets) expect(asset.startsWith(`${BASE}/`)).toBe(true);
+  });
+
+  test('index.html redireciona #/admin para o admin.html (v1.20.0)', () => {
+    const distIndex = root('dist/index.html');
+    test.skip(!existsSync(distIndex), 'rode `npm run build` antes da suíte de artefatos');
+    const indexHtml = readFileSync(distIndex, 'utf-8');
+    expect(indexHtml).toContain("location.hash === '#/admin'");
+    expect(indexHtml).toContain("'admin.html'");
   });
 
   test('sitemap.xml com URL canônica e schema correto', () => {
@@ -114,6 +143,10 @@ test.describe('Artefatos de build (v1.15.0)', () => {
 });
 
 test.describe('Artefatos servidos no app', () => {
+  test.beforeEach(async ({ page }) => {
+    await loadSite(page);
+  });
+
   test('head declara manifest e ícones, todos acessíveis', async ({ page, request }) => {
     await waitForApp(page);
     const manifestHref = await page.locator('link[rel="manifest"]').getAttribute('href');

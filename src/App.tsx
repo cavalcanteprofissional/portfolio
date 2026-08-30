@@ -7,7 +7,6 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { Nav, Hero, Stats, Footer, ScrollToTop, BootScreen, PoolEffect, CookieConsent } from './components';
 import { useConsentStore } from './stores/consentStore';
 import { enableUmami } from './lib/analytics';
-import { Admin } from './pages/Admin';
 import { focusReveal } from './lib/motion';
 import { BOOT_TIMELINE, EASE } from './lib/motion';
 import { BG_DARK_HSL } from './lib/constants';
@@ -41,14 +40,6 @@ function App() {
   useEffect(() => {
     if (consent === true) enableUmami();
   }, [consent]);
-
-  // Hash routing: #/admin renderiza o dashboard (GitHub Pages compatível)
-  const [isAdmin, setIsAdmin] = useState(() => window.location.hash === '#/admin');
-  useEffect(() => {
-    const onHash = () => setIsAdmin(window.location.hash === '#/admin');
-    window.addEventListener('hashchange', onHash);
-    return () => window.removeEventListener('hashchange', onHash);
-  }, []);
 
   useEffect(() => {
     if (booted) return;
@@ -107,14 +98,7 @@ function App() {
   return (
     <ErrorBoundary>
       <MotionConfig reducedMotion="user">
-        {isAdmin && (
-          <div className="min-h-screen bg-background text-foreground">
-            <Admin />
-          </div>
-        )}
-        <AnimatePresence>
-          {!booted && <BootScreen onComplete={handleBootComplete} ready={resourcesReady} />}
-        </AnimatePresence>
+        <AnimatePresence>{!booted && <BootScreen onComplete={handleBootComplete} ready={resourcesReady} />}</AnimatePresence>
 
         <motion.div
           className="fixed inset-0 z-[45] pointer-events-none"

@@ -1088,7 +1088,7 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 
 > **Decisões confirmadas pelo usuário:**
 > - Projeto é **Vite** → no front usamos **`VITE_`** (não `NEXT_PUBLIC_`).
-> - `/admin` via **hash routing** (`#/admin`), 100% compatível com GitHub Pages (`base: '/portfolio-cavalcante/'`).
+> - `/admin` inicialmente via **hash routing** (`#/admin`), 100% compatível com GitHub Pages (`base: '/portfolio-cavalcante/'`). *⚠️ Superado em v1.20.0: admin agora é página própria `admin.html` (MPA), com `#/admin` virando redirect.*
 > - Form do orçamento vai **no CTA existente** (`Contact.tsx`).
 > - Aviso para o dono (você) quando cliente solicitar: **por EMAIL** (Resend) → `cavalcanteprofissional@outlook.com`.
 > - **service_role key**: será **rotacionada pelo usuário no painel na hora de configurar o Worker** (a postada estava comprometida — NÃO usar; tratar como vazada). A NOVA nunca passa pelo chat; vai direto via `wrangler secret put`.
@@ -1122,7 +1122,7 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 ### Fase 5 — Dashboard Admin (`/admin`) + Aprovação
 | # | Tarefa | Status |
 |---|--------|--------|
-| A1 | Rota `/admin` com **Supabase Auth** (login email/senha) | ✅ (hash routing `#/admin` + `src/pages/Admin.tsx` + `src/lib/supabase.ts`) |
+| A1 | Rota `/admin` com **Supabase Auth** (login email/senha) | ✅ (página própria `admin.html` + `/admin`; v1.20.0 migrou de `#/admin` p/ MPA — `src/admin/main.tsx` + `src/pages/Admin.tsx` + `src/lib/supabase.ts`; redirect automático do `#/admin`) |
 | A2 | Lista orçamentos (status PENDENTE/APROVADO/RECUSADO, dados, valor, datas) | ✅ (`GET /admin/orcamentos` no Worker + listagem) |
 | A3 | Botão Aprovar/Recusar → `POST /aprovar` → Worker gera PDF + Resend envia p/ cliente | ✅ (`POST /admin/aprovar` no Worker + `src/lib/api.ts`) |
 | A4 | Aviso p/ você (email) que o orçamento foi enviado ao cliente | ✅ (em `POST /admin/aprovar`, status APROVADO) |
@@ -1285,7 +1285,7 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 #### 📐 Passo 1 — Supabase (banco + auth)
 - [ ] Rotacionar `service_role` (a antiga foi postada no chat → comprometida) — Guardar p/ `wrangler secret put`
 - [ ] Rodar `supabase/schema.sql` no SQL Editor (cria `services` + `orcamentos` + RLS)
-- [ ] Criar usuário admin (Auth → Users) p/ login do `#/admin`
+- [ ] Criar usuário admin (Auth → Users) p/ login do `admin.html`
 - [ ] Confirmar anon key (pública) e `SUPABASE_URL`
 
 #### ✉️ Passo 2 — Brevo (email — sem domínio)
@@ -1316,7 +1316,7 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 #### ✅ Passo 7 — Validação end-to-end
 - [ ] `GET /health` → `ok:true`
 - [ ] Solicitar orçamento no modal → código + aviso por email ao dono
-- [ ] Login `#/admin` → listar → aprovar → cliente recebe **PDF** por email
+- [ ] Login `admin.html` → listar → aprovar → cliente recebe **PDF** por email
 - [ ] Conferir visita no Umami após aceitar cookie
 
 ---
@@ -1353,10 +1353,10 @@ GitHub Pages (Vite/React)  ──►  Cloudflare Worker  ──►  Supabase (Po
 - [x] **Redeploy final do Worker** ✅ — código atual (rename `email.ts`, `FROM_EMAIL`, `workers_dev`) publicado; `GET /health` → `{"ok":true,"supabase":true}` · `GET /services` → 4 serviços
 - [ ] ⚠️ **Decisão usuária:** manter `SERVICE_ROLE_KEY` atual (NÃO rotacionar agora) — ainda exposta no chat = risco de segurança aceito. **Recomendação permanece:** rotacionar antes de expor publicamente/produção real
 - [ ] Brevo: confirmar **sender verificado** (`cavalcanteprofissional@outlook.com`) — `FROM_EMAIL` já no `wrangler.toml`
-- [ ] Supabase: criar **usuário admin** (Authentication → Users) p/ login `#/admin`
+- [ ] Supabase: criar **usuário admin** (Authentication → Users) p/ login `admin.html`
 - [ ] **Merge `feat/tracking` → `main` + deploy site (GitHub Actions) + validação e2e (Passo 7)**
   - [x] (PÓS-MERGE PREP) **Step `wrangler deploy` adicionado no `.github/workflows/deploy.yml`** (job `build`, após `npm run build`): `npm ci` + `npx wrangler deploy` em `worker/`, condicionado a `secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != ''` — deploy automático do Worker junto do site sem quebrar se faltarem secrets. *Decisão usuária (2026-08-29): remover integração "Workers Builds" do Cloudflare (Opção A) e centralizar o deploy do Worker no GitHub Actions.*
   - [x] (PÓS-MERGE PREP) **Credenciais CI p/ wrangler:** secrets do repositório criadas em GitHub → Settings → Secrets: `CLOUDFLARE_API_TOKEN` (scoped em Workers Scripts → Edit; validada via `wrangler whoami` → conta `cavalcanteprofissional`) + `CLOUDFLARE_ACCOUNT_ID` (`1871ddf7...`); valores também registrados (referência) em `.env.local` + documentados em `.env.example`. `HF_TOKEN` = secret existente do pipeline de currículo.
-  - [ ] (PÓS-MERGE) **Validação e2e (Passo 7):** `GET /health` · orçamento no modal (código + email dono) · login `#/admin` criar usuário admin no Supabase · conferir visita no Umami
+  - [ ] (PÓS-MERGE) **Validação e2e (Passo 7):** `GET /health` · orçamento no modal (código + email dono) · login `admin.html` criar usuário admin no Supabase · conferir visita no Umami
 
 > **🔗 Vínculo Git–Cloudflare (2026-08-29):** foi criada (por acidente) uma integração "Workers Builds" com `root_directory: /` + `build_command: npm run build` (0 builds, nada quebrou). Removida via suporte Cloudflare (Opção A). Conta limpa: sem Pages, sem Workers Builds, sem conexão de repo. Worker deployado manual via `wrangler deploy`. **Plano:** automatizar no `deploy.yml` (pós-merge). Subdomínio workers.dev já registrado e ativo: `cavalcanteprofissional`.

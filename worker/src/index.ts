@@ -11,27 +11,19 @@ export interface Env {
   BREVO_API_KEY: string;
   FROM_EMAIL: string;
   OWNER_EMAIL: string;
+  ALLOWED_ORIGINS?: string;
 }
 
 const GITHUB_PAGES_ORIGIN = 'https://cavalcanteprofissional.github.io';
 
 const LANG = 'pt'; // orcamento sempre gerado em pt para o cliente
 
-function corsHeaders(): Record<string, string> {
-  return {
-    'Access-Control-Allow-Origin': GITHUB_PAGES_ORIGIN,
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Content-Type': 'application/json; charset=utf-8',
-  };
-}
-
-function json(data: unknown, status = 200): Response {
-  return new Response(JSON.stringify(data), { status, headers: corsHeaders() });
-}
-
-function error(msg: string, status = 400): Response {
-  return json({ error: msg }, status);
+function originAllowed(origin: string | null, env: Env): boolean {
+  if (!origin) return false;
+  const allowed = (env.ALLOWED_ORIGINS ?? GITHUB_PAGES_ORIGIN)
+    .split(',')
+    .map((o) => o.trim());
+  return allowed.includes(origin);
 }
 
 function langFrom(req: QuoteRequest): 'pt' | 'en' | 'es' {
@@ -71,6 +63,21 @@ async function recomputePrice(
 
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
+    const origin = req.headers.get('Origin');
+    const corsHeaders = (): Record<string, string> => {
+      const headers: Record<string, string> = {
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Vary': 'Origin',
+        'Content-Type': 'application/json; charset=utf-8',
+      };
+      if (origin && originAllowed(origin, env)) headers['Access-Control-Allow-Origin'] = origin;
+      return headers;
+    };
+    const json = (data: unknown, status = 200): Response =>
+      new Response(JSON.stringify(data), { status, headers: corsHeaders() });
+    const error = (msg: string, status = 400): Response => json({ error: msg }, status);
+
     if (req.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders() });
     }

@@ -1,4 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { loadSite } from './consent';
+
+test.beforeEach(async ({ page }) => {
+  await loadSite(page);
+});
 
 async function ensureNavVisible(page: import('@playwright/test').Page) {
   const isDesktop = await page.evaluate(() => window.innerWidth >= 768);
@@ -112,6 +117,7 @@ test.describe('Portfolio - Responsividade', () => {
     await page.goto('/portfolio-cavalcante/');
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(500);
-    await expect(page.locator('button[aria-label="Voltar ao topo"]')).toBeVisible();
+    // O logo da nav também tem aria-label "Voltar ao topo" — mira o botão fixo flutuante
+    await expect(page.locator('button[aria-label="Voltar ao topo"]').last()).toBeVisible();
   });
 });

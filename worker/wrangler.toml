@@ -6,6 +6,8 @@ workers_dev = true
 # Variaveis públicas (visiveis ao codigo, nao sensiveis)
 [vars]
 SUPABASE_URL = "https://ohtkfjckydmjsfuouyaj.supabase.co"
+# Origens com CORS liberado (separa por virgula). Inclui dev do Vite e o GH Pages.
+ALLOWED_ORIGINS = "https://cavalcanteprofissional.github.io,http://localhost:5173,http://127.0.0.1:5173"
 # Sender do Brevo — email validado pelo usuario como remetente verificado.
 # O name antes de <email> eh opcional.
 FROM_EMAIL = "Cavalcante <cavalcanteprofissional@outlook.com>"

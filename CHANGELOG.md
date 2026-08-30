@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.20.0] - 2026-08-30
+
+### 🖥️ Admin como página separada (Vite MPA) + CORS dinâmico
+
+- 🔗 **Admin fora do bundle do site** — `admin.html` + `src/admin/main.tsx` com seu próprio `rollupOptions.input`; `#/admin` vira redirect para `/admin.html` (backward compat); o admin deixa de montar BootScreen/nav/cookies/analytics do portfólio completo
+- 🌐 **URL dupla** — `/admin.html` (arquivo real) e `/admin` (cópia `admin/index.html` gerada no build)
+- 🛡️ **CORS dinâmico no Worker** — allow-list via env `ALLOWED_ORIGINS` (GH Pages + localhost dev) com reflexão da origem + `Vary: Origin`; elimina o "Failed to fetch" de outras origens
+- 🩺 **Fetch tratado no front** — wrapper `wf()` em `src/lib/api.ts`: distingue erro de rede (mensagem com a URL do worker + origem atual) de erro HTTP (status + mensagem do servidor)
+
 ## [1.19.1] - 2026-08-30
 
 ### 🚀 Merge do Backend Real + CI do Worker
