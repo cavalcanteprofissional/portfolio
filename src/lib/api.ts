@@ -53,12 +53,12 @@ export async function submitOrcamento(input: SubmitQuoteInput): Promise<SubmitQu
     await new Promise((r) => setTimeout(r, 600));
     return { codigo, status: 'PENDENTE', valor: 0 };
   }
-  const res = await wf('/orcamento', {
+  const res = await wf<SubmitQuoteResult>('/orcamento', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(input),
   });
-  return (await res.json()) as SubmitQuoteResult;
+  return res;
 }
 
 export interface AdminOrcamento {
@@ -75,7 +75,7 @@ export interface AdminOrcamento {
   created_at: string;
 }
 
-async function wf(path: string, init?: RequestInit): Promise<Response> {
+async function wf<T>(path: string, init?: RequestInit): Promise<T> {
   let res: Response;
   try {
     res = await fetch(`${WORKER_URL}${path}`, init);
@@ -89,14 +89,13 @@ async function wf(path: string, init?: RequestInit): Promise<Response> {
   if (!res.ok) {
     throw new Error((data as { error?: string }).error ?? `Erro do servidor (${res.status})`);
   }
-  return res;
+  return data as T;
 }
 
 export async function adminListOrcamentos(token: string): Promise<AdminOrcamento[]> {
-  const res = await wf('/admin/orcamentos', {
+  return wf<AdminOrcamento[]>('/admin/orcamentos', {
     headers: { Authorization: `Bearer ${token}` },
   });
-  return (await res.json()) as AdminOrcamento[];
 }
 
 export async function adminAprovar(
@@ -104,10 +103,9 @@ export async function adminAprovar(
   codigo: string,
   status: 'APROVADO' | 'RECUSADO',
 ): Promise<void> {
-  const res = await wf('/admin/aprovar', {
+  await wf<unknown>('/admin/aprovar', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ codigo, status }),
   });
-  await res.json().catch(() => ({}));
 }
