@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.19.1] - 2026-08-30
+
+### 🚀 Merge do Backend Real + CI do Worker
+
+- 🔁 Merge `feat/tracking` → `main` — backend real (Supabase + Worker + Brevo + Umami) promovido à produção (v1.19.0)
+- ☁️ **Deploy automatizado do Cloudflare Worker** no GitHub Actions — step no `deploy.yml` (job `build`, após `npm run build`): `npm ci` + `npx wrangler deploy` no `worker/`; condicionado à presença das secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` (se faltarem, o deploy do site não quebra)
+- 🔑 **Secrets do repositório** documentadas em `.env.example` — `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` (CI) e `HF_TOKEN` (pipeline de currículo); valores locais apenas em `.env.local` (git-ignored)
+
 ## [1.19.0] - 2026-08-27
 
 ### 🚀 Backend Real — Supabase + Cloudflare Worker + Brevo + Umami
