@@ -4,7 +4,7 @@
 
 ### 🐛 Fixes de produção (admin/site sem backend no deploy publicado)
 
-- 🔧 **`VITE_*` públicas no build via GitHub Variables** — o bundle publicado nunca teve as env vars (o `.env.local` é git-ignored e o CI não injetava nada): admin exibia "Painel não configurado" e o orçamento virava demo fake. As 5 chaves públicas (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_UMAMI_WEBSITE_ID`, `VITE_UMAMI_SRC`, `VITE_WORKER_URL`) agora são Variables do Actions (Settings → Secrets and variables → Actions → Variables)
+- 🔧 **`VITE_*` públicas fixadas no build do CI** — o bundle publicado nunca teve as env vars (`.env.local` é git-ignored e o CI não injetava nada): admin exibia "Painel não configurado" e o orçamento virava demo fake. Vite 7 não inlinea `process.env`, então o passo `Build` agora gera um `.env.production` com as 5 chaves públicas (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_UMAMI_WEBSITE_ID`, `VITE_UMAMI_SRC`, `VITE_WORKER_URL`) — valores públicos (`sb_publishable_*`/URLs), seguros de versionar. *Testado antes com GitHub Variables (`vars.*`), que retornaram vazio no runner e foram descartadas.*
 - 🩺 **`body stream already read`** — o wrapper `wf()` lia o body do `Response` p/ extrair o erro e os chamadores faziam `res.json()` de novo; agora lê uma única vez e devolve o JSON tipado. Corrige a listagem vazia do admin e o fluxo de aprovar/orçamento
 
 ## [1.20.0] - 2026-08-30
