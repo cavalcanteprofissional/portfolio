@@ -1,0 +1,20 @@
+name = "portfolio-cavalcante-worker"
+main = "src/index.ts"
+compatibility_date = "2026-08-27"
+workers_dev = true
+
+# Variaveis públicas (visiveis ao codigo, nao sensiveis)
+[vars]
+SUPABASE_URL = "https://ohtkfjckydmjsfuouyaj.supabase.co"
+# Sender do Brevo — email validado pelo usuario como remetente verificado.
+# O name antes de <email> eh opcional.
+FROM_EMAIL = "Cavalcante <cavalcanteprofissional@outlook.com>"
+OWNER_EMAIL = "cavalcanteprofissional@outlook.com"
+
+# Secrets (definidos via `wrangler secret put`, nunca no repo):
+#   SERVICE_ROLE_KEY   -> nova service_role key (rotacionada pelo usuario)
+#   BREVO_API_KEY      -> Brevo (SMTP/Transactional) API key
+
+# Cron Trigger gratuito: ping anti-pausa do Supabase 1x/dia
+[triggers]
+crons = ["0 8 * * *"]

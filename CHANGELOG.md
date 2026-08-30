@@ -1,5 +1,50 @@
 # Changelog
 
+## [1.19.1] - 2026-08-30
+
+### 🚀 Merge do Backend Real + CI do Worker
+
+- 🔁 Merge `feat/tracking` → `main` — backend real (Supabase + Worker + Brevo + Umami) promovido à produção (v1.19.0)
+- ☁️ **Deploy automatizado do Cloudflare Worker** no GitHub Actions — step no `deploy.yml` (job `build`, após `npm run build`): `npm ci` + `npx wrangler deploy` no `worker/`; condicionado à presença das secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` (se faltarem, o deploy do site não quebra)
+- 🔑 **Secrets do repositório** documentadas em `.env.example` — `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` (CI) e `HF_TOKEN` (pipeline de currículo); valores locais apenas em `.env.local` (git-ignored)
+
+## [1.19.0] - 2026-08-27
+
+### 🚀 Backend Real — Supabase + Cloudflare Worker + Brevo + Umami
+
+- ⚙️ **Supabase** — `supabase/schema.sql` cria `services` (leitura pública via RLS) e `orcamentos` (sem policy — só o Worker acessa via `service_role`); Auth para o `/admin`
+- 🔧 **Cloudflare Worker** — pasta `worker/` (Wrangler, TypeScript) no mesmo repo; rotas: `POST /orcamento`, `GET /services`, `GET /orcamento/:codigo`, `GET /admin/orcamentos`, `POST /admin/aprovar`, `GET /health` + cron anti-pausa do Supabase (1x/dia)
+- 📄 **PDF via pdf-lib** — `worker/src/pdf.ts` gera o orçamento em PDF (compatível com runtime Workers — sem Node streams do PDFKit)
+- ✉️ **Brevo** — envio de email com anexo PDF ao cliente + aviso ao dono (`cavalcanteprofissional@outlook.com`)
+- 🔐 **Admin seguro** — `GET /admin/orcamentos` e `POST /admin/aprovar` exigem `Authorization: Bearer <token Supabase Auth>` validado via `db.auth.getUser()`; credenciais só no Worker (nunca no bundle)
+- 📊 **Umami** — loader analítico consent-gated (só dispara após aceitar o cookie), aguarda `VITE_UMAMI_WEBSITE_ID`
+
+### 🖥️ Admin Dashboard `#/admin`
+
+- 🔑 **Supabase Auth** — login por email/senha; routing por hash (`#/admin`) 100% compatível com GitHub Pages
+- 📋 **Lista de orçamentos** — status PENDENTE/APROVADO/RECUSADO, dados do cliente (nome, email, WhatsApp, CPF/CNPJ), itens, valor, datas
+- ✅ **Aprovar/Recusar** — sobre aprovação, o Worker gera o PDF e envia por email ao cliente + aviso ao dono
+
+### 🔁 Modal de Orçamento em Etapas + não expor preços no front
+
+- 🪟 **QuoteModal** — wizard em 3 etapas: (1) serviço + urgência (pills), (2) dados do cliente (nome, email, WhatsApp, CPF/CNPJ + descrição), (3) sucesso com código de pedido
+- 🔒 **Sem preços no front** — `services.ts` só dados públicos; front nunca carrega valores (só aparecem no PDF/Worker)
+- 🧮 **pricing.ts** — simplificado para `formatBRL` apenas (uso no admin)
+
+### 🐛 Fixes (UX)
+
+- 🎯 **CTA** — "Solicitar Orçamento" abre o modal; alinhamento e brilho pulsante neon (`cta-glow`)
+- 📐 **Modal segue o scroll** — renderizado via `createPortal(document.body)` (corrige `position:fixed` quebrado por transform do `Reveal`)
+- ⤵️ **Urgência em pills** — substitue `<select>` nativo; chave i18n `muito_urgente` corrigida (pt/en/es)
+- 🇬🇧 **Estrelas em inglês** — todas as estrelas preenchidas com a mesma cor (amarelo) em todos os idiomas
+- 🧭 **Hero** — botão de email virou `cta-glow` "Solicitar Orçamento" (abre o modal); mobile: bio expande/colapsa só o texto, botões abaixo; centro no mobile / esquerda+mais larga na tablet
+
+### 📝 Docs
+
+- 📋 **TODO.md** — Fases 2–5 + revisão UX documentadas e checklist de provisionamento/deploy (Passos 1–7)
+- 📄 **CHANGELOG.md** — v1.19.0 documentada
+- 📄 **README.md** — stack backend + setup documentados
+
 ## [1.18.0] - 2026-08-26
 
 ### 🖼️ ProfileLight — Light controller two-stage + Canvas-relative mouse
