@@ -83,20 +83,22 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_UMAMI_WEBSITE_ID: ${{ vars.VITE_UMAMI_WEBSITE_ID }}
+          VITE_UMAMI_SRC: ${{ vars.VITE_UMAMI_SRC }}
+          VITE_WORKER_URL: ${{ vars.VITE_WORKER_URL }}
         run: |
-          # VITE_* públicas — fontes: Repository/Environment variables do GitHub.
-          # Vite NAO le process.env; gera o .env.production que o build le no modo production.
-          cat > .env.production <<'EOF'
-          VITE_SUPABASE_URL=${{ vars.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY=${{ vars.VITE_SUPABASE_ANON_KEY }}
-          VITE_UMAMI_WEBSITE_ID=${{ vars.VITE_UMAMI_WEBSITE_ID }}
-          VITE_UMAMI_SRC=${{ vars.VITE_UMAMI_SRC }}
-          VITE_WORKER_URL=${{ vars.VITE_WORKER_URL }}
+          # Vite NAO le process.env nem inlinea os ${{ vars.* }} dentro do heredoc;
+          # por isso o env: do step fornece as VITE_* e o arquivo eh gerado no shell.
+          cat > .env.production <<EOF
+          VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+          VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+          VITE_UMAMI_WEBSITE_ID=$VITE_UMAMI_WEBSITE_ID
+          VITE_UMAMI_SRC=$VITE_UMAMI_SRC
+          VITE_WORKER_URL=$VITE_WORKER_URL
           EOF
-          if grep -q '=$' .env.production; then
-            echo "::error::Variaveis VITE_* ausentes/vazias no GitHub (Repository variables)"
-            exit 1
-          fi
           npm run build
 
       - name: Deploy Cloudflare Worker
