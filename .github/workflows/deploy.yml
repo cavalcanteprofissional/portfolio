@@ -95,6 +95,34 @@ jobs:
           EOF
           npm run build
 
+      - name: Check HF_TOKEN (publicado no site)
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python -m pip install -q huggingface_hub
+          python - <<'PY'
+          import os
+
+          token = os.environ.get("HF_TOKEN") or ""
+          if not token:
+              out = "HF_TOKEN: AUSENTE (secret vazio/variable)"
+              ok = False
+          else:
+              from huggingface_hub import HfApi
+              try:
+                  me = HfApi().whoami(token=token)
+                  name = me.get("name") or me.get("orgname") or me.get("username") or "?"
+                  out = f"HF_TOKEN: OK (user/org '{name}') len={len(token)}"
+                  ok = True
+              except Exception as e:
+                  out = f"HF_TOKEN: INVALIDO ({str(e)[:160]}) len={len(token)}"
+                  ok = False
+          print(out)
+          os.makedirs("dist", exist_ok=True)
+          with open("dist/hf-status.txt", "w", encoding="utf-8") as f:
+              f.write(out + "\nok=" + str(ok) + "\n")
+          PY
+
       - name: Deploy Cloudflare Worker
         working-directory: worker
         env:
