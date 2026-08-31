@@ -10,7 +10,7 @@
 - 🚦 **Rate-limit por IP** no `POST /orcamento` (5/h, 429 + `Retry-After`) — decisão: sem Turnstile
 - ✉️ **Emails não-fatais** pós-persistência (falha do Brevo não vira 500) + `/admin/aprovar` idempotente (rejeita transição de estado terminal)
 - 🧹 **HTML escapado** em `email.ts` (campos do usuário)
-- 🔒 **Preços não públicos** — `GET /services` projeta `(slug, name, description, repo, active)`; migração SQL manual (`services_public` view) em `supabase/migrations/20260830_hide_services_prices.sql`
+- 🔒 **Preços não públicos** — `GET /services` projeta `(slug, name, description, repo, active)`; migração SQL manual `supabase/migrations/20260830_hide_services_prices.sql` **aplicada em produção (2026-08-30)** — anon em `services` → `42501`, `services_public` → 200 sem preços
 
 ### 🐛 Fase B — Frontend: bugs + i18n/a11y/SEO
 

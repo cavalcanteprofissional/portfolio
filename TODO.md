@@ -12,8 +12,8 @@ Endurecer o backend (segurança/robustez), corrigir bugs frontend + i18n/a11y/SE
 - [x] A4 Rate-limit por IP no `POST /orcamento` (5/h, 429 + Retry-After) — decisão usuária: **rate-limit simples**, sem Turnstile
 - [x] A5 Emails não-fatais pós-persistência (falha de Brevo não vira 500) + `/admin/aprovar` idempotente (rejeita transição de estado terminal)
 - [x] A6 Escapar HTML em `email.ts` (campos do usuário)
-- [x] A7 Preços **não públicos** — decisão usuária — `GET /services` projeta `(slug, name, description, repo, active)`; **pendente manual**: aplicar migração SQL no dashboard (`REVOKE ALL on services FROM anon` + VIEW `services_public` + `GRANT SELECT`)
-- [ ] A8 (manual usuário) Rotacionar `service_role` quando expor a produção
+- [x] A7 Preços **não públicos** — decisão usuária — `GET /services` projeta `(slug, name, description, repo, active)`; migração SQL aplicada (✅ 2026-08-30): `REVOKE ALL on services FROM anon` + VIEW `services_public` + `GRANT SELECT`
+- [x] A8 `service_role` rotacionada ✅ (2026-08-30)
 
 ## Fase B — Frontend: bugs + i18n/a11y/SEO
 - [x] B1 `html lang` + `document.title` sincronizados com o idioma; CookieConsent via `i18n` (hoje lê `documentElement.lang` estático → trava em PT)
@@ -47,11 +47,11 @@ Endurecer o backend (segurança/robustez), corrigir bugs frontend + i18n/a11y/SE
 - **Bola de luz/scroll na foto de perfil** (`ProfileLight.tsx` wheel `preventDefault`): **comportamento intencional** — o scroll controla a luz. Não corrigir; sem alteração. (Não é bug.)
 
 ## ⏳ Pendências manuais abertas (revisitar na Fase E)
-- [ ] Supabase: criar usuário admin (Auth → Users) p/ login `admin.html`
-- [ ] Supabase: aplicar migração A7 (`services_public`)
-- [ ] Brevo: confirmar sender verificado
-- [ ] Umami: validar visita pós-aceite (Passo 7 original)
-- [ ] Rotação `service_role` (A8)
+- [x] Supabase: criar usuário admin (Auth → Users) p/ login `admin.html` ✅ (2026-08-30)
+- [x] Supabase: aplicar migração A7 (`services_public`) ✅ (2026-08-30 — verificado: anon em `services` → 42501; `services_public` → 200 sem preços; worker `/services` OK)
+- [x] Brevo: confirmar sender verificado ✅ (2026-08-30)
+- [x] Umami: validar visita pós-aceite (Passo 7 original) ✅ (2026-08-30)
+- [x] Rotação `service_role` (A8) ✅ (2026-08-30)
 
 ---
 
