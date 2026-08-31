@@ -50,7 +50,7 @@ function ProjectCard({ project }: ProjectCardProps) {
   return (
     <StaggerItem>
       <motion.div
-        className="bg-card/80 backdrop-blur-sm rounded-soft-xl overflow-hidden border border-border/30 h-full flex flex-col shadow-soft hover:shadow-soft-lg transition-all"
+        className="group bg-card/80 backdrop-blur-sm rounded-soft-xl overflow-hidden border border-border/30 h-full flex flex-col shadow-soft hover:shadow-soft-lg transition-all"
         whileHover={{ y: -8 }}
         transition={{ duration: 0.3 }}
       >

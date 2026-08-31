@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +35,10 @@ export function QuoteModal({ open, onClose }: QuoteModalProps) {
   const [error, setError] = useState<string | null>(null);
   const [code, setCode] = useState<string | null>(null);
 
-  function reset() {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  const reset = useCallback(() => {
     setStep(1);
     setSelected([]);
     setUrgencia('normal');
@@ -47,12 +50,12 @@ export function QuoteModal({ open, onClose }: QuoteModalProps) {
     setError(null);
     setCode(null);
     setSending(false);
-  }
+  }, []);
 
-  function handleClose() {
+  const handleClose = useCallback(() => {
     reset();
     onClose();
-  }
+  }, [reset, onClose]);
 
   function toggleService(slug: string) {
     setSelected((prev) => (prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]));
@@ -66,6 +69,52 @@ export function QuoteModal({ open, onClose }: QuoteModalProps) {
       document.body.style.overflow = prev;
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const prevFocus = document.activeElement as HTMLElement | null;
+    previousFocusRef.current = prevFocus;
+    const panel = panelRef.current;
+    const first = panel?.querySelector<HTMLElement>(
+      'button:not([disabled]), [href], input, textarea, select, [tabindex]:not([tabindex="-1"])',
+    );
+    first?.focus();
+    return () => {
+      prevFocus?.focus?.();
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        if (sending) return;
+        handleClose();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const panel = panelRef.current;
+      if (!panel) return;
+      const focusables = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input, textarea, select, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [open, sending, handleClose]);
 
   function goNext() {
     if (selected.length === 0) {
@@ -109,7 +158,7 @@ export function QuoteModal({ open, onClose }: QuoteModalProps) {
     'w-full px-4 py-3 rounded-lg bg-secondary/50 border border-border focus:outline-none focus:border-primary/50';
 
   const modal = (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -120,6 +169,7 @@ export function QuoteModal({ open, onClose }: QuoteModalProps) {
       />
 
       <motion.div
+        ref={panelRef}
         initial={{ opacity: 0, scale: 0.96, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.97, y: 12 }}
@@ -127,8 +177,8 @@ export function QuoteModal({ open, onClose }: QuoteModalProps) {
         className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-border bg-card shadow-2xl"
       >
         <div className="flex items-center justify-between px-6 pt-5 pb-2">
-          <h3 className="text-lg font-bold">{t('quote.title')}</h3>
-          <button onClick={handleClose} aria-label="Fechar" className="p-1.5 rounded-full hover:bg-secondary">
+          <h3 id="quote-modal-title" className="text-lg font-bold">{t('quote.title')}</h3>
+          <button onClick={handleClose} aria-label={t('quote.close')} className="p-1.5 rounded-full hover:bg-secondary">
             <X className="w-5 h-5" />
           </button>
         </div>

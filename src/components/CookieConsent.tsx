@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { useConsentStore } from '../stores/consentStore';
@@ -62,6 +62,44 @@ export function CookieConsent({ visible }: CookieConsentProps) {
   }, []);
 
   const show = visible && consent === null && !dismissed;
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!show) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setDismissed(true);
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const panel = panelRef.current;
+      if (!panel) return;
+      const focusables = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input, textarea, select, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [show]);
+
+  useEffect(() => {
+    if (!show || !showButtons) return;
+    const btn = panelRef.current?.querySelector<HTMLButtonElement>('button');
+    btn?.focus();
+  }, [show, showButtons]);
 
   const headerChars = copy.header.slice(0, typedHeader);
   const visibleBody = flatBody.slice(0, typedBody);
@@ -89,6 +127,7 @@ export function CookieConsent({ visible }: CookieConsentProps) {
         {show && (
           <motion.div
             key="cookie-consent"
+            ref={panelRef}
             initial={{ y: '100%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '-100%', opacity: 0 }}

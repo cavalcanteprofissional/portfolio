@@ -35,12 +35,10 @@ export async function fetchServices(): Promise<Service[]> {
     // o front nunca deve expor valores de servicos.
     return data
       .filter((s) => s.active !== false)
-      .map(({ base_price: _bp, complexity: _c, estimated_days: _ed, ...rest }) => ({
-        slug: rest.slug,
-        name: rest.name,
-        description: rest.description,
-        repo: rest.repo,
-      }));
+      .map((s) => {
+        const { slug, name, description, repo } = s;
+        return { slug, name, description, repo };
+      });
   } catch {
     return SERVICES;
   }
@@ -75,15 +73,27 @@ export interface AdminOrcamento {
   created_at: string;
 }
 
+const REQUEST_TIMEOUT_MS = 15_000;
+
 async function wf<T>(path: string, init?: RequestInit): Promise<T> {
+  if (!available()) {
+    throw new Error('Serviço de orçamentos não configurado.');
+  }
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   let res: Response;
   try {
-    res = await fetch(`${WORKER_URL}${path}`, init);
-  } catch {
+    res = await fetch(`${WORKER_URL}${path}`, { ...init, signal: controller.signal });
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      throw new Error('Tempo limite excedido ao conectar ao servidor de orçamentos. Tente novamente.');
+    }
     throw new Error(
       `Não foi possível conectar ao servidor de orçamentos (${WORKER_URL}). ` +
         `Verifique sua conexão ou o CORS — origem atual: ${window.location.origin}`,
     );
+  } finally {
+    clearTimeout(timer);
   }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {

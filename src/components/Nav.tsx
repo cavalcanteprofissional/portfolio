@@ -83,6 +83,15 @@ export function Nav() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
   const changeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode);
     setCurrentLang(langCode);
