@@ -29,13 +29,18 @@ export function Admin() {
 
   useEffect(() => {
     if (!supabase) return;
+    let alive = true;
     supabase.auth.getSession().then(({ data }) => {
       const session = data.session;
-      if (session) {
+      if (session && alive) {
         setSessionUser(session.user.email ?? null);
         setToken(session.access_token);
+        loadFor(session.access_token);
       }
     });
+    return () => {
+      alive = false;
+    };
   }, [supabase]);
 
   async function doLogin(e: React.FormEvent) {
@@ -54,6 +59,7 @@ export function Admin() {
     }
     setSessionUser(data.session.user.email ?? null);
     setToken(data.session.access_token);
+    loadFor(data.session.access_token);
   }
 
   async function doLogout() {
@@ -63,12 +69,11 @@ export function Admin() {
     setRows([]);
   }
 
-  async function load() {
-    if (!token) return;
+  async function loadFor(access: string) {
     setBusy(true);
     setActionError(null);
     try {
-      setRows(await adminListOrcamentos(token));
+      setRows(await adminListOrcamentos(access));
     } catch (e) {
       setActionError(e instanceof Error ? e.message : 'Erro');
     } finally {
@@ -76,10 +81,9 @@ export function Admin() {
     }
   }
 
-  useEffect(() => {
-    if (token) load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  function load() {
+    if (token) loadFor(token);
+  }
 
   async function setStatus(codigo: string, status: 'APROVADO' | 'RECUSADO') {
     if (!token) return;
@@ -87,7 +91,7 @@ export function Admin() {
     setActionError(null);
     try {
       await adminAprovar(token, codigo, status);
-      await load();
+      await loadFor(token);
     } catch (e) {
       setActionError(e instanceof Error ? e.message : 'Erro');
     } finally {

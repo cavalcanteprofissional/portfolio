@@ -1,7 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { formatBRL } from './pricing';
 import type { LineItem } from './pricing';
-import type { QuoteRequest } from './types';
 
 const PRIMARY = rgb(0.13, 0.15, 0.28);   // dark indigo
 const MUTED = rgb(0.45, 0.45, 0.5);
@@ -25,7 +24,7 @@ export async function buildQuotePdf(params: {
   const font = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
 
-  let page = doc.addPage([595, 842]); // A4 portrait
+  const page = doc.addPage([595, 842]); // A4 portrait
   const { width, height } = page.getSize();
   const margin = 48;
   let y = height - margin;

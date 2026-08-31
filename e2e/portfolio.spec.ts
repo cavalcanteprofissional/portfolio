@@ -136,3 +136,37 @@ test.describe('Portfolio - Responsividade', () => {
     await expect(page.locator('button[aria-label="Voltar ao topo"]').last()).toBeVisible();
   });
 });
+
+test.describe('Portfolio - Acessibilidade e Modais', () => {
+
+  test('trocar idioma atualiza html lang e título', async ({ page }) => {
+    await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
+    await page.locator('button[aria-label="Selecionar idioma"]').click();
+    await page.locator('text=English').click();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page).toHaveTitle(/Lucas Cavalcante/);
+  });
+
+  test('modal de orçamento abre e fecha com Escape', async ({ page }) => {
+    await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
+    await page.getByRole('button', { name: /Solicitar Orçamento/ }).first().click();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(dialog).not.toBeVisible();
+  });
+
+  test('Escape fecha o menu mobile', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
+    const toggle = page.locator('button[aria-label="Abrir menu"]');
+    await toggle.click();
+    await expect(page.getByRole('link', { name: 'Experiência' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('link', { name: 'Experiência' })).not.toBeVisible();
+  });
+});

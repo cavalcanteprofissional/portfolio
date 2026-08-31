@@ -29,13 +29,6 @@ export function CookieConsent({ visible }: CookieConsentProps) {
 
   useEffect(() => {
     if (!visible || consent !== null) return;
-    setTypedHeader(0);
-    setTypedBody(0);
-    setShowButtons(false);
-  }, [visible, consent]);
-
-  useEffect(() => {
-    if (!visible || consent !== null) return;
 
     if (typedHeader < copy.header.length) {
       const timer = setTimeout(() => setTypedHeader((p) => p + 1), 8);

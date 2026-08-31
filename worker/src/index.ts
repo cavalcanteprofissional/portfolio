@@ -42,7 +42,7 @@ function originAllowed(origin: string | null, env: Env): boolean {
   return allowed.includes(origin);
 }
 
-function langFrom(req: QuoteRequest): 'pt' | 'en' | 'es' {
+function langFrom(): 'pt' | 'en' | 'es' {
   return LANG;
 }
 
@@ -197,7 +197,7 @@ export default {
         }
 
         const services = await listServices(db);
-        const { lines, subtotal, urgenciaFactor, total } = computeTotal(body, services, langFrom(body));
+        const { lines, subtotal, urgenciaFactor, total } = computeTotal(body, services, langFrom());
 
         if (lines.length === 0) throw new ApiError('Nenhum item valido na solicitacao', 422);
 
@@ -267,7 +267,7 @@ export default {
         if (novoStatus === 'APROVADO') {
           // Emails/PDF apos persistir — falha NAO vira 500 (status ja comitado; sem duplicata em retry)
           try {
-            const { lines, total, subtotal, urgenciaFactor } = await recomputePrice(orc, db);
+            const { lines, subtotal, urgenciaFactor } = await recomputePrice(orc, db);
             const urgenciaLabel =
               orc.urgencia === 'muito_urgente' ? 'muito urgente' : orc.urgencia === 'urgente' ? 'urgente' : 'normal';
 

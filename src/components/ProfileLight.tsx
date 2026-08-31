@@ -59,21 +59,14 @@ export function ProfileLight({
   const planRef = useRef<DepthInferencePlan | null>(null);
   const lightRef = useRef(createLightController());
   const rafRef = useRef<number>(0);
-  const startTimeRef = useRef(performance.now());
+  const startTimeRef = useRef(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [hasWebGPU, setHasWebGPU] = useState(true);
+  const [hasWebGPU] = useState(() => 'gpu' in navigator);
   const photoBitmapRef = useRef<ImageBitmap | null>(null);
   const hoveringRef = useRef(false);
   const mousePosRef = useRef({ x: 0.5, y: 0.5 });
   const consent = useConsentStore((s) => s.consent);
-
-  useEffect(() => {
-    if (!('gpu' in navigator)) {
-      setHasWebGPU(false);
-      return;
-    }
-  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -170,7 +163,15 @@ export function ProfileLight({
 
   useEffect(() => {
     if (hasWebGPU && consent === true) {
-      initPipeline();
+      const timer = setTimeout(initPipeline, 0);
+      return () => {
+        clearTimeout(timer);
+        cancelAnimationFrame(rafRef.current);
+        planRef.current?.destroy();
+        rendererRef.current?.destroy();
+        rootRef.current?.destroy();
+        photoBitmapRef.current?.close();
+      };
     }
     return () => {
       cancelAnimationFrame(rafRef.current);
@@ -209,6 +210,7 @@ export function ProfileLight({
     }
 
     const loop = () => {
+      if (startTimeRef.current === 0) startTimeRef.current = performance.now();
       if (!visible || !rendererRef.current || !photoBitmapRef.current) {
         rafRef.current = requestAnimationFrame(loop);
         return;
