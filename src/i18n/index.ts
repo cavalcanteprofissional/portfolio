@@ -32,6 +32,7 @@ export const translations = {
       current: "Atual",
       more: "mais",
       activities: "atividades",
+      goToPage: "Ir para a página {{page}}",
       "7": { title: "Bolsista em Inovação Tecnológica", company: "SiDi", "1": "Processamento de Linguagem Natural.", "2": "Aprendizagem de Máquina.", "3": "Processamento de Imagem e Visão Computacional.", "4": "Mineração e Ciência de Dados.", "5": "Estatística e Inteligência Artificial Aplicada ao Negócios.", "6": "Inteligência Empresarial e Estratégias Corporativas." },
       "2": { title: "Analista de Dados", company: "Rebualf", "1": "Definição do escopo e modelagem de dados (DER) para projeto no mercado de moda do Ceará.", "2": "Coleta, limpeza e preparação de datasets utilizando Python e bibliotecas de análise.", "3": "Realização de Análise Exploratória de Dados (EDA) e cálculo de estatísticas descritivas.", "4": "Geração de dashboards interativos e relatórios para alta gestão utilizando Power BI." },
       "3": { title: "Analista de Dados", company: "Zents", "1": "Definição do escopo e modelagem de dados (DER) para projeto no mercado de moda do Ceará.", "2": "Coleta, limpeza e preparação de datasets utilizando Python e bibliotecas de análise.", "3": "Realização de Análise Exploratória de Dados (EDA) e cálculo de estatísticas descritivas.", "4": "Implementação de modelo de machine learning (Random Forest) com avaliação de métricas.", "5": "Geração de dashboards interativos e relatórios para alta gestão utilizando Streamlit." },
@@ -101,7 +102,25 @@ export const translations = {
       "3": { question: "Qual a sua experiência profissional?", answer: "Tenho experiência prática em empresas de pequeno e médio porte, atuação em setores institucional/educacional e também no setor industrial. Trabalhei com projetos de análise de dados, desenvolvimento de chatbots, dashboards e pipelines de dados." }
     },
     availability: { label: "Disponível para projetos", badge: "Disponível" },
-    acessibilidade: { skipToContent: "Pular para o conteúdo", scrollToTop: "Voltar ao topo", navAria: "Navegação principal" },
+    acessibilidade: { skipToContent: "Pular para o conteúdo", scrollToTop: "Voltar ao topo", navAria: "Navegação principal", selectLanguage: "Selecionar idioma", toggleTheme: "Alternar tema", toggleMenu: "Abrir menu" },
+    meta: {
+      title: "Lucas Cavalcante | Analista de Dados & IA",
+      description: "Portfólio de Lucas Cavalcante: análises de dados, dashboards, chatbots com IA e automações. Projetos, certificações e experiência profissional.",
+    },
+    consent: {
+      header: "> POLÍTICA DE PRIVACIDADE",
+      body: "Valorizamos sua privacidade. Usamos apenas o que é essencial:\n• Estatísticas anônimas (só com sua permissão) para melhorar o site.\n• Preferências como idioma e som, salvas no seu navegador.\n• Nada é vendido, compartilhado ou usado para te rastrear.",
+      accept: "[ Aceitar ]",
+    },
+    boot: {
+      mute: "Silenciar som do boot",
+      unmute: "Ativar som do boot",
+    },
+    errorBoundary: {
+      title: "Algo deu errado",
+      message: "Tente recarregar a página.",
+      retry: "Recarregar",
+    },
     quote: {
       title: "Solicitar Orçamento",
       requestCta: "Solicitar Orçamento",
@@ -164,18 +183,19 @@ export const translations = {
       "13": { title: "Pro Git QA Bot", description: "RAG chatbot for answering Git questions using LangChain and Streamlit." },
       "14": { title: "JobMatch AI", description: "End-to-end ML system for intelligent resume-job matching with FastAPI and React frontend." },
       "15": { title: "CD Price Tracker", description: "Weekly CD price scraper across Amazon, Mercado Livre, and Shopee with Next.js dashboard and Recharts charts." },
-      "16": { title: "LinkTree Pessoal", description: "Personal link aggregator with analytics dashboard, Instagram feed, dark mode, and interactive 3D theme with Three.js." }
+      "16": { title: "Personal LinkTree", description: "Personal link aggregator with analytics dashboard, Instagram feed, dark mode, and interactive 3D theme with Three.js." }
     },
     experience: {
       current: "Current",
       more: "more",
       activities: "activities",
+      goToPage: "Go to page {{page}}",
       "7": { title: "Artificial Intelligence Research Fellow", company: "SiDi", "1": "Natural Language Processing.", "2": "Machine Learning.", "3": "Image Processing and Computer Vision.", "4": "Data Mining and Data Science.", "5": "Statistics and Applied AI for Business.", "6": "Business Intelligence and Corporate Strategies." },
       "2": { title: "Data Analyst", company: "Rebualf", "1": "Definition of scope and data modeling (ERD) for a project in the Ceará fashion market.", "2": "Collection, cleaning, and preparation of datasets using Python and analysis libraries.", "3": "Performance of Exploratory Data Analysis (EDA) and calculation of descriptive statistics.", "4": "Generation of interactive dashboards and reports for senior management using Power BI." },
       "3": { title: "Data Analyst", company: "Zents", "1": "Definition of scope and data modeling (ERD) for a project in the Ceará fashion market.", "2": "Collection, cleaning, and preparation of datasets using Python and analysis libraries.", "3": "Performance of Exploratory Data Analysis (EDA) and calculation of descriptive statistics.", "4": "Implementation of machine learning model (Random Forest) with metric evaluation.", "5": "Generation of interactive dashboards and reports for senior management using Streamlit." },
       "4": { title: "Marketing and Commercial Analyst", company: "Iselétrica LTDA.", "1": "Planning and management of digital campaigns (Google Ads, Meta Ads) with KPI monitoring.", "2": "Implementation of SEO and SEM strategies, resulting in increased organic traffic.", "3": "Creation and editing of audiovisual content for social media and sales funnels.", "4": "CRM management via internal ERP.", "5": "Support to the commercial team in customer prospecting and retention." },
       "5": { title: "Marketing Analyst | Marketing Assistant", company: "Portal Education Institute", "1": "Development and monitoring of promotional campaigns.", "2": "Implementation of SEO/SEM strategies and content management for website and social media.", "3": "Creation of graphic content and maintenance of digital communication channels." },
-      "6": { title: "IT and Network Technician", company: "Freelancer", "1": "Assembly, maintenance and configuration of IT infrastructure (computers, servers, TCP/IP networks, Wi-Fi).", "2": "Remote and on-site technical support, software installation and access permissions.", "3": "Technical consulting and preparation of bids for equipment procurement." }
+      "6": { title: "IT and Network Technician", company: "Self-employed", "1": "Assembly, maintenance and configuration of IT infrastructure (computers, servers, TCP/IP networks, Wi-Fi).", "2": "Remote and on-site technical support, software installation and access permissions.", "3": "Technical consulting and preparation of bids for equipment procurement." }
     },
     skills: {
       languages: "Languages & Libraries",
@@ -239,7 +259,25 @@ export const translations = {
       "3": { question: "What is your professional experience?", answer: "I have practical experience in small and medium-sized companies, working in institutional/educational sectors and also in the industrial sector. I have worked on data analysis projects, chatbot development, dashboards and data pipelines." }
     },
     availability: { label: "Available for projects", badge: "Available" },
-    acessibilidade: { skipToContent: "Skip to content", scrollToTop: "Back to top", navAria: "Main navigation" },
+    acessibilidade: { skipToContent: "Skip to content", scrollToTop: "Back to top", navAria: "Main navigation", selectLanguage: "Select language", toggleTheme: "Toggle theme", toggleMenu: "Open menu" },
+    meta: {
+      title: "Lucas Cavalcante | Data Analyst & AI",
+      description: "Lucas Cavalcante's portfolio: data analysis, dashboards, AI chatbots and automation. Projects, certifications and professional experience.",
+    },
+    consent: {
+      header: "> PRIVACY POLICY",
+      body: "We value your privacy. We only use what is essential:\n• Anonymous statistics (only with your permission) to improve the site.\n• Preferences like language and sound, saved in your browser.\n• Nothing is sold, shared, or used to track you.",
+      accept: "[ Accept ]",
+    },
+    boot: {
+      mute: "Mute boot sound",
+      unmute: "Enable boot sound",
+    },
+    errorBoundary: {
+      title: "Something went wrong",
+      message: "Try reloading the page.",
+      retry: "Reload",
+    },
     quote: {
       title: "Request a quote",
       requestCta: "Request a Quote",
@@ -302,12 +340,13 @@ export const translations = {
       "13": { title: "Pro Git QA Bot", description: "Chatbot RAG para responder preguntas sobre Git usando LangChain y Streamlit." },
       "14": { title: "JobMatch AI", description: "Sistema de Machine Learning para matching inteligente entre currículos y ofertas de empleo con FastAPI y frontend React." },
       "15": { title: "CD Price Tracker", description: "Scraper semanal de precios de CD en Amazon, Mercado Libre y Shopee con panel Next.js y gráficos Recharts." },
-      "16": { title: "LinkTree Pessoal", description: "Agregador de enlaces personales con dashboard de analytics, feed de Instagram, modo oscuro y tema 3D interactivo con Three.js." }
+      "16": { title: "LinkTree Personal", description: "Agregador de enlaces personales con dashboard de analytics, feed de Instagram, modo oscuro y tema 3D interactivo con Three.js." }
     },
     experience: {
       current: "Actual",
       more: "más",
       activities: "actividades",
+      goToPage: "Ir a la página {{page}}",
       "7": { title: "Becario en Inteligencia Artificial", company: "SiDi", "1": "Procesamiento de Lenguaje Natural.", "2": "Aprendizaje Automático.", "3": "Procesamiento de Imagen y Visión por Computadora.", "4": "Minería y Ciencia de Datos.", "5": "Estadística e IA Aplicada a los Negocios.", "6": "Inteligencia Empresarial y Estrategias Corporativas." },
       "2": { title: "Analista de Datos", company: "Rebualf", "1": "Definición del alcance y modelado de datos (DER) para un proyecto en el mercado de moda de Ceará.", "2": "Recopilación, limpieza y preparación de datasets utilizando Python y bibliotecas de análisis.", "3": "Realización de Análisis Exploratorio de Datos (EDA) y cálculo de estadísticas descriptivas.", "4": "Generación de dashboards interactivos e informes para la alta gerencia utilizando Power BI." },
       "3": { title: "Analista de Datos", company: "Zents", "1": "Definición del alcance y modelado de datos (DER) para un proyecto en el mercado de moda de Ceará.", "2": "Recopilación, limpieza y preparación de datasets utilizando Python y bibliotecas de análisis.", "3": "Realización de Análisis Exploratorio de Datos (EDA) y cálculo de estadísticas descriptivas.", "4": "Implementación de modelo de machine learning (Random Forest) con evaluación de métricas.", "5": "Generación de dashboards interactivos e informes para la alta gerencia utilizando Streamlit." },
@@ -372,12 +411,30 @@ export const translations = {
     faq: {
       title: "Preguntas Frecuentes",
       "0": { question: "¿Cuál es el tiempo promedio de entrega de un proyecto?", answer: "El plazo varía de 3 a 5 semanas, dependiendo de la complejidad del proyecto. Proyectos más pequeños pueden entregarse en menor tiempo." },
-      "1": { question: "¿Trabaja presencialmente?", answer: "Atendo presencialmente solo en Fortaleza y Región Metropolitana. Para otras ubicaciones, ofrezco servicios remotos." },
+      "1": { question: "¿Trabaja presencialmente?", answer: "Atiendo presencialmente solo en Fortaleza y Región Metropolitana. Para otras ubicaciones, ofrezco servicios remotos." },
       "2": { question: "¿Qué tecnologías utiliza?", answer: "Trabajo principalmente con Python y sus librerías: Pandas y Scikit-learn para análisis y machine learning, Streamlit y Flask para aplicaciones web, LangChain y Hugging Face para NLP, OpenCV para visión computacional, además de Streamlit y Folium para visualización de datos en series temporales y geoespaciales." },
       "3": { question: "¿Cuál es su experiencia profesional?", answer: "Tengo experiencia práctica en empresas pequeñas y medianas, actuación en sectores institucional/educacional y también en el sector industrial. He trabajado en proyectos de análisis de datos, desarrollo de chatbots, dashboards y pipelines de datos." }
     },
     availability: { label: "Disponible para proyectos", badge: "Disponible" },
-    acessibilidade: { skipToContent: "Saltar al contenido", scrollToTop: "Volver arriba", navAria: "Navegación principal" },
+    acessibilidade: { skipToContent: "Saltar al contenido", scrollToTop: "Volver arriba", navAria: "Navegación principal", selectLanguage: "Seleccionar idioma", toggleTheme: "Cambiar tema", toggleMenu: "Abrir menú" },
+    meta: {
+      title: "Lucas Cavalcante | Analista de Datos e IA",
+      description: "Portafolio de Lucas Cavalcante: análisis de datos, dashboards, chatbots con IA y automatizaciones. Proyectos, certificaciones y experiencia profesional.",
+    },
+    consent: {
+      header: "> POLÍTICA DE PRIVACIDAD",
+      body: "Valoramos tu privacidad. Solo usamos lo esencial:\n• Estadísticas anónimas (solo con tu permiso) para mejorar el sitio.\n• Preferencias como idioma y sonido, guardadas en tu navegador.\n• Nada se vende, comparte ni se usa para rastrearte.",
+      accept: "[ Aceptar ]",
+    },
+    boot: {
+      mute: "Silenciar el sonido de inicio",
+      unmute: "Activar el sonido de inicio",
+    },
+    errorBoundary: {
+      title: "Algo salió mal",
+      message: "Intenta recargar la página.",
+      retry: "Recargar",
+    },
     quote: {
       title: "Solicitar Presupuesto",
       requestCta: "Solicitar Presupuesto",

@@ -113,7 +113,7 @@ export function Nav() {
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="flex items-center justify-center cursor-pointer"
-            aria-label="Voltar ao topo"
+            aria-label={t('acessibilidade.scrollToTop')}
           >
             <img
               src={theme === 'dark' 
@@ -152,7 +152,9 @@ export function Nav() {
               <button
                 onClick={() => setLangMenuOpen(!langMenuOpen)}
                 className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-secondary transition-colors text-sm font-medium"
-                aria-label="Select language"
+                aria-label={t('acessibilidade.selectLanguage')}
+                aria-haspopup="true"
+                aria-expanded={langMenuOpen}
               >
                 <Globe className="w-4 h-4" aria-hidden="true" />
                 <span className="w-6">{currentLang.toUpperCase()}</span>
@@ -180,7 +182,7 @@ export function Nav() {
             <button
               onClick={toggleTheme}
               className="p-2.5 rounded-lg hover:bg-secondary transition-colors"
-              aria-label="Toggle theme"
+              aria-label={t('acessibilidade.toggleTheme')}
             >
               {theme === 'dark' ? (
                 <Sun className="w-5 h-5" aria-hidden="true" />
@@ -191,7 +193,9 @@ export function Nav() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden p-2.5 rounded-lg hover:bg-secondary transition-colors"
-              aria-label="Toggle menu"
+              aria-label={t('acessibilidade.toggleMenu')}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
               {isOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
             </button>
@@ -218,7 +222,7 @@ export function Nav() {
               transition={{ duration: 0.25, ease: 'easeOut' }}
               className="md:hidden"
             >
-              <div className="py-4 px-4 space-y-1 bg-background/95 backdrop-blur-xl border-t border-border/50">
+              <div className="py-4 px-4 space-y-1 bg-background/95 backdrop-blur-xl border-t border-border/50" id="mobile-menu">
                 {navItems.map((item, index) => {
                   const Icon = item.icon;
                   const sectionId = item.href.replace('#', '');

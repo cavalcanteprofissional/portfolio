@@ -1,62 +1,31 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { useConsentStore } from '../stores/consentStore';
 import { EASE, DURATION } from '../lib/motion';
 import { MONO_FONT } from '../lib/constants';
-
-const PRIVACY_LINES = {
-  pt: {
-    header: '> POLÍTICA DE PRIVACIDADE',
-    body: [
-      'Valorizamos sua privacidade. Usamos apenas o que é essencial:',
-      '• Estatísticas anônimas (só com sua permissão) para melhorar o site.',
-      '• Preferências como idioma e som, salvas no seu navegador.',
-      '• Nada é vendido, compartilhado ou usado para te rastrear.',
-    ],
-    accept: '[ Aceitar ]',
-  },
-  en: {
-    header: '> PRIVACY POLICY',
-    body: [
-      'We value your privacy. We only use what is essential:',
-      '• Anonymous statistics (only with your permission) to improve the site.',
-      '• Preferences like language and sound, saved in your browser.',
-      '• Nothing is sold, shared, or used to track you.',
-    ],
-    accept: '[ Accept ]',
-  },
-  es: {
-    header: '> POLÍTICA DE PRIVACIDAD',
-    body: [
-      'Valoramos tu privacidad. Solo usamos lo esencial:',
-      '• Estadísticas anónimas (solo con tu permiso) para mejorar el sitio.',
-      '• Preferencias como idioma y sonido, guardadas en tu navegador.',
-      '• Nada se vende, comparte ni se usa para rastrearte.',
-    ],
-    accept: '[ Aceptar ]',
-  },
-};
-
-function getPrivacyLines(lang: string) {
-  if (lang === 'en') return PRIVACY_LINES.en;
-  if (lang === 'es') return PRIVACY_LINES.es;
-  return PRIVACY_LINES.pt;
-}
 
 interface CookieConsentProps {
   visible: boolean;
 }
 
 export function CookieConsent({ visible }: CookieConsentProps) {
+  const { t } = useTranslation();
   const { consent, setConsent } = useConsentStore();
   const [typedHeader, setTypedHeader] = useState(0);
   const [typedBody, setTypedBody] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  const lang = document.documentElement.lang || 'pt';
-  const t = getPrivacyLines(lang);
-  const flatBody = t.body.join('\n');
+  const copy = useMemo(
+    () => ({
+      header: t('consent.header'),
+      body: t('consent.body'),
+      accept: t('consent.accept'),
+    }),
+    [t],
+  );
+  const flatBody = copy.body;
 
   useEffect(() => {
     if (!visible || consent !== null) return;
@@ -68,7 +37,7 @@ export function CookieConsent({ visible }: CookieConsentProps) {
   useEffect(() => {
     if (!visible || consent !== null) return;
 
-    if (typedHeader < t.header.length) {
+    if (typedHeader < copy.header.length) {
       const timer = setTimeout(() => setTypedHeader((p) => p + 1), 8);
       return () => clearTimeout(timer);
     }
@@ -80,7 +49,7 @@ export function CookieConsent({ visible }: CookieConsentProps) {
 
     const timer = setTimeout(() => setShowButtons(true), 120);
     return () => clearTimeout(timer);
-  }, [visible, consent, typedHeader, typedBody, t, flatBody]);
+  }, [visible, consent, typedHeader, typedBody, copy, flatBody]);
 
   const handleAccept = useCallback(() => setConsent(true), [setConsent]);
 
@@ -94,7 +63,7 @@ export function CookieConsent({ visible }: CookieConsentProps) {
 
   const show = visible && consent === null && !dismissed;
 
-  const headerChars = t.header.slice(0, typedHeader);
+  const headerChars = copy.header.slice(0, typedHeader);
   const visibleBody = flatBody.slice(0, typedBody);
   const visibleLines = visibleBody.split('\n');
   const isTypingBody = typedBody < flatBody.length;
@@ -129,7 +98,7 @@ export function CookieConsent({ visible }: CookieConsentProps) {
           >
             <ModalCard>
               <ModalContent
-                t={t}
+                t={copy}
                 headerChars={headerChars}
                 typedHeader={typedHeader}
                 visibleLines={visibleLines}
@@ -142,7 +111,7 @@ export function CookieConsent({ visible }: CookieConsentProps) {
                   className="w-full px-3 py-1.5 sm:px-4 sm:py-2 sm:flex-none text-[11px] sm:text-xs font-semibold text-white transition-all rounded border border-primary/50 hover:border-primary bg-primary/10 hover:bg-primary/25 boot-glow-text cookie-accept-glow"
                   style={{ fontFamily: MONO_FONT }}
                 >
-                  {t.accept}
+                  {copy.accept}
                 </button>
               </ModalContent>
             </ModalCard>
@@ -172,7 +141,7 @@ function ModalCard({ children }: { children: React.ReactNode }) {
 }
 
 interface ModalContentProps {
-  t: { header: string; body: string[]; accept: string };
+  t: { header: string; body: string; accept: string };
   headerChars: string;
   typedHeader: number;
   visibleLines: string[];

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Volume2, VolumeX } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { ensureBootAudio, playBootStart, playOkBlip, playPostBeep, playWelcomeChime } from './bootSound';
 import { MONO_FONT, BG_DARK_HSL } from '../lib/constants';
 
@@ -82,6 +83,7 @@ interface BootScreenProps {
 }
 
 export function BootScreen({ onComplete, ready }: BootScreenProps) {
+  const { t } = useTranslation();
   const [typingLine, setTypingLine] = useState(0);
   const [typingPos, setTypingPos] = useState(0);
   const [okLines, setOkLines] = useState<number[]>([]);
@@ -220,7 +222,7 @@ export function BootScreen({ onComplete, ready }: BootScreenProps) {
       <button
         type="button"
         onClick={() => setMuted((m) => !m)}
-        aria-label={muted ? 'Ativar som do boot' : 'Silenciar som do boot'}
+        aria-label={muted ? t('boot.unmute') : t('boot.mute')}
         aria-pressed={muted}
         className="absolute top-3 right-3 sm:top-5 sm:right-6 z-[70] p-2.5 rounded-full border border-white/15 bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
       >

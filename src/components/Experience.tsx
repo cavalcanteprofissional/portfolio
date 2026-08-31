@@ -132,7 +132,7 @@ export function Experience() {
                     ? 'w-10 bg-gradient-blue'
                     : 'w-3 bg-muted-foreground/20 hover:bg-primary/40'
                 }`}
-                aria-label={`Go to page ${pageIndex + 1}`}
+                aria-label={t('experience.goToPage', { page: pageIndex + 1 })}
               />
             ))}
           </div>

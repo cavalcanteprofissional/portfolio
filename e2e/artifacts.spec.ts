@@ -191,7 +191,7 @@ test.describe('Artefatos servidos no app', () => {
 
   test('idioma espanhol altera mensagem pré-preenchida', async ({ page }) => {
     await waitForApp(page);
-    await page.locator('button[aria-label="Select language"]').click();
+    await page.locator('button[aria-label="Selecionar idioma"]').click();
     await page.locator('text=Español').click();
 
     const href = await page

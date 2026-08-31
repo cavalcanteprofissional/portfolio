@@ -8,7 +8,10 @@ test.beforeEach(async ({ page }) => {
 async function ensureNavVisible(page: import('@playwright/test').Page) {
   const isDesktop = await page.evaluate(() => window.innerWidth >= 768);
   if (!isDesktop) {
-    await page.locator('button[aria-label="Toggle menu"]').click();
+    const menuToggle = page.locator(
+      'button[aria-label="Abrir menu"], button[aria-label="Open menu"], button[aria-label="Abrir menú"]',
+    );
+    await menuToggle.click();
     await page.waitForTimeout(400);
   }
 }
@@ -38,14 +41,14 @@ test.describe('Portfolio - Navegação e Layout', () => {
     await page.goto('/portfolio-cavalcante/');
     const html = page.locator('html');
     const initial = await html.getAttribute('class');
-    await page.locator('button[aria-label="Toggle theme"]').click();
+    await page.locator('button[aria-label="Alternar tema"]').click();
     const after = await html.getAttribute('class');
     expect(after).not.toBe(initial);
   });
 
   test('deve trocar idioma para inglês', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
-    await page.locator('button[aria-label="Select language"]').click();
+    await page.locator('button[aria-label="Selecionar idioma"]').click();
     await page.locator('text=English').click();
     await ensureNavVisible(page);
     await expect(page.getByRole('link', { name: 'Projects' }).last()).toBeVisible();
@@ -53,7 +56,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('deve trocar idioma para espanhol', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
-    await page.locator('button[aria-label="Select language"]').click();
+    await page.locator('button[aria-label="Selecionar idioma"]').click();
     await page.locator('text=Español').click();
     await ensureNavVisible(page);
     await expect(page.getByRole('link', { name: 'Proyectos' }).last()).toBeVisible();
@@ -107,9 +110,9 @@ test.describe('Portfolio - Responsividade', () => {
   test('menu mobile deve abrir e fechar', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/portfolio-cavalcante/');
-    await page.locator('button[aria-label="Toggle menu"]').click();
+    await page.locator('button[aria-label="Abrir menu"]').click();
     await expect(page.getByRole('link', { name: 'Experiência' })).toBeVisible();
-    await page.locator('button[aria-label="Toggle menu"]').click();
+    await page.locator('button[aria-label="Abrir menu"]').click();
     await expect(page.getByRole('link', { name: 'Experiência' })).not.toBeVisible();
   });
 

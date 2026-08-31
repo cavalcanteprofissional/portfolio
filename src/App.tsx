@@ -32,7 +32,7 @@ function App() {
   const { theme } = useThemeStore();
   const booted = useBootStore((s) => s.booted);
   const setBooted = useBootStore((s) => s.setBooted);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [resourcesReady, setResourcesReady] = useState(false);
   const [showConsent, setShowConsent] = useState(false);
   const consent = useConsentStore((s) => s.consent);
@@ -88,6 +88,15 @@ function App() {
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
   }, [theme]);
+
+  useEffect(() => {
+    const localeMap: Record<string, string> = { pt: 'pt-BR', en: 'en', es: 'es' };
+    const base = String(i18n.language || 'pt').split('-')[0];
+    document.documentElement.lang = localeMap[base] ?? 'pt-BR';
+    document.title = t('meta.title');
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', t('meta.description'));
+  }, [i18n.language, t]);
 
   useEffect(() => {
     if (!booted) return;
