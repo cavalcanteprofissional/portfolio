@@ -1,4 +1,4 @@
- # Plano de Melhorias — Onda 1.21 (pós-análise profunda, 2026-08-30)
+# Plano de Melhorias — Onda 1.21 (pós-análise profunda, 2026-08-30)
 
 > Análise profunda (3 auditorias + verificação manual) → plano registrado e executado **por fases**. Decisões do usuário anotadas em cada item.
 
@@ -6,48 +6,47 @@
 Endurecer o backend (segurança/robustez), corrigir bugs frontend + i18n/a11y/SEO, cortar perf do bundle inicial, limpar CI/qualidade/testes e sincronizar docs.
 
 ## Fase A — Segurança/robustez (Worker + Supabase)
-- [ ] A1 Admin por allowlist de email (`ADMIN_EMAILS = cavalcanteprofissional@outlook.com`) — `requireAdmin` → **401** (token inválido) vs **403** (sessão válida fora da lista)
-- [ ] A2 Validação no edge (urgencia no enum; caps nome/email/whatsapp/cpf/descricao/itens/qtd → 422; JSON mal-formado → 400)
-- [ ] A3 Erros mapeados 400/401/403/404/422/500 sem vazar internals (hoje tudo vira 500)
-- [ ] A4 Rate-limit por IP no `POST /orcamento` (5/h, 429 + Retry-After) — decisão usuária: **rate-limit simples**, sem Turnstile
-- [ ] A5 Emails não-fatais pós-persistência (falha de Brevo não vira 500) + `/admin/aprovar` idempotente (rejeita transição de estado terminal)
-- [ ] A6 Escapar HTML em `email.ts` (campos do usuário)
-- [ ] A7 Preços **não públicos** — decisão usuária — `GET /services` projeta `(slug, name, description, repo, active)`; migração SQL: `REVOKE ALL on services FROM anon` + VIEW `services_public` + `GRANT SELECT` na view (aplicar no dashboard)
+- [x] A1 Admin por allowlist de email (`ADMIN_EMAILS = cavalcanteprofissional@outlook.com`) — `requireAdmin` → **401** (token inválido) vs **403** (sessão válida fora da lista)
+- [x] A2 Validação no edge (urgencia no enum; caps nome/email/whatsapp/cpf/descricao/itens/qtd → 422; JSON mal-formado → 400)
+- [x] A3 Erros mapeados 400/401/403/404/422/500 sem vazar internals (hoje tudo vira 500)
+- [x] A4 Rate-limit por IP no `POST /orcamento` (5/h, 429 + Retry-After) — decisão usuária: **rate-limit simples**, sem Turnstile
+- [x] A5 Emails não-fatais pós-persistência (falha de Brevo não vira 500) + `/admin/aprovar` idempotente (rejeita transição de estado terminal)
+- [x] A6 Escapar HTML em `email.ts` (campos do usuário)
+- [x] A7 Preços **não públicos** — decisão usuária — `GET /services` projeta `(slug, name, description, repo, active)`; **pendente manual**: aplicar migração SQL no dashboard (`REVOKE ALL on services FROM anon` + VIEW `services_public` + `GRANT SELECT`)
 - [ ] A8 (manual usuário) Rotacionar `service_role` quando expor a produção
 
 ## Fase B — Frontend: bugs + i18n/a11y/SEO
-- [ ] B1 `html lang` + `document.title` sincronizados com o idioma; CookieConsent via `i18n` (hoje lê `documentElement.lang` estático → trava em PT)
-- [ ] B2 Focus trap + Escape + restore (QuoteModal, Nav mobile, CookieConsent)
-- [ ] B3 aria-labels hardcoded PT/EN → chaves i18n (Nav:116/155/183/194, QuoteModal:131, BootScreen:223, ErrorBoundary, Experience:135) + ajuste e2e
-- [ ] B4 TechStack toggle `div`→`button` (aria-pressed); aria-pressed nos toggles de serviço; aria-expanded em Skills
-- [ ] B5 ES FAQ `Atendo`→`Atiendo`; traduzir `project.16.title` e `experience.6.company`
-- [ ] B6 Fix `group-hover` em Portfolio (falta `group` no card)
-- [ ] B7 `wf()` com `AbortSignal.timeout(12s)` + abort no close + guarda `available()`
+- [x] B1 `html lang` + `document.title` sincronizados com o idioma; CookieConsent via `i18n` (hoje lê `documentElement.lang` estático → trava em PT)
+- [x] B2 Focus trap + Escape + restore (QuoteModal, Nav mobile, CookieConsent)
+- [x] B3 aria-labels hardcoded PT/EN → chaves i18n (Nav:116/155/183/194, QuoteModal:131, BootScreen:223, ErrorBoundary, Experience:135) + ajuste e2e
+- [x] B4 TechStack toggle `div`→`button` (aria-pressed); aria-pressed nos toggles de serviço; aria-expanded em Skills
+- [x] B5 ES FAQ `Atendo`→`Atiendo`; traduzir `project.16.title` e `experience.6.company`
+- [x] B6 Fix `group-hover` em Portfolio (falta `group` no card)
+- [x] B7 `wf()` com `AbortSignal.timeout(12s)` + abort no close + guarda `available()`
 
 ## Fase C — Perf
-- [ ] C1 `ProfileLight` lazy + Suspense (remove typegpu/~700KB do entry)
-- [ ] C2 Remover preload eager dos 9 chunks (App.tsx)
-- [ ] C3 Deletar `mouseStore` (escrito 60fps, nunca lido)
-- [ ] C4 `manualChunks` vendors (se viável)
+- [x] C1 `ProfileLight` lazy + Suspense (remove typegpu/~700KB do entry)
+- [x] C2 Remover preload eager dos 9 chunks (App.tsx)
+- [x] C3 Deletar `mouseStore` (escrito 60fps, nunca lido)
+- [x] C4 `manualChunks` vendors (se viável)
 
 ## Fase D — CI/qualidade/testes
-- [ ] D1 Corrigir `typecheck` (hoje no-op: `tsc --noEmit` em tsconfig `files: []`)
-- [ ] D2 CI: lint + typecheck + Playwright (pós-build)
-- [ ] D3 Gate do passo `Check HF_TOKEN` para `main` (não roda em PR/fork)
-- [ ] D4 `package.json` version→1.21.0 + `engines.node≥20.19` + remover dep morta `i18next-browser-languagedetector`
-- [ ] D5 Novos e2e: pageerror/console checker global, fluxo quote modal, admin mínimo, persistência lang/theme, asserts `html lang`/title
+- [x] D1 Corrigir `typecheck` (hoje no-op: `tsc --noEmit` em tsconfig `files: []`)
+- [x] D2 CI: lint + typecheck + Playwright (pós-build)
+- [x] D3 Gate do passo `Check HF_TOKEN` para `main` (não roda em PR/fork)
+- [x] D4 `package.json` version→1.21.0 + `engines.node≥20.19` + remover dep morta `i18next-browser-languagedetector`
+- [x] D5 Novos e2e: pageerror/console checker global, fluxo quote modal, admin mínimo, persistência lang/theme, asserts `html lang`/title
 
 ## Fase E — Docs + UX
-- [ ] E1 Sincronizar CONTENT.md (status projetos, stats, hero title, swap ZENTS/Rebualf, `2026pro`, slug LinkedIn, base `/portfolio/`, seção Showcase removida, contagens, `23.` duplicado)
-- [ ] E2 Boot mais rápido — decisão usuária: **reduzir tempo da animação** (MIN_BOOT_MS 1800→800, TICK_MS 2→1, SECTION_PAUSE/OK_DELAY/LINE_GAP/PROMPT_DELAY menores, TYPE_STEP maiores)
-- [ ] E3 Limpeza topo TODO.md (prefixo perdido na linha 1)
-- [ ] E4 CHANGELOG 1.21.0
+- [x] E1 Sincronizar CONTENT.md (status projetos, stats, hero title, swap ZENTS/Rebualf, `2026pro`, slug LinkedIn, base `/portfolio/`, seção Showcase removida, contagens, `23.` duplicado)
+- [x] E2 Boot mais rápido — decisão usuária: **reduzir tempo da animação** (MIN_BOOT_MS 1800→800, TICK_MS 2→1, SECTION_PAUSE/OK_DELAY/LINE_GAP/PROMPT_DELAY menores, TYPE_STEP maiores)
+- [x] E3 Limpeza topo TODO.md (prefixo perdido na linha 1)
+- [x] E4 CHANGELOG 1.21.0
 
 ## 🧰 Decisões de design (registradas)
 - **Bola de luz/scroll na foto de perfil** (`ProfileLight.tsx` wheel `preventDefault`): **comportamento intencional** — o scroll controla a luz. Não corrigir; sem alteração. (Não é bug.)
 
 ## ⏳ Pendências manuais abertas (revisitar na Fase E)
-- [ ] Git: `HF_TOKEN` validado via `hf-status.txt` ✅ (2026-08-30, user `CavalcanteProfissional`)
 - [ ] Supabase: criar usuário admin (Auth → Users) p/ login `admin.html`
 - [ ] Supabase: aplicar migração A7 (`services_public`)
 - [ ] Brevo: confirmar sender verificado

@@ -1,5 +1,47 @@
 # Changelog
 
+## [1.21.0] - 2026-08-30
+
+### 🛡️ Fase A — Segurança/robustez (Worker + Supabase)
+
+- 🔐 **Admin por allowlist de email** (`ADMIN_EMAILS`) — `requireAdmin` devolve **401** (token inválido) vs **403** (sessão válida fora da lista)
+- ✅ **Validação no edge** — uriá média no enum; caps nome/email/whatsapp/cpf/descricao/itens/qtd → **422**; JSON mal-formado → **400**
+- 🗺️ **Erros mapeados** 400/401/403/404/422/500 sem vazar internals (antes tudo virava 500)
+- 🚦 **Rate-limit por IP** no `POST /orcamento` (5/h, 429 + `Retry-After`) — decisão: sem Turnstile
+- ✉️ **Emails não-fatais** pós-persistência (falha do Brevo não vira 500) + `/admin/aprovar` idempotente (rejeita transição de estado terminal)
+- 🧹 **HTML escapado** em `email.ts` (campos do usuário)
+- 🔒 **Preços não públicos** — `GET /services` projeta `(slug, name, description, repo, active)`; migração SQL manual (`services_public` view) em `supabase/migrations/20260830_hide_services_prices.sql`
+
+### 🐛 Fase B — Frontend: bugs + i18n/a11y/SEO
+
+- 🌐 **`html lang` + `document.title` + meta description sincronizados** com o idioma; CookieConsent migrado para `i18n`
+- 🎯 **Focus trap + Escape + restore** em QuoteModal, Nav mobile e CookieConsent; autofocus
+- 🏷️ **aria-labels via i18n** (Nav, QuoteModal, BootScreen, ErrorBoundary, Experience, lang/theme/menu)
+- 🔘 **TechStack toggle `div`→`button`** (aria-pressed) + aria-pressed/expanded em toggles/skills
+- 🔤 **B5** — ES `Atendo`→`Atiendo`; traduzidos `project.16.title` e `experience.6.company` (EN)
+- 🐛 **B6** — `group-hover` corrigido no card do Portfolio (faltava a classe `group`)
+- ⏱️ **B7** — `wf()` com timeout 15s (AbortController), abort no close e guarda `available()`
+
+### ⚡ Fase C — Performance
+
+- 🎞️ **ProfileLight lazy + Suspense** no Hero (typegpu fora do entry; fallback `<img>`)
+- 🏃 **Boot sem preload eager** dos 9 chunks — `resourcesReady` aguarda só `window.load` + `MIN_BOOT_MS`
+- 🧹 **mouseStore deletado** (escrito 60fps e nunca lido)
+- 📦 **manualChunks** (react/motion/lucide/i18n) — `main` **703→441KB** (gzip 184→105KB), sem warning de chunk >500KB
+
+### 🔬 Fase D — CI/qualidade/testes
+
+- ✅ **`typecheck` real** (`tsc -b` checa `src`; antes era no-op)
+- 🚦 **CI com lint + typecheck (root+worker)** antes do build; HF-check só na `main`
+- 🧭 **Débito de lint zerado** — typegpu/dist-check ignorados (vendor/gerados); erros `set-state-in-effect` e unused vars corrigidos
+- 🧪 **E2E ampliados** (58 → 66): pageerror/console checker global, persistência de idioma e tema, smoke do `admin.html`, modal/com Escape, `html lang`+title — suíte estável ~1.5min
+- 🌐 **Idioma persistido** em `localStorage('portfolio-lang')` (novo); dep morta `i18next-browser-languagedetector` removida
+
+### 🚀 Fase E — Docs + UX
+
+- ⏱️ **Boot mais rápido** — `MIN_BOOT_MS` 1800→800, `TICK_MS` 2→1, pauses menores, `TYPE_STEP` maiores (v2.7.0)
+- 📄 **CONTENT.md sincronizado** (título hero, swap Zents/Rebaulf, status dos projetos, stats calculados, slug LinkedIn, base `/portfolio-cavalcante/`, Showcase removida, `2026` em vez de `2026pro`, `23.` duplicado corrigido, boot v2.7.0 com 16 módulos)
+
 ## [1.20.1] - 2026-08-30
 
 ### 🐛 Fixes de produção (admin/site sem backend no deploy publicado)

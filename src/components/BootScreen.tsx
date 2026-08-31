@@ -41,23 +41,23 @@ const BOOT_LINES: BootLine[] = [
   { type: 'module', text: '    linktree-cavalcante [Next.js + Three.js]', ok: true },
   { type: 'gap', text: '' },
   { type: 'info', text: '  POST complete — all systems nominal.' },
-  { type: 'footer', text: '  Booting: Lucas Cavalcante Systems v2.6.0' },
+  { type: 'footer', text: '  Booting: Lucas Cavalcante Systems v2.7.0' },
 ];
 
-const MIN_BOOT_MS = 1800;
-const SECTION_PAUSE = 40;
-const LINE_GAP = 6;
-const OK_DELAY = 16;
-const PROMPT_DELAY = 80;
+const MIN_BOOT_MS = 800;
+const SECTION_PAUSE = 20;
+const LINE_GAP = 3;
+const OK_DELAY = 8;
+const PROMPT_DELAY = 40;
 const TARGET_WIDTH = 48;
-const TICK_MS = 2;
+const TICK_MS = 1;
 
 const TYPE_STEP: Record<string, number> = {
-  header: 20,
-  hw: 10,
-  module: 16,
-  info: 16,
-  footer: 16,
+  header: 30,
+  hw: 16,
+  module: 24,
+  info: 24,
+  footer: 24,
 };
 
 const POST_LINE_INDEX = BOOT_LINES.findIndex((line) => line.type === 'info');

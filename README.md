@@ -135,7 +135,7 @@ portfolio/
 ├── src/
 │   ├── components/     # BootScreen, ProfileLight, CookieConsent, Hero, QuoteModal…
 │   ├── i18n/           # traduções pt/en/es (i18next)
-│   ├── stores/         # Zustand (boot, theme, mouse, consent)
+│   ├── stores/         # Zustand (boot, theme, consent)
 │   ├── lib/typegpu/    # WebGPU renderer, shaders WGSL, ML inference, light control
 │   ├── lib/            # api.ts (worker), pricing.ts, supabase.ts
 │   ├── pages/          # Admin.tsx (página própria — admin.html + /admin)

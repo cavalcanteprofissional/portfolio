@@ -483,11 +483,27 @@ const resources = {
 
 i18n.use(initReactI18next);
 
+const savedLang = (() => {
+  try {
+    return localStorage.getItem('portfolio-lang');
+  } catch {
+    return null;
+  }
+})();
+
 i18n.init({
   resources,
-  lng: 'pt',
+  lng: savedLang === 'en' || savedLang === 'es' ? savedLang : 'pt',
   fallbackLng: 'pt',
   interpolation: { escapeValue: false },
+});
+
+i18n.on('languageChanged', (lng) => {
+  try {
+    localStorage.setItem('portfolio-lang', lng);
+  } catch {
+    // storage indisponível — limita ao idioma da sessão
+  }
 });
 
 export default i18n;
