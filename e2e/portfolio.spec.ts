@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { loadSite } from './consent';
+import { loadSite, waitForApp } from './consent';
 
 test.beforeEach(async ({ page }) => {
   await loadSite(page);
@@ -20,16 +20,19 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('deve carregar a página com título correto', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await expect(page).toHaveTitle(/Lucas Cavalcante/);
   });
 
   test('deve exibir o nome no Hero', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await expect(page.locator('text=Lucas Cavalcante').first()).toBeVisible();
   });
 
   test('deve ter navegação com todos os links', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await ensureNavVisible(page);
     const nav = page.locator('nav');
     await expect(nav.locator('text=Projetos').last()).toBeVisible();
@@ -39,6 +42,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('deve alternar tema ao clicar no botão', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     const html = page.locator('html');
     const initial = await html.getAttribute('class');
     await page.locator('button[aria-label="Alternar tema"]').click();
@@ -48,6 +52,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('deve trocar idioma para inglês', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await page.locator('button[aria-label="Selecionar idioma"]').click();
     await page.locator('text=English').click();
     await ensureNavVisible(page);
@@ -56,6 +61,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('deve trocar idioma para espanhol', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await page.locator('button[aria-label="Selecionar idioma"]').click();
     await page.locator('text=Español').click();
     await ensureNavVisible(page);
@@ -64,6 +70,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('seções principais devem estar visíveis', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await expect(page.locator('#hero')).toBeVisible();
     await expect(page.locator('#experience')).toBeVisible();
     await expect(page.locator('#projects')).toBeVisible();
@@ -76,6 +83,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('projetos devem ter links de demo e código', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await page.locator('#projects').scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000);
     const section = page.locator('#projects');
@@ -86,6 +94,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('footer deve ter links sociais', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     const footer = page.locator('footer');
     await expect(footer).toBeVisible();
     const links = footer.locator('a');
@@ -95,6 +104,7 @@ test.describe('Portfolio - Navegação e Layout', () => {
 
   test('FAQ deve abrir e fechar itens', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await page.locator('#faq').scrollIntoViewIfNeeded();
     await page.waitForTimeout(500);
     const firstButton = page.locator('#faq button').first();
@@ -110,6 +120,7 @@ test.describe('Portfolio - Responsividade', () => {
   test('menu mobile deve abrir e fechar', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await page.locator('button[aria-label="Abrir menu"]').click();
     await expect(page.getByRole('link', { name: 'Experiência' })).toBeVisible();
     await page.locator('button[aria-label="Abrir menu"]').click();
@@ -118,6 +129,7 @@ test.describe('Portfolio - Responsividade', () => {
 
   test('botão scroll-to-top deve aparecer após rolar', async ({ page }) => {
     await page.goto('/portfolio-cavalcante/');
+    await waitForApp(page);
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(500);
     // O logo da nav também tem aria-label "Voltar ao topo" — mira o botão fixo flutuante

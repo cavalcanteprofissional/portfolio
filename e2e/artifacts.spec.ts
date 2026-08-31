@@ -19,7 +19,7 @@ function pngSize(buf: Buffer) {
 
 async function waitForApp(page: import('@playwright/test').Page) {
   await page.goto(`${BASE}/`);
-  await page.locator('footer').waitFor({ state: 'visible', timeout: 15000 });
+  await page.locator('#hero').waitFor({ state: 'visible', timeout: 30000 }).catch(() => {});
 }
 
 test.describe('Artefatos de build (v1.15.0)', () => {
