@@ -23,6 +23,16 @@ function bytesToBase64(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
+// Escapa conteudo de usuario antes de injetar no HTML do email.
+function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export async function sendEmail(
   apiKey: string,
   from: string,
@@ -70,37 +80,38 @@ export function buildClientEmail(p: {
   lang: 'pt' | 'en' | 'es';
 }): SendParams {
   const rows = p.lines
-    .map((l) => `<tr><td>${l.name}</td><td>${l.qtd}</td><td>${formatBRL(l.subtotal)}</td></tr>`)
+    .map((l) => `<tr><td>${escapeHtml(l.name)}</td><td>${l.qtd}</td><td>${formatBRL(l.subtotal)}</td></tr>`)
     .join('');
   return {
     from: '',
     to: p.orcamento.email,
-    subject: `Seu orcamento ${p.orcamento.codigo}`,
+    subject: `Seu orcamento ${escapeHtml(p.orcamento.codigo)}`,
     html: `
-      <h2>Ola, ${p.orcamento.nome}!</h2>
-      <p>Seu orcamento <b>${p.orcamento.codigo}</b> foi confirmado.</p>
+      <h2>Ola, ${escapeHtml(p.orcamento.nome)}!</h2>
+      <p>Seu orcamento <b>${escapeHtml(p.orcamento.codigo)}</b> foi confirmado.</p>
       <table cellspacing=8>
         <tr><th align=left>Item</th><th align=left>Qtd</th><th align=left>Valor</th></tr>
         ${rows}
       </table>
       <p><b>Total: ${formatBRL(p.orcamento.valor)}</b></p>
       <p>Em anexo, o PDF com os detalhes.</p>`,
-    attachmentName: `orcamento-${p.orcamento.codigo}.pdf`,
+    attachmentName: `orcamento-${escapeHtml(p.orcamento.codigo)}.pdf`,
   };
 }
 
 export function buildOwnerNotice(p: {
   orcamento: NoticeOrcamento;
 }): SendParams {
+  const e = escapeHtml;
   return {
     from: '',
     to: '',
-    subject: `Novo orcamento ${p.orcamento.codigo} (${p.orcamento.status})`,
+    subject: `Novo orcamento ${e(p.orcamento.codigo)} (${e(p.orcamento.status)})`,
     html: `
       <h2>Novo orcamento</h2>
-      <p><b>Codigo:</b> ${p.orcamento.codigo}</p>
-      <p><b>Cliente:</b> ${p.orcamento.nome} (${p.orcamento.email}${p.orcamento.whatsapp ? ` / ${p.orcamento.whatsapp}` : ''}${p.orcamento.cpf_cnpj ? ` / ${p.orcamento.cpf_cnpj}` : ''})</p>
-      <p><b>Status:</b> ${p.orcamento.status}</p>
+      <p><b>Codigo:</b> ${e(p.orcamento.codigo)}</p>
+      <p><b>Cliente:</b> ${e(p.orcamento.nome)} (${e(p.orcamento.email)}${p.orcamento.whatsapp ? ` / ${e(p.orcamento.whatsapp)}` : ''}${p.orcamento.cpf_cnpj ? ` / ${e(p.orcamento.cpf_cnpj)}` : ''})</p>
+      <p><b>Status:</b> ${e(p.orcamento.status)}</p>
       <p><b>Valor:</b> ${formatBRL(p.orcamento.valor)}</p>`,
   };
 }

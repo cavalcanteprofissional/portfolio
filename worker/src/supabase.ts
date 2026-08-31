@@ -22,6 +22,20 @@ export async function listServices(db: SupabaseClient): Promise<ServiceRow[]> {
   return data as ServiceRow[];
 }
 
+export type PublicService = Pick<ServiceRow, 'slug' | 'name' | 'description' | 'repo' | 'active'>;
+
+// Catalogo publico: NUNCA expoe base_price/complexity/estimated_days.
+// (A view services_public no banco garante o mesmo via REST; aqui e reforco do Worker.)
+export async function listPublicServices(db: SupabaseClient): Promise<PublicService[]> {
+  const { data, error } = await db
+    .from('services')
+    .select('slug,name,description,repo,active')
+    .eq('active', true)
+    .order('slug');
+  if (error) throw new Error(`listPublicServices: ${error.message}`);
+  return (data as PublicService[]) ?? [];
+}
+
 export type OrcamentoInsert = Pick<
   OrcamentoRow,
   'codigo' | 'nome' | 'email' | 'itens' | 'valor'

@@ -12,6 +12,8 @@ ALLOWED_ORIGINS = "https://cavalcanteprofissional.github.io,http://localhost:517
 # O name antes de <email> eh opcional.
 FROM_EMAIL = "Cavalcante <cavalcanteprofissional@outlook.com>"
 OWNER_EMAIL = "cavalcanteprofissional@outlook.com"
+# Emails autorizados no painel admin (separa por virgula). RequireAdmin checa a sessao.
+ADMIN_EMAILS = "cavalcanteprofissional@outlook.com"
 
 # Secrets (definidos via `wrangler secret put`, nunca no repo):
 #   SERVICE_ROLE_KEY   -> nova service_role key (rotacionada pelo usuario)

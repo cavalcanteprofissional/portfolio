@@ -24,10 +24,21 @@ create table if not exists public.services (
 
 alter table public.services enable row level security;
 
-create policy "services_public_read"
-  on public.services
-  for select
-  using (true);
+-- Leitura publica expoe SOMENTE campos publicos via view services_public.
+-- Precos (base_price/complexity/estimated_days) NAO sao acessiveis ao anon/authenticated.
+drop policy if exists "services_public_read" on public.services;
+
+revoke all on table public.services from anon;
+revoke all on table public.services from authenticated;
+
+create or replace view public.services_public
+  with (security_invoker = false) as
+  select slug, name, description, repo, active
+  from public.services
+  where active = true;
+
+grant select on public.services_public to anon;
+grant select on public.services_public to authenticated;
 
 -- -----------------------------------------------------------------------------
 -- orcamentos  (sem policies — acesso somente via service_role)
