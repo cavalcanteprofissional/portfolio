@@ -1,11 +1,34 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense, type ComponentProps } from 'react';
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
 import { Linkedin, Github, FileText, ChevronDown, MessageCircle } from 'lucide-react';
 import { useThemeStore } from '../stores/themeStore';
 import { BOOT_TIMELINE, EASE, STAGGER, scaleIn, slideFrom, staggerChild, staggerContainer } from '../lib/motion';
-import { ProfileLight } from './ProfileLight';
 import { QuoteModal } from './QuoteModal';
+
+const ProfileLight = lazy(() => import('./ProfileLight').then((m) => ({ default: m.ProfileLight })));
+
+function SafeProfileLight(props: ComponentProps<typeof ProfileLight>) {
+  const { width = 352, height = 384, className = '' } = props;
+  return (
+    <Suspense
+      fallback={
+        <div className={`relative ${className}`} style={{ width, height }}>
+          <img
+            src={props.src}
+            alt={props.alt}
+            width={width}
+            height={height}
+            loading="eager"
+            className="glow-hover w-full h-full object-cover rounded-2xl"
+          />
+        </div>
+      }
+    >
+      <ProfileLight {...props} />
+    </Suspense>
+  );
+}
 
 export function Hero() {
   const { t } = useTranslation();
@@ -120,7 +143,7 @@ export function Hero() {
                   aria-label="GitHub"
                   className="glow-hover group relative block w-full h-full rounded-2xl"
                 >
-                  <ProfileLight
+<SafeProfileLight
                     src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
                     alt="Lucas Cavalcante"
                     width={192}
@@ -215,7 +238,7 @@ export function Hero() {
                 aria-label="GitHub"
                 className="block w-full h-full rounded-2xl"
               >
-                <ProfileLight
+<SafeProfileLight
                   src="/portfolio-cavalcante/images/profile/foto-perfil.webp"
                   alt="Lucas Cavalcante"
                   width={352}

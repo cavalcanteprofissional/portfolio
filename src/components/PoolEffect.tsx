@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { useMouseStore } from '../stores/mouseStore';
 
 interface PoolEffectProps {
   intense?: boolean;
@@ -57,7 +56,6 @@ export function PoolEffect({ intense = false }: PoolEffectProps) {
       smooth.y += (mouse.y - smooth.y) * 0.08;
       el.style.left = `${smooth.x * 100}%`;
       el.style.top = `${smooth.y * 100}%`;
-      useMouseStore.getState().set(smooth.x, smooth.y);
       rafId = requestAnimationFrame(tick);
     };
 

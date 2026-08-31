@@ -49,18 +49,6 @@ function App() {
       if (!cancelled) setResourcesReady(true);
     };
 
-    const chunks = Promise.all([
-      import('./components/Companies'),
-      import('./components/TechStack'),
-      import('./components/Experience'),
-      import('./components/Portfolio'),
-      import('./components/Skills'),
-      import('./components/Certifications'),
-      import('./components/Languages'),
-      import('./components/FAQ'),
-      import('./components/Contact'),
-    ]).catch(() => {});
-
     const load = new Promise<void>((resolve) => {
       if (document.readyState === 'complete') resolve();
       else window.addEventListener('load', () => resolve(), { once: true });
@@ -68,7 +56,7 @@ function App() {
 
     const fallback = setTimeout(finish, 8000);
 
-    Promise.all([chunks, load]).then(() => {
+    load.then(() => {
       clearTimeout(fallback);
       finish();
     });

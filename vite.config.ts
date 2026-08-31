@@ -33,6 +33,14 @@ export default defineConfig({
         main: resolve('index.html'),
         admin: resolve('admin.html'),
       },
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-motion': ['motion'],
+          'vendor-lucide': ['lucide-react'],
+          'vendor-i18n': ['i18next', 'react-i18next'],
+        },
+      },
     },
   },
   base: '/portfolio-cavalcante/',
