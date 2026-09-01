@@ -1,10 +1,12 @@
 import { BookOpen, Github, Linkedin, Mail, Phone } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useTranslation } from 'react-i18next';
+import { useConsentStore } from '../stores/consentStore';
 import { BOOT_TIMELINE, STAGGER, slideFrom, staggerChild, staggerContainer } from '../lib/motion';
 
 export function Footer() {
   const { t } = useTranslation();
+  const requestPolicy = useConsentStore((s) => s.requestPolicy);
 
   const socialLinks = [
     {
@@ -63,6 +65,24 @@ export function Footer() {
               </motion.a>
             );
           })}
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={staggerContainer(STAGGER.child, BOOT_TIMELINE.footer)}
+          className="flex items-center justify-center gap-2 mt-2"
+        >
+          <button
+            type="button"
+            onClick={requestPolicy}
+            className="text-[10px] sm:text-[11px] text-white/50 hover:text-primary transition-colors underline underline-offset-2"
+          >
+            {t('footer.privacy')}
+          </button>
+          <span className="text-[10px] sm:text-[11px] text-white/40" aria-hidden="true">
+            ·
+          </span>
+          <span className="text-[10px] sm:text-[11px] text-white/40">{t('footer.rights')}</span>
         </motion.div>
       </div>
     </motion.footer>

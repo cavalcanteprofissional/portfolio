@@ -13,6 +13,8 @@ export interface Env {
   OWNER_EMAIL: string;
   ALLOWED_ORIGINS?: string;
   ADMIN_EMAILS?: string;
+  UMAMI_WEBSITE_ID?: string;
+  UMAMI_API_KEY?: string;
 }
 
 const GITHUB_PAGES_ORIGIN = 'https://cavalcanteprofissional.github.io';
@@ -75,6 +77,53 @@ async function requireAdmin(
   const { data, error } = await db.auth.getUser(token);
   if (error || !data?.user) throw new ApiError('Nao autorizado', 401);
   assertAdminEmail(data.user.email, env);
+}
+
+const UMAMI_API_BASE = 'https://api.umami.is';
+
+// Busca uma metrica do Umami Cloud com a chave de API (server-side, nunca no bundle).
+async function umamiMetrics(
+  env: Env,
+  type: string,
+  startAt: number,
+  endAt: number,
+): Promise<Array<{ x: string; y: number }>> {
+  if (!env.UMAMI_API_KEY || !env.UMAMI_WEBSITE_ID) return [];
+  const url = `${UMAMI_API_BASE}/api/websites/${env.UMAMI_WEBSITE_ID}/metrics?type=${encodeURIComponent(
+    type,
+  )}&startAt=${startAt}&endAt=${endAt}&limit=50`;
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${env.UMAMI_API_KEY}` },
+  });
+  if (!res.ok) throw new ApiError('Falha ao consultar analytics', 502);
+  const data = (await res.json()) as Array<{ x: string; y: number }>;
+  return Array.isArray(data) ? data : [];
+}
+
+// GET /admin/analytics — proxy agrega visitas do Umami Cloud p/ o dashboard admin.
+async function adminAnalytics(env: Env): Promise<Record<string, unknown>> {
+  const endAt = Date.now();
+  const startAt = endAt - 30 * 24 * 60 * 60 * 1000;
+
+  if (!env.UMAMI_API_KEY || !env.UMAMI_WEBSITE_ID) {
+    throw new ApiError('Analytics nao configurado', 502);
+  }
+
+  const statsUrl = `${UMAMI_API_BASE}/api/websites/${env.UMAMI_WEBSITE_ID}/stats?startAt=${startAt}&endAt=${endAt}`;
+  const statsRes = await fetch(statsUrl, {
+    headers: { Authorization: `Bearer ${env.UMAMI_API_KEY}` },
+  });
+  if (!statsRes.ok) throw new ApiError('Falha ao consultar analytics', 502);
+  const stats = (await statsRes.json()) as Record<string, number>;
+
+  const [devices, pages, countries, browsers] = await Promise.all([
+    umamiMetrics(env, 'device', startAt, endAt),
+    umamiMetrics(env, 'url', startAt, endAt),
+    umamiMetrics(env, 'country', startAt, endAt),
+    umamiMetrics(env, 'browser', startAt, endAt),
+  ]);
+
+  return { stats, devices, pages, countries, browsers };
 }
 
 function assertQuoteValid(body: Partial<QuoteRequest> | null): asserts body is QuoteRequest {
@@ -304,6 +353,12 @@ export default {
         }
 
         return json({ codigo: orc.codigo, status: novoStatus });
+      }
+
+      // GET /admin/analytics — proxy do Umami Cloud (visitas) para o dashboard
+      if (req.method === 'GET' && path === '/admin/analytics') {
+        await requireAdmin(req, db, env);
+        return json(await adminAnalytics(env));
       }
 
       throw new ApiError('Rota nao encontrada', 404);

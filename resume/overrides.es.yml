@@ -3,10 +3,10 @@
 # =============================================================
 # Use this file to override automatically translated fields.
 # Only include fields you want to change — the rest will be
-# translated automatically by MarianMT.
+# translated automatically by mBART.
 #
 # Format example:
-#   resumo_profissional: "Analista de Datos con experiencia en proyectos de IA..."
+#   resumo_profissional: "Analista de Datos con experiencia..."
 #   experiencia_profissional:
 #     - cargo: "Analista de Datos"
 #       atividades:
@@ -15,3 +15,33 @@
 # The pipeline does a deep merge: auto-translated data serves
 # as base, overrides replace by index/key when present.
 # =============================================================
+
+experiencia_profissional:
+  - cargo: "Becario en Innovación Tecnológica"
+  - cargo: "Analista de Datos"
+  - cargo: "Analista de Datos"
+  - cargo: "Analista de Marketing y Comercial"
+  - cargo: "Analista de Marketing"
+  - cargo: "Técnico en Informática y Redes"
+
+formacao_academica:
+  - curso: "Tecnólogo en Marketing Digital"
+  - curso: "Tecnólogo en Análisis y Desarrollo de Sistemas"
+  - curso: "Licenciatura en Ciencias Sociales"
+  - curso: "Técnico en Programación de Juegos Digitales"
+
+certificacoes:
+  - nome: "Inteligencia Artificial"
+  - nome: "Ciencia de Datos y Big Data Analytics"
+  - nome: "Administración de Bases de Datos"
+  - nome: "Ingeniería de Software"
+  - nome: "Ciencia de Datos"
+  - nome: "DevOps"
+  - nome: "Desarrollador FullStack"
+  - nome: "Diseño Gráfico y Web"
+  - nome: "Ensamblaje y Mantenimiento de Computadores"
+
+idiomas:
+  - nivel: "Nativo"
+  - nivel: "Avanzado (comprende, habla, lee y escribe con fluidez)"
+  - nivel: "Básico (comprende y lee bien)"

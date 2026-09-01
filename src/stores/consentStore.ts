@@ -14,6 +14,10 @@ function readConsent(): boolean | null {
 interface ConsentStore {
   consent: boolean | null;
   setConsent: (value: boolean) => void;
+  /** Abre o modal de política/consentimento sob demanda (ex.: link no rodapé). */
+  forcedOpen: boolean;
+  requestPolicy: () => void;
+  closePolicy: () => void;
 }
 
 export const useConsentStore = create<ConsentStore>((set) => ({
@@ -22,6 +26,9 @@ export const useConsentStore = create<ConsentStore>((set) => ({
     try {
       localStorage.setItem(STORAGE_KEY, String(value));
     } catch { /* localStorage indisponível */ }
-    set({ consent: value });
+    set({ consent: value, forcedOpen: false });
   },
+  forcedOpen: false,
+  requestPolicy: () => set({ forcedOpen: true }),
+  closePolicy: () => set({ forcedOpen: false }),
 }));

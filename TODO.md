@@ -1,3 +1,35 @@
+# Plano de Melhorias — Onda 1.22 (2026-08-31)
+
+> Fechamento pós-1.21. Prioridades selecionadas: Política de Privacidade + rodapé (checklist §5), CV17 (overrides de tradução) e Visão de visitas (Umami) + Export CSV no Admin (A5 deferido). Decisões do usuário anotadas em cada item.
+
+## 🍪 Item 1 — Política de Privacidade no rodapé (reusa CookieConsent)
+- [x] **Decisão:** reusar o modal CookieConsent (fonte única da política), sem página separada.
+- [x] `consentStore.ts` — estado/actions `forcedOpen` + `requestPolicy()` / `closePolicy()`
+- [x] `CookieConsent.tsx` — `show` passa a abrir também com `forcedOpen` (mesmo com `consent` já definido); fechar via Escape/backdrop no modo forçado chama `closePolicy()`
+- [x] `Footer.tsx` — link "Política de Privacidade" (`footer.privacy` pt/en/es) que reabre o modal + restaurado `footer.rights`; `main` `pb-20`→`pb-24` p/ comportar a nova linha
+- [x] typecheck
+
+## 🧰 Item 2 — CV17: Qualidade de tradução (overrides mBART)
+- [x] Rodado `python resume/build.py` → identificados campos-detupados (cargos, formação, certificações, idiomas)
+- [x] `overrides.en.yml` / `overrides.es.yml` preenchidos com traduções manuais (deep-merge por índice)
+- [x] PDFs regenerados e commitados (committed-first; CI regera como double-check)
+- [x] Greps nos HTMLs EN/ES validam as correções
+
+## 📊 Item 3 — Visão de visitas (Umami) + Export CSV no Admin (A5 deferido)
+- [x] **Descoberta:** Umami Cloud exige `https://api.umami.is` com API key (Bearer) — token **server-side** no Worker (nunca no bundle)
+- [x] Worker: `GET /admin/analytics` (atrás de `requireAdmin`) — proxy stats/devices/pages/countries/browsers (30 dias)
+- [x] `Env` + `wrangler.toml`: `UMAMI_WEBSITE_ID` (público, vars) + `UMAMI_API_KEY` (secret → `wrangler secret put`)
+- [x] `src/lib/api.ts` — `adminFetchAnalytics(token)`
+- [x] `src/pages/Admin.tsx` — seção "Visitas (30 dias)" + totais + tabelas + **Export CSV**
+- [x] typecheck front+worker · build · `wrangler deploy --dry-run` (bindings OK)
+- [ ] ⏳ **Manual pós-deploy:** `wrangler secret put UMAMI_API_KEY` (não pode ir no repo)
+
+## ✅ Fecho da Onda 1.22
+- [x] `package.json` version → **1.22.0** · `CHANGELOG.md` `[1.22.0]`
+- [x] Commit
+
+---
+
 # Plano de Melhorias — Onda 1.21 (pós-análise profunda, 2026-08-30)
 
 > Análise profunda (3 auditorias + verificação manual) → plano registrado e executado **por fases**. Decisões do usuário anotadas em cada item.
@@ -205,7 +237,7 @@ Corrigir issues críticas de performance, SEO, internacionalização e qualidade
 | CV14 | Hero: voltar para 1 botão CV dinâmico por idioma (remover 3 botões) | ✅ |
 | CV15 | Bug: `cargo` em experiencia_profissional não é traduzido (EN/ES) | ✅ |
 | CV16 | ~~Bug: tradução MarianMT com artefatos de encoding ("experienceCIa")~~ Resolvido: trocado para mBART-large-50 | ✅ |
-| CV17 | Qualidade mBART: frases curtas sem contexto ainda paraphraseiam (ex: "Formacao" → "Academic Formula") — usar overrides.en.yml/es.yml | ⬜ |
+| CV17 | Qualidade mBART: frases curtas sem contexto ainda paraphraseiam (ex: "Formacao" → "Academic Formula") — usar overrides.en.yml/es.yml | ✅ v1.22.0 |
 ---
 
 ### 🚨 Hotfix — Deploy quebrado: mBART tokenizer sem protobuf/tiktoken (2026-07-28)

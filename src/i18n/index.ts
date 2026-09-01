@@ -78,7 +78,7 @@ export const translations = {
       japanese: "Japonês",
       level: { native: "Nativo", advanced: "Avançado", intermediate: "Intermediário", basic: "Básico" }
     },
-    footer: { contact: "Entre em Contato", message: "Estou sempre aberto a novas oportunidades e colaborações.", rights: "Todos os direitos reservados." },
+    footer: { contact: "Entre em Contato", message: "Estou sempre aberto a novas oportunidades e colaborações.", rights: "Todos os direitos reservados.", privacy: "Política de Privacidade" },
     cta: { title: "Vamos Trabalhar Juntos?", subtitle: "Estou sempre aberto a novas oportunidades e colaborações. Vamos conversar sobre seu próximo projeto?", contact: "Entre em Contato", whatsapp: "Fale no WhatsApp", linkedin: "Conecte no LinkedIn", hero: "Contato", whatsappMsg: "Olá Lucas! Vim pelo seu portfólio e gostaria de conversar." },
     companies: { title: "Empresas Atendidas", subtitle: "Parceiros que confiam no meu trabalho" },
     techstack: {
@@ -157,6 +157,15 @@ export const translations = {
       empty: "Nenhum orçamento registrado.",
       approve: "Aprovar",
       reject: "Recusar",
+      analyticsTitle: "Visitas (30 dias)",
+      analyticsEmpty: "Sem dados de analytics (configure UMAMI_API_KEY no Worker).",
+      analyticsTotalVisitors: "Visitantes",
+      analyticsTotalPageviews: "Visualizações",
+      exportCsv: "Exportar CSV",
+      devices: "Dispositivos",
+      pages: "Páginas",
+      countries: "Países",
+      browsers: "Navegadores",
     },
   },
   en: {
@@ -235,7 +244,7 @@ export const translations = {
       japanese: "Japanese",
       level: { native: "Native", advanced: "Advanced", intermediate: "Intermediate", basic: "Basic" }
     },
-    footer: { contact: "Contact Me", message: "I am always open to new opportunities and collaborations.", rights: "All rights reserved." },
+    footer: { contact: "Contact Me", message: "I am always open to new opportunities and collaborations.", rights: "All rights reserved.", privacy: "Privacy Policy" },
     cta: { title: "Let's Work Together?", subtitle: "I'm always open to new opportunities and collaborations. Let's talk about your next project?", contact: "Get in Touch", whatsapp: "Message on WhatsApp", linkedin: "Connect on LinkedIn", hero: "Contact", whatsappMsg: "Hi Lucas! I came from your portfolio and would like to chat." },
     companies: { title: "Companies", subtitle: "Partners who trust my work" },
     techstack: {
@@ -314,6 +323,15 @@ export const translations = {
       empty: "No orders registered.",
       approve: "Approve",
       reject: "Reject",
+      analyticsTitle: "Visits (30 days)",
+      analyticsEmpty: "No analytics data (set UMAMI_API_KEY on the Worker).",
+      analyticsTotalVisitors: "Visitors",
+      analyticsTotalPageviews: "Pageviews",
+      exportCsv: "Export CSV",
+      devices: "Devices",
+      pages: "Pages",
+      countries: "Countries",
+      browsers: "Browsers",
     },
   },
   es: {
@@ -392,7 +410,7 @@ export const translations = {
       japanese: "Japonés",
       level: { native: "Nativo", advanced: "Avanzado", intermediate: "Intermedio", basic: "Básico" }
     },
-    footer: { contact: "Contáctame", message: "Siempre estoy abierto a nuevas oportunidades y colaboraciones.", rights: "Todos los derechos reservados." },
+    footer: { contact: "Contáctame", message: "Siempre estoy abierto a nuevas oportunidades y colaboraciones.", rights: "Todos los derechos reservados.", privacy: "Política de Privacidad" },
     cta: { title: "¿Trabajamos Juntos?", subtitle: "Siempre estoy abierto a nuevas oportunidades y colaboraciones. Hablemos sobre tu próximo proyecto?", contact: "Contáctame", whatsapp: "Escríbeme en WhatsApp", linkedin: "Conecta en LinkedIn", hero: "Contacto", whatsappMsg: "¡Hola Lucas! Vine desde tu portafolio y me gustaría conversar." },
     companies: { title: "Empresas Atendidas", subtitle: "Socios que confían en mi trabajo" },
     techstack: {
@@ -471,6 +489,15 @@ export const translations = {
       empty: "No hay presupuestos registrados.",
       approve: "Aprobar",
       reject: "Rechazar",
+      analyticsTitle: "Visitas (30 días)",
+      analyticsEmpty: "Sin datos de analytics (configura UMAMI_API_KEY en el Worker).",
+      analyticsTotalVisitors: "Visitantes",
+      analyticsTotalPageviews: "Vistas de página",
+      exportCsv: "Exportar CSV",
+      devices: "Dispositivos",
+      pages: "Páginas",
+      countries: "Países",
+      browsers: "Navegadores",
     },
   }
 };

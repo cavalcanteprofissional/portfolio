@@ -119,3 +119,17 @@ export async function adminAprovar(
     body: JSON.stringify({ codigo, status }),
   });
 }
+
+export interface AdminAnalytics {
+  stats: Record<string, number>;
+  devices: Array<{ x: string; y: number }>;
+  pages: Array<{ x: string; y: number }>;
+  countries: Array<{ x: string; y: number }>;
+  browsers: Array<{ x: string; y: number }>;
+}
+
+export async function adminFetchAnalytics(token: string): Promise<AdminAnalytics> {
+  return wf<AdminAnalytics>('/admin/analytics', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}

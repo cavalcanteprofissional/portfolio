@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.22.0] - 2026-08-31
+
+### 🍪 Política de Privacidade no rodapé
+
+- 🔗 **Link "Política de Privacidade" no Footer** (pt/en/es) que **reabre o modal CookieConsent** sob demanda — `requestPolicy()`/`forcedOpen` no `consentStore`; modal agora abre mesmo após o usuário já ter aceitado (antes só com `consent === null`); segue abrindo com Escape/backdrop/focus-trap
+
+### 🧰 CV17 — Qualidade de tradução (mBART)
+
+- 📝 **`overrides.en.yml`/`overrides.es.yml` preenchidos** com traduções manuais dos campos curtos que o mBART deturpava: cargos, formação acadêmica, certificações e níveis de idioma (ex.: "Tecnólogo em Marketing Digital" → "Technologist in Digital Marketing" / "Tecnólogo en Marketing Digital")
+- 🔄 PDFs de currículo **regenerados** (`resume/build.py`) e commitados (committed-first; CI regera como double-check)
+
+### 📊 Admin — Visão de visitas (Umami) + Export CSV
+
+- 📈 **`GET /admin/analytics`** no Worker (protegido via `requireAdmin`) — proxy do **Umami Cloud API** (`api.umami.is`) usando `UMAMI_API_KEY` (**secret server-side**, nunca no bundle): stats (visitors/pageviews), devices, pages, countries, browsers (últimos 30 dias)
+- 🧱 Novo secret `UMAMI_API_KEY` + var públca `UMAMI_WEBSITE_ID` no `wrangler.toml`
+- 📥 **Painel admin**: seção "Visitas (30 dias)" com totais e tabelas por dispositivo/navegador/página/país + botão **Export CSV** (client-side, `.csv` com BOM)
+
 ## [1.21.0] - 2026-08-30
 
 ### 🛡️ Fase A — Segurança/robustez (Worker + Supabase)

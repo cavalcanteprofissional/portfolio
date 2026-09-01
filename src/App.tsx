@@ -116,7 +116,7 @@ function App() {
 
           <motion.main
             id="main-content"
-            className="pb-20"
+            className="pb-24"
             initial="hidden"
             animate={booted ? 'show' : 'hidden'}
             variants={focusReveal(BOOT_TIMELINE.mainFocus)}

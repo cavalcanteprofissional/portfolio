@@ -1,8 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LogOut, RefreshCw, Check, X, LogIn, ShieldAlert } from 'lucide-react';
+import { LogOut, RefreshCw, Check, X, LogIn, ShieldAlert, Download, BarChart3 } from 'lucide-react';
 import { getSupabaseClient } from '../lib/supabase';
-import { adminListOrcamentos, adminAprovar, type AdminOrcamento } from '../lib/api';
+import {
+  adminListOrcamentos,
+  adminAprovar,
+  adminFetchAnalytics,
+  type AdminOrcamento,
+  type AdminAnalytics,
+} from '../lib/api';
 import { formatBRL } from '../lib/pricing';
 
 export function Admin() {
@@ -18,6 +24,9 @@ export function Admin() {
   const [rows, setRows] = useState<AdminOrcamento[]>([]);
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
+
+  const [analytics, setAnalytics] = useState<AdminAnalytics | null>(null);
+  const [analyticsError, setAnalyticsError] = useState<string | null>(null);
 
   const supabase = useMemo(() => {
     try {
@@ -67,6 +76,8 @@ export function Admin() {
     setSessionUser(null);
     setToken(null);
     setRows([]);
+    setAnalytics(null);
+    setAnalyticsError(null);
   }
 
   async function loadFor(access: string) {
@@ -78,6 +89,17 @@ export function Admin() {
       setActionError(e instanceof Error ? e.message : 'Erro');
     } finally {
       setBusy(false);
+    }
+    loadAnalytics(access);
+  }
+
+  async function loadAnalytics(access: string) {
+    setAnalyticsError(null);
+    try {
+      setAnalytics(await adminFetchAnalytics(access));
+    } catch (e) {
+      setAnalyticsError(e instanceof Error ? e.message : 'Erro');
+      setAnalytics(null);
     }
   }
 
@@ -97,6 +119,36 @@ export function Admin() {
     } finally {
       setBusy(false);
     }
+  }
+
+  function exportCsv() {
+    if (!analytics) return;
+    const rowsCsv: string[][] = [
+      ['metrics', 'y'],
+      ['visitors', String(analytics.stats.visitors ?? 0)],
+      ['pageviews', String(analytics.stats.pageviews ?? 0)],
+      [],
+    ];
+    const sections: Array<[string, Array<{ x: string; y: number }>]> = [
+      ['devices', analytics.devices],
+      ['pages', analytics.pages],
+      ['countries', analytics.countries],
+      ['browsers', analytics.browsers],
+    ];
+    for (const [label, items] of sections) {
+      rowsCsv.push([label]);
+      rowsCsv.push(['x', 'y']);
+      for (const it of items) rowsCsv.push([it.x, String(it.y)]);
+      rowsCsv.push([]);
+    }
+    const csv = rowsCsv.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `analytics-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   if (!supabase) {
@@ -203,6 +255,70 @@ export function Admin() {
                 </button>
               </div>
             )}
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-12">
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <h2 className="flex items-center gap-2 text-xl font-bold">
+            <BarChart3 className="w-5 h-5" />
+            {t('admin.analyticsTitle')}
+          </h2>
+          <button
+            onClick={exportCsv}
+            disabled={!analytics}
+            className="flex items-center gap-2 px-4 py-2 rounded-full border border-border hover:bg-secondary disabled:opacity-40"
+          >
+            <Download className="w-4 h-4" />
+            {t('admin.exportCsv')}
+          </button>
+        </div>
+
+        {analyticsError && <p className="text-sm text-red-500 mb-4">{analyticsError}</p>}
+        {!analytics && !analyticsError && (
+          <div className="rounded-2xl border border-border p-8 text-center text-muted-foreground">
+            {t('admin.analyticsEmpty')}
+          </div>
+        )}
+        {analytics && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4 sm:max-w-md">
+              <div className="rounded-2xl border border-border bg-card p-5 text-center">
+                <div className="text-3xl font-bold">{analytics.stats.visitors ?? 0}</div>
+                <div className="text-sm text-muted-foreground">{t('admin.analyticsTotalVisitors')}</div>
+              </div>
+              <div className="rounded-2xl border border-border bg-card p-5 text-center">
+                <div className="text-3xl font-bold">{analytics.stats.pageviews ?? 0}</div>
+                <div className="text-sm text-muted-foreground">{t('admin.analyticsTotalPageviews')}</div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <AnalyticsTable title={t('admin.devices')} items={analytics.devices} />
+              <AnalyticsTable title={t('admin.browsers')} items={analytics.browsers} />
+              <AnalyticsTable title={t('admin.pages')} items={analytics.pages} />
+              <AnalyticsTable title={t('admin.countries')} items={analytics.countries} />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function AnalyticsTable({ title, items }: { title: string; items: Array<{ x: string; y: number }> }) {
+  if (!items || items.length === 0) return null;
+  const max = Math.max(...items.map((i) => i.y), 1);
+  return (
+    <div className="rounded-2xl border border-border bg-card p-5">
+      <div className="text-sm font-semibold mb-3 text-muted-foreground">{title}</div>
+      <div className="space-y-2">
+        {items.slice(0, 10).map((it) => (
+          <div key={it.x} className="flex items-center gap-3">
+            <span className="text-sm flex-1 truncate">{it.x}</span>
+            <span className="text-sm font-medium">{it.y}</span>
+            <span className="h-2 rounded-full bg-primary/40" style={{ width: `${(it.y / max) * 100}px` }} />
           </div>
         ))}
       </div>

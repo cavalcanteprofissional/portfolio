@@ -11,7 +11,7 @@ interface CookieConsentProps {
 
 export function CookieConsent({ visible }: CookieConsentProps) {
   const { t } = useTranslation();
-  const { consent, setConsent } = useConsentStore();
+  const { consent, setConsent, forcedOpen, closePolicy } = useConsentStore();
   const [typedHeader, setTypedHeader] = useState(0);
   const [typedBody, setTypedBody] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
@@ -27,8 +27,10 @@ export function CookieConsent({ visible }: CookieConsentProps) {
   );
   const flatBody = copy.body;
 
+  const show = forcedOpen || (visible && consent === null && !dismissed);
+
   useEffect(() => {
-    if (!visible || consent !== null) return;
+    if (show === false) return;
 
     if (typedHeader < copy.header.length) {
       const timer = setTimeout(() => setTypedHeader((p) => p + 1), 8);
@@ -42,19 +44,22 @@ export function CookieConsent({ visible }: CookieConsentProps) {
 
     const timer = setTimeout(() => setShowButtons(true), 120);
     return () => clearTimeout(timer);
-  }, [visible, consent, typedHeader, typedBody, copy, flatBody]);
+  }, [show, typedHeader, typedBody, copy, flatBody]);
 
   const handleAccept = useCallback(() => setConsent(true), [setConsent]);
 
   const handleBackdropClick = useCallback(() => {
+    if (forcedOpen) {
+      closePolicy();
+      return;
+    }
     setDismissed(true);
-  }, []);
+  }, [forcedOpen, closePolicy]);
 
   const handleContainerClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
   }, []);
 
-  const show = visible && consent === null && !dismissed;
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,7 +67,11 @@ export function CookieConsent({ visible }: CookieConsentProps) {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
-        setDismissed(true);
+        if (forcedOpen) {
+          closePolicy();
+        } else {
+          setDismissed(true);
+        }
         return;
       }
       if (e.key !== 'Tab') return;
@@ -86,7 +95,7 @@ export function CookieConsent({ visible }: CookieConsentProps) {
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [show]);
+  }, [show, forcedOpen, closePolicy]);
 
   useEffect(() => {
     if (!show || !showButtons) return;
