@@ -82,7 +82,9 @@ export function Footer() {
           <span className="text-[10px] sm:text-[11px] text-white/40" aria-hidden="true">
             ·
           </span>
-          <span className="text-[10px] sm:text-[11px] text-white/40">{t('footer.rights')}</span>
+          <span className="text-[10px] sm:text-[11px] text-white/40">
+            © {new Date().getFullYear()} · {t('footer.rights')}
+          </span>
         </motion.div>
       </div>
     </motion.footer>
